@@ -2,43 +2,33 @@ NAME        := minishell
 
 LIBS        := ft
 LIBS_TARGET := libft/libft.a 
+INCS        := include libft/include
 
-INCS        := include    \
-    libft/include
+SRCS        := main.c
 
-
-SRC			:= main.c
-
-OBJ			:= $(SRC:%.c=%.o)
-DEPS        := $(OBJS:.o=.d)
+OBJS        := $(SRCS:%.c=%.o)
 
 CC          := gcc
-CFLAGS      := -Wall -Wextra -Werror 
-RDFLAGS		:= -lreadline
-#-fsanitize=address -g3
+CFLAGS      := -Wall -Wextra -Werror
 
-CPPFLAGS    := $(addprefix -I,$(INCS))
-#-MMD -MP
-LDFLAGS     := $(addprefix -L,$(dir $(LIBS_TARGET)))
-LDLIBS      := $(addprefix -l,$(LIBS))
 
-RM          := rm -f
 
 all: $(NAME)
+
 $(NAME): $(OBJS) $(LIBS_TARGET)
-	$(CC) $(CFLAGS) $(OBJS) $(RDFLAGS) $(LIBS_TARGET) -o $(NAME)
+	$(CC) -L $(dir $(LIBS_TARGET)) $(OBJS) -lreadline -l$(LIBS) -o $(NAME)
 
 $(LIBS_TARGET):
 	$(MAKE) -C $(@D)
 
-%.o: %.c
-	$(CC) $(CFLAGS) $< $(RDFLAGS) $(CPPFLAGS) $(LDFLAGS) -c -o $@ $<
 
--include $(DEPS)
+
+RM          := rm -f
+MAKEFLAGS   += --no-print-directory
 
 clean:
-	$(MAKE) fclean -C $(dir $(LIBS_TARGET)) 
-	$(RM) $(OBJ)
+	$(MAKE) fclean -C $(dir $(LIBS_TARGET))
+	$(RM) $(OBJS)
 
 fclean: clean
 	$(RM) $(NAME)
@@ -47,4 +37,7 @@ re:
 	$(MAKE) fclean
 	$(MAKE) all
 
+
+
 .PHONY: clean fclean re
+#.SILENT:
