@@ -6,7 +6,7 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 17:58:01 by irene             #+#    #+#             */
-/*   Updated: 2024/04/12 19:11:02 by irene            ###   ########.fr       */
+/*   Updated: 2024/04/12 22:10:43 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void show_leaks(void)
 int main(void)
 {
 	char *s;
+	int a = 2;
 
 	//atexit(show_leaks);
 	s = readline("Write:");

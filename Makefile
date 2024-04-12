@@ -7,9 +7,11 @@ INCS        := include libft/include
 SRCS        := main.c
 
 OBJS        := $(SRCS:%.c=%.o)
-
 CC          := gcc
 CFLAGS      := -Wall -Wextra -Werror
+
+RM          := rm -f
+MAKEFLAGS   += --no-print-directory
 
 
 
@@ -22,9 +24,6 @@ $(LIBS_TARGET):
 	$(MAKE) -C $(@D)
 
 
-
-RM          := rm -f
-MAKEFLAGS   += --no-print-directory
 
 clean:
 	$(MAKE) fclean -C $(dir $(LIBS_TARGET))
