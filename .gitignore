@@ -1,0 +1,4 @@
+*.h.ghc
+*.o
+minishell
+a.out
