@@ -6,11 +6,19 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 17:58:01 by irene             #+#    #+#             */
-/*   Updated: 2024/04/12 22:10:43 by irene            ###   ########.fr       */
+/*   Updated: 2024/04/13 13:33:37 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void signal_handler(int signum)
+{
+	if (signum == SIGQUIT)
+		printf("Hi, signal C-\\ %d\n", signum);//Poner algo aquí, sin nada escribe ^\ y sale
+	else if (signum == SIGINT)//esto no funciona
+		printf("You did C-c\n");
+}
 
 /*
 void show_leaks(void)
@@ -21,9 +29,16 @@ void show_leaks(void)
 int main(void)
 {
 	char *s;
-	int a = 2;
+	struct sigaction sa;
+
+    sa.sa_handler = signal_handler;
+    sigemptyset(&sa.sa_mask);
 
 	//atexit(show_leaks);
+	if (sigaction(SIGQUIT, &sa, NULL) == -1)
+		exit(3);
+	if (sigaction(SIGINT, &sa, NULL) == -1)
+		exit(4);
 	s = readline("Write:");
 	while (s && *s)
 	{
@@ -47,8 +62,8 @@ Prompt:
 readline lee y devuelve la línea de stdin (malloc).
 Si la línea no es vacía, se guarda en con add_history en un histórico que gestiona la propia función readline.
 No parece que add_history deje leaks
-Ctrl - C debe simplemente establecer una nueva línea de prompt
-Ctrl - D debe salir del programa
+Ctrl - C debe simplemente establecer una nueva línea de prompt => Escribe ^C y nueva línea de promp
+Ctrl - D debe salir del programa => Lo hace por defecto
 Ctrl - \ debe no hacer nada
 Cuando dejamos la línea vacía (intro directamente) revisar qué hace
 
@@ -78,15 +93,35 @@ fork, dup, dup2, pipe,
 
 wait, waitpid, wait3, wait4, 
 
-signal, sigaction, sigemptyset, sigaddset, 
+
+
+https://www.gnu.org/software/libc/manual/html_node/Signal-Handling.html Hasta Blocking Signals incluido
+
+typedef void (*sighandler_t)(int);
+sighandler_t signal(int signum, sighandler_t handler); returns  the  previous value of the signal handler, or SIG_ERR on error
+int sigaction(int signum, const struct sigaction *act, struct sigaction *oldact); => 0/-1  -> to change the action taken by a process on receipt of a specific signal. 
+int sigemptyset(sigset_t *set);=> 0/-1 -> initializes the signal set given by set to empty, with all signals excluded from the set.
+int sigaddset(sigset_t *set, int signum) => 0/-1; -> add signal signum from set.
+
+
+
 kill, exit,
 getcwd, chdir, stat, lstat, fstat, unlink, 
 
-execve,
+
 
 opendir, readdir, closedir,
 strerror, perror, 
-isatty, ttyname, ttyslot, ioctl,
+
+int isatty(int fd); -> function tests whether fd is an open file descriptor referring to a terminal. returns 1 if fd is an open file descriptor referring to a terminal; otherwise 0 is returned
+char *ttyname(int fd); -> The function ttyname() returns a pointer to the null-terminated pathname of the terminal device that is open on the file descriptor fd, or NULL on error.
+int ttyslot(void); -> (?)
+
+
+execve,
+int ioctl(int fd, unsigned long request, ...); => 0/-1; 
+
+
 
 getenv, tcsetattr, tcgetattr, tgetent, tgetflag,
 tgetnum, tgetstr, tgoto, tputs
