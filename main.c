@@ -6,18 +6,35 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 17:58:01 by irene             #+#    #+#             */
-/*   Updated: 2024/04/13 13:33:37 by irene            ###   ########.fr       */
+/*   Updated: 2024/04/14 15:20:21 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+void prompt(void)
+{
+	char *s;
+
+	s = readline("Write:");
+	while (s)
+	{
+		printf("String:\n%s\n", s);
+		add_history(s);
+		printf("Length: %lu\n", ft_strlen(s));
+		free(s);
+		s = readline("Write:");
+	}
+	rl_clear_history();
+}
+
+
 void signal_handler(int signum)
 {
 	if (signum == SIGQUIT)
-		printf("Hi, signal C-\\ %d\n", signum);//Poner algo aquí, sin nada escribe ^\ y sale
-	else if (signum == SIGINT)//esto no funciona
-		printf("You did C-c\n");
+		rl_replace_line("Write:", 3);//Esto no funciona bien
+	else if (signum == SIGINT)
+		printf("Write:^C\nWrite:");
 }
 
 /*
@@ -28,49 +45,29 @@ void show_leaks(void)
 */
 int main(void)
 {
-	char *s;
 	struct sigaction sa;
 
+	//atexit(show_leaks);
     sa.sa_handler = signal_handler;
     sigemptyset(&sa.sa_mask);
-
-	//atexit(show_leaks);
+	//sigaddset(&sa.sa_mask, SA_RESTART);
 	if (sigaction(SIGQUIT, &sa, NULL) == -1)
 		exit(3);
 	if (sigaction(SIGINT, &sa, NULL) == -1)
 		exit(4);
-	s = readline("Write:");
-	while (s && *s)
-	{
-		printf("String:\n%s\n", s);
-		add_history(s);
-		printf("Length: %lu\n", ft_strlen(s));
-		free(s);
-		s = readline("Write:");
-		if (*s == '\n')
-			rl_on_new_line();
-	}
-	rl_clear_history();
+	prompt();
 }
 
 /*
-
-Makefile:
-Hacer que pille la minishell
 
 Prompt:
 readline lee y devuelve la línea de stdin (malloc).
 Si la línea no es vacía, se guarda en con add_history en un histórico que gestiona la propia función readline.
 No parece que add_history deje leaks
-Ctrl - C debe simplemente establecer una nueva línea de prompt => Escribe ^C y nueva línea de promp
-Ctrl - D debe salir del programa => Lo hace por defecto
 Ctrl - \ debe no hacer nada
-Cuando dejamos la línea vacía (intro directamente) revisar qué hace
 
 
 
-- Leer man de las funciones permitidas
-- Establecer prompt que escuche la entrada estandar
 - Parseo de la entrada estandar
 - Establecimiento de built-ins
 - Otros comandos
