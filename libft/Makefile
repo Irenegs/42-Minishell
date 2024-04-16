@@ -1,10 +1,4 @@
-####################################### BEG ######
-
 NAME        = libft.a
-
-#------------------------------------------------#
-#   INGREDIENTS                                  #
-#------------------------------------------------#
 
 SRCS		= ft_isalpha.c ft_isdigit.c ft_isalnum.c \
 			ft_isascii.c ft_isprint.c ft_strlen.c \
@@ -18,13 +12,8 @@ SRCS		= ft_isalpha.c ft_isdigit.c ft_isalnum.c \
 			ft_strmapi.c ft_striteri.c ft_putchar_fd.c \
 			ft_putstr_fd.c ft_putendl_fd.c ft_putnbr_fd.c ft_calloc.c ft_split.c
 
-BSRCS		= ft_lstnew_bonus.c ft_lstadd_front_bonus.c \
-			ft_lstsize_bonus.c ft_lstlast_bonus.c ft_lstadd_back_bonus.c \
-			ft_lstdelone_bonus.c ft_lstclear_bonus.c ft_lstiter_bonus.c ft_lstmap_bonus.c
+OBJS        := $(SRCS:%.c=%.o)
 
-OBJS		= $(SRCS:.c=.o)
-
-BOBJS		= $(BSRCS:.c=.o)
 
 CC			= gcc
 CFLAGS		= -Wall -Wextra -Werror
@@ -32,31 +21,19 @@ CFLAGS		= -Wall -Wextra -Werror
 AR		= ar
 ARFLAGS	= -r -c -s
 
-FILE = .asdfa
-
-#------------------------------------------------#
-
 
 RM			= rm -f
 MAKE		= $(MAKE) --no-print-directory
 
-#------------------------------------------------#
-#   RECIPES                                      #
-#------------------------------------------------#
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
 	$(AR) $(ARFLAGS) $(NAME) $(OBJS)
 
-bonus: $(FILE)
 
-$(FILE) : $(OBJS) $(BOBJS)
-	$(AR) $(ARFLAGS) $(NAME) $(OBJS) $(BOBJS)
-	@touch $(FILE)
-
-%.o: %.c
-	$(CC) $(CFLAGS) -c $< 
+#%.o: %.c
+#	$(CC) $(CFLAGS) -c $< 
 
 clean:
 	$(RM) $(OBJS) $(BOBJS) libft.h.gch
@@ -66,9 +43,6 @@ fclean: clean
 
 re: fclean all bonus
 
-#------------------------------------------------#
-#   SPEC                                         #
-#------------------------------------------------#
 
 .PHONY: clean fclean re all bonus
 

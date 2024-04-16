@@ -1,23 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstdelone.c                                     :+:      :+:    :+:   */
+/*   ft_lstlast.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irgonzal <irgonzal@student.42madrid.com>   +#+  +:+       +#+        */
+/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/30 21:17:23 by irgonzal          #+#    #+#             */
-/*   Updated: 2022/10/01 10:58:42 by irgonzal         ###   ########.fr       */
+/*   Created: 2022/09/30 09:29:54 by irgonzal          #+#    #+#             */
+/*   Updated: 2024/04/16 22:05:18 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#	include "libft.h"
+#	include "minishell.h"
 
-void	ft_lstdelone(t_list *lst, void (*del)(void *))
+t_word	*ft_lstlast(t_word *lst)
 {
-	if (lst && lst->content && del)
+	t_word	a;
+
+	if (!lst)
+		return (NULL);
+	a = lst[0];
+	if (a.next == NULL)
+		return (lst);
+	while (a.next->next != NULL)
 	{
-		lst->next = NULL;
-		del(lst->content);
-		free(lst);
+		a = *a.next;
 	}
+	return (a.next);
 }

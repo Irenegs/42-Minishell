@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstclear.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irgonzal <irgonzal@student.42madrid.com>   +#+  +:+       +#+        */
+/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 21:29:50 by irgonzal          #+#    #+#             */
-/*   Updated: 2022/10/01 17:49:52 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/04/16 22:05:04 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#	include "libft.h"
+#	include "minishell.h"
 
-void	ft_lstclear(t_list **lst, void (*del)(void *))
+void	ft_lstclear(t_word **lst, void (*del)(void *))
 {
-	t_list	*a;
-	t_list	*b;
+	t_word	*a;
+	t_word	*b;
 
 	if (!del || !lst || !*lst)
 		return ;

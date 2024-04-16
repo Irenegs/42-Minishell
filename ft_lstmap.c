@@ -3,26 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irgonzal <irgonzal@student.42madrid.com>   +#+  +:+       +#+        */
+/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 12:59:02 by irgonzal          #+#    #+#             */
-/*   Updated: 2022/10/10 13:35:33 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/04/16 22:05:22 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#	include "libft.h"
+#	include "minishell.h"
 
-static t_list	*ft_out(t_list *lst, void (*del)(void *))
+static t_word	*ft_out(t_word *lst, void (*del)(void *))
 {
 	ft_lstclear(&lst, del);
 	return (NULL);
 }
 
-t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
+t_word	*ft_lstmap(t_word *lst, void *(*f)(void *), void (*del)(void *))
 {
-	t_list	*res;
-	t_list	*a;
-	t_list	*b;
+	t_word	*res;
+	t_word	*a;
+	t_word	*b;
 	void	*c;
 
 	if (!lst || !f)

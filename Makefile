@@ -14,7 +14,6 @@ RM          := rm -f
 MAKEFLAGS   += --no-print-directory
 
 
-
 all: $(NAME)
 
 $(NAME): $(OBJS) $(LIBS_TARGET)
@@ -22,8 +21,6 @@ $(NAME): $(OBJS) $(LIBS_TARGET)
 
 $(LIBS_TARGET):
 	$(MAKE) -C $(@D)
-
-
 
 clean:
 	$(MAKE) fclean -C $(dir $(LIBS_TARGET))

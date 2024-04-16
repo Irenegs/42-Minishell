@@ -1,29 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstlast.c                                       :+:      :+:    :+:   */
+/*   ft_lstadd_front.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irgonzal <irgonzal@student.42madrid.com>   +#+  +:+       +#+        */
+/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/30 09:29:54 by irgonzal          #+#    #+#             */
-/*   Updated: 2022/09/30 09:49:20 by irgonzal         ###   ########.fr       */
+/*   Created: 2022/09/29 15:48:49 by irgonzal          #+#    #+#             */
+/*   Updated: 2024/04/16 22:05:01 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#	include "libft.h"
+#	include	"minishell.h"
 
-t_list	*ft_lstlast(t_list *lst)
+void	ft_lstadd_front(t_word **lst, t_word *new)
 {
-	t_list	a;
-
-	if (!lst)
-		return (NULL);
-	a = lst[0];
-	if (a.next == NULL)
-		return (lst);
-	while (a.next->next != NULL)
-	{
-		a = *a.next;
-	}
-	return (a.next);
+	if (lst)
+		new->next = *lst;
+	*lst = new;
 }

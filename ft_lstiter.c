@@ -1,30 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstsize.c                                       :+:      :+:    :+:   */
+/*   ft_lstiter.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irgonzal <irgonzal@student.42madrid>       +#+  +:+       +#+        */
+/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/29 16:16:03 by irgonzal          #+#    #+#             */
-/*   Updated: 2022/09/30 09:24:37 by irgonzal         ###   ########.fr       */
+/*   Created: 2022/09/30 21:53:22 by irgonzal          #+#    #+#             */
+/*   Updated: 2024/04/16 22:05:13 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#	include "libft.h"
+#	include "minishell.h"
 
-int	ft_lstsize(t_list *lst)
+void	ft_lstiter(t_word *lst, void (*f)(void *))
 {
-	int		i;
-	t_list	a;
+	t_word	*a;
 
-	if (!lst)
-		return (0);
-	a = lst[0];
-	i = 1;
-	while (a.next != NULL)
+	a = lst;
+	while (a != NULL)
 	{
-		a = *a.next;
-		i++;
+		f(a->content);
+		a = a->next;
 	}
-	return (i);
 }

@@ -1,25 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstiter.c                                       :+:      :+:    :+:   */
+/*   ft_lstdelone.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irgonzal <irgonzal@student.42madrid.com>   +#+  +:+       +#+        */
+/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/30 21:53:22 by irgonzal          #+#    #+#             */
-/*   Updated: 2022/09/30 21:55:41 by irgonzal         ###   ########.fr       */
+/*   Created: 2022/09/30 21:17:23 by irgonzal          #+#    #+#             */
+/*   Updated: 2024/04/16 22:05:08 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#	include "libft.h"
+#	include "minishell.h"
 
-void	ft_lstiter(t_list *lst, void (*f)(void *))
+void	ft_lstdelone(t_word *lst, void (*del)(void *))
 {
-	t_list	*a;
-
-	a = lst;
-	while (a != NULL)
+	if (lst && lst->content && del)
 	{
-		f(a->content);
-		a = a->next;
+		lst->next = NULL;
+		del(lst->content);
+		free(lst);
 	}
 }
