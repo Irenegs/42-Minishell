@@ -3,7 +3,7 @@
 
 int main(int argc, char **argv)
 {
-	char 	*s = argv[0];
+	char 	*s = argv[1];
 	t_word	*parseo = parser(s);
 
 	int i = 0;
