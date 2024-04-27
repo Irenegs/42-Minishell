@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
+/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 17:58:01 by irene             #+#    #+#             */
-/*   Updated: 2024/04/14 22:27:33 by irene            ###   ########.fr       */
+/*   Updated: 2024/04/27 18:59:51 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,16 @@ void prompt(void)
 		free(s);
 		s = readline("Write:");
 	}
-	rl_clear_history();
+	//rl_clear_history();
 }
 
 
 void signal_handler(int signum)
 {
 	if (signum == SIGQUIT)
-		rl_replace_line("Write:", 3);//Esto no funciona bien
+		printf("Write:");//Esto no funciona bien
 	else if (signum == SIGINT)
-		printf("Write:^C\nWrite:");
+		printf("^CWrite");//No vuelve a la terminal
 }
 
 /*
@@ -114,20 +114,29 @@ fork, dup, dup2, pipe,
 wait, waitpid, wait3, wait4, 
 
 Señales:
-
+https://www.codequoi.com/en/sending-and-intercepting-a-signal-in-c/
 https://www.gnu.org/software/libc/manual/html_node/Signal-Handling.html Hasta Blocking Signals incluido
 typedef void (*sighandler_t)(int);
 sighandler_t signal(int signum, sighandler_t handler); returns  the  previous value of the signal handler, or SIG_ERR on error
 int sigaction(int signum, const struct sigaction *act, struct sigaction *oldact); => 0/-1  -> to change the action taken by a process on receipt of a specific signal. 
 int sigemptyset(sigset_t *set);=> 0/-1 -> initializes the signal set given by set to empty, with all signals excluded from the set.
 int sigaddset(sigset_t *set, int signum) => 0/-1; -> add signal signum from set.
+Termios
+https://blog.nelhage.com/2009/12/a-brief-introduction-to-termios-termios3-and-stty/
+int tcgetattr(int fildes, struct termios *termios_p); => 0/-1
+int tcsetattr(int fildes, int optional_actions, const struct termios *termios_p); => 0/-1
+int ioctl(int fd, unsigned long request, ...); => 0/-1; It takes a file descriptor, a numeric “request” code, and an unspecified number of other arguments. ioctl looks up whatever device (or file system, network protcol, or whatever) is backing that file descriptor, and hands it the “request” and the arguments to do with as they will.
+
 
 kill, exit,
-getcwd, chdir, stat, lstat, fstat, unlink, 
+
+getcwd, chdir, opendir, readdir, closedir,
+
+stat, lstat, fstat, unlink, 
 
 
 
-opendir, readdir, closedir,
+
 strerror, perror, 
 
 int isatty(int fd); -> function tests whether fd is an open file descriptor referring to a terminal. returns 1 if fd is an open file descriptor referring to a terminal; otherwise 0 is returned
@@ -137,14 +146,30 @@ int ttyslot(void); -> (?)
 
 execve,
 int ioctl(int fd, unsigned long request, ...); => 0/-1; 
+It takes a file descriptor, a numeric “request” code, and an unspecified number of other arguments. ioctl looks up whatever device (or file system, network protcol, or whatever) is backing that file descriptor, and hands it the “request” and the arguments to do with as they will.
+
+
+getenv
+char *     getenv(const char *name); obtains the current value of the environment variable, name.  The application should not modify the string pointed to by the getenv() function.
 
 
 
-getenv, tcsetattr, tcgetattr, tgetent, tgetflag,
-tgetnum, tgetstr, tgoto, tputs
+
+
+tgetent, tgetflag, tgetnum, tgetstr, tgoto, tputs
 
 Valgrind leaks:
 valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose --log-file=valgrind-out.txt ./minishell
 
 
+Observaciones:
+<< EOF
+C-c sale del heredoc
+
+
+
+Shell grammar
+https://www.ibm.com/docs/en/zos/3.1.0?topic=shell-grammar
+https://pubs.opengroup.org/onlinepubs/009604499/utilities/xcu_chap02.html#
+https://en.wikipedia.org/wiki/LL_parser
 */

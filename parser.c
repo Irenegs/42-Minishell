@@ -19,21 +19,12 @@ static int	is_space(char c)
 	return (0);
 }
 
-char obtain_delimiter(char *s, int i)
-{
-	if (s[i] == '"')
-		return('"');
-	if (s[i] == '\'')
-		return('\'');
-	return (' ');
-}
-
 int is_metacharacter(char c)
 {
 	char *metacharacter;
 	int i;
 	
-	metacharacter = "|&;<>()$`\\'\"\n \t";
+	metacharacter = "|$<>'\"\n \t";
 	i = 0;
 	while (metacharacter[i] != '\0')
 	{
@@ -53,23 +44,91 @@ int is_delimiter(char del, char c)
 	return (c == del);
 }
 
-char *obtain_word(char *s, int i)
+int obtain_len(char *s, int i, char del)
 {
-	char *s;
-	char del;
 	int len;
 	
-	del = obtain_delimiter(s, i);
-	if (del = '\'')
+	len = 0;
+	while (is_delimiter(del, s[i + len]) == 0)
+		len++;
+	return (len);
+}
+
+char *obtain_word(char *s, int i, char del)
+{
+	int len;
+
+	len = obtain_len(s, i, del);
+	if (len == 0)
+		return (NULL);
+	return(ft_substr(s, i, len));
+}
+
+int	obtain_variables_to_expand(char *s, int i, char del)
+{
+	int		var;
+	
+	var = 0;
+	while (is_delimiter(del, s[i]) == 0 || s[i] == '$')
 	{
+		if (s[i] == '$')
+			var++;
 		i++;
-		len = 0;
-		while (is_delimiter(del, s[i + len]) == 0)
-			len++;
-		if (s[i + len] == '\0')
-			return (NULL);
-		return(ft_substr(s, i, len));
 	}
+	return (var);
+}
+
+char *obtain_variable(char *s, int i)
+{
+	char *var_name;
+	char *var_value;
+
+	var_name = obtain_word(s, i + 1, ' ');
+	var_value = getenv(var_name);
+	if (var_value == 0)
+		return (NULL);
+	return (var_value);
+}
+
+char *expand_string(char *s, int i, char del)
+{
+	char *result;
+	int var;
+	int v;
+	char *variable;
+	char *aux;
+	
+	var = obtain_variables_to_expand(s, i, del);
+	v = 0;
+	if (s[i] != '$')
+	{
+		result = obtain_word(s, i, del);
+		i += ft_strlen(result);
+	}
+	else
+		result = NULL;
+	while (v < var)
+	{
+		if (s[i] == '$')
+		{
+			aux = result;
+			v++;
+			variable = obtain_variable(s, i);
+			i = i + ft_strlen(variable) + 1;
+			result = ft_strjoin(aux, variable);
+			free(aux);
+		}
+		else
+		{
+			aux = result;
+			variable = obtain_word(s, i, del);
+			i = i + ft_strlen(variable);
+			result = ft_strjoin(aux, variable);
+			free(aux);
+			free(variable);
+		}
+	}
+	return (result);
 }
 
 char *obtain_element(char *s, int i)
@@ -77,15 +136,18 @@ char *obtain_element(char *s, int i)
 	int len;
 	
 	len = 0;
-	i++;
 	while (is_space(s[i]) != 0)
 		i++;
 	if (s[i] == '|' || s[i] == '<' || s[i] == '>')
 	{
-		printf("Parse error\n");
+		printf("Parse error_%d_%c*\n", s[i], i);
 		return NULL;
 	}
-	return (obtain_word(s, i));
+	if (s[i] == '\'')
+		return (obtain_word(s, i + 1, '\''));
+	if (s[i] == '"')
+		return (expand_string(s, i + 1, '"'));
+	return (expand_string(s, i, ' '));
 }
 
 int redirect_output(char *s, int i)
@@ -97,14 +159,17 @@ int redirect_output(char *s, int i)
 	append = 0;
 	if (s[i + 1] == '\0')
 		return (-1);
-	if (s[i + 1] == '>')
+	len = 1;
+	if (s[i + len] == '>')
 	{
 		append = 1;
-		i++;
+		len++;
 	}
+	while (is_space(s[i + len]) == 1)
+		len++;
 	file = obtain_element(s, i);
-	printf("File %s", file);
-	len = ft_strlen(file);
+	printf("Output: %s\n", file);
+	len += ft_strlen(file);
 	free(file);
 	return (len);
 }
@@ -116,15 +181,23 @@ int redirect_input(char *s, int i)
 
 	if (s[i + 1] == '\0')
 		return (-1);
-	if (s[i + 1] == '<')
+	len = 1;
+	if (s[i + len] == '<')
 	{
-		file = obtain_element(s,i + 1);
+		len++;
+		while (is_space(s[i + len]) == 1)
+			len++;
+		file = obtain_element(s,i + len);
 		free(file);
 		return (printf("Delimiter\n"));
 	}
-	file = obtain_element(s, i);
-	printf("File %s", file);
-	len = ft_strlen(file);
+	while (is_space(s[i + len]) == 1)
+		len++;
+	printf("Input len: %d\n", len);
+	file = obtain_element(s, i + len - 1);
+	printf("Input: %s\n", file);
+	len += ft_strlen(file);
+	printf("Input len: %d\n", len);
 	free(file);
 	return (len);
 }
@@ -144,14 +217,18 @@ void read_cli(char *s)
 	}
 	while (s[i] != '\0')
 	{
+		printf("Bucleando %d\n", i);
+		while (is_space(s[i]) == 1)
+			i++;
 		if (s[i] == '<')
 		{
+			printf("i %d\n", i);
 			len = redirect_input(s, i);
 			if (len < 1)
 				return ;
 			i += len;
 		}
-		if (s[i] == '>')
+		else if (s[i] == '>')
 		{
 			len = redirect_output(s, i);
 			if (len < 1)
@@ -159,7 +236,19 @@ void read_cli(char *s)
 			i += len;
 		}
 		else
-			i++;
+		{
+			while (is_space(s[i]) == 1)
+				i++;
+			char *element = obtain_element(s, i);
+			if (!element)
+				exit(0);
+			printf("Element: %s\n", element);
+			len = ft_strlen(element);
+			if (len < 1)
+				return ;
+			i += len;
+			free(element);
+		}
 	}
 }
 
@@ -199,87 +288,6 @@ cuál es el comportamiento exacto de <>
 
 
 
-/*
-int last_in_words_fun(t_word *words)
-{
-	t_word *a;
-
-	if (!words)
-		return (1);
-	a = words;
-	while(a && a->next != NULL)
-		a = a->next;
-	return (a->function);
-}
-
-static int calculate_function(char *s, t_word *words)
-{
-	if (!s)
-		return (-1);
-	if (*s == '<' && *(s + 1) != '<')
-		return (INPUT);
-	else if (*s == '<' && *(s + 1) == '<')
-		return (DELIMITER);
-	else if (*s == '>' && *(s + 1) != '>')
-		return (KOUTPUT);
-	else if (*s == '>' && *(s + 1) == '>')
-		return (OUTPUT);
-	else if (last_in_words_fun(words) == COMMAND)
-		return (ARG);
-	return (COMMAND);
-}
-
-static int	calculate_word(char *s, t_word *new)
-{
-	int j;
-
-	j = 0;
-	while (s[j] != ' ' && s[j] != '\0')
-		j++;
-	new->content = ft_substr(s, 0, j);
-	return (j);
-}
-
-static int add_words(char *s, t_word *words)
-{
-	// devuelve lo que se avanza en s al parsear
-	int len;
-	int fun;
-	t_word *new;
-
-	if (!s)
-		return (0);
-	len = 0;
-	new = malloc(sizeof(t_word));
-	new->function = calculate_function(s, words);
-	len = calculate_word(s, new);
-	if (fun == INPUT || fun == DELIMITER)
-		ft_lstadd_front(&words, new);
-	else
-		ft_lstadd_back(&words, new);
-	return (len);
-}
-
-t_word *parser(char *s)
-{
-	int i;
-	t_word *words;
-	int pipes;
-
-	i = 0;
-	pipes = 0;
-	while (s && s[i] != '\0')
-	{
-		if (s[i] == '|')
-			pipes++;
-		i += add_words(s + i, words);
-	}
-	words = malloc(sizeof(t_word *));
-	while(add_words(s, words) != 0)
-		i--;
-	return (words);
-}
-*/
 /*
 1 Delimitar cuántas palabras hay y si es una expresión bien formada. Determinar si hay redirecciones y el número de pipes.
 2 Considerar cada palabra con su función. Funciones (input/output_file, comando, argumentos de comando)
