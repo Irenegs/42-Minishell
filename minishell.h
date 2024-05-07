@@ -6,7 +6,7 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 17:56:24 by irene             #+#    #+#             */
-/*   Updated: 2024/04/16 22:24:16 by irene            ###   ########.fr       */
+/*   Updated: 2024/05/07 19:18:31 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,5 +46,5 @@ void	ft_lstdelone(t_word *lst, void (*del)(void *));
 void	ft_lstclear(t_word **lst, void (*del)(void *));
 void	ft_lstiter(t_word *lst, void (*f)(void *));
 t_word	*ft_lstmap(t_word *lst, void *(*f)(void *), void (*del)(void *));
-
+int is_metacharacter(char c);
 #endif
