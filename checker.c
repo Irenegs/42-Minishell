@@ -6,7 +6,7 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 18:32:16 by irene             #+#    #+#             */
-/*   Updated: 2024/05/07 19:42:48 by irene            ###   ########.fr       */
+/*   Updated: 2024/05/08 18:08:57 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int is_valid(char s)
 	return (1);
 }
 
-void change_insert(int var[3], int pipe, int input, int output)
+void change_insert(int *var, int pipe, int input, int output)
 {
 	var[0] = pipe;
 	var[1] = input;
@@ -62,14 +62,16 @@ int redirection(char *s, int i, int insert[3])
 		return (0);
 	if (s[i] == s[i + 1] && s[i] == s[i + 2])
 		return (-(i + 3));
-	if (s[i] == '>' && valid_insertion(insert, s[i]) == 0)
+	if (valid_insertion(insert, s[i]) != 1)
+		return (-(i + 3));	
+	if (s[i] == '>')
 		change_insert(insert, 0, 0, 1);
-	else if (s[i] == '<' && s[i + 1] == '<' && valid_insertion(insert, s[i]) == 0)
+	else if (s[i] == '<' && s[i + 1] == '<')
 	{
 		change_insert(insert, 0, 0, 0);
 		return (1);
 	}
-	if (s[i] == '<' && valid_insertion(insert, s[i]) == 0)
+	if (s[i] == '<')
 		change_insert(insert, 0, 0, 1);
 	return (0);
 }
@@ -87,8 +89,7 @@ int checker(char *s)
 	pipes = 0;
 	while (s[++i] != '\0' && is_valid(s[i]) == 1)
 	{
-		printf("i: %d\n", i);
-		if (s[i] == '|' && valid_insertion(insert, s[i]) == 0)
+		if (s[i] == '|' && valid_insertion(insert, s[i]) == 1)
 		{
 			pipes++;
 			change_insert(insert, 0, 1, 1);
@@ -98,6 +99,7 @@ int checker(char *s)
 			return (-1);
 		if (ft_isalnum(s[i]) == 1)
 			change_insert(insert, 1, 1, 1);
+		printf("insert %d %d %d\n", insert[0], insert[1], insert[2]);
 	}
 	if (s[i] != '\0')
 		return (-1);
