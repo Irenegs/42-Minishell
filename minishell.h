@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
+/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 17:56:24 by irene             #+#    #+#             */
-/*   Updated: 2024/05/07 19:18:31 by irene            ###   ########.fr       */
+/*   Updated: 2024/05/10 18:00:31 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,10 @@
 # include <readline/history.h>
 # include <signal.h>
 # include "libft/libft.h"
+# include <sys/types.h>
+# include <sys/wait.h>
+# include <sys/stat.h>
+
 
 # define INPUT 0
 # define DELIMITER 1
@@ -36,7 +40,6 @@ typedef struct s_word
 	
 }	t_word;
 
-t_word	*parser(char *s);
 t_word	*ft_lstnew(char *content, int func);
 void	ft_lstadd_front(t_word **lst, t_word *new);
 int		ft_lstsize(t_word *lst);
@@ -46,5 +49,7 @@ void	ft_lstdelone(t_word *lst, void (*del)(void *));
 void	ft_lstclear(t_word **lst, void (*del)(void *));
 void	ft_lstiter(t_word *lst, void (*f)(void *));
 t_word	*ft_lstmap(t_word *lst, void *(*f)(void *), void (*del)(void *));
-int is_metacharacter(char c);
+int 	is_metacharacter(char c);
+int 	parser(char *s);
+void    parse_and_execute(char *s);
 #endif

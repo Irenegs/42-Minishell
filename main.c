@@ -6,22 +6,22 @@
 /*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 17:58:01 by irene             #+#    #+#             */
-/*   Updated: 2024/04/27 18:59:51 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/05/10 18:25:21 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void prompt(void)
+void	prompt(void)
 {
 	char *s;
 
 	s = readline("Write:");
 	while (s)
 	{
-		printf("String:\n%s\n", s);
+		//printf("String:\n%s\n", s);
 		add_history(s);
-		printf("Length: %lu\n", ft_strlen(s));
+		parse_and_execute(s);
 		free(s);
 		s = readline("Write:");
 	}
@@ -56,6 +56,7 @@ int main(void)
 	if (sigaction(SIGINT, &sa, NULL) == -1)
 		exit(4);
 	prompt();
+	return (0);
 }
 
 /*
@@ -109,9 +110,17 @@ void rl_redisplay (void) -> Change what’s displayed on the screen to reflect t
 printf, 
 malloc, free, 
 write, access, open, read,close, 
+
 fork, dup, dup2, pipe, 
 
 wait, waitpid, wait3, wait4, 
+pid_t wait(int *wstatus);
+pid_t wait3(int *wstatus, int options, struct rusage *rusage);
+pid_t wait4(pid_t pid, int *wstatus, int options, struct rusage *rusage);
+The wait() system call suspends execution of the calling thread until one of its children terminates. The  call wait(&wstatus) is equivalent to: waitpid(-1, &wstatus, 0); The  waitpid()  system  call suspends execution of the calling thread until a child specified by pid argument has changed state.  By default, waitpid() waits only for terminated children
+In other words, wait3() waits of any child, while wait4() can be used to select a specific child, or children, on which to wait.
+
+
 
 Señales:
 https://www.codequoi.com/en/sending-and-intercepting-a-signal-in-c/
@@ -133,8 +142,10 @@ kill, exit,
 getcwd, chdir, opendir, readdir, closedir,
 
 stat, lstat, fstat, unlink, 
-
-
+stat()  retrieves information about the file pointed to by pathname; the differences for fstatat() are described below.
+lstat() is identical to stat(), except that if pathname is a symbolic link, then it returns information about the link itself, not the file that the link refers to.
+fstat()  is  identical to stat(), except that the file about which information is to be retrieved is specified by the file descriptor fd.
+int unlink(const char *pathname); deletes a name from the filesystem.  If that name was the last link to a file and no processes have the file open, the file is deleted and the space it was using is made available for reuse.
 
 
 strerror, perror, 
@@ -156,7 +167,9 @@ char *     getenv(const char *name); obtains the current value of the environmen
 
 
 
-tgetent, tgetflag, tgetnum, tgetstr, tgoto, tputs
+tgetent, tgetflag, tgetnum, tgetstr, tgoto, tputs => Seguramente se utilice para algunos built-ins
+https://www.gnu.org/software/termutils/manual/termcap-1.3/html_chapter/termcap_2.html
+
 
 Valgrind leaks:
 valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose --log-file=valgrind-out.txt ./minishell
