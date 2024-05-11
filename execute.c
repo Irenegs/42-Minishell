@@ -6,13 +6,13 @@
 /*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 16:09:28 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/05/10 17:46:04 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/05/11 17:29:51 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-
+/*
 int calculate_child_number(pid_t *childpid, int pipes)
 {
     int i;
@@ -79,6 +79,41 @@ void    execute(int pipes, char *s)
         printf("waitpid %d\n", childpid[0]);
     free(childpid);
     return ;
+}*/
+/*
+static int	run_command(char **command)
+{
+	if (!command)
+		return (-1);
+	cmd = command_exists(command[0]);
+	if (!cmd)
+		return (127);
+	execve(cmd, command, environ);
+	ft_out(command);
+	return (-1);
+}*/
+
+int execute_only_child(char *s)
+{
+    int input;
+    int output;
+    char **command;
+
+    input = extract_input(s);
+    printf("Input fd: %d\n", input);
+    close(input);
+    //dup2(input, STDIN_FILENO);
+    /*
+    output = extract_output(s);
+    printf("Output fd: %d\n", output);
+    close(output);*/
+    /*
+    dup2(output, STDOUT_FILENO);
+    command = extract_command(s);
+    if (run_command(s) != 0)
+        ft_out(command);
+    return (-1);*/
+    return (0);
 }
 
 void    parse_and_execute(char *s)
@@ -88,8 +123,11 @@ void    parse_and_execute(char *s)
     if (!s || ft_strlen(s) == 0)
         return ;
     pipes = parser(s);
-    if (pipes != -1)
-        execute(pipes, s);
+    if (pipes == 0)
+        execute_only_child(s);
+    /*
+    else if (pipes > 0)
+        execute(pipes, s);*/
 }
 
 int main(int argc, char **argv)

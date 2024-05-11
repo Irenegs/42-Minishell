@@ -6,18 +6,13 @@
 /*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 15:44:45 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/05/10 15:44:52 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/05/11 17:42:55 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	is_space(char c)
-{
-	if (c == 32 || (c < 14 && c > 8))
-		return (1);
-	return (0);
-}
+
 
 int is_metacharacter(char c)
 {
@@ -90,47 +85,6 @@ char *obtain_variable(char *s, int i)
 	return (var_value);
 }
 
-char *expand_string(char *s, int i, char del)
-{
-	char *result;
-	int var;
-	int v;
-	char *variable;
-	char *aux;
-	
-	var = obtain_variables_to_expand(s, i, del);
-	v = 0;
-	if (s[i] != '$')
-	{
-		result = obtain_word(s, i, del);
-		i += ft_strlen(result);
-	}
-	else
-		result = NULL;
-	while (v < var)
-	{
-		if (s[i] == '$')
-		{
-			aux = result;
-			v++;
-			variable = obtain_variable(s, i);
-			i = i + ft_strlen(variable) + 1;
-			result = ft_strjoin(aux, variable);
-			free(aux);
-		}
-		else
-		{
-			aux = result;
-			variable = obtain_word(s, i, del);
-			i = i + ft_strlen(variable);
-			result = ft_strjoin(aux, variable);
-			free(aux);
-			free(variable);
-		}
-	}
-	return (result);
-}
-
 char *obtain_element(char *s, int i)
 {
 	int len;
@@ -150,6 +104,7 @@ char *obtain_element(char *s, int i)
 	return (expand_string(s, i, ' '));
 }
 
+/*
 int redirect_output(char *s, int i)
 {
 	char *file;
@@ -258,7 +213,7 @@ int main(int argc, char **argv)
 	
 	read_cli(s);
 }
-
+*/
 
 /*
 

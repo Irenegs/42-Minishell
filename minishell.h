@@ -6,7 +6,7 @@
 /*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 17:56:24 by irene             #+#    #+#             */
-/*   Updated: 2024/05/10 18:00:31 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/05/11 17:06:43 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <sys/stat.h>
+# include <fcntl.h>
 
 
 # define INPUT 0
@@ -52,4 +53,5 @@ t_word	*ft_lstmap(t_word *lst, void *(*f)(void *), void (*del)(void *));
 int 	is_metacharacter(char c);
 int 	parser(char *s);
 void    parse_and_execute(char *s);
+int		extract_input(char *s);
 #endif
