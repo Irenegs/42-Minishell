@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   extract.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 16:36:46 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/05/11 20:13:15 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/05/12 23:04:11 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,17 +29,7 @@ size_t	len_literal_word(char *s, int pos)
 		len++;
 	return (len);
 }
-/*
-size_t len_simple_quotes(char *s, int pos)
-{
-	size_t	len;
 
-	len = 0;
-	while (s[pos + 1 + len] != '\0' && s[pos + 1 + len] != '\'')
-		len++;
-	return (len);
-}
-*/
 size_t len_quotes(char *s, int pos)
 {
 	size_t	len;
@@ -72,6 +62,37 @@ char *obtain_variable(char *s, int i)
 	return (var_value);
 }
 
+char	*expand_double_quotes(char *s, int pos)
+{
+	int		len;
+	char	*result;
+	char	*aux;
+	char	*chunk;
+
+	len = 0;
+	while(s[pos + len + 1] != '"')
+	{
+		while(s[pos + len + 1] != '"' && s[pos + len + 1] != '$')
+		{
+			len++;
+		}
+		result = ft_substr(s, pos + 1, len);
+		pos = pos + len + 1;
+		if (s[pos] == '"')
+			return (result);
+		if (s[pos] == '$')
+		{
+			chunk = obtain_variable(s, pos + 1);
+			pos += len_literal_word(s, pos + 1);
+			aux = result;
+			result = ft_strjoin(aux, chunk);
+			free(aux);
+		}
+		len = 0;
+	}
+	return (result);
+}
+
 char *extract_element(char *s, int pos)
 {
 	size_t	len;
@@ -90,28 +111,38 @@ char *extract_element(char *s, int pos)
 		{
 			len = len_quotes(s, pos);
 			chunk = ft_substr(s, pos + 1, len);
-			pos = pos + len + 2;
+			pos = pos + len + 2;aux = result;
+			result = ft_strjoin(aux, chunk);
+			free(aux);
+			free(chunk);
 		}
 		else if (s[pos] == '"')
 		{
+			chunk = expand_double_quotes(s, pos);
 			pos += len_quotes(s, pos) + 2;
-			chunk = NULL;//Falta
+			aux = result;
+			result = ft_strjoin(aux, chunk);
+			free(aux);
+			free(chunk);
 		}
 		else if (s[pos] == '$')
 		{
-			pos += len_literal_word(s, pos + 1);
 			chunk = obtain_variable(s, pos + 1);
+			pos += len_literal_word(s, pos + 1) + 1;//comprobar si se necesita en más sitios
+			aux = result;
+			result = ft_strjoin(aux, chunk);
+			free(aux);
 		}
 		else
 		{
 			len = len_literal_word(s, pos);
 			chunk = ft_substr(s, pos, len);
 			pos = pos + len;
+			aux = result;
+			result = ft_strjoin(aux, chunk);
+			free(aux);
+			free(chunk);
 		}
-		aux = result;
-		result = ft_strjoin(aux, chunk);
-		free(aux);
-		free(chunk);
 	}
 	return (result);
 }
@@ -140,7 +171,6 @@ int extract_input(char *s)
 		return (-1);
 	printf("Extract input: string %s\n", s);
 	pos = locate_position(s, '<');
-	printf("Pos %d\n", pos);
 	if (pos == -1)
 		return (0);
 	if (pos == -2)
