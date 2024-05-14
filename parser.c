@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 18:32:16 by irene             #+#    #+#             */
-/*   Updated: 2024/05/10 16:09:39 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/05/13 16:22:25 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int is_valid(char s)
 {
 	if (ft_isalnum(s) == 0 && is_metacharacter(s) == 0)
 	{
-		if (s != '_' && s != '-')
+		if (s != '_' && s != '-' && s != '{' && s != '}')
 			return (0);
 	}
 	return (1);

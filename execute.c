@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 16:09:28 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/05/11 17:29:51 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/05/13 16:45:27 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,10 +103,10 @@ int execute_only_child(char *s)
     printf("Input fd: %d\n", input);
     close(input);
     //dup2(input, STDIN_FILENO);
-    /*
+    
     output = extract_output(s);
     printf("Output fd: %d\n", output);
-    close(output);*/
+    close(output);
     /*
     dup2(output, STDOUT_FILENO);
     command = extract_command(s);
@@ -123,6 +123,7 @@ void    parse_and_execute(char *s)
     if (!s || ft_strlen(s) == 0)
         return ;
     pipes = parser(s);
+    printf("pipes %d\n",pipes);
     if (pipes == 0)
         execute_only_child(s);
     /*

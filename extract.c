@@ -6,7 +6,7 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 16:36:46 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/05/12 23:04:11 by irene            ###   ########.fr       */
+/*   Updated: 2024/05/13 16:50:18 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,12 @@ char *obtain_variable(char *s, int i)
 	size_t len;
 
 	len = len_literal_word(s, i);
-	var_name = ft_substr(s, i, len);
+	if (len > 0 && s[i] == '{')
+		var_name = ft_substr(s, i + 1, len - 2);
+	else
+		var_name = ft_substr(s, i, len);
 	var_value = getenv(var_name);
+	printf("var_name, var_value %s;%s\n" ,var_name, var_value);
 	free(var_name);
 	if (var_value == 0)
 		return (NULL);
@@ -73,9 +77,7 @@ char	*expand_double_quotes(char *s, int pos)
 	while(s[pos + len + 1] != '"')
 	{
 		while(s[pos + len + 1] != '"' && s[pos + len + 1] != '$')
-		{
 			len++;
-		}
 		result = ft_substr(s, pos + 1, len);
 		pos = pos + len + 1;
 		if (s[pos] == '"')
@@ -128,7 +130,7 @@ char *extract_element(char *s, int pos)
 		else if (s[pos] == '$')
 		{
 			chunk = obtain_variable(s, pos + 1);
-			pos += len_literal_word(s, pos + 1) + 1;//comprobar si se necesita en más sitios
+			pos += len_literal_word(s, pos + 1) + 1;
 			aux = result;
 			result = ft_strjoin(aux, chunk);
 			free(aux);
@@ -183,80 +185,33 @@ int extract_input(char *s)
 }
 
 
+int extract_output(char *s)
+{
+	int		fd;
+	int		pos;
+	char	*filename;
+
+	if (!s)
+		return (-1);
+	printf("Extract output: string %s\n", s);
+	pos = locate_position(s, '>');
+	if (pos == -1)
+		return (0);
+	if (s[pos + 1] == '>')
+		pos++;
+	filename = extract_element(s, pos);
+	printf("Filename %s\n", filename);
+	if (pos == locate_position(s, '>'))
+		fd = open(filename, O_WRONLY | O_TRUNC | O_CREAT, 0644);
+	else
+		fd = open(filename, O_WRONLY | O_CREAT, 0644);
+	free(filename);
+	return (fd);
+}
+
+
 /*
-Extract file - obtiene el nombre de archivo
-Para cuando llega a un espacio que esté fuera de comillas o cuando llega a un símbolo separador
-
-
 
 Extract command - obtiene un comando con sus argumentos y lo guarda en un char**
 
-*/
-/*
-int	obtain_variables_to_expand(char *s, int i, char del)
-{
-	int		var;
-	
-	var = 0;
-	while (is_delimiter(del, s[i]) == 0 || s[i] == '$')
-	{
-		if (s[i] == '$')
-			var++;
-		i++;
-	}
-	return (var);
-}
-
-char *obtain_variable(char *s, int i)
-{
-	char *var_name;
-	char *var_value;
-
-	var_name = obtain_word(s, i + 1, ' ');
-	var_value = getenv(var_name);
-	if (var_value == 0)
-		return (NULL);
-	return (var_value);
-}
-
-char *expand_string(char *s, int i, char del)
-{
-	char *result;
-	int var;
-	int v;
-	char *variable;
-	char *aux;
-	
-	var = obtain_variables_to_expand(s, i, del);
-	v = 0;
-	if (s[i] != '$')
-	{
-		result = obtain_word(s, i, del);
-		i += ft_strlen(result);
-	}
-	else
-		result = NULL;
-	while (v < var)
-	{
-		if (s[i] == '$')
-		{
-			aux = result;
-			v++;
-			variable = obtain_variable(s, i);
-			i = i + ft_strlen(variable) + 1;
-			result = ft_strjoin(aux, variable);
-			free(aux);
-		}
-		else
-		{
-			aux = result;
-			variable = obtain_word(s, i, del);
-			i = i + ft_strlen(variable);
-			result = ft_strjoin(aux, variable);
-			free(aux);
-			free(variable);
-		}
-	}
-	return (result);
-}
 */
