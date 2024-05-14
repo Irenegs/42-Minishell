@@ -4,7 +4,7 @@ LIBS        := ft
 LIBS_TARGET := libft/libft.a 
 INCS        := include libft/include
 
-SRCS        := execute.c main.c parser.c
+SRCS        := command.c execute.c extract.c main.c parser.c super_split.c split_utils.c
 
 OBJS        := $(SRCS:%.c=%.o)
 CC          := gcc

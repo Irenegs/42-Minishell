@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 16:09:28 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/05/14 18:55:05 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/05/14 21:41:24 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,24 +62,7 @@ int forking(int pipes, pid_t *childpid)
 }
 */
 /*
-void    execute(int pipes, char *s)
-{
-    pid_t   *childpid;
-    int     *fd[2];
 
-    printf("Pipes %d\n", pipes);
-    childpid = malloc((pipes + 1) * sizeof(pid_t));
-    if (forking(pipes, childpid) == -1)
-    {
-        free(childpid);
-        return ;
-    }
-    run_child(childpid, fd, s, pipes);
-    //printf("hola %d\n", childpid[0]);
-    if (waitpid(-1, &childpid[0], 0) != -1)// && waitpid(-1, &childpid[1], 0) != -1 && waitpid(-1, &childpid[2], 0) != -1)
-        printf("waitpid %d\n", childpid[0]);
-    free(childpid);
-    return ;
 }*/
 /*
 static int	run_command(char **command)
@@ -116,6 +99,32 @@ int execute_only_child(char *s)
     return (0);
 }
 
+
+
+void    execute(int pipes, char *s)
+{
+    int p;
+    int fd[2];
+    int status;
+
+    p = 1;
+    while (p < pipes)
+    {
+        pipe(fd);
+        fork();
+        dup2(fd[1], STDOUT_FILENO);
+        //s se debe reemplazar por el substring de s referente al pipe; se debe calcular antes del fork
+        execute_child(s, fd);
+        dup2(fd[0], STDIN_FILENO);
+        p++;
+    }
+    //last command
+    while (wait(&status) > 0)
+    {
+	    exiting(WEXITSTATUS(&status));
+    }
+}
+
 void    parse_and_execute(char *s)
 {
     int pipes;
@@ -126,9 +135,8 @@ void    parse_and_execute(char *s)
     printf("pipes %d\n",pipes);
     if (pipes == 0)
         execute_only_child(s);
-    /*
     else if (pipes > 0)
-        execute(pipes, s);*/
+        execute(pipes, s);
 }
 
 int main(int argc, char **argv)

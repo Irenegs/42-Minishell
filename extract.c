@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   extract.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 16:36:46 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/05/14 19:10:38 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/05/14 21:56:56 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -225,9 +225,13 @@ int extract_output(char *s)
 char **extract_command(char *s)
 {
 	int pos;
+	char **command;
 
 	pos = locate_cmd_position(s);
-	
+	if (pos == -1)
+		return (NULL);//devolver {NULL, NULL, NULL} para diferenciar de fallo en el malloc(?)
+	command = ft_super_split(s + pos, ' ');//pasar substring de s
+	return (command);
 }
 
 /*

@@ -6,53 +6,38 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 17:56:24 by irene             #+#    #+#             */
-/*   Updated: 2024/05/13 16:47:46 by irene            ###   ########.fr       */
+/*   Updated: 2024/05/14 22:03:30 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
-# include <sys/ioctl.h>
+# include <errno.h>
+# include <fcntl.h>
+# include "libft/libft.h"
+# include <limits.h>
+# include <readline/history.h>
+# include <readline/readline.h>
+# include <signal.h>
 # include <stdio.h>
 # include <stdlib.h>
-# include <unistd.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include <signal.h>
-# include "libft/libft.h"
+# include <string.h>
+# include <sys/ioctl.h>
+# include <sys/stat.h>
 # include <sys/types.h>
 # include <sys/wait.h>
-# include <sys/stat.h>
-# include <fcntl.h>
+# include <unistd.h>
 
-
-# define INPUT 0
-# define DELIMITER 1
-# define COMMAND 2
-# define ARG 3
-# define OUTPUT 4
-# define KOUTPUT 5
-
-typedef struct s_word
-{
-	char			*content;
-	int				function;
-	struct s_word	*next;
-	
-}	t_word;
-
-t_word	*ft_lstnew(char *content, int func);
-void	ft_lstadd_front(t_word **lst, t_word *new);
-int		ft_lstsize(t_word *lst);
-t_word	*ft_lstlast(t_word *lst);
-void	ft_lstadd_back(t_word **lst, t_word *new);
-void	ft_lstdelone(t_word *lst, void (*del)(void *));
-void	ft_lstclear(t_word **lst, void (*del)(void *));
-void	ft_lstiter(t_word *lst, void (*f)(void *));
-t_word	*ft_lstmap(t_word *lst, void *(*f)(void *), void (*del)(void *));
+extern char	**environ;
 int 	is_metacharacter(char c);
 int 	parser(char *s);
 void    parse_and_execute(char *s);
 int		extract_input(char *s);
 int		extract_output(char *s);
+char 	**extract_command(char *s);
+char	**ft_super_split(char const *s, char *sep);
+int		is_escaped(char const *s, int i);
+int		new_word(char const *s, char *sep, int i, int quotes);
+int		ft_wc(char const *s, char *sep);
+int		end_word(char const *s, char *sep, int i, int quot);
 #endif
