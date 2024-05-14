@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   extract.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
+/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 16:36:46 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/05/13 16:50:18 by irene            ###   ########.fr       */
+/*   Updated: 2024/05/14 19:10:38 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,7 @@ char *extract_element(char *s, int pos)
 	return (result);
 }
 
-int	locate_position(char *s, char c)
+int	locate_char_position(char *s, char c)
 {
 	int i;
 
@@ -157,6 +157,20 @@ int	locate_position(char *s, char c)
 	while (s && s[i] != '\0')
 	{
 		if (s[i] == c)
+			return (i);
+		i++;
+	}
+	return (-1);
+}
+
+int locate_char_position(char *s)
+{
+	int i;
+
+	i = 0;
+	while (s && s[i] != '\0')
+	{
+		if (ft_isalnum(s[i]) == 1)
 			return (i);
 		i++;
 	}
@@ -172,7 +186,7 @@ int extract_input(char *s)
 	if (!s)
 		return (-1);
 	printf("Extract input: string %s\n", s);
-	pos = locate_position(s, '<');
+	pos = locate_char_position(s, '<');
 	if (pos == -1)
 		return (0);
 	if (pos == -2)
@@ -184,7 +198,6 @@ int extract_input(char *s)
 	return (fd);
 }
 
-
 int extract_output(char *s)
 {
 	int		fd;
@@ -194,14 +207,14 @@ int extract_output(char *s)
 	if (!s)
 		return (-1);
 	printf("Extract output: string %s\n", s);
-	pos = locate_position(s, '>');
+	pos = locate_char_position(s, '>');
 	if (pos == -1)
 		return (0);
 	if (s[pos + 1] == '>')
 		pos++;
 	filename = extract_element(s, pos);
 	printf("Filename %s\n", filename);
-	if (pos == locate_position(s, '>'))
+	if (pos == locate_char_position(s, '>'))
 		fd = open(filename, O_WRONLY | O_TRUNC | O_CREAT, 0644);
 	else
 		fd = open(filename, O_WRONLY | O_CREAT, 0644);
@@ -209,9 +222,17 @@ int extract_output(char *s)
 	return (fd);
 }
 
+char **extract_command(char *s)
+{
+	int pos;
+
+	pos = locate_cmd_position(s);
+	
+}
 
 /*
+< a < b cmd , hace cmd sobre b únicamente
 
+ls > a > b , lleva el ls sobre b, el archivo a se queda vacío
 Extract command - obtiene un comando con sus argumentos y lo guarda en un char**
-
 */

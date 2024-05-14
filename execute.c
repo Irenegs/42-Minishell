@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
+/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 16:09:28 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/05/13 16:45:27 by irene            ###   ########.fr       */
+/*   Updated: 2024/05/14 18:55:05 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,8 @@ int forking(int pipes, pid_t *childpid)
         return (-1);
     return (0);
 }
-
+*/
+/*
 void    execute(int pipes, char *s)
 {
     pid_t   *childpid;
@@ -103,7 +104,6 @@ int execute_only_child(char *s)
     printf("Input fd: %d\n", input);
     close(input);
     //dup2(input, STDIN_FILENO);
-    
     output = extract_output(s);
     printf("Output fd: %d\n", output);
     close(output);
@@ -143,9 +143,32 @@ int main(int argc, char **argv)
 
 /*
 1) Establecer pipes
+
+
+Bucle:
+- establecer pipe (Quizás solo haga falta una pipe?)
+- fork
+> - redirigir con dup2(fd1, stdout)
+> - ejecutar todos menos el último
+- dup(fd0, stdin)
+
+
+- al final e último hijo recoge el stdout (dup2()) para hacer el último comando
 2) fork: childpid para cada proceso #pipes + 1
 3) comprobar que ningún childpid es -1 => "exit" (volver al prompt) + error
 4) en cada childpid != 0 y childpidothers == 0: establecer input y output y ejecutar el comando
 5) Cerrar salidas/entradas de fds de pipes
 6) waitpid, WEXITSTATUS para escribir errores
+*/
+
+/*
+
+Gestión esperar a los hijos
+
+while ((wpid = wait(&status)) > 0)
+{
+	exiting(WEXITSTATUS(&status), 1, argv);
+}
+//lo va a hacer en orden ?
+
 */
