@@ -6,13 +6,13 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 16:36:46 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/05/14 21:56:56 by irene            ###   ########.fr       */
+/*   Updated: 2024/05/16 22:17:15 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	is_space(char c)
+int	is_space(char c)
 {
 	if (c == 32 || (c < 14 && c > 8))
 		return (1);
@@ -163,7 +163,7 @@ int	locate_char_position(char *s, char c)
 	return (-1);
 }
 
-int locate_char_position(char *s)
+int locate_cmd_position(char *s)
 {
 	int i;
 
@@ -188,13 +188,14 @@ int extract_input(char *s)
 	printf("Extract input: string %s\n", s);
 	pos = locate_char_position(s, '<');
 	if (pos == -1)
-		return (0);
+		return (STDIN_FILENO);
 	if (pos == -2)
 		return (1);//heredoc
 	filename = extract_element(s, pos);
 	printf("Filename %s\n", filename);
 	fd = open(filename, O_RDONLY);
 	free(filename);
+	perror("minishell");//función de escritura de errores?
 	return (fd);
 }
 
@@ -209,7 +210,7 @@ int extract_output(char *s)
 	printf("Extract output: string %s\n", s);
 	pos = locate_char_position(s, '>');
 	if (pos == -1)
-		return (0);
+		return (STDOUT_FILENO);
 	if (s[pos + 1] == '>')
 		pos++;
 	filename = extract_element(s, pos);
@@ -224,13 +225,13 @@ int extract_output(char *s)
 
 char **extract_command(char *s)
 {
-	int pos;
-	char **command;
+	int		pos;
+	char	**command;
 
 	pos = locate_cmd_position(s);
 	if (pos == -1)
 		return (NULL);//devolver {NULL, NULL, NULL} para diferenciar de fallo en el malloc(?)
-	command = ft_super_split(s + pos, ' ');//pasar substring de s
+	command = ft_super_split(s + pos, " ");//pasar substring de s
 	return (command);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 18:32:16 by irene             #+#    #+#             */
-/*   Updated: 2024/05/14 17:29:36 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/05/16 22:27:40 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,26 @@ int redirection(char *s, int i, int insert[3])
 	return (0);
 }
 
+int	open_quotes(char *s)
+{
+	int i;
+	int quotes;
+
+	i = 0;
+	quotes = 0;
+	while (s[i] != '\0')
+	{
+		if (s[i] == quotes && quotes != 0)
+			quotes = 0;
+		if (quotes == 0 && (s[i] == '\'' || s[i] == '"'))
+			quotes = s[i];
+		i++;
+	}
+	if (quotes != 0)
+		return (-1);
+	return (0);
+}
+
 int parser(char *s)
 {
 	int i;
@@ -86,8 +106,8 @@ int parser(char *s)
 	insert[0] = 0;
 	insert[1] = 1;
 	insert[2] = 1;
-	pipes = 0;
-	while (s[++i] != '\0' && is_valid(s[i]) == 1)
+	pipes = open_quotes(s);
+	while (s[++i] != '\0' && is_valid(s[i]) == 1 && pipes >= 0)
 	{
 		if (s[i] == '|' && valid_insertion(insert, s[i]) == 1)
 		{

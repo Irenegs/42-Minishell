@@ -6,7 +6,7 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 16:09:28 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/05/14 21:41:24 by irene            ###   ########.fr       */
+/*   Updated: 2024/05/16 22:20:47 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,30 +99,80 @@ int execute_only_child(char *s)
     return (0);
 }
 
-
-
-void    execute(int pipes, char *s)
+int locate_pipe_init(char *s, int pipe)
 {
+    int i;
     int p;
-    int fd[2];
-    int status;
 
-    p = 1;
+    i = 0;
+    p = 0;
+    while(p < pipe)
+    {
+        if (s[i] == '|')
+            p++;
+        i++;
+    }
+    while (s[i] == '|' || is_space(s[i]) == 1)
+    {
+        i++;
+    }
+    return (i);
+}
+
+int pipe_len(char *s, int pipe, int pos)
+{
+    int len;
+
+    len = 0;
+    while (s[pos + len] != '|' && s[pos + len] != '\0')
+        len++;
+    while(is_space(s[pos + len]) == 1 || s[pos + len] == '|')
+        len--;
+    return (++len);
+}
+
+char    *extract_pipe(char *s, int pipe)
+{
+    int pos;
+    int len;
+
+    pos = 0;
+    len = 0;
+    pos = locate_pipe_init(s, pipe);
+    len = pipe_len(s, pipe, pos);
+    return (ft_substr(s, pos, len));
+}
+
+void    execute(char *s, int pipes)
+{
+    int     p;
+    int     fd[2];
+    int     aux;
+    char    *subs;
+
+    p = 0;// tal vez queramos separar el primer y último comando - pensar
     while (p < pipes)
     {
-        pipe(fd);
-        fork();
-        dup2(fd[1], STDOUT_FILENO);
+        //pipe(fd);cerrar abrir fds de pipe
+        subs = extract_pipe(s, p);
+        printf("Subs: %sAAAA\n", subs);
+        //fork();
+        aux = extract_input(subs);
+        if (aux != -1)
+            dup2(fd[1], STDOUT_FILENO);
         //s se debe reemplazar por el substring de s referente al pipe; se debe calcular antes del fork
-        execute_child(s, fd);
+        //execute_child(subs);
+        aux = extract_output(subs);
+        free(subs);
         dup2(fd[0], STDIN_FILENO);
         p++;
     }
-    //last command
+    //last command <- a lo mejor esto vale para onlychild
+    /*
     while (wait(&status) > 0)
     {
-	    exiting(WEXITSTATUS(&status));
-    }
+	    printf("Exit: %d\n", WEXITSTATUS(&status));
+    }*/
 }
 
 void    parse_and_execute(char *s)
@@ -136,7 +186,7 @@ void    parse_and_execute(char *s)
     if (pipes == 0)
         execute_only_child(s);
     else if (pipes > 0)
-        execute(pipes, s);
+        execute(s, pipes);
 }
 
 int main(int argc, char **argv)

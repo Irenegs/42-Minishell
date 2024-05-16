@@ -6,7 +6,7 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 17:56:24 by irene             #+#    #+#             */
-/*   Updated: 2024/05/14 22:03:30 by irene            ###   ########.fr       */
+/*   Updated: 2024/05/16 21:51:28 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 # include <unistd.h>
 
 extern char	**environ;
+int	is_space(char c);
 int 	is_metacharacter(char c);
 int 	parser(char *s);
 void    parse_and_execute(char *s);
@@ -40,4 +41,5 @@ int		is_escaped(char const *s, int i);
 int		new_word(char const *s, char *sep, int i, int quotes);
 int		ft_wc(char const *s, char *sep);
 int		end_word(char const *s, char *sep, int i, int quot);
+char **extract_command(char *s);
 #endif

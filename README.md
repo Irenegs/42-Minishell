@@ -1,6 +1,7 @@
 Por hacer:
-- función extract_command -> pasar a super_split la subcadena y luego liberarla
-- implementar la gestión de comillas sin cerrar -> que no de segfault, etc.
+- varias redirecciones en el mismo pipe: "< file1 < file 2"; "> file1 > file2"
+OBS: cuando hay un | < file, prevalece el archivo e ignora la pipe 
+- probar error de open output si el archivo ya existe y no tiene permisos de escritura
 - probar con only_child
 - probar con varias pipes
 - en la función piping/execute child revisar si hay varios input/output
