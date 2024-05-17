@@ -6,7 +6,7 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 17:56:24 by irene             #+#    #+#             */
-/*   Updated: 2024/05/16 21:51:28 by irene            ###   ########.fr       */
+/*   Updated: 2024/05/17 16:50:17 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,4 +42,6 @@ int		new_word(char const *s, char *sep, int i, int quotes);
 int		ft_wc(char const *s, char *sep);
 int		end_word(char const *s, char *sep, int i, int quot);
 char **extract_command(char *s);
+char	**ft_out(char **arr);
+char	*command_exists(char *s);
 #endif

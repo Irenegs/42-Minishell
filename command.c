@@ -6,11 +6,29 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 17:36:54 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/05/14 21:57:59 by irene            ###   ########.fr       */
+/*   Updated: 2024/05/17 16:53:39 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+
+int	is_local(char *s)
+{
+	int	i;
+
+	i = 0;
+	if (s)
+	{
+		while (s[i] != '\0')
+		{
+			if (s[i] == '/')
+				return (0);
+			i++;
+		}
+	}
+	return (1);
+}
 
 static int	select_variable(char **environ)
 {

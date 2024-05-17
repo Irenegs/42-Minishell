@@ -6,7 +6,7 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 16:36:46 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/05/16 22:17:15 by irene            ###   ########.fr       */
+/*   Updated: 2024/05/17 17:35:22 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ size_t	len_literal_word(char *s, int pos)
 
 	len = 1;
 	while (s[pos + len] != '\'' && s[pos + len] != '"' && s[pos + len] != '$' && is_space(s[pos + len]) == 0 && s[pos + len] != '\0')
-
 		len++;
 	return (len);
 }
@@ -59,7 +58,6 @@ char *obtain_variable(char *s, int i)
 	else
 		var_name = ft_substr(s, i, len);
 	var_value = getenv(var_name);
-	printf("var_name, var_value %s;%s\n" ,var_name, var_value);
 	free(var_name);
 	if (var_value == 0)
 		return (NULL);
@@ -182,19 +180,22 @@ int extract_input(char *s)
 	int		fd;
 	int		pos;
 	char	*filename;
+	int		aux_fd;
 
 	if (!s)
 		return (-1);
-	printf("Extract input: string %s\n", s);
 	pos = locate_char_position(s, '<');
 	if (pos == -1)
 		return (STDIN_FILENO);
 	if (pos == -2)
 		return (1);//heredoc
 	filename = extract_element(s, pos);
-	printf("Filename %s\n", filename);
 	fd = open(filename, O_RDONLY);
+	printf("filename, fd %s,%d\n", filename, fd);
 	free(filename);
+	aux_fd = extract_output(s + pos + 1);
+	if (aux_fd > 1)
+		fd = aux_fd;
 	perror("minishell");//función de escritura de errores?
 	return (fd);
 }
@@ -204,22 +205,24 @@ int extract_output(char *s)
 	int		fd;
 	int		pos;
 	char	*filename;
+	int		aux_fd;
 
 	if (!s)
 		return (-1);
-	printf("Extract output: string %s\n", s);
 	pos = locate_char_position(s, '>');
 	if (pos == -1)
 		return (STDOUT_FILENO);
 	if (s[pos + 1] == '>')
 		pos++;
 	filename = extract_element(s, pos);
-	printf("Filename %s\n", filename);
 	if (pos == locate_char_position(s, '>'))
 		fd = open(filename, O_WRONLY | O_TRUNC | O_CREAT, 0644);
 	else
 		fd = open(filename, O_WRONLY | O_CREAT, 0644);
 	free(filename);
+	aux_fd = extract_output(s + pos + 1);
+	if (aux_fd > 1)
+		fd = aux_fd;
 	return (fd);
 }
 
