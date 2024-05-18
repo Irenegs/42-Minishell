@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
+/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 16:09:28 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/05/17 17:22:24 by irene            ###   ########.fr       */
+/*   Updated: 2024/05/18 19:52:19 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 static int	run_command(char **command)
 {
@@ -36,11 +35,17 @@ int execute_only_child(char *s)
 
     input = extract_input(s);
     printf("Input fd: %d\n", input);
-    dup2(input, STDIN_FILENO);
+    //dup2(input, STDIN_FILENO);
     output = extract_output(s);
     printf("Output fd: %d\n", output);
-    dup2(output, STDOUT_FILENO);
+    //dup2(output, STDOUT_FILENO);
     childpid = fork();
+    if (childpid == -1)
+    {
+        printf("Childerror\n");
+        exit(1);
+    }
+    printf("Childpid %d\n", childpid);
     if (childpid == 0)
     {
         command = extract_command(s);
@@ -51,54 +56,10 @@ int execute_only_child(char *s)
         return (-1);
     }
     if (waitpid(-1, &childpid, 0) != -1)
-        printf("exit");
+        printf("exit\n");
     //close(STDOUT_FILENO);
     //close(STDIN_FILENO);
     return (0);
-}
-
-int locate_pipe_init(char *s, int pipe)
-{
-    int i;
-    int p;
-
-    i = 0;
-    p = 0;
-    while(p < pipe)
-    {
-        if (s[i] == '|')
-            p++;
-        i++;
-    }
-    while (s[i] == '|' || is_space(s[i]) == 1)
-    {
-        i++;
-    }
-    return (i);
-}
-
-int pipe_len(char *s, int pipe, int pos)
-{
-    int len;
-
-    len = 0;
-    while (s[pos + len] != '|' && s[pos + len] != '\0')
-        len++;
-    while(is_space(s[pos + len]) == 1 || s[pos + len] == '|')
-        len--;
-    return (++len);
-}
-
-char    *extract_pipe(char *s, int pipe)
-{
-    int pos;
-    int len;
-
-    pos = 0;
-    len = 0;
-    pos = locate_pipe_init(s, pipe);
-    len = pipe_len(s, pipe, pos);
-    return (ft_substr(s, pos, len));
 }
 
 void    execute(char *s, int pipes)
@@ -141,7 +102,7 @@ void    execute(char *s, int pipes)
     }*/
 }
 
-void    parse_and_execute(char *s)
+int    parse_and_execute(char *s)
 {
     int pipes;
 
@@ -153,6 +114,7 @@ void    parse_and_execute(char *s)
         execute_only_child(s);
     else if (pipes > 0)
         execute(s, pipes);
+    
 }
 
 int main(int argc, char **argv)

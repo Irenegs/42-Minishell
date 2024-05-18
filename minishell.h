@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
+/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 17:56:24 by irene             #+#    #+#             */
-/*   Updated: 2024/05/17 16:50:17 by irene            ###   ########.fr       */
+/*   Updated: 2024/05/18 18:41:56 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,8 @@ int		end_word(char const *s, char *sep, int i, int quot);
 char **extract_command(char *s);
 char	**ft_out(char **arr);
 char	*command_exists(char *s);
+char    *extract_pipe(char *s, int pipe);
+size_t	len_literal_word(char *s, int pos);
+size_t len_quotes(char *s, int pos);
+int	something_to_add(char *s, int pos);
 #endif

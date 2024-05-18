@@ -6,7 +6,7 @@
 /*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 17:58:01 by irene             #+#    #+#             */
-/*   Updated: 2024/05/10 18:25:21 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/05/18 19:40:03 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,14 @@ void	prompt(void)
 {
 	char *s;
 
-	s = readline("Write:");
+	s = readline("Minishell:");
 	while (s)
 	{
 		//printf("String:\n%s\n", s);
 		add_history(s);
 		parse_and_execute(s);
 		free(s);
-		s = readline("Write:");
+		s = readline("Minishell:");
 	}
 	//rl_clear_history();
 }
@@ -32,9 +32,9 @@ void	prompt(void)
 void signal_handler(int signum)
 {
 	if (signum == SIGQUIT)
-		printf("Write:");//Esto no funciona bien
+		printf("Minishell:");//Esto no funciona bien
 	else if (signum == SIGINT)
-		printf("^CWrite");//No vuelve a la terminal
+		printf("^CMinishell:");//No vuelve a la terminal
 }
 
 /*
