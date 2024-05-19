@@ -18,7 +18,7 @@ Conlleva la gestión de las variabes de entorno, inicialmente se obtienen con ge
 # Por hacer:
 ## 1a
 Gestionar $?
-heredoc + leaks: El delimitador se lee literalmente, no se transforma el delimitador. 'Delimitador' no expande las variables. C-c dentro de heredoc lo corta y vuelve a la shell sin ejecutar ninguna instrucción, C-\ no hace nada y C-d cierra el heredoc con un error (bash: warning: here-document at line 160 delimited by end-of-file (wanted 'DELIMITADOR')) pero sigue con las instrucciones.
+heredoc + leaks: El delimitador se lee literalmente, no se transforma el delimitador. 'Delimitador' no expande las variables. C-c dentro de heredoc lo corta y vuelve a la shell sin ejecutar ninguna instrucción $?=130, C-\ no hace nada y C-d cierra el heredoc con un error (bash: warning: here-document at line 160 delimited by end-of-file (wanted 'DELIMITADOR')) pero sigue con las instrucciones $?=0.
 escribir errores
 separar ejecución de built-ins
 probar con varias pipes
