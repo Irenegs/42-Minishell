@@ -6,7 +6,7 @@
 /*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 17:56:24 by irene             #+#    #+#             */
-/*   Updated: 2024/05/18 18:41:56 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/05/19 16:38:30 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,5 @@ char    *extract_pipe(char *s, int pipe);
 size_t	len_literal_word(char *s, int pos);
 size_t len_quotes(char *s, int pos);
 int	something_to_add(char *s, int pos);
+char *extract_element(char *s, int pos);
 #endif

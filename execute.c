@@ -6,7 +6,7 @@
 /*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 16:09:28 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/05/18 19:52:19 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/05/19 19:07:18 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,8 @@ void    execute(char *s, int pipes)
     {
         //pipe(fd);cerrar abrir fds de pipe
         subs = extract_pipe(s, p);
+        if (!subs)
+            return ;
         printf("Subs: %sAAAA\n", subs);
         /*
         childpid = fork();
@@ -102,25 +104,31 @@ void    execute(char *s, int pipes)
     }*/
 }
 
-int    parse_and_execute(char *s)
+void    parse_and_execute(char *s)
 {
     int pipes;
 
     if (!s || ft_strlen(s) == 0)
         return ;
     pipes = parser(s);
-    printf("pipes %d\n",pipes);
-    if (pipes == 0)
+    if (pipes == -1)
+        printf("Parse error\n");
+    else if (pipes == 0)
         execute_only_child(s);
     else if (pipes > 0)
         execute(s, pipes);
     
 }
 
+void show_leaks(void)
+{
+    system("leaks a.out");
+}
+
 int main(int argc, char **argv)
 {
     char *s = argv[1];
-
+    atexit(show_leaks);
     if (argc == 1)
         return (1);
     parse_and_execute(s);

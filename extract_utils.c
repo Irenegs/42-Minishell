@@ -6,7 +6,7 @@
 /*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:40:20 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/05/18 18:40:47 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/05/19 18:10:44 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 int	is_space(char c)
 {
-	if (c == 32 || (c < 14 && c > 8))
+	if (c == 32 || (c < 14 && c > 8) || c == '\0')
 		return (1);
 	return (0);
 }
@@ -42,7 +42,7 @@ size_t len_quotes(char *s, int pos)
 
 int	something_to_add(char *s, int pos)
 {
-	if (s[pos] == '\'' || s[pos] == '"' || s[pos] == '$' || ft_isalnum(s[pos]) == 1)
+	if (is_space(s[pos]) == 0 && s[pos] != '<' && s[pos] != '>' && s[pos] != '|')
 		return (1);
 	return (0);
 }

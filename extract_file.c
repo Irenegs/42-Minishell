@@ -6,7 +6,7 @@
 /*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 16:36:46 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/05/18 19:13:52 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/05/19 19:19:49 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,9 @@ int extract_input(char *s)
 	if (pos == -2)
 		return (1);//heredoc
 	filename = extract_element(s, pos);
+	if (!filename)
+		return (-2);//-1 para gestionar el error?
 	fd = open(filename, O_RDONLY);
-	//printf("filename, fd %s,%d\n", filename, fd);
 	free(filename);
 	//perror("minishell");//función de escritura de errores?
 	aux_fd = extract_input(s + pos + 1);
@@ -66,6 +67,8 @@ int extract_output(char *s)
 	if (s[pos + 1] == '>')
 		pos++;
 	filename = extract_element(s, pos);
+	if (!filename)
+		return (-2);//-1 para gestionar el error?
 	if (pos == locate_char_position(s, '>'))
 		fd = open(filename, O_WRONLY | O_TRUNC | O_CREAT, 0644);
 	else
