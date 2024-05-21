@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 17:56:24 by irene             #+#    #+#             */
-/*   Updated: 2024/05/18 18:41:56 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/05/21 19:43:20 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,13 @@ char    *extract_pipe(char *s, int pipe);
 size_t	len_literal_word(char *s, int pos);
 size_t len_quotes(char *s, int pos);
 int	something_to_add(char *s, int pos);
+char *extract_element(char *s, int pos);
+
+
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 1
+# endif
+
+char	*get_next_line(int fd);
+
 #endif
