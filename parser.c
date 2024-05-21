@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
+/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 18:32:16 by irene             #+#    #+#             */
-/*   Updated: 2024/05/16 22:27:40 by irene            ###   ########.fr       */
+/*   Updated: 2024/05/19 19:01:05 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,16 +38,17 @@ int valid_insertion(int var[3], char s)
 		return (0);
 	return (1);
 }
-
+/*
 int is_valid(char s)
 {
+	//realmente no habría que dejar pasar todos los caracteres, pueden estar en el nombre de archivo, salvo \  
 	if (ft_isalnum(s) == 0 && is_metacharacter(s) == 0)
 	{
-		if (s != '_' && s != '-' && s != '{' && s != '}')
+		if (s != '_' && s != '-' && s != '{' && s != '}' && s != '.' && s != '/')
 			return (0);
 	}
 	return (1);
-}
+}*/
 
 void change_insert(int *var, int pipe, int input, int output)
 {
@@ -87,7 +88,7 @@ int	open_quotes(char *s)
 	{
 		if (s[i] == quotes && quotes != 0)
 			quotes = 0;
-		if (quotes == 0 && (s[i] == '\'' || s[i] == '"'))
+		else if (quotes == 0 && (s[i] == '\'' || s[i] == '"'))
 			quotes = s[i];
 		i++;
 	}
@@ -107,7 +108,7 @@ int parser(char *s)
 	insert[1] = 1;
 	insert[2] = 1;
 	pipes = open_quotes(s);
-	while (s[++i] != '\0' && is_valid(s[i]) == 1 && pipes >= 0)
+	while (s[++i] != '\0' && pipes >= 0)//eliminar  && is_valid(s[i]) == 1
 	{
 		if (s[i] == '|' && valid_insertion(insert, s[i]) == 1)
 		{

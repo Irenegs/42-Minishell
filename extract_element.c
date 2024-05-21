@@ -6,7 +6,7 @@
 /*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:42:48 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/05/18 19:11:27 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/05/19 19:16:00 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 static char *obtain_variable(char *s, int i)
 {
+	//TODO Falta gestionar $? 
 	char *var_name;
 	char *var_value;
 	size_t len;
@@ -23,10 +24,10 @@ static char *obtain_variable(char *s, int i)
 		var_name = ft_substr(s, i + 1, len - 2);
 	else
 		var_name = ft_substr(s, i, len);
+	if (!var_name)
+		return (NULL);
 	var_value = getenv(var_name);
 	free(var_name);
-	if (var_value == 0)
-		return (NULL);
 	return (var_value);
 }
 
@@ -61,6 +62,7 @@ static char	*expand_double_quotes(char *s, int pos)
 
 char *extract_element(char *s, int pos)
 {
+	//TODO proteger frees cuando algo es NULL
 	size_t	len;
 	char	*result;
 	char	*chunk;
@@ -77,7 +79,8 @@ char *extract_element(char *s, int pos)
 		{
 			len = len_quotes(s, pos);
 			chunk = ft_substr(s, pos + 1, len);
-			pos = pos + len + 2;aux = result;
+			pos = pos + len + 2;
+			aux = result;
 			result = ft_strjoin(aux, chunk);
 			free(aux);
 			free(chunk);
@@ -112,3 +115,4 @@ char *extract_element(char *s, int pos)
 	}
 	return (result);
 }
+

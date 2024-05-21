@@ -6,7 +6,7 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 17:56:24 by irene             #+#    #+#             */
-/*   Updated: 2024/05/21 19:43:20 by irene            ###   ########.fr       */
+/*   Updated: 2024/05/21 20:48:15 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,9 @@ size_t len_quotes(char *s, int pos);
 int	something_to_add(char *s, int pos);
 char *extract_element(char *s, int pos);
 
-
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 1
 # endif
 
 char	*get_next_line(int fd);
-
 #endif
