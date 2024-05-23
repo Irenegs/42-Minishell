@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 18:31:25 by pablo             #+#    #+#             */
-/*   Updated: 2024/05/22 23:29:44 by pablo            ###   ########.fr       */
+/*   Updated: 2024/05/23 23:00:52 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,6 @@ char	**ft_split(char const *s, char c)
 	return (end(split, j));
 }
 
-
 // Función rapida para dividir la entrada en argumentos
 char **parse_input(char *input) 
 {
@@ -223,6 +222,76 @@ void ft_pwd(void)
     }
 }
 
+void ft_export(char **argv) 
+{
+    char **kv;
+    int i;
+    i = 1;
+
+    if (!argv[1]) 
+    {
+        printf("export: missing argument\n");
+        return;
+    }
+
+    while (argv[i])
+     {
+        kv = ft_split(argv[i], '=');
+
+        if (kv[0] && kv[1]) 
+        {
+            if (setenv(kv[0], kv[1], 1) != 0) 
+            {
+                perror("export");
+            }
+        } 
+        else 
+        {
+            printf("export: invalid argument '%s'\n", argv[i]);
+        }
+
+        i++;
+    }
+}
+
+//se podra pasar **envp por argumento? Esta funcion solo i que imprime las que he puesto
+void ft_env(void) 
+{
+    const char *env_vars[] = { "PATH", "HOME", "USER", "SHELL", "LANG", "PWD", "LOGNAME", "TERM", NULL};
+    const char **var;
+    const char *value;
+    
+    var = env_vars;
+    while (*var) 
+    {
+        value = getenv(*var);
+        if (value) 
+        {
+            printf("%s=%s\n", *var, value);
+        }
+        var++;
+    }
+}
+
+void ft_unset(char **argv)
+{
+    int i;
+    i = 1;
+    if (!argv[1])
+    {
+        fprintf(stderr, "unset: missing argument\n");
+        return;
+    }
+
+    while (argv[i])
+    {
+        if (unsetenv(argv[i]) != 0)
+        {
+            perror("unset");
+        }
+        i++;
+    }
+}
 
 void ft_exit(char **argv)
 {
@@ -245,6 +314,12 @@ void execute_builtin(char **argv)
         ft_pwd();
     else if (ft_strncmp(argv[0], "exit", ft_strlen("exit")) == 0)
         ft_exit(argv);
+    else if (strncmp(argv[0], "export", ft_strlen("export")) == 0)
+        ft_export(argv);
+    else if (strncmp(argv[0], "unset", ft_strlen("unset")) == 0)
+        ft_unset(argv);
+    else if (strncmp(argv[0], "env", ft_strlen("env")) == 0)
+        ft_env();
     else
         fprintf(stderr, "%s: command not found\n", argv[0]);
 }
