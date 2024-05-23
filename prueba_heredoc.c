@@ -25,6 +25,60 @@ char *get_heredoc(char *delimiter)
 	return (line);
 }
 
+char *obtain_delimiter(char *del_str)
+{
+	char	*delimiter;
+	int		len;
+
+	len = ft_strlen(del_str);
+	if (del_str[0] == '\'' || del_str[0] == '"')
+	{
+		len = len - 2;
+		del_str++;
+	}
+	delimiter = malloc(len + 2);
+	ft_memmove(delimiter, del_str, len);
+	delimiter[len] = '\n';
+	delimiter[len + 1] = '\0';
+	return (delimiter);
+}
+
+char	*expand_string(char *s)
+{
+	char	*expanded;
+	char	*aux;
+	char	*chunk;
+	int		pos;
+	int		len;
+
+	expanded = NULL;
+	while (s[pos] != '\0')
+	{
+		if (s[pos] != '$')
+		{
+			len = len_literal_word(s, pos);
+			chunk = ft_substr(s, pos, len);
+			pos = pos + len;
+			aux = expanded;
+			expanded = ft_strjoin(aux, chunk);
+			if (aux)
+				free(aux);
+			if (chunk)
+				free(chunk);
+		}
+		else
+		{
+			chunk = obtain_variable(s, pos + 1);
+			pos += len_literal_word(s, pos + 1) + 1;
+			aux = expanded;
+			expanded = ft_strjoin(aux, chunk);
+			if (aux)
+				free(aux);
+		}
+	}
+	return (expanded);
+}
+
 void	show_leaks(void)
 {
 	system("leaks a.out");
@@ -32,18 +86,22 @@ void	show_leaks(void)
 
 int	main(int argc, char **argv)
 {
-	char *result;
-	char *delimiter;
+	char	*heredoc_text;
+	char	*delimiter;
+	char	*aux;
 
 	atexit(show_leaks);
-	delimiter = malloc(ft_strlen(argv[1]) + 2);
-	ft_memmove(delimiter, argv[1], ft_strlen(argv[1]));
-	delimiter[ft_strlen(argv[1])] = '\n';
-	delimiter[ft_strlen(argv[1]) + 1] = '\0';
-	result = get_heredoc(delimiter);
-	printf("%s\n====\n", result);
+	delimiter = obtain_delimiter(argv[1]);
+	heredoc_text = get_heredoc(delimiter);
+	if (argv[1][0] != '\'' && argv[1][0] != '"')
+	{
+		aux = heredoc_text;
+		heredoc_text = expand_string(aux);
+		free(aux);
+	}
+	printf("%s\n====\n", heredoc_text);
 	free(delimiter);
-	free(result);
+	free(heredoc_text);
 	return 0;
 }
 
