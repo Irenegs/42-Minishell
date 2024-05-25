@@ -7,6 +7,7 @@ char *get_heredoc(char *delimiter)
 	char	*aux_1;
 	char	*aux_2;
 
+	printf("Delimiter: %s\n", delimiter);
 	aux_2 = get_next_line(1);
 	line = NULL;
 	while (ft_strncmp(aux_2, delimiter, ft_strlen(delimiter)) != 0 && aux_2 != NULL)
@@ -30,6 +31,8 @@ char *obtain_delimiter(char *del_str)
 	char	*delimiter;
 	int		len;
 
+	while (*del_str == '<' || is_space(*del_str))
+		del_str++;
 	len = ft_strlen(del_str);
 	if (del_str[0] == '\'' || del_str[0] == '"')
 	{
@@ -51,6 +54,8 @@ char	*expand_string(char *s)
 	int		pos;
 	int		len;
 
+	if (!s)
+		return (NULL);
 	expanded = NULL;
 	while (s[pos] != '\0')
 	{
@@ -97,14 +102,11 @@ int	main(int argc, char **argv)
 	{
 		aux = heredoc_text;
 		heredoc_text = expand_string(aux);
+		printf("hola\n");
 		free(aux);
 	}
-	printf("%s\n====\n", heredoc_text);
+	printf("\n====\n%s\n====\n", heredoc_text);
 	free(delimiter);
 	free(heredoc_text);
 	return 0;
 }
-
-/*
-Falta distinguir en el delimitador si está o no entrecomillado para luego expandirlo o no.
-*/

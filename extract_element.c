@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   extract_element.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:42:48 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/05/19 19:16:00 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/05/25 13:58:01 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char *obtain_variable(char *s, int i)
+char *obtain_variable(char *s, int i)
 {
 	//TODO Falta gestionar $? 
 	char *var_name;
