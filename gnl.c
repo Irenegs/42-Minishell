@@ -6,7 +6,7 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 19:44:36 by irene             #+#    #+#             */
-/*   Updated: 2024/05/21 19:44:57 by irene            ###   ########.fr       */
+/*   Updated: 2024/05/25 13:56:48 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ ssize_t	read_line(char **rem, int fd)
 	char	*buffer;
 	char	*line;
 
-	buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
-	bytes = read(fd, buffer, BUFFER_SIZE);
+	buffer = malloc((11) * sizeof(char));
+	bytes = read(fd, buffer, 10);
 	if (bytes >= 0)
 	{
 		buffer[bytes] = '\0';
@@ -69,7 +69,7 @@ char	*get_next_line(int fd)
 	char		*array[2];
 	ssize_t		bytes;
 
-	if (fd < 0 || fd > FOPEN_MAX || BUFFER_SIZE < 1)
+	if (fd < 0 || fd > FOPEN_MAX)
 		return (NULL);
 	if (!rem || rem[find_br(rem)] != '\n')
 	{
