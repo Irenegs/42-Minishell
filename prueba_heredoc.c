@@ -6,7 +6,7 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 14:46:24 by irene             #+#    #+#             */
-/*   Updated: 2024/05/25 18:34:20 by irene            ###   ########.fr       */
+/*   Updated: 2024/05/25 20:11:06 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@ static char	*expand_string(char *s)
 		return (NULL);
 	expanded = NULL;
 	pos = 0;
-	printf("%p\n", s);
 	while (s[pos] != '\0')
 	{
 		if (s[pos] != '$')

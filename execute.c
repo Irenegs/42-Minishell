@@ -6,7 +6,7 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 16:09:28 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/05/25 18:37:18 by irene            ###   ########.fr       */
+/*   Updated: 2024/05/25 20:23:35 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,15 @@ int execute_only_child(char *s)
             dup2(input, STDIN_FILENO);
         if (input == -2)
         {
+            input = open("tmpfile", O_RDWR | O_TRUNC | O_CREAT, 0644);
             heredoc = get_heredoc(s);
-            printf("End heredoc\n");
-            write(STDIN_FILENO, heredoc, ft_strlen(heredoc));
+            write(input, heredoc, ft_strlen(heredoc));
+            dup2(input, STDIN_FILENO);
+            //borrar tmpfile en algún momento
         }
+        output = extract_output(s);
+        printf("Output fd: %d\n", output);
+        dup2(output, STDOUT_FILENO);
         command = extract_command(s);
         //printf("Comando: %s\n", command[0]);
         //printf("Args: %s\n", command[1]);
@@ -60,13 +65,10 @@ int execute_only_child(char *s)
             ft_out(command);
         return (-1);
     }
-    output = extract_output(s);
-    printf("Output fd: %d\n", output);
-    //dup2(output, STDOUT_FILENO);
     if (waitpid(-1, &childpid, 0) != -1)
         printf("exit\n");
-    //close(STDOUT_FILENO);
-    //close(STDIN_FILENO);
+    close(STDOUT_FILENO);
+    close(STDIN_FILENO);
     return (0);
 }
 
