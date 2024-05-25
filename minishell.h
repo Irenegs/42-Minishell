@@ -6,7 +6,7 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 17:56:24 by irene             #+#    #+#             */
-/*   Updated: 2024/05/25 13:58:09 by irene            ###   ########.fr       */
+/*   Updated: 2024/05/25 14:54:31 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,5 @@ int	something_to_add(char *s, int pos);
 char *extract_element(char *s, int pos);
 char *obtain_variable(char *s, int i);
 char	*get_next_line(int fd);
+char	*get_heredoc(char *s);
 #endif
