@@ -6,7 +6,7 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:36:03 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/05/25 14:32:50 by irene            ###   ########.fr       */
+/*   Updated: 2024/05/26 14:45:14 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ static char **split_command(char *s)
 		if (!arr[i])
 			return (ft_out(arr));
 		pos = find_next_word(s, pos);
+		//printf("%d-%s\n", i, arr[i]);
 	}
 	arr[i] = NULL;
 	return (arr);
@@ -115,6 +116,7 @@ char **extract_command(char *s)
 		return (NULL);
 	//printf("cmd substr:%s\n", cmd_string);
 	command = split_command(cmd_string);
+	//printf("command[0]:%s\n", command[0]);
 	free(cmd_string);
 	return (command);
 }
