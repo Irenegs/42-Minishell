@@ -6,10 +6,9 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 18:31:25 by pablo             #+#    #+#             */
-/*   Updated: 2024/05/23 23:00:52 by pablo            ###   ########.fr       */
+/*   Updated: 2024/05/28 22:05:33 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include <unistd.h>
 #include <stdio.h>
@@ -19,8 +18,109 @@
 #include <readline/history.h>
 
 
+typedef struct s_mix
+{
+	char	**m_env;
+	char	**m_path;
+	char	**m_argv;
+
+}				t_mix;
+
 #define MAX_argv 100  // Número máximo de argumentos
-//uso fprintf para probar,habria que hacer una funcion para imprimir en la stderr
+//uso fprintf para probar, y las funciones de la libft version normal
+//compilar gcc -o built built_in.c -lreadline
+
+void	ft_free_env(char **env)
+{
+	int	i;
+
+	i = -1;
+	if (!env)
+		return ;
+	while (env[++i])
+	{
+		free(env[i]);
+	}
+	*env = NULL;
+	free(env);
+}
+
+//inicializar la struct
+void	ft_init_mix(t_mix *data)
+{
+	data->m_path = NULL;
+	data->m_env = NULL;
+	data->m_argv = NULL;
+
+}
+
+//hace una copia del entorno
+char	**ft_copy_env(char **envp)
+{
+	char	**env_copy;
+	int		i;
+	int		j;
+
+	j = 0;
+	i = 0;
+	while (envp[j])
+		j++;
+	env_copy = (char **)malloc((j + 1) * sizeof(char *));
+	if (!env_copy)
+		return (ft_free_env(env_copy), NULL);
+	while (envp[i])
+	{
+		env_copy
+        [i] = strdup(envp[i]);
+		i++;
+	}
+	env_copy
+    [i] = NULL;
+	return (env_copy);
+}
+
+//hace copia de argumentos
+char  **ft_copy_argv(int argc, char **argv)
+{
+    char **new_argv;
+    int i;
+    int j;
+
+    new_argv = (char **)malloc((argc + 1) * sizeof(char *));
+    if (!new_argv)
+    {
+        perror("Error en la asignación de memoria");
+        return (NULL);
+    }
+    i = 0;
+    while ( i < argc)
+    {
+        new_argv[i] = strdup(argv[i]);
+        if (!new_argv[i])
+        {
+            perror("Error en el duplicado de cadena");
+            j = 0;
+            while (j < i)
+            {
+                free(new_argv[j]);
+                j++;
+            }
+            free(new_argv);
+            return (NULL);
+        }
+        i++;
+    }
+    new_argv[argc] = NULL;
+    return (new_argv);
+}
+
+//pasamos los datos a la struct
+void	ft_fill_struct(t_mix *data, int argc, char **argv, char **envp)
+{
+	data->m_env = ft_copy_env(envp);
+    data->m_argv = ft_copy_argv(argc, argv);
+}
+
 
 size_t	ft_strlen(const char *s)
 {
@@ -31,6 +131,7 @@ size_t	ft_strlen(const char *s)
 		i++;
 	return (i);
 }
+
 int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
 	size_t			i;
@@ -55,25 +156,25 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 	return (c - d);
 }
 
-static int	ft_count_words(const char *str, char c)
+static int	ft_j_words(const char *str, char c)
 {
-	int	count;
+	int	j;
 	int	i;
 
-	count = 0;
+	j = 0;
 	i = 0;
 	while (*str)
 	{
 		if (*str != c && i == 0)
 		{
 			i = 1;
-			count++;
+			j++;
 		}
 		else if (*str == c)
 			i = 0;
 		str++;
 	}
-	return (count);
+	return (j);
 }
 
 static char	*ft_word( const char *str, int start, int end)
@@ -121,7 +222,7 @@ char	**ft_split(char const *s, char c)
 	int		k;
 	char	**split;
 
-	split = malloc (sizeof(char *) * (ft_count_words (s, c) + 1));
+	split = malloc (sizeof(char *) * (ft_j_words (s, c) + 1));
 	if (!s || !split)
 		return (0);
 	i = 0;
@@ -146,45 +247,52 @@ char	**ft_split(char const *s, char c)
 // Función rapida para dividir la entrada en argumentos
 char **parse_input(char *input) 
 {
-    char **argv = malloc(MAX_argv * sizeof(char *));
-    char **token;
-    int i = 0;
+    char **c_argv; 
+    char **temp;
+    int i;
+    int	j;
 
-    if (!argv) 
+	j = 0;
+	i = 0;
+	while (input[j])
+		j++;
+    c_argv = malloc((j + 1) * sizeof(char *));
+    if (!c_argv) 
     {
         perror("malloc");
         exit(EXIT_FAILURE);
     }
 
-    token = ft_split(input, ' ');
-    while (token[i] != NULL && i < MAX_argv - 1) 
+    temp = ft_split(input, ' ');
+    while (temp[i] != NULL && i < (j - 1)) 
     {
-        argv[i] = token[i];
+        c_argv[i] = temp[i];
         i++;
     }
-    argv[i] = NULL;
-    free (token);
-    return argv;
+    c_argv[i] = NULL;
+    free (temp);
+    return c_argv;
 }
 
-void ft_echo(char **argv)
+void ft_echo(t_mix *data)
 {
+
     int new_line;
     int i;
 
     new_line = 1;
     i = 1;
 
-    if (argv[i] && ft_strncmp(argv[i], "-n", ft_strlen("-n")) == 0)
+    if (data->m_argv[i] && ft_strncmp(data->m_argv[i], "-n", ft_strlen("-n")) == 0)
     {
         new_line = 0;
         i++;
     }
 
-    while (argv[i])
+    while (data->m_argv[i])
     {
-        printf("%s", argv[i]);
-        if (argv[i + 1])
+        printf("%s", data->m_argv[i]);
+        if (data->m_argv[i + 1])
             printf(" ");
         i++;
     }
@@ -192,15 +300,15 @@ void ft_echo(char **argv)
         printf("\n");
 }
 
-void ft_cd(char **argv)
+void ft_cd(t_mix *data)
 {
-    if (!argv[1])
+    if (!data->m_argv[1])
     {
         fprintf(stderr, "cd: missing argument\n");
         return;
     }
 
-    if (chdir(argv[1]) != 0)
+    if (chdir(data->m_argv[1]) != 0)
     {
         perror("cd");
     }
@@ -222,109 +330,110 @@ void ft_pwd(void)
     }
 }
 
-void ft_export(char **argv) 
+//no se puede usar setenv, tp actualiza bien el entorno, no funciona bien
+void ft_export(t_mix *data) 
 {
-    char **kv;
+    char **str;
     int i;
+    
     i = 1;
 
-    if (!argv[1]) 
+    if (!data->m_argv[1]) 
     {
         printf("export: missing argument\n");
         return;
     }
 
-    while (argv[i])
+    while (data->m_argv[i])
      {
-        kv = ft_split(argv[i], '=');
+        str = ft_split(data->m_argv[i], '=');
 
-        if (kv[0] && kv[1]) 
+        if (str[0] && str[1]) 
         {
-            if (setenv(kv[0], kv[1], 1) != 0) 
+            if (setenv(str[0], str[1], 1) != 0) 
             {
                 perror("export");
             }
         } 
         else 
         {
-            printf("export: invalid argument '%s'\n", argv[i]);
+            printf("export: invalid argument '%s'\n", data->m_argv[i]);
         }
 
         i++;
     }
+    data->m_env = ft_copy_env(data->m_env);
 }
 
-//se podra pasar **envp por argumento? Esta funcion solo i que imprime las que he puesto
-void ft_env(void) 
+
+void ft_env(t_mix *data) 
 {
-    const char *env_vars[] = { "PATH", "HOME", "USER", "SHELL", "LANG", "PWD", "LOGNAME", "TERM", NULL};
-    const char **var;
-    const char *value;
-    
-    var = env_vars;
-    while (*var) 
-    {
-        value = getenv(*var);
-        if (value) 
-        {
-            printf("%s=%s\n", *var, value);
-        }
-        var++;
-    }
+ int j;
+
+	j = 0;
+	while (data->m_env[j])
+	{
+		if (strchr(data->m_env[j], '='))
+			printf("%s\n", data->m_env[j]);
+		j++;
+	}
 }
 
-void ft_unset(char **argv)
+//no se puede usar unsetenv, no actualiza bien el entorno, no funciona bien
+void ft_unset(t_mix *data)
 {
     int i;
+    
     i = 1;
-    if (!argv[1])
+    if (!data->m_argv[1])
     {
         fprintf(stderr, "unset: missing argument\n");
         return;
     }
 
-    while (argv[i])
+    while (data->m_argv[i])
     {
-        if (unsetenv(argv[i]) != 0)
+        if (unsetenv(data->m_argv[i]) != 0)
         {
             perror("unset");
         }
         i++;
     }
+    data->m_env = ft_copy_env(data->m_env);
 }
 
-void ft_exit(char **argv)
+void ft_exit(t_mix *data)
 {
     int status;
     status = 0;
-    if (argv[1])
+    if (data->m_argv[1])
     {
-        status = atoi(argv[1]); //cambiar por ft_atoi
+        status = atoi(data->m_argv[1]); //cambiar por ft_atoi
     }
     exit(status);
 }
 
-void execute_builtin(char **argv)
+void execute_builtin(char **argv, t_mix *data)
 {
     if (ft_strncmp(argv[0], "echo", ft_strlen("echo")) == 0)
-        ft_echo(argv);
+        ft_echo(data);
     else if (ft_strncmp(argv[0], "cd", ft_strlen("cd")) == 0)
-        ft_cd(argv);
+        ft_cd(data);
     else if (ft_strncmp(argv[0], "pwd", ft_strlen("pwd")) == 0)
         ft_pwd();
     else if (ft_strncmp(argv[0], "exit", ft_strlen("exit")) == 0)
-        ft_exit(argv);
+        ft_exit(data);
     else if (strncmp(argv[0], "export", ft_strlen("export")) == 0)
-        ft_export(argv);
+        ft_export(data);
     else if (strncmp(argv[0], "unset", ft_strlen("unset")) == 0)
-        ft_unset(argv);
+        ft_unset(data);
     else if (strncmp(argv[0], "env", ft_strlen("env")) == 0)
-        ft_env();
+        ft_env(data);
     else
         fprintf(stderr, "%s: command not found\n", argv[0]);
 }
 
-void prompt(void)
+void prompt(t_mix *data)
 {
     char *input;
     char **argv;
@@ -337,15 +446,23 @@ void prompt(void)
         argv = parse_input(input);  
         if (argv)
         {
-            execute_builtin(argv);
+            data->m_argv = argv;
+            execute_builtin(argv, data);
             free(argv);
         }
         free(input);
     }
 }
 
-int main(void)
+int main(int argc, char **argv, char **envp)
 {
-    prompt();
+    t_mix data;
+
+    if (argc != 1 || !argv)
+		return (1);
+
+    ft_init_mix(&data);
+    ft_fill_struct(&data, argc, argv, envp);
+    prompt(&data);
     return 0;
 }
