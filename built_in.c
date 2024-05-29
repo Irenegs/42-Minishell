@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 18:31:25 by pablo             #+#    #+#             */
-/*   Updated: 2024/05/28 22:05:33 by pablo            ###   ########.fr       */
+/*   Updated: 2024/05/23 23:00:52 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,15 +68,20 @@ char	**ft_copy_env(char **envp)
 	env_copy = (char **)malloc((j + 1) * sizeof(char *));
 	if (!env_copy)
 		return (ft_free_env(env_copy), NULL);
-	while (envp[i])
-	{
-		env_copy
-        [i] = strdup(envp[i]);
-		i++;
-	}
-	env_copy
-    [i] = NULL;
-	return (env_copy);
+	 while (i < j)
+    {
+        env_copy[i] = strdup(envp[i]);
+        if (!env_copy[i])
+        {
+            while (i--)
+                free(env_copy[i]);
+            free(env_copy);
+            return NULL;
+        }
+        i++;
+    }
+    env_copy[j] = NULL;
+    return env_copy;
 }
 
 //hace copia de argumentos
@@ -98,15 +103,10 @@ char  **ft_copy_argv(int argc, char **argv)
         new_argv[i] = strdup(argv[i]);
         if (!new_argv[i])
         {
-            perror("Error en el duplicado de cadena");
-            j = 0;
-            while (j < i)
-            {
-                free(new_argv[j]);
-                j++;
-            }
+            while (i--)
+                free(new_argv[i]);
             free(new_argv);
-            return (NULL);
+            return NULL;
         }
         i++;
     }
@@ -244,36 +244,6 @@ char	**ft_split(char const *s, char c)
 	return (end(split, j));
 }
 
-// Función rapida para dividir la entrada en argumentos
-char **parse_input(char *input) 
-{
-    char **c_argv; 
-    char **temp;
-    int i;
-    int	j;
-
-	j = 0;
-	i = 0;
-	while (input[j])
-		j++;
-    c_argv = malloc((j + 1) * sizeof(char *));
-    if (!c_argv) 
-    {
-        perror("malloc");
-        exit(EXIT_FAILURE);
-    }
-
-    temp = ft_split(input, ' ');
-    while (temp[i] != NULL && i < (j - 1)) 
-    {
-        c_argv[i] = temp[i];
-        i++;
-    }
-    c_argv[i] = NULL;
-    free (temp);
-    return c_argv;
-}
-
 void ft_echo(t_mix *data)
 {
 
@@ -304,7 +274,7 @@ void ft_cd(t_mix *data)
 {
     if (!data->m_argv[1])
     {
-        fprintf(stderr, "cd: missing argument\n");
+        printf("cd: missing argument\n");
         return;
     }
 
@@ -330,61 +300,188 @@ void ft_pwd(void)
     }
 }
 
-//no se puede usar setenv, tp actualiza bien el entorno, no funciona bien
-void ft_export(t_mix *data) 
+char *create_env_entry(const char *key, const char *value)
 {
-    char **str;
-    int i;
-    
-    i = 1;
+    size_t key_len = ft_strlen(key);
+    size_t value_len = ft_strlen(value);
+    size_t entry_len = key_len + value_len + 2;
+    char *entry = (char *)malloc(entry_len);
+    if (!entry)
+        return NULL;
 
-    if (!data->m_argv[1]) 
+    size_t j = 0;
+    while (j < key_len)
+    {
+        entry[j] = key[j];
+        j++;
+    }
+    entry[j++] = '=';
+    size_t k = 0;
+    while (k < value_len)
+    {
+        entry[j++] = value[k++];
+    }
+    entry[j] = '\0';
+
+    return entry;
+}
+
+char **copy_env_with_new_entry(char **env, const char *key, const char *value, int size)
+{
+    char **new_env = (char **)malloc((size + 2) * sizeof(char *));
+    if (!new_env)
+        return NULL;
+
+    int i = 0;
+    while (env[i])
+    {
+        new_env[i] = env[i];
+        i++;
+    }
+
+    new_env[i] = create_env_entry(key, value);
+    if (!new_env[i])
+    {
+        free(new_env);
+        return NULL;
+    }
+
+    new_env[i + 1] = NULL;
+    return new_env;
+}
+
+char **update_existing_entry(char **env, int index, const char *key, const char *value)
+{
+    free(env[index]);
+    env[index] = create_env_entry(key, value);
+    if (!env[index])
+        return NULL;
+    return env;
+}
+
+int find_env_index(char **env, const char *key)
+{
+    size_t key_len = ft_strlen(key);
+    int i = 0;
+
+    while (env[i])
+    {
+        if (ft_strncmp(env[i], key, key_len) == 0 && env[i][key_len] == '=')
+            return i;
+        i++;
+    }
+    return -1;
+}
+
+char **add_or_update_env(char **env, const char *key, const char *value)
+{
+    int index = find_env_index(env, key);
+    if (index != -1)
+    {
+        return update_existing_entry(env, index, key, value);
+    }
+
+    int size = 0;
+    while (env[size])
+        size++;
+
+    char **new_env = copy_env_with_new_entry(env, key, value, size);
+    if (!new_env)
+        return NULL;
+
+    free(env);
+    return new_env;
+}
+
+void ft_export(t_mix *data)
+{
+    char **kv;
+    int i = 1;
+
+    if (!data->m_argv[1])
     {
         printf("export: missing argument\n");
         return;
     }
 
     while (data->m_argv[i])
-     {
-        str = ft_split(data->m_argv[i], '=');
+    {
+        kv = ft_split(data->m_argv[i], '=');
 
-        if (str[0] && str[1]) 
+        if (kv[0] && kv[1])
         {
-            if (setenv(str[0], str[1], 1) != 0) 
+            data->m_env = add_or_update_env(data->m_env, kv[0], kv[1]);
+            if (!data->m_env)
             {
                 perror("export");
+                return;
             }
-        } 
-        else 
+        }
+        else
         {
             printf("export: invalid argument '%s'\n", data->m_argv[i]);
         }
 
+        // Liberar memoria de kv
+        for (int j = 0; kv[j]; j++)
+            free(kv[j]);
+        free(kv);
+
         i++;
     }
-    data->m_env = ft_copy_env(data->m_env);
 }
 
-
-void ft_env(t_mix *data) 
+char **copy_env_without_entry(char **env, int index, int size)
 {
- int j;
+    char **new_env = (char **)malloc(size * sizeof(char *));
+    if (!new_env)
+        return NULL;
 
-	j = 0;
-	while (data->m_env[j])
-	{
-		if (strchr(data->m_env[j], '='))
-			printf("%s\n", data->m_env[j]);
-		j++;
-	}
+    int j = 0;
+    int i = 0;
+
+    while (i < index)
+    {
+        new_env[j] = env[i];
+        i++;
+        j++;
+    }
+
+    free(env[index]);
+
+    while (env[++i])
+    {
+        new_env[j] = env[i];
+        j++;
+    }
+
+    new_env[j] = NULL;
+
+    return new_env;
 }
 
-//no se puede usar unsetenv, no actualiza bien el entorno, no funciona bien
+char **remove_env(char **env, const char *key)
+{
+    int index = find_env_index(env, key);
+    if (index == -1)
+        return env;
+
+    int size = 0;
+    while (env[size])
+        size++;
+
+    char **new_env = copy_env_without_entry(env, index, size);
+    if (!new_env)
+        return NULL;
+
+    free(env);
+    return new_env;
+}
+
 void ft_unset(t_mix *data)
 {
-    int i;
-    
-    i = 1;
+    int i = 1;
+
     if (!data->m_argv[1])
     {
         fprintf(stderr, "unset: missing argument\n");
@@ -393,22 +490,35 @@ void ft_unset(t_mix *data)
 
     while (data->m_argv[i])
     {
-        if (unsetenv(data->m_argv[i]) != 0)
+        data->m_env = remove_env(data->m_env, data->m_argv[i]);
+        if (!data->m_env)
         {
             perror("unset");
+            return;
         }
         i++;
     }
-    data->m_env = ft_copy_env(data->m_env);
+}
+
+void ft_env(t_mix *data)
+{
+    int j;
+
+    j =0;
+    while (data->m_env[j])
+    {
+        if (strchr(data->m_env[j], '='))
+            printf("%s\n", data->m_env[j]);
+        j++;
+    }
 }
 
 void ft_exit(t_mix *data)
 {
-    int status;
-    status = 0;
+    int status = 0;
     if (data->m_argv[1])
     {
-        status = atoi(data->m_argv[1]); //cambiar por ft_atoi
+        status = atoi(data->m_argv[1]);
     }
     exit(status);
 }
@@ -423,11 +533,11 @@ void execute_builtin(char **argv, t_mix *data)
         ft_pwd();
     else if (ft_strncmp(argv[0], "exit", ft_strlen("exit")) == 0)
         ft_exit(data);
-    else if (strncmp(argv[0], "export", ft_strlen("export")) == 0)
+    else if (ft_strncmp(argv[0], "export", ft_strlen("export")) == 0)
         ft_export(data);
-    else if (strncmp(argv[0], "unset", ft_strlen("unset")) == 0)
+    else if (ft_strncmp(argv[0], "unset", ft_strlen("unset")) == 0)
         ft_unset(data);
-    else if (strncmp(argv[0], "env", ft_strlen("env")) == 0)
+    else if (ft_strncmp(argv[0], "env", ft_strlen("env")) == 0)
         ft_env(data);
     else
         fprintf(stderr, "%s: command not found\n", argv[0]);
@@ -443,7 +553,7 @@ void prompt(t_mix *data)
         if (*input)
             add_history(input);
 
-        argv = parse_input(input);  
+        argv = ft_split(input, ' ');
         if (argv)
         {
             data->m_argv = argv;
@@ -459,10 +569,12 @@ int main(int argc, char **argv, char **envp)
     t_mix data;
 
     if (argc != 1 || !argv)
-		return (1);
+        return 1;
 
     ft_init_mix(&data);
     ft_fill_struct(&data, argc, argv, envp);
     prompt(&data);
+    ft_free_env(data.m_env);
+    ft_free_env(data.m_argv);
     return 0;
 }
