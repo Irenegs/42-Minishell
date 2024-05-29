@@ -156,6 +156,25 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 	return (c - d);
 }
 
+int ft_strcmp(const char *s1, const char *s2)
+{
+    size_t i = 0;
+
+    while (s1[i] != '\0' && s2[i] != '\0')
+    {
+        unsigned char c = (unsigned char)s1[i];
+        unsigned char d = (unsigned char)s2[i];
+
+        if (c != d)
+            return c - d;
+
+        i++;
+    }
+
+    return (unsigned char)s1[i] - (unsigned char)s2[i];
+}
+
+
 static int	ft_j_words(const char *str, char c)
 {
 	int	j;
@@ -253,7 +272,7 @@ void ft_echo(t_mix *data)
     new_line = 1;
     i = 1;
 
-    if (data->m_argv[i] && ft_strncmp(data->m_argv[i], "-n", ft_strlen("-n")) == 0)
+    if (data->m_argv[i] && ft_strcmp(data->m_argv[i], "-n") == 0)
     {
         new_line = 0;
         i++;
@@ -302,22 +321,27 @@ void ft_pwd(void)
 
 char *create_env_entry(const char *key, const char *value)
 {
-    size_t key_len = ft_strlen(key);
-    size_t value_len = ft_strlen(value);
-    size_t entry_len = key_len + value_len + 2;
-    char *entry = (char *)malloc(entry_len);
+    size_t key_len;
+    size_t entry_len;
+    size_t j;
+    size_t k;
+    char *entry;
+
+    key_len = ft_strlen(key);
+    entry_len = key_len + ft_strlen(value) + 2;
+    entry = (char *)malloc(entry_len);
     if (!entry)
         return NULL;
 
-    size_t j = 0;
+    j = 0;
     while (j < key_len)
     {
         entry[j] = key[j];
         j++;
     }
     entry[j++] = '=';
-    size_t k = 0;
-    while (k < value_len)
+    k = 0;
+    while (k < ft_strlen(value))
     {
         entry[j++] = value[k++];
     }
@@ -395,7 +419,7 @@ char **add_or_update_env(char **env, const char *key, const char *value)
 
 void ft_export(t_mix *data)
 {
-    char **kv;
+    char **str;
     int i = 1;
 
     if (!data->m_argv[1])
@@ -406,11 +430,11 @@ void ft_export(t_mix *data)
 
     while (data->m_argv[i])
     {
-        kv = ft_split(data->m_argv[i], '=');
+        str = ft_split(data->m_argv[i], '=');
 
-        if (kv[0] && kv[1])
+        if (str[0] && str[1])
         {
-            data->m_env = add_or_update_env(data->m_env, kv[0], kv[1]);
+            data->m_env = add_or_update_env(data->m_env, str[0], str[1]);
             if (!data->m_env)
             {
                 perror("export");
@@ -422,10 +446,9 @@ void ft_export(t_mix *data)
             printf("export: invalid argument '%s'\n", data->m_argv[i]);
         }
 
-        // Liberar memoria de kv
-        for (int j = 0; kv[j]; j++)
-            free(kv[j]);
-        free(kv);
+        for (int j = 0; str[j]; j++)
+            free(str[j]);
+        free(str);
 
         i++;
     }
@@ -484,7 +507,7 @@ void ft_unset(t_mix *data)
 
     if (!data->m_argv[1])
     {
-        fprintf(stderr, "unset: missing argument\n");
+        printf("unset: missing argument\n");
         return;
     }
 
@@ -525,19 +548,19 @@ void ft_exit(t_mix *data)
 
 void execute_builtin(char **argv, t_mix *data)
 {
-    if (ft_strncmp(argv[0], "echo", ft_strlen("echo")) == 0)
+    if (ft_strcmp(argv[0], "echo") == 0)
         ft_echo(data);
-    else if (ft_strncmp(argv[0], "cd", ft_strlen("cd")) == 0)
+    else if (ft_strcmp(argv[0], "cd") == 0)
         ft_cd(data);
-    else if (ft_strncmp(argv[0], "pwd", ft_strlen("pwd")) == 0)
+    else if (ft_strcmp(argv[0], "pwd") == 0)
         ft_pwd();
-    else if (ft_strncmp(argv[0], "exit", ft_strlen("exit")) == 0)
+    else if (ft_strcmp(argv[0], "exit") == 0)
         ft_exit(data);
-    else if (ft_strncmp(argv[0], "export", ft_strlen("export")) == 0)
+    else if (ft_strcmp(argv[0], "export") == 0)
         ft_export(data);
-    else if (ft_strncmp(argv[0], "unset", ft_strlen("unset")) == 0)
+    else if (ft_strcmp(argv[0], "unset") == 0)
         ft_unset(data);
-    else if (ft_strncmp(argv[0], "env", ft_strlen("env")) == 0)
+    else if (ft_strcmp(argv[0], "env") == 0)
         ft_env(data);
     else
         fprintf(stderr, "%s: command not found\n", argv[0]);
