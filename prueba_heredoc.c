@@ -1,7 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   prueba_heredoc.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/25 14:46:24 by irene             #+#    #+#             */
+/*   Updated: 2024/05/25 20:11:06 by irene            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 # include "minishell.h"
 
-
-char *get_heredoc(char *delimiter)
+static char *get_rawtext(char *delimiter)
 {
 	char 	*line;
 	char	*aux_1;
@@ -25,12 +36,16 @@ char *get_heredoc(char *delimiter)
 	return (line);
 }
 
-char *obtain_delimiter(char *del_str)
+static char *obtain_delimiter(char *del_str)
 {
 	char	*delimiter;
 	int		len;
 
-	len = ft_strlen(del_str);
+	while (*del_str != '<')
+		del_str++;
+	while (*del_str == '<' || is_space(*del_str))
+		del_str++;
+	len = len_literal_word(del_str, 0);
 	if (del_str[0] == '\'' || del_str[0] == '"')
 	{
 		len = len - 2;
@@ -43,7 +58,7 @@ char *obtain_delimiter(char *del_str)
 	return (delimiter);
 }
 
-char	*expand_string(char *s)
+static char	*expand_string(char *s)
 {
 	char	*expanded;
 	char	*aux;
@@ -51,7 +66,10 @@ char	*expand_string(char *s)
 	int		pos;
 	int		len;
 
+	if (!s)
+		return (NULL);
 	expanded = NULL;
+	pos = 0;
 	while (s[pos] != '\0')
 	{
 		if (s[pos] != '$')
@@ -79,32 +97,42 @@ char	*expand_string(char *s)
 	return (expanded);
 }
 
-void	show_leaks(void)
+static int	must_expand(char *s)
 {
-	system("leaks a.out");
+	if (!s)
+		return (0);
+	while (*s != '<' && *s != '\0')
+		s++;
+	while (*s == '<' || is_space(*s) == 1)
+		s++;
+	if (*s == '"' || *s == '\'')
+		return (0);
+	return (1);
 }
 
-int	main(int argc, char **argv)
+char	*get_heredoc(char *s)
 {
 	char	*heredoc_text;
 	char	*delimiter;
 	char	*aux;
 
-	atexit(show_leaks);
-	delimiter = obtain_delimiter(argv[1]);
-	heredoc_text = get_heredoc(delimiter);
-	if (argv[1][0] != '\'' && argv[1][0] != '"')
+	delimiter = obtain_delimiter(s);
+	heredoc_text = get_rawtext(delimiter);
+	if (must_expand(s) == 1)
 	{
 		aux = heredoc_text;
 		heredoc_text = expand_string(aux);
 		free(aux);
 	}
-	printf("%s\n====\n", heredoc_text);
 	free(delimiter);
-	free(heredoc_text);
-	return 0;
+	return (heredoc_text);
 }
-
 /*
-Falta distinguir en el delimitador si está o no entrecomillado para luego expandirlo o no.
-*/
+int main(int argc, char **argv)
+{
+	char *heredoc = get_heredoc(argv[1]);
+	printf("4\n");
+	printf("%p\n", heredoc);
+	free(heredoc);
+	return (0);
+}*/

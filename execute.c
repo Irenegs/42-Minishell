@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 16:09:28 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/05/19 19:07:18 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/05/25 20:23:35 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,8 @@ int execute_only_child(char *s)
     int output;
     char **command;
     int childpid;
+    char *heredoc;
 
-    input = extract_input(s);
-    printf("Input fd: %d\n", input);
-    //dup2(input, STDIN_FILENO);
-    output = extract_output(s);
-    printf("Output fd: %d\n", output);
-    //dup2(output, STDOUT_FILENO);
     childpid = fork();
     if (childpid == -1)
     {
@@ -48,17 +43,32 @@ int execute_only_child(char *s)
     printf("Childpid %d\n", childpid);
     if (childpid == 0)
     {
+        input = extract_input(s);
+        printf("Input fd: %d\n", input);
+        if (input > 0)
+            dup2(input, STDIN_FILENO);
+        if (input == -2)
+        {
+            input = open("tmpfile", O_RDWR | O_TRUNC | O_CREAT, 0644);
+            heredoc = get_heredoc(s);
+            write(input, heredoc, ft_strlen(heredoc));
+            dup2(input, STDIN_FILENO);
+            //borrar tmpfile en algún momento
+        }
+        output = extract_output(s);
+        printf("Output fd: %d\n", output);
+        dup2(output, STDOUT_FILENO);
         command = extract_command(s);
-        printf("Comando: %s\n", command[0]);
-        printf("Args: %s\n", command[1]);
+        //printf("Comando: %s\n", command[0]);
+        //printf("Args: %s\n", command[1]);
         if (run_command(command) != 0)
             ft_out(command);
         return (-1);
     }
     if (waitpid(-1, &childpid, 0) != -1)
         printf("exit\n");
-    //close(STDOUT_FILENO);
-    //close(STDIN_FILENO);
+    close(STDOUT_FILENO);
+    close(STDIN_FILENO);
     return (0);
 }
 
@@ -69,31 +79,33 @@ void    execute(char *s, int pipes)
     int     aux;
     char    *subs;
     int     childpid;
+    char **command;
+
 
     p = 0;// tal vez queramos separar el primer y último comando - pensar
-    while (p < pipes)
+    while (p <= pipes)
     {
         //pipe(fd);cerrar abrir fds de pipe
         subs = extract_pipe(s, p);
         if (!subs)
             return ;
         printf("Subs: %sAAAA\n", subs);
-        /*
         childpid = fork();
         if (childpid == 0)
         {
-            /*
             aux = extract_input(subs);
-            if (aux != -1)
-                dup2(fd[1], STDOUT_FILENO);*/
+            //if (aux != -1)
+            //    dup2(fd[1], STDOUT_FILENO);
+            command = extract_command(subs);
+            printf("command: %s-%s\n", command[0], command[1]);
+            ft_out(command);
             //s se debe reemplazar por el substring de s referente al pipe; se debe calcular antes del fork
             //execute_child(subs);
-            /*
-            printf("hijo\n");
         }
         aux = extract_output(subs);
+        //if (aux != -1)
+        //dup2(fd[0], STDIN_FILENO);
         free(subs);
-        dup2(fd[0], STDIN_FILENO);*/
         p++;
     }
     //last command <- a lo mejor esto vale para onlychild

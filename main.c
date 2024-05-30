@@ -3,15 +3,58 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 17:58:01 by irene             #+#    #+#             */
-/*   Updated: 2024/05/18 19:40:03 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/05/30 22:23:48 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+//para probar compilar:
+//gcc -o beta built_in2.c built_in.c built_in3.c built_in4.c  struct.c main.c libft/libft.a -lreadline
+void prompt(t_mix *data)
+{
+    char *input;
+    char **argv;
+
+    while (1)
+    {
+        input = readline("Minishell: ");
+        if (*input)
+            add_history(input);
+        if(*input != '\0')
+        {
+            argv = ft_split(input, ' ');
+            if (argv)
+            {
+                data->m_argv = argv;
+                execute_builtin(argv, data);
+                free(argv);
+            }
+            free(input);
+        }
+    }
+}
+
+int main(int argc, char **argv, char **envp)
+{
+    t_mix data;
+
+    if (argc != 1 || !argv)
+       return (1);
+
+    ft_init_mix(&data);
+    ft_fill_struct(&data, argc, argv, envp);
+    prompt(&data);
+    ft_free_env(data.m_env);
+    ft_free_env(data.m_argv);
+    return (0);
+}
+
+
+/*
 void	prompt(void)
 {
 	char *s;
@@ -42,7 +85,7 @@ void show_leaks(void)
 {
 	system("leaks minishell");
 }
-*/
+
 int main(void)
 {
 	struct sigaction sa;
@@ -59,7 +102,7 @@ int main(void)
 	return (0);
 }
 
-/*
+
 
 Prompt:
 readline lee y devuelve la línea de stdin (malloc).

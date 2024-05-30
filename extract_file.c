@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   extract_file.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 16:36:46 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/05/19 19:19:49 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/05/25 18:22:33 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,14 @@ int extract_input(char *s)
 		return (-1);
 	pos = locate_char_position(s, '<');
 	if (pos == -1)
+		return (-1);
+	if (s[pos + 1] == '<')
 		return (-2);
-	if (pos == -2)
-		return (1);//heredoc
 	filename = extract_element(s, pos);
 	if (!filename)
-		return (-2);//-1 para gestionar el error?
+		return (-1);//-1 para gestionar el error?
 	fd = open(filename, O_RDONLY);
+	printf("Input: %s\n", filename);
 	free(filename);
 	//perror("minishell");//función de escritura de errores?
 	aux_fd = extract_input(s + pos + 1);
@@ -73,6 +74,7 @@ int extract_output(char *s)
 		fd = open(filename, O_WRONLY | O_TRUNC | O_CREAT, 0644);
 	else
 		fd = open(filename, O_WRONLY | O_CREAT, 0644);
+	printf("Output: %s\n", filename);
 	free(filename);
 	//perror("minishell");//función de escritura de errores?
 	aux_fd = extract_output(s + pos + 1);
