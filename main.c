@@ -6,22 +6,43 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 17:58:01 by irene             #+#    #+#             */
-/*   Updated: 2024/05/30 22:23:48 by pablo            ###   ########.fr       */
+/*   Updated: 2024/06/04 23:06:48 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 //para probar compilar:
-//gcc -o beta built_in2.c built_in.c built_in3.c built_in4.c  struct.c main.c libft/libft.a -lreadline
+//gcc -o beta built_in2.c built_in.c built_in3.c built_in4.c  signals.c struct.c main.c libft/libft.a -lreadline
+
+void free_argv(char **argv)
+{
+    int i = 0;
+    if (!argv)
+        return;
+    while (argv[i])
+    {
+        free(argv[i]);
+        i++;
+    }
+    free(argv);
+}
+
 void prompt(t_mix *data)
 {
     char *input;
     char **argv;
 
+    signal_handler();
     while (1)
     {
+        
         input = readline("Minishell: ");
+        if(input == NULL) //esto seria la señal de CRTL +D
+        {
+            printf("\n");
+            break;
+        }
         if (*input)
             add_history(input);
         if(*input != '\0')
@@ -31,7 +52,8 @@ void prompt(t_mix *data)
             {
                 data->m_argv = argv;
                 execute_builtin(argv, data);
-                free(argv);
+                free_argv(argv);
+                data->m_argv = NULL;
             }
             free(input);
         }
@@ -49,7 +71,11 @@ int main(int argc, char **argv, char **envp)
     ft_fill_struct(&data, argc, argv, envp);
     prompt(&data);
     ft_free_env(data.m_env);
-    ft_free_env(data.m_argv);
+    if (data.m_argv) // Solo libera si no es NULL
+    {
+        free_argv(data.m_argv);
+        data.m_argv = NULL; // para no referenciar memoria liberada, doble free si crlt+d 2 vces en un sleep
+    }
     return (0);
 }
 

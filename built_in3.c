@@ -69,6 +69,8 @@ void execute_builtin(char **argv, t_mix *data)
         ft_unset(data);
     else if (ft_strcmp(argv[0], "env") == 0)
         ft_env(data);
+    else if (ft_strcmp(argv[0], "sleep") == 0)
+        ft_sleep(data);
     else
         fprintf(stderr, "%s: command not found\n", argv[0]);
 }

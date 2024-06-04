@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 17:56:24 by irene             #+#    #+#             */
-/*   Updated: 2024/05/30 22:47:21 by pablo            ###   ########.fr       */
+/*   Updated: 2024/06/04 22:34:23 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,15 @@ typedef struct s_mix
 	char	**m_env;
 	char	**m_path;
 	char	**m_argv;
+	int interrupted;
 
 }				t_mix;
+
+//signals.c
+void	ft_sigint(int signum);
+void	ft_sigquit(int signum);
+void	signal_handler(void);
+void ft_sleep(t_mix *data); // para hacer pruebas con las signals
 
 
 //struct.c
