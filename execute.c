@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
+/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 16:09:28 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/05/25 20:23:35 by irene            ###   ########.fr       */
+/*   Updated: 2024/06/06 18:45:07 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,9 @@ int execute_only_child(char *s)
         printf("Childerror\n");
         exit(1);
     }
-    printf("Childpid %d\n", childpid);
     if (childpid == 0)
     {
         input = extract_input(s);
-        printf("Input fd: %d\n", input);
         if (input > 0)
             dup2(input, STDIN_FILENO);
         if (input == -2)
@@ -55,20 +53,19 @@ int execute_only_child(char *s)
             dup2(input, STDIN_FILENO);
             //borrar tmpfile en algún momento
         }
-        output = extract_output(s);
-        printf("Output fd: %d\n", output);
-        dup2(output, STDOUT_FILENO);
         command = extract_command(s);
-        //printf("Comando: %s\n", command[0]);
-        //printf("Args: %s\n", command[1]);
+        printf("Comando: %s\n", command[0]);
+        printf("Args: %s\n", command[1]);
+        output = extract_output(s);
+        if (output > 0)
+            dup2(output, STDOUT_FILENO);
         if (run_command(command) != 0)
             ft_out(command);
         return (-1);
     }
+    write(2, "hola!\n", 6);
     if (waitpid(-1, &childpid, 0) != -1)
-        printf("exit\n");
-    close(STDOUT_FILENO);
-    close(STDIN_FILENO);
+        printf("exit!\n");
     return (0);
 }
 

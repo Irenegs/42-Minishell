@@ -3,44 +3,45 @@
 /*                                                        :::      ::::::::   */
 /*   extract_command.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
+/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:36:03 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/05/25 14:32:50 by irene            ###   ########.fr       */
+/*   Updated: 2024/06/06 19:10:17 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int len_cmd(char *s, int pos)
+static int	len_cmd(char *s, int pos)
 {
-	int len;
+	int	len;
 
 	len = 0;
-	while (s[pos + len] != '\0' && s[pos + len] != '<' && s[pos + len] != '>' && s[pos + len] != '|')
+	while (s[pos + len] != '\0' && s[pos + len] != '<'
+		&& s[pos + len] != '>' && s[pos + len] != '|')
 		len++;
-	while(is_space(s[pos + len]) == 1 || s[pos + len] == '|' || s[pos + len] == '<' || s[pos + len] == '>')
-        len--;
+	while (is_space(s[pos + len]) == 1 || s[pos + len] == '|'
+		|| s[pos + len] == '<' || s[pos + len] == '>')
+		len--;
 	return (++len);
 }
 
-static int skip_word(char *s, int pos)
+static int	skip_word(char *s, int pos)
 {
-	int len;
+	int	len;
 
 	len = 0;
-	while (s[pos + len] == '<' || s[pos + len] == '>' || is_space(s[pos + len]) == 1)
+	while (s[pos + len] == '<' || s[pos + len] == '>'
+		|| is_space(s[pos + len]) == 1)
 		len++;
 	while (something_to_add(s, pos + len) == 1)
-	{
 		len += len_literal_word(s, pos + len);
-	}
 	return (len);
 }
 
-static int locate_cmd_position(char *s)
+static int	locate_cmd_position(char *s)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (s && s[i] != '\0')
@@ -48,33 +49,13 @@ static int locate_cmd_position(char *s)
 		if (s[i] == '<' || s[i] == '>')
 			i += skip_word(s, i);
 		if (is_space(s[i]) == 0)
-		{
 			return (i);
-		}
 		i++;
 	}
 	return (-1);
 }
 
-static int	find_next_word(char *s, int pos)
-{
-	int quotes;
-
-	quotes = 0;
-	while(s[pos] != '\0' && (is_space(s[pos]) == 0 || quotes == 0))
-	{
-		if (s[pos] == quotes && quotes != 0)
-			quotes = 0;
-		if (quotes == 0 && (s[pos] == '\'' || s[pos] == '"'))
-			quotes = s[pos];
-		pos++;
-	}
-	while (is_space(s[pos])  == 1)
-		pos++;
-	return (pos);
-}
-
-static char **split_command(char *s)
+static char	**split_command(char *s)
 {
 	char	**arr;
 	int		i;
@@ -93,13 +74,15 @@ static char **split_command(char *s)
 		arr[i] = extract_element(s, pos);
 		if (!arr[i])
 			return (ft_out(arr));
-		pos = find_next_word(s, pos);
+		pos += len_literal_word(s, pos);
+		while (s[pos] != '\0' && is_space(s[pos]) == 0)
+			pos++;
 	}
 	arr[i] = NULL;
 	return (arr);
 }
 
-char **extract_command(char *s)
+char	**extract_command(char *s)
 {
 	int		pos;
 	int		len;
@@ -108,13 +91,17 @@ char **extract_command(char *s)
 
 	pos = locate_cmd_position(s);
 	if (pos == -1)
-		return (NULL);//devolver {NULL, NULL, NULL} para diferenciar de fallo en el malloc(?)
+		return (NULL);
 	len = len_cmd(s, pos);
 	cmd_string = ft_substr(s, pos, len);
 	if (!cmd_string)
 		return (NULL);
-	//printf("cmd substr:%s\n", cmd_string);
 	command = split_command(cmd_string);
 	free(cmd_string);
 	return (command);
 }
+
+/*
+extract command: 
+devolver {NULL, NULL, NULL} para diferenciar de fallo en el malloc ?
+*/

@@ -3,21 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   extract_element.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
+/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:42:48 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/05/25 13:58:01 by irene            ###   ########.fr       */
+/*   Updated: 2024/06/06 19:08:27 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char *obtain_variable(char *s, int i)
+char	*obtain_variable(char *s, int i)
 {
-	//TODO Falta gestionar $? 
-	char *var_name;
-	char *var_value;
-	size_t len;
+	char	*var_name;
+	char	*var_value;
+	size_t	len;
 
 	len = len_literal_word(s, i);
 	if (len > 0 && s[i] == '{')
@@ -39,9 +38,9 @@ static char	*expand_double_quotes(char *s, int pos)
 	char	*chunk;
 
 	len = 0;
-	while(s[pos + len + 1] != '"')
+	while (s[pos + len + 1] != '"')
 	{
-		while(s[pos + len + 1] != '"' && s[pos + len + 1] != '$')
+		while (s[pos + len + 1] != '"' && s[pos + len + 1] != '$')
 			len++;
 		result = ft_substr(s, pos + 1, len);
 		pos = pos + len + 1;
@@ -60,14 +59,13 @@ static char	*expand_double_quotes(char *s, int pos)
 	return (result);
 }
 
-char *extract_element(char *s, int pos)
+char	*extract_element(char *s, int pos)
 {
-	//TODO proteger frees cuando algo es NULL
 	size_t	len;
 	char	*result;
 	char	*chunk;
 	char	*aux;
-
+//TODO proteger frees cuando algo es NULL
 	if (!s)
 		return (NULL);
 	result = NULL;
@@ -115,4 +113,3 @@ char *extract_element(char *s, int pos)
 	}
 	return (result);
 }
-
