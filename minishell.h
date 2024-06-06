@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 17:56:24 by irene             #+#    #+#             */
-/*   Updated: 2024/06/04 22:34:23 by pablo            ###   ########.fr       */
+/*   Updated: 2024/06/06 23:59:19 by pablgarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,9 @@ void execute_builtin(char **argv, t_mix *data);
 
 //built_in4.c
 char *create_env_entry(const char *key, const char *value);
-char **copy_env_with_new_entry(char **env, const char *key, const char *value, int size);
-char **update_existing_entry(char **env, int index, const char *key, const char *value);
+char **new_entry(char **env, const char *key, const char *value, int size);
+char **update_entry(char **env, int i, const char *key, const char *value);
+void free_argv(char **argv);
 
 //command.c
 int	is_local(char *s);
