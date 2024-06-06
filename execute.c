@@ -132,7 +132,7 @@ void    parse_and_execute(char *s)
     
 }
 
-void show_leaks(void)
+/*void show_leaks(void)
 {
     system("leaks a.out");
 }
@@ -147,7 +147,7 @@ int main(int argc, char **argv)
     return (0);
 }
 
-/*
+
 1) Establecer pipes
 
 

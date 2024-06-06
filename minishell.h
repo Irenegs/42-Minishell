@@ -30,6 +30,8 @@
 
 #define MAX_argv 100 
 
+extern char	**environ;
+
 typedef struct s_mix
 {
 	char	**m_env;
@@ -78,29 +80,88 @@ char *create_env_entry(const char *key, const char *value);
 char **copy_env_with_new_entry(char **env, const char *key, const char *value, int size);
 char **update_existing_entry(char **env, int index, const char *key, const char *value);
 
-
-extern char	**environ;
-int	is_space(char c);
-int 	is_metacharacter(char c);
-int 	parser(char *s);
-void    parse_and_execute(char *s);
-int		extract_input(char *s);
-int		extract_output(char *s);
-char 	**extract_command(char *s);
-char	**ft_super_split(char const *s, char *sep);
-int		is_escaped(char const *s, int i);
-int		new_word(char const *s, char *sep, int i, int quotes);
-int		ft_wc(char const *s, char *sep);
-int		end_word(char const *s, char *sep, int i, int quot);
-char **extract_command(char *s);
-char	**ft_out(char **arr);
+//command.c
+int	is_local(char *s);
+static int	select_variable(char **environ);
+static char	*get_path(char *s, int i, char **path);
+static char	**get_path_variable(char **environ);
+static char	*get_route(char *s, char **path);
 char	*command_exists(char *s);
+
+//execute.c
+static int	run_command(char **command);
+int execute_only_child(char *s);
+void    execute(char *s, int pipes);
+void    parse_and_execute(char *s);
+
+//extract_command.c
+static int len_cmd(char *s, int pos);
+static int skip_word(char *s, int pos);
+static int locate_cmd_position(char *s);
+static int	find_next_word(char *s, int pos);
+static char **split_command(char *s);
+char **extract_command(char *s);
+
+//extract_elements.c
+char *obtain_variable(char *s, int i);
+static char	*expand_double_quotes(char *s, int pos);
+char *extract_element(char *s, int pos);
+
+//extract_file.c
+static int	locate_char_position(char *s, char c);
+int extract_input(char *s);
+int extract_output(char *s);
+
+//extract_pipe.c
+static int locate_pipe_init(char *s, int pipe);
+static int pipe_len(char *s, int pipe, int pos);
 char    *extract_pipe(char *s, int pipe);
+
+//extract_utils.c
+int	is_space(char c);
 size_t	len_literal_word(char *s, int pos);
 size_t len_quotes(char *s, int pos);
 int	something_to_add(char *s, int pos);
-char *extract_element(char *s, int pos);
-char *obtain_variable(char *s, int i);
+
+//gnl.c
+static size_t	find_br(char *s);
+ssize_t	read_line(char **rem, int fd);
+void	prepare_line(char *array[], char *rem);
 char	*get_next_line(int fd);
+
+//parser.c
+int is_metacharacter(char c);
+int valid_insertion(int var[3], char s);
+void change_insert(int *var, int pipe, int input, int output);
+int redirection(char *s, int i, int insert[3]);
+int	open_quotes(char *s);
+int parser(char *s);
+
+//prueba_children.c
+
+void    execute(char *s, int pipes);
+void    parse_and_execute(char *s);
+
+//prueba_heredoc.c
+static char *get_rawtext(char *delimiter);
+static char *obtain_delimiter(char *del_str);
+static char	*expand_string(char *s);
+static int	must_expand(char *s);
 char	*get_heredoc(char *s);
+
+//split_utils.c
+static int	is_separator(char c, char *sep);
+int	is_escaped(char const *s, int i);
+int	new_word(char const *s, char *sep, int i, int quotes);
+int	ft_wc(char const *s, char *sep);
+int	end_word(char const *s, char *sep, int i, int quot);
+
+//super_split.c
+char	**ft_out(char **arr);
+static int	ch_to_print(char const *s, int i);
+static int	len_next_word(char const *s, char *sep, int pos);
+static int	copy_return_nonprint(char *dst, char const *s, int len);
+char	**ft_super_split(char const *s, char *sep);
+
+
 #endif

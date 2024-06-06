@@ -127,6 +127,7 @@ char	*get_heredoc(char *s)
 	free(delimiter);
 	return (heredoc_text);
 }
+
 /*
 int main(int argc, char **argv)
 {
