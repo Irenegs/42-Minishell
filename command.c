@@ -6,7 +6,7 @@
 /*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 17:36:54 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/05/19 19:05:42 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/06/06 18:56:19 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,30 +29,6 @@ int	is_local(char *s)
 	return (1);
 }
 
-static int	select_variable(char **environ)
-{
-	int		i;
-	char	**var;
-
-	i = 0;
-	if (environ[0] == NULL)
-		return (-2);
-	while (environ[i])
-	{
-		var = ft_super_split(environ[i], "=:");
-		if (!var)
-			return (-1);
-		if (ft_strncmp(var[0], "PATH", 4) == 0)
-		{
-			ft_out(var);
-			return (i);
-		}
-		ft_out(var);
-		i++;
-	}
-	return (-1);
-}
-
 static char	*get_path(char *s, int i, char **path)
 {
 	char	*route;
@@ -71,20 +47,6 @@ static char	*get_path(char *s, int i, char **path)
 		}
 	}
 	return (route);
-}
-
-static char	**get_path_variable(char **environ)
-{
-	char	*default_path;
-	int		path_var;
-
-	path_var = select_variable(environ);
-	default_path = "PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin";
-	if (path_var == -2)
-		return (ft_super_split(default_path, "=:"));
-	if (path_var == -1)
-		return (NULL);
-	return (ft_super_split(environ[path_var], "=:"));
 }
 
 static char	*get_route(char *s, char **path)
@@ -113,7 +75,7 @@ char	*command_exists(char *s)
 	route = NULL;
 	if (s)
 	{
-		path = get_path_variable(environ);
+		path = ft_super_split(getenv("PATH"), "=:");
 		if (!path || is_local(s) == 0)
 		{
 			if (path)

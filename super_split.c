@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   super_split.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
+/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 15:23:01 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/05/14 21:50:40 by irene            ###   ########.fr       */
+/*   Updated: 2024/06/06 18:53:52 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,8 @@ char	**ft_super_split(char const *s, char *sep)
 	int		pos;
 	int		len;
 
+	if (!s)
+		return (NULL);
 	arr = malloc((ft_wc(s, sep) + 1) * sizeof(char *));
 	if (!arr)
 		return (NULL);

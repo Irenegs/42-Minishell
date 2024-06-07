@@ -1,7 +1,7 @@
 
 # include "minishell.h"
 
-/*
+
 static int	run_command(char **command)
 {
     char *cmd;
@@ -15,15 +15,7 @@ static int	run_command(char **command)
 	ft_out(command);
 	return (-1);
 }
-void execute_child(char *s)
-{
-	char **command;
 
-	command = extract_command(s);
-	if (run_command(command) != 0)
-            ft_out(command);
-}
-*/
 void    execute(char *s, int pipes)
 {
     int     p;
@@ -32,43 +24,34 @@ void    execute(char *s, int pipes)
     char    *subs;
     int     childpid;
 	int		status;
-	char 	*arg[4];
+    char    **command;
 
-	arg[0] = "/usr/bin/cat";
-	arg[1] = "file";
-	arg[2] = NULL;
-    p = 0;// tal vez queramos separar el primer y último comando - pensar
+    p = 0;
     while (p < pipes)
     {
-		printf("p %d\n", p);
-        pipe(fd);//cerrar abrir fds de pipe
-        subs = extract_pipe(s, p);
-        if (!subs)
-            return ;
+        if (p != pipes)
+            pipe(fd);
         childpid = fork();
+        if (childpid == -1)
+            return ;
         if (childpid == 0)
         {
-			printf("p-child %d\n", p);
-			if (p == 0)
-			{
-				printf("Subs: %sAAAA\n", subs);
-				dup2(fd[1], STDOUT_FILENO);
-				execve("/usr/bin/cat", arg, NULL);
-			}
-			close(fd[0]);
-			/*
-            aux = extract_input(subs);
-            if (aux != -1)
-                dup2(fd[1], STDOUT_FILENO);*/
-            //s se debe reemplazar por el substring de s referente al pipe; se debe calcular antes del fork
-            /*
-            printf("hijo\n");*/
+            printf("p %d\n", p);
+            if (p != pipes)
+                dup2(fd[1], STDOUT_FILENO);
+            close(fd[0]);
+            subs = extract_pipe(s, p);
+            if (!subs)
+                return ;
+            command = extract_command(subs);
+            if (!command)
+                return ;
+            run_command(command);
+            exit(1);
         }
-		/*
-        aux = extract_output(subs);
-        free(subs);*/
-        dup2(fd[0], STDIN_FILENO);
-		close(fd[1]);
+        if (p != pipes)
+            dup2(fd[0], STDIN_FILENO);
+        close(fd[1]);
         p++;
     }
     //last command <- a lo mejor esto vale para onlychild
@@ -90,8 +73,10 @@ void    parse_and_execute(char *s)
     /*else if (pipes == 0)
         execute_only_child(s);*/
     else if (pipes > 0)
+    {
+        printf("Pipes %d\n", pipes);
         execute(s, pipes);
-    
+    }
 }
 
 void show_leaks(void)
