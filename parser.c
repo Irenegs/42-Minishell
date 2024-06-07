@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 18:32:16 by irene             #+#    #+#             */
-/*   Updated: 2024/05/19 19:01:05 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/06/07 17:50:15 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int is_metacharacter(char c)
+static int	is_metacharacter(char c)
 {
-	char *metacharacter;
-	int i;
-	
+	char	*metacharacter;
+	int		i;
+
 	metacharacter = "|$<>'\"\n \t";
 	i = 0;
 	while (metacharacter[i] != '\0')
@@ -28,7 +28,7 @@ int is_metacharacter(char c)
 	return (0);
 }
 
-int valid_insertion(int var[3], char s)
+static int	valid_insertion(int var[3], char s)
 {
 	if (s == '|' && var[0] != 1)
 		return (0);
@@ -38,33 +38,22 @@ int valid_insertion(int var[3], char s)
 		return (0);
 	return (1);
 }
-/*
-int is_valid(char s)
-{
-	//realmente no habría que dejar pasar todos los caracteres, pueden estar en el nombre de archivo, salvo \  
-	if (ft_isalnum(s) == 0 && is_metacharacter(s) == 0)
-	{
-		if (s != '_' && s != '-' && s != '{' && s != '}' && s != '.' && s != '/')
-			return (0);
-	}
-	return (1);
-}*/
 
-void change_insert(int *var, int pipe, int input, int output)
+static void	change_insert(int *var, int pipe, int input, int output)
 {
 	var[0] = pipe;
 	var[1] = input;
 	var[2] = output;
 }
 
-int redirection(char *s, int i, int insert[3])
+static int	redirection(char *s, int i, int insert[3])
 {
 	if (s[i] != '<' && s[i] != '>')
 		return (0);
 	if (s[i] == s[i + 1] && s[i] == s[i + 2])
 		return (-(i + 3));
 	if (valid_insertion(insert, s[i]) != 1)
-		return (-(i + 3));	
+		return (-(i + 3));
 	if (s[i] == '>')
 		change_insert(insert, 0, 0, 1);
 	else if (s[i] == '<' && s[i + 1] == '<')
@@ -77,10 +66,10 @@ int redirection(char *s, int i, int insert[3])
 	return (0);
 }
 
-int	open_quotes(char *s)
+static int	open_quotes(char *s)
 {
-	int i;
-	int quotes;
+	int	i;
+	int	quotes;
 
 	i = 0;
 	quotes = 0;
@@ -97,9 +86,9 @@ int	open_quotes(char *s)
 	return (0);
 }
 
-int parser(char *s)
+int	parser(char *s)
 {
-	int i;
+	int	i;
 	int	insert[3];
 	int	pipes;
 
@@ -108,7 +97,7 @@ int parser(char *s)
 	insert[1] = 1;
 	insert[2] = 1;
 	pipes = open_quotes(s);
-	while (s[++i] != '\0' && pipes >= 0)//eliminar  && is_valid(s[i]) == 1
+	while (s[++i] != '\0' && pipes >= 0)
 	{
 		if (s[i] == '|' && valid_insertion(insert, s[i]) == 1)
 		{

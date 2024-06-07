@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 17:56:24 by irene             #+#    #+#             */
-/*   Updated: 2024/06/06 23:59:19 by pablgarc         ###   ########.fr       */
+/*   Updated: 2024/06/07 17:48:40 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,8 +131,6 @@ void	prepare_line(char *array[], char *rem);
 char	*get_next_line(int fd);
 
 //parser.c
-int is_metacharacter(char c);
-int valid_insertion(int var[3], char s);
 void change_insert(int *var, int pipe, int input, int output);
 int redirection(char *s, int i, int insert[3]);
 int	open_quotes(char *s);
