@@ -25,6 +25,7 @@ void    execute(char *s, int pipes)
     int     childpid;
 	int		status;
     char    **command;
+    int     output;
 
     p = 0;
     while (p <= pipes)
@@ -36,26 +37,36 @@ void    execute(char *s, int pipes)
             return ;
         if (childpid == 0)
         {
-            printf("p %d\n", p);
-            if (p != pipes)
+            output = extract_output(s);
+            if (output > 0)
+            {
+                if (p != pipes)
+                {
+                    close(fd[1]);
+                    dup2(output, fd[1]);
+                }
+                else
+                    dup2(output, STDOUT_FILENO);
+            }
+            if (p != pipes && output < 0)
                 dup2(fd[1], STDOUT_FILENO);
             close(fd[0]);
             subs = extract_pipe(s, p);
             if (!subs)
                 return ;
+            
+            
             command = extract_command(subs);
             if (!command)
                 return ;
             run_command(command);
             exit(1);
         }
-        
         if (p != pipes)
             dup2(fd[0], STDIN_FILENO);
         close(fd[1]);
         p++;
     }
-    //last command <- a lo mejor esto vale para onlychild
     while (wait(&status) > 0)
     {
 	    printf("Exit: %d\n", status);

@@ -6,7 +6,7 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 18:32:16 by irene             #+#    #+#             */
-/*   Updated: 2024/06/07 17:50:15 by irene            ###   ########.fr       */
+/*   Updated: 2024/06/07 18:20:52 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,14 @@ static int	valid_insertion(int var[3], char s)
 	return (1);
 }
 
-static void	change_insert(int *var, int pipe, int input, int output)
+void	change_insert(int *var, int pipe, int input, int output)
 {
 	var[0] = pipe;
 	var[1] = input;
 	var[2] = output;
 }
 
-static int	redirection(char *s, int i, int insert[3])
+int	redirection(char *s, int i, int insert[3])
 {
 	if (s[i] != '<' && s[i] != '>')
 		return (0);
@@ -66,7 +66,7 @@ static int	redirection(char *s, int i, int insert[3])
 	return (0);
 }
 
-static int	open_quotes(char *s)
+int	open_quotes(char *s)
 {
 	int	i;
 	int	quotes;
