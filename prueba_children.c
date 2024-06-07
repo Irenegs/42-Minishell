@@ -79,6 +79,7 @@ void    parse_and_execute(char *s)
     }
 }
 
+/*
 void show_leaks(void)
 {
     system("leaks a.out");
@@ -93,3 +94,4 @@ int main(int argc, char **argv)
     parse_and_execute(s);
     return (0);
 }
+*/

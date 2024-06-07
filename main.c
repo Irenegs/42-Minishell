@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 17:58:01 by irene             #+#    #+#             */
-/*   Updated: 2024/06/04 23:06:48 by pablo            ###   ########.fr       */
+/*   Updated: 2024/06/06 22:46:42 by pablgarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,7 @@
 //para probar compilar:
 //gcc -o beta built_in2.c built_in.c built_in3.c built_in4.c  signals.c struct.c main.c libft/libft.a -lreadline
 
-void free_argv(char **argv)
-{
-    int i = 0;
-    if (!argv)
-        return;
-    while (argv[i])
-    {
-        free(argv[i]);
-        i++;
-    }
-    free(argv);
-}
+
 
 void prompt(t_mix *data)
 {
