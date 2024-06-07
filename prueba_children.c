@@ -27,7 +27,7 @@ void    execute(char *s, int pipes)
     char    **command;
 
     p = 0;
-    while (p < pipes)
+    while (p <= pipes)
     {
         if (p != pipes)
             pipe(fd);
@@ -49,6 +49,7 @@ void    execute(char *s, int pipes)
             run_command(command);
             exit(1);
         }
+        
         if (p != pipes)
             dup2(fd[0], STDIN_FILENO);
         close(fd[1]);
@@ -79,7 +80,7 @@ void    parse_and_execute(char *s)
     }
 }
 
-/*
+
 void show_leaks(void)
 {
     system("leaks a.out");
@@ -94,4 +95,3 @@ int main(int argc, char **argv)
     parse_and_execute(s);
     return (0);
 }
-*/
