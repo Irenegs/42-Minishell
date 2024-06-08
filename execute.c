@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 16:09:28 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/06/06 18:45:07 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/06/07 17:42:48 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,10 @@ int execute_only_child(char *s)
         if (output > 0)
             dup2(output, STDOUT_FILENO);
         if (run_command(command) != 0)
+        {
+            printf("Run command error\n");
             ft_out(command);
+        }
         return (-1);
     }
     write(2, "hola!\n", 6);
