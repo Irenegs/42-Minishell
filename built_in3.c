@@ -6,7 +6,7 @@
 /*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 22:04:50 by pablo             #+#    #+#             */
-/*   Updated: 2024/06/06 23:06:56 by pablgarc         ###   ########.fr       */
+/*   Updated: 2024/06/08 16:43:13 by pablgarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,24 +56,24 @@ void	ft_exit(t_mix *data)
 	exit(status);
 }
 
-void	execute_builtin(char **argv, t_mix *data)
+void	execute_builtin(t_mix *data)
 {
-	if (ft_strcmp(argv[0], "echo") == 0)
+	if (ft_strcmp(data->m_argv[0], "echo") == 0)
 		ft_echo(data);
-	else if (ft_strcmp(argv[0], "cd") == 0)
+	else if (ft_strcmp(data->m_argv[0], "cd") == 0)
 		ft_cd(data);
-	else if (ft_strcmp(argv[0], "pwd") == 0)
+	else if (ft_strcmp(data->m_argv[0], "pwd") == 0)
 		ft_pwd();
-	else if (ft_strcmp(argv[0], "exit") == 0)
+	else if (ft_strcmp(data->m_argv[0], "exit") == 0)
 		ft_exit(data);
-	else if (ft_strcmp(argv[0], "export") == 0)
+	else if (ft_strcmp(data->m_argv[0], "export") == 0)
 		ft_export(data);
-	else if (ft_strcmp(argv[0], "unset") == 0)
+	else if (ft_strcmp(data->m_argv[0], "unset") == 0)
 		ft_unset(data);
-	else if (ft_strcmp(argv[0], "env") == 0)
+	else if (ft_strcmp(data->m_argv[0], "env") == 0)
 		ft_env(data);
-	else if (ft_strcmp(argv[0], "sleep") == 0)
+	else if (ft_strcmp(data->m_argv[0], "sleep") == 0)
 		ft_sleep(data);
 	else
-		fprintf(stderr, "%s: command not found\n", argv[0]);
+		fprintf(stderr, "%s: command not found\n", data->m_argv[0]);
 }

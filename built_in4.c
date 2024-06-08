@@ -6,7 +6,7 @@
 /*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 22:08:38 by pablo             #+#    #+#             */
-/*   Updated: 2024/06/07 00:01:44 by pablgarc         ###   ########.fr       */
+/*   Updated: 2024/06/08 17:10:06 by pablgarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,8 @@ char	**new_entry(char **env, const char *key, const char *value, int size)
 char	**update_entry(char **env, int i, const char *key, const char *value)
 {
 	free(env[i]);
-    env[i] = create_env_entry(key, value);
-    if (!env[i])
-        return NULL;
-    return env;
+	env[i] = create_env_entry(key, value);
+	if (!env[i])
+		return (NULL);
+	return (env);
 }

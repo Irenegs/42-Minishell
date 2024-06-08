@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
+/*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 17:56:24 by irene             #+#    #+#             */
-/*   Updated: 2024/06/07 17:48:40 by irene            ###   ########.fr       */
+/*   Updated: 2024/06/08 16:43:17 by pablgarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void ft_unset(t_mix *data);
 int ft_strcmp(const char *s1, const char *s2);
 void ft_env(t_mix *data);
 void ft_exit(t_mix *data);
-void execute_builtin(char **argv, t_mix *data);
+void execute_builtin(t_mix *data);
 
 //built_in4.c
 char *create_env_entry(const char *key, const char *value);

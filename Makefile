@@ -8,7 +8,7 @@ SRCS        := command.c extract_command.c extract_element.c extract_file.c \
 				extract_pipe.c extract_utils.c execute.c  \
 				parser.c super_split.c split_utils.c built_in.c built_in2.c \
 				built_in3.c built_in4.c struct.c signals.c gnl.c  \
-				prueba_heredoc.c main.c \
+				heredoc.c main.c \
 				#prueba_children.c \
 
 OBJS        := $(SRCS:%.c=%.o)
