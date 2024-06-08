@@ -20,12 +20,12 @@ void    execute(char *s, int pipes)
 {
     int     p;
     int     fd[2];
-    int     aux;
     char    *subs;
     int     childpid;
 	int		status;
     char    **command;
     int     output;
+    int     input;
 
     p = 0;
     while (p <= pipes)
@@ -45,6 +45,11 @@ void    execute(char *s, int pipes)
                 dup2(fd[1], STDOUT_FILENO);
                 close(fd[0]);
             }
+            input = extract_input(subs);
+            if (input > 0)
+            {
+                dup2(input, STDIN_FILENO);
+            }
             output = extract_output(subs);
             if (output > 0)
             {
@@ -56,8 +61,8 @@ void    execute(char *s, int pipes)
             run_command(command);
             exit(1);
         }
-        //if (p != pipes)
-            dup2(fd[0], STDIN_FILENO);
+        dup2(fd[0], STDIN_FILENO);
+        close(STDIN_FILENO);
         close(fd[1]);
         p++;
     }
@@ -76,9 +81,7 @@ void    parse_and_execute(char *s)
     pipes = parser(s);
     if (pipes == -1)
         printf("Parse error\n");
-    /*else if (pipes == 0)
-        execute_only_child(s);*/
-    else if (pipes > 0)
+    else if (pipes >= 0)
     {
         printf("Pipes %d\n", pipes);
         execute(s, pipes);

@@ -6,7 +6,7 @@
 /*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 16:36:46 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/06/06 19:13:35 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/06/08 19:04:19 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,17 @@ int extract_input(char *s)
 	if (pos == -1)
 		return (-1);
 	if (s[pos + 1] == '<')
-		return (-2);
+	{
+		fd = open("tmpfile", O_WRONLY | O_TRUNC | O_CREAT, 0644);
+        filename = get_heredoc(s);
+        write(fd, filename, ft_strlen(filename));
+		close(fd);
+		fd = open("tmpfile", O_RDONLY);
+		aux_fd = extract_input(s + pos + 2);
+		if (aux_fd > 0)
+			fd = aux_fd;
+		return (fd);
+	}
 	filename = extract_element(s, pos);
 	if (!filename)
 		return (-1);//-1 para gestionar el error?
@@ -48,7 +58,7 @@ int extract_input(char *s)
 	free(filename);
 	//perror("minishell");//función de escritura de errores?
 	aux_fd = extract_input(s + pos + 1);
-	if (aux_fd > -2)
+	if (aux_fd > 0)
 		fd = aux_fd;
 	return (fd);
 }
