@@ -6,7 +6,7 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 16:36:46 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/06/08 22:15:58 by irene            ###   ########.fr       */
+/*   Updated: 2024/06/08 22:24:23 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,17 +39,6 @@ int extract_input(char *s)
 	if (pos == -1)
 		return (-1);
 	if (s[pos + 1] == '<')
-	{
-		fd = open("tmpfile", O_WRONLY | O_TRUNC | O_CREAT, 0644);
-        filename = get_heredoc(s);
-        write(fd, filename, ft_strlen(filename));
-		close(fd);
-		fd = open("tmpfile", O_RDONLY);
-		aux_fd = extract_input(s + pos + 2);
-		if (aux_fd > 0)
-			fd = aux_fd;
-		return (fd);
-	}
 	{
 		fd = open("tmpfile", O_WRONLY | O_TRUNC | O_CREAT, 0644);
         filename = get_heredoc(s);
