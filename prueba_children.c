@@ -37,25 +37,15 @@ void    execute(char *s, int pipes)
             return ;
         if (childpid == 0)
         {
-            output = extract_output(s);
-            if (output > 0)
-            {
-                if (p != pipes)
-                {
-                    close(fd[1]);
-                    dup2(output, fd[1]);
-                }
-                else
-                    dup2(output, STDOUT_FILENO);
-            }
-            if (p != pipes && output < 0)
-                dup2(fd[1], STDOUT_FILENO);
-            close(fd[0]);
             subs = extract_pipe(s, p);
             if (!subs)
                 return ;
-            
-            
+            output = extract_output(subs);
+            if (output > 0)
+                dup2(output, STDOUT_FILENO);
+            if (p != pipes && output < 0)
+                dup2(fd[1], STDOUT_FILENO);
+            close(fd[0]);
             command = extract_command(subs);
             if (!command)
                 return ;
