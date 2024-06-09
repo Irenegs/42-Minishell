@@ -6,7 +6,7 @@
 /*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 16:09:28 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/06/08 19:24:57 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/06/09 17:45:45 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ int execute_only_child(char *s)
     int output;
     char **command;
     int childpid;
-    char *heredoc;
 
     childpid = fork();
     if (childpid == -1)
@@ -44,14 +43,10 @@ int execute_only_child(char *s)
     {
         input = extract_input(s);
         if (input > 0)
-        {
             dup2(input, STDIN_FILENO);
-        }
         output = extract_output(s);
         if (output > 0)
-        {
             dup2(output, STDOUT_FILENO);
-        }
         command = extract_command(s);
         if (!command)
             return (-1);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   extract_file.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
+/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 16:36:46 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/06/08 22:24:23 by irene            ###   ########.fr       */
+/*   Updated: 2024/06/09 18:09:02 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ int extract_input(char *s)
 	if (!filename)
 		return (-1);//-1 para gestionar el error?
 	fd = open(filename, O_RDONLY);
-	printf("Input: %s\n", filename);
 	free(filename);
 	//perror("minishell");//función de escritura de errores?
 	aux_fd = extract_input(s + pos + 1);
@@ -84,7 +83,6 @@ int extract_output(char *s)
 		fd = open(filename, O_WRONLY | O_TRUNC | O_CREAT, 0644);
 	else
 		fd = open(filename, O_WRONLY | O_CREAT, 0644);
-	printf("Output: %s\n", filename);
 	free(filename);
 	//perror("minishell");//función de escritura de errores?
 	aux_fd = extract_output(s + pos + 1);

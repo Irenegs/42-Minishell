@@ -40,7 +40,7 @@ void    execute(char *s, int pipes)
             subs = extract_pipe(s, p);
             if (!subs)
                 return ;
-            if (p != pipes)
+            if (p != pipes && p != 0)
             {
                 dup2(fd[1], STDOUT_FILENO);
                 close(fd[0]);
@@ -57,8 +57,10 @@ void    execute(char *s, int pipes)
             run_command(command);
             return ;
         }
-        if (p != pipes)
-            dup2(fd[0], STDIN_FILENO);
+        /*
+        if (input > 0)
+            close(input);*/
+        dup2(fd[0], STDIN_FILENO);
         close(fd[1]);
         p++;
     }
