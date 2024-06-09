@@ -64,9 +64,10 @@ void    execute(char *s, int pipes)
         close(fd[1]);
         p++;
     }
-    while (wait(&status) > 0)
+    while (waitpid(childpid,&childpid, 0) && wait(&status) > 0)
     {
 	    printf("Exit: %d\n", status);
+        printf("Last exit: %d\n", childpid);//valor de $?
     }
 }
 

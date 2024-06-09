@@ -6,7 +6,7 @@
 /*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 16:09:28 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/06/09 17:45:45 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/06/09 18:52:30 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int execute_only_child(char *s)
         exit(1);
     }
     if (waitpid(-1, &childpid, 0) != -1)
-        printf("exit!\n");
+        printf("exit!\n");//valor de $?
     return (0);
 }
 
