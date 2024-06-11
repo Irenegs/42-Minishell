@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   extract_command.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
+/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:36:03 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/06/07 17:43:18 by irene            ###   ########.fr       */
+/*   Updated: 2024/06/06 19:10:17 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,6 @@ char	**extract_command(char *s)
 	if (!cmd_string)
 		return (NULL);
 	command = split_command(cmd_string);
-	//printf("command[0]:%s\n", command[0]);
 	free(cmd_string);
 	return (command);
 }

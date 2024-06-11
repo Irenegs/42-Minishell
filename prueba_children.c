@@ -37,32 +37,39 @@ void    execute(char *s, int pipes)
             return ;
         if (childpid == 0)
         {
-            subs = extract_pipe(s, p);
-            if (!subs)
-                return ;
-            output = extract_output(subs);
+            output = extract_output(s);
             if (output > 0)
-                dup2(output, STDOUT_FILENO);
+            {
+                if (p != pipes)
+                {
+                    close(fd[1]);
+                    dup2(output, fd[1]);
+                }
+                else
+                    dup2(output, STDOUT_FILENO);
+            }
             if (p != pipes && output < 0)
                 dup2(fd[1], STDOUT_FILENO);
             close(fd[0]);
+            subs = extract_pipe(s, p);
+            if (!subs)
+                return ;
+            
+            
             command = extract_command(subs);
             if (!command)
                 return ;
             run_command(command);
             exit(1);
         }
-        /*
-        if (input > 0)
-            close(input);*/
-        dup2(fd[0], STDIN_FILENO);
+        if (p != pipes)
+            dup2(fd[0], STDIN_FILENO);
         close(fd[1]);
         p++;
     }
-    while (waitpid(childpid,&childpid, 0) && wait(&status) > 0)
+    while (wait(&status) > 0)
     {
 	    printf("Exit: %d\n", status);
-        printf("Last exit: %d\n", childpid);//valor de $?
     }
 }
 

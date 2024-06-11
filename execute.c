@@ -6,7 +6,7 @@
 /*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 16:09:28 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/06/09 18:52:30 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/06/06 18:45:07 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int execute_only_child(char *s)
     int output;
     char **command;
     int childpid;
+    char *heredoc;
 
     childpid = fork();
     if (childpid == -1)
@@ -44,17 +45,27 @@ int execute_only_child(char *s)
         input = extract_input(s);
         if (input > 0)
             dup2(input, STDIN_FILENO);
+        if (input == -2)
+        {
+            input = open("tmpfile", O_RDWR | O_TRUNC | O_CREAT, 0644);
+            heredoc = get_heredoc(s);
+            write(input, heredoc, ft_strlen(heredoc));
+            dup2(input, STDIN_FILENO);
+            //borrar tmpfile en algún momento
+        }
+        command = extract_command(s);
+        printf("Comando: %s\n", command[0]);
+        printf("Args: %s\n", command[1]);
         output = extract_output(s);
         if (output > 0)
             dup2(output, STDOUT_FILENO);
-        command = extract_command(s);
-        if (!command)
-            return (-1);
-        run_command(command);
-        exit(1);
+        if (run_command(command) != 0)
+            ft_out(command);
+        return (-1);
     }
+    write(2, "hola!\n", 6);
     if (waitpid(-1, &childpid, 0) != -1)
-        printf("exit!\n");//valor de $?
+        printf("exit!\n");
     return (0);
 }
 
@@ -62,56 +73,44 @@ void    execute(char *s, int pipes)
 {
     int     p;
     int     fd[2];
+    int     aux;
     char    *subs;
     int     childpid;
-	int		status;
-    char    **command;
-    int     output;
-    int     input;
+    char **command;
 
-    p = 0;
+
+    p = 0;// tal vez queramos separar el primer y último comando - pensar
     while (p <= pipes)
     {
-        if (p != pipes)
-            pipe(fd);
-        childpid = fork();
-        if (childpid == -1)
+        //pipe(fd);cerrar abrir fds de pipe
+        subs = extract_pipe(s, p);
+        if (!subs)
             return ;
+        printf("Subs: %sAAAA\n", subs);
+        childpid = fork();
         if (childpid == 0)
         {
-            subs = extract_pipe(s, p);
-            if (!subs)
-                return ;
-            if (p != pipes)
-            {
-                dup2(fd[1], STDOUT_FILENO);
-                close(fd[0]);
-            }
-            input = extract_input(subs);
-            if (input > 0)
-            {
-                dup2(input, STDIN_FILENO);
-            }
-            output = extract_output(subs);
-            if (output > 0)
-            {
-                dup2(output, STDOUT_FILENO);
-            }
+            aux = extract_input(subs);
+            //if (aux != -1)
+            //    dup2(fd[1], STDOUT_FILENO);
             command = extract_command(subs);
-            if (!command)
-                return ;
-            run_command(command);
-            exit(1);
+            printf("command: %s-%s\n", command[0], command[1]);
+            ft_out(command);
+            //s se debe reemplazar por el substring de s referente al pipe; se debe calcular antes del fork
+            //execute_child(subs);
         }
-        dup2(fd[0], STDIN_FILENO);
-        close(STDIN_FILENO);
-        close(fd[1]);
+        aux = extract_output(subs);
+        //if (aux != -1)
+        //dup2(fd[0], STDIN_FILENO);
+        free(subs);
         p++;
     }
+    //last command <- a lo mejor esto vale para onlychild
+    /*
     while (wait(&status) > 0)
     {
-	    printf("Exit: %d\n", status);
-    }
+	    printf("Exit: %d\n", WEXITSTATUS(&status));
+    }*/
 }
 
 void    parse_and_execute(char *s)
@@ -130,7 +129,7 @@ void    parse_and_execute(char *s)
     
 }
 
-void show_leaks(void)
+/*void show_leaks(void)
 {
     system("leaks a.out");
 }
@@ -144,7 +143,7 @@ int main(int argc, char **argv)
     parse_and_execute(s);
     return (0);
 }
-/*
+
 
 1) Establecer pipes
 
