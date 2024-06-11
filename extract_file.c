@@ -6,7 +6,7 @@
 /*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 16:36:46 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/06/06 19:13:35 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/06/11 17:55:37 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int extract_input(char *s)
 	return (fd);
 }
 
-int extract_output(char *s)
+int extract_output(char *s, int p)
 {
 	int		fd;
 	int		pos;
@@ -65,6 +65,7 @@ int extract_output(char *s)
 	pos = locate_char_position(s, '>');
 	if (pos == -1)
 		return (-2);
+
 	if (s[pos + 1] == '>')
 		pos++;
 	filename = extract_element(s, pos);
@@ -73,11 +74,11 @@ int extract_output(char *s)
 	if (pos == locate_char_position(s, '>'))
 		fd = open(filename, O_WRONLY | O_TRUNC | O_CREAT, 0644);
 	else
-		fd = open(filename, O_WRONLY | O_CREAT, 0644);
+		fd = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	printf("Output: %s\n", filename);
 	free(filename);
 	//perror("minishell");//función de escritura de errores?
-	aux_fd = extract_output(s + pos + 1);
+	aux_fd = extract_output(s + pos + 1, p);
 	if (aux_fd > -2)
 		fd = aux_fd;
 	return (fd);

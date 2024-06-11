@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
+/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 17:56:24 by irene             #+#    #+#             */
-/*   Updated: 2024/06/07 17:48:40 by irene            ###   ########.fr       */
+/*   Updated: 2024/06/11 17:47:19 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ char *extract_element(char *s, int pos);
 //extract_file.c
 static int	locate_char_position(char *s, char c);
 int extract_input(char *s);
-int extract_output(char *s);
+int extract_output(char *s, int p);
 
 //extract_pipe.c
 static int locate_pipe_init(char *s, int pipe);
