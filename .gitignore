@@ -8,3 +8,5 @@ otros/*
 out*
 tmp*
 test*
+.tmp
+file*

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   prueba_heredoc.c                                   :+:      :+:    :+:   */
+/*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
+/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 14:46:24 by irene             #+#    #+#             */
-/*   Updated: 2024/05/25 20:11:06 by irene            ###   ########.fr       */
+/*   Updated: 2024/06/11 19:51:01 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static char *get_rawtext(char *delimiter)
 	char	*aux_1;
 	char	*aux_2;
 
-	aux_2 = get_next_line(1);
+	aux_2 = get_next_line(STDIN_FILENO);
 	line = NULL;
 	while (ft_strncmp(aux_2, delimiter, ft_strlen(delimiter)) != 0 && aux_2 != NULL)
 	{
@@ -28,7 +28,7 @@ static char *get_rawtext(char *delimiter)
 			free(aux_1);
 		if (aux_2 != NULL)
 			free(aux_2);
-		aux_2 = get_next_line(1);
+		aux_2 = get_next_line(STDIN_FILENO);
 	}
 	if (aux_2 != NULL)
 		free(aux_2);

@@ -20,12 +20,13 @@ void    execute(char *s, int pipes)
 {
     int     p;
     int     fd[2];
-    int     aux;
     char    *subs;
     int     childpid;
 	int		status;
     char    **command;
     int     output;
+    int     input;
+    char    *heredoc;
 
     p = 0;
     while (p <= pipes)
@@ -45,7 +46,17 @@ void    execute(char *s, int pipes)
             subs = extract_pipe(s, p);
             if (!subs)
                 return ;
-            output = extract_output(subs, p);
+            input = extract_input(subs);
+            if (input > 0)
+                dup2(input, STDIN_FILENO);
+            else if (input == -1)
+            {
+                printf("1\n");
+                heredoc = get_heredoc(subs);
+                write(STDIN_FILENO, heredoc, ft_strlen(heredoc));
+                free(heredoc);
+            }
+            output = extract_output(subs);
             if (output > 0)
                 dup2(output, STDOUT_FILENO);
             command = extract_command(subs);
@@ -54,8 +65,7 @@ void    execute(char *s, int pipes)
             run_command(command);
             exit(1);
         }
-        if (p != pipes)
-            dup2(fd[0], STDIN_FILENO);
+        dup2(fd[0], STDIN_FILENO);
         close(fd[1]);
         p++;
     }
@@ -77,10 +87,7 @@ void    parse_and_execute(char *s)
     /*else if (pipes == 0)
         execute_only_child(s);*/
     else if (pipes > 0)
-    {
-        printf("Pipes %d\n", pipes);
         execute(s, pipes);
-    }
 }
 
 
