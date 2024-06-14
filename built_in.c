@@ -12,8 +12,6 @@
 
 #include "minishell.h"
 
-//gcc -o beta built_in2.c built_in.c built_in3.c built_in4.c  struct.c main.c libft/libft.a -lreadline
-
 
 int	find_env_index(char **env, const char *key)
 {
@@ -102,4 +100,31 @@ char	**remove_env(char **env, const char *key)
 		return (NULL);
 	free(env);
 	return (new_env);
+}
+
+int is_builtin(char **m_cmd)
+{
+    char *builtins[7] = {
+        "echo",
+        "cd",
+        "pwd",
+        "export",
+        "unset",
+        "env",
+        "exit"
+    };
+    int i;
+
+    i = 0;
+    while (i < 7)
+    {
+        if (m_cmd && m_cmd[0]) // Verifica que m_cmd no sea NULL y que m_cmd[0] no sea NULL
+        {
+            if (ft_strncmp(builtins[i], m_cmd[0], strlen(builtins[i])) == 0 
+				&& strlen(m_cmd[0]) == strlen(builtins[i]))
+                return (1);
+        }
+        i++;
+    }
+    return (0);
 }

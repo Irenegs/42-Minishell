@@ -6,7 +6,7 @@
 /*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 17:56:24 by irene             #+#    #+#             */
-/*   Updated: 2024/06/08 16:43:17 by pablgarc         ###   ########.fr       */
+/*   Updated: 2024/06/14 18:25:38 by pablgarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,15 @@
 
 extern char	**environ;
 
+
+
 typedef struct s_mix
 {
 	char	**m_env;
 	char	**m_path;
 	char	**m_argv;
 	int interrupted;
-
+	char	*s_val;
 }				t_mix;
 
 //signals.c
@@ -60,6 +62,7 @@ int find_env_index(char **env, const char *key);
 char **add_or_update_env(char **env, const char *key, const char *value);
 char **copy_env_without_entry(char **env, int index, int size);
 char **remove_env(char **env, const char *key);
+int	is_builtin (char **m_cmd);
 
 
 //built_in2.c
@@ -91,9 +94,9 @@ char	*command_exists(char *s);
 
 //execute.c
 static int	run_command(char **command);
-int execute_only_child(char *s);
+int execute_only_child(char *s, t_mix *data);
 void    execute(char *s, int pipes);
-void    parse_and_execute(char *s);
+void    parse_and_execute(char *s, t_mix *data);
 
 //extract_command.c
 static int len_cmd(char *s, int pos);
@@ -138,8 +141,8 @@ int parser(char *s);
 
 //prueba_children.c
 
-void    execute(char *s, int pipes);
-void    parse_and_execute(char *s);
+//void    execute(char *s, int pipes);
+//void    parse_and_execute(char *s);
 
 //prueba_heredoc.c
 static char *get_rawtext(char *delimiter);

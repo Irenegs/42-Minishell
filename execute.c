@@ -26,7 +26,7 @@ static int	run_command(char **command)
 	return (-1);
 }
 
-int execute_only_child(char *s)
+int execute_only_child(char *s, t_mix *data)
 {
     int input;
     int output;
@@ -56,11 +56,21 @@ int execute_only_child(char *s)
         command = extract_command(s);
         printf("Comando: %s\n", command[0]);
         printf("Args: %s\n", command[1]);
+        data->m_argv = command;
         output = extract_output(s);
         if (output > 0)
             dup2(output, STDOUT_FILENO);
-        if (run_command(command) != 0)
-            ft_out(command);
+        if (is_builtin(command) != 0)
+            {
+                write(2, "built\n", 6);
+                execute_builtin(data);
+            }
+        if (is_builtin(command) == 0)
+            {
+                run_command(command);
+                ft_out(command);
+            }
+
         return (-1);
     }
     write(2, "hola!\n", 6);
@@ -113,7 +123,7 @@ void    execute(char *s, int pipes)
     }*/
 }
 
-void    parse_and_execute(char *s)
+void    parse_and_execute(char *s, t_mix *data)
 {
     int pipes;
 
@@ -123,7 +133,7 @@ void    parse_and_execute(char *s)
     if (pipes == -1)
         printf("Parse error\n");
     else if (pipes == 0)
-        execute_only_child(s);
+        execute_only_child(s, data);
     else if (pipes > 0)
         execute(s, pipes);
     

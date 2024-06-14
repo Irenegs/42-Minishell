@@ -12,24 +12,28 @@
 
 #include "minishell.h"
 
+
+/*
 void	ft_sigint(int signum)
 {
 	if (signum == SIGINT)
 	{
-		/*
-		cuando el crtl+c interrumpe proceso imprime dos veces el prompt
-		hace falta un flag de proceso en ejecuccion para poner aqui
-		un if y un else y que lo imprima bien
-		
-		*/
+		//printf("SIGINT recibida\n");
 
-		rl_replace_line("", 0); // borra la linea actual del prompt
-		write(STDOUT_FILENO, "\n", 1);
+		
+		//cuando el crtl+c interrumpe proceso imprime dos veces el prompt
+		//hace falta un flag de proceso en ejecuccion para poner aqui
+		//un if y un else y que lo imprima bien
+		
+		
+
+        rl_replace_line("", 0); // borra la linea actual del prompt
+        write(STDOUT_FILENO, "\n", 1);
 		rl_on_new_line(); //mueve cursor a nueva linea
-		rl_redisplay();
+        rl_redisplay();
+		
 	}
 }
-
 void	ft_sigquit(int signum)
 {
 	if (signum == SIGQUIT)
@@ -47,21 +51,81 @@ void	signal_handler(void)
 	signal(SIGQUIT, ft_sigquit);
 }
 
-void	ft_sleep(t_mix *data)
+*/
+
+int sig_exit_status;
+
+void signal_default(void)
 {
-	int	seconds;
+    signal(SIGQUIT, SIG_DFL);
+    signal(SIGINT, SIG_DFL);
+}
 
-	if (data->m_argv[1] == NULL)
-	{
-		printf("ft_sleep: expected argument\n");
-		return ;
-	}
-	seconds = ft_atoi(data->m_argv[1]);
-	if (seconds < 0)
-	{
-		printf("ft_sleep: invalid time '%s'\n", data->m_argv[1]);
-		return ;
-	}
+void handler_sigint(int sig)
+{
+    if (sig == SIGINT)
+    {
+        ft_putchar_fd('\n', STDOUT_FILENO);
+        rl_on_new_line();
+        rl_replace_line("", 0);
+    }
+}
 
-	sleep(seconds);
+
+
+
+void handler(int sig)
+{
+    if (sig == SIGINT)
+    {
+        ft_putchar_fd('\n', STDOUT_FILENO);
+        rl_on_new_line();
+        rl_replace_line("", 0);
+        rl_redisplay();
+        sig_exit_status = 130;
+    }
+}
+
+void signal_handler(void)
+{
+    struct sigaction sa;
+
+    sa.sa_flags = SA_RESTART;
+    sigemptyset(&sa.sa_mask);
+    sa.sa_handler = &handler;
+
+    if (sigaction(SIGINT, &sa, NULL) == -1) 
+	{
+        perror("sigaction");
+    }
+
+    if (signal(SIGQUIT, SIG_IGN) == SIG_ERR) 
+	{
+        perror("signal");
+    }
+}
+
+
+
+
+
+
+void ft_sleep(t_mix *data)
+{
+	int seconds;
+
+    if (data->m_argv[1] == NULL)
+    {
+        printf("ft_sleep: expected argument\n");
+        return;
+    }
+
+    seconds = ft_atoi(data->m_argv[1]);
+    if (seconds < 0)
+    {
+        printf("ft_sleep: invalid time '%s'\n", data->m_argv[1]);
+        return;
+    }
+
+    sleep(seconds);
 }

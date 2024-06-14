@@ -6,7 +6,7 @@
 /*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 22:04:50 by pablo             #+#    #+#             */
-/*   Updated: 2024/06/08 16:43:13 by pablgarc         ###   ########.fr       */
+/*   Updated: 2024/06/06 23:06:56 by pablgarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,13 @@ int	ft_strcmp(const char *s1, const char *s2)
 void	ft_env(t_mix *data)
 {
 	int	j;
-
+  
+  	if (!data || !data->m_env)
+        return;
 	j = 0;
 	while (data->m_env[j])
 	{
-		if (strchr(data->m_env[j], '='))
+		if (ft_strchr(data->m_env[j], '='))
 			printf("%s\n", data->m_env[j]);
 		j++;
 	}
