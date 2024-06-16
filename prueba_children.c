@@ -53,7 +53,11 @@ void    execute(char *s, int pipes)
             {
                 printf("1\n");
                 heredoc = get_heredoc(subs);
-                write(STDIN_FILENO, heredoc, ft_strlen(heredoc));
+                input = open(".tmpfile", O_WRONLY | O_CREAT | O_TRUNC, 0644);
+                write(input, heredoc, ft_strlen(heredoc));
+                close(input);
+                input = open(".tmpfile", O_RDONLY);
+                dup2(input, STDIN_FILENO);
                 free(heredoc);
             }
             output = extract_output(subs);

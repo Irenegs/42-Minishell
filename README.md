@@ -6,6 +6,8 @@ Gestión de hijos, pipes, ejecución de comandos
 
 ## Parte 2:
 Gestión de señales - variable global
+-> se pueden utilizarlas variables globales de readline.
+
 
 ## Parte 3:
 Builtins
