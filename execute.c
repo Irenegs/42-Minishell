@@ -6,7 +6,7 @@
 /*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 16:09:28 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/06/06 18:45:07 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/06/18 17:40:20 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int execute_only_child(char *s)
         input = extract_input(s);
         if (input > 0)
             dup2(input, STDIN_FILENO);
-        if (input == -2)
+        if (input == -1)
         {
             input = open("tmpfile", O_RDWR | O_TRUNC | O_CREAT, 0644);
             heredoc = get_heredoc(s);

@@ -6,7 +6,7 @@
 /*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 14:46:24 by irene             #+#    #+#             */
-/*   Updated: 2024/06/16 19:38:20 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/06/18 20:37:58 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ static char *get_rawtext(char *delimiter)
 	printf("antes gnl\n");
 	aux_2 = get_next_line(STDIN_FILENO);
 	printf("dsps gnl\n");
+	printf("obtenido %s==\n", aux_2);
 	line = NULL;
 	while (ft_strncmp(aux_2, delimiter, ft_strlen(delimiter)) != 0 && aux_2 != NULL)
 	{

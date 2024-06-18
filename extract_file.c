@@ -6,7 +6,7 @@
 /*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 16:36:46 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/06/11 18:47:30 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/06/18 17:48:55 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,13 @@ int extract_input(char *s)
 	if (pos == -1)
 		return (-2);
 	if (s[pos + 1] == '<')
-		return (-1);
+	{
+		fd = -1;
+		aux_fd = extract_input(s + pos + 2);
+		if (aux_fd > 0)
+			fd = aux_fd;
+		return (fd);
+	}
 	filename = extract_element(s, pos);
 	if (!filename)
 		return (-2);//-1 para gestionar el error?
