@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   extract_file.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 16:36:46 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/06/18 17:48:55 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/06/20 19:32:37 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	locate_char_position(char *s, char c)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (s && s[i] != '\0')
@@ -26,7 +26,21 @@ static int	locate_char_position(char *s, char c)
 	return (-1);
 }
 
-int extract_input(char *s)
+static int	get_heredoc_fd(char *s)
+{
+	char	*heredoc_text;
+	int		fd;
+
+	heredoc_text = get_heredoc(s);
+	fd = open(".tmpfile", O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	write(fd, heredoc_text, ft_strlen(heredoc_text));
+	close(fd);
+	fd = open(".tmpfile", O_RDONLY);
+	free(heredoc_text);
+	return (fd);
+}
+
+int	extract_input(char *s)
 {
 	int		fd;
 	int		pos;
@@ -39,26 +53,22 @@ int extract_input(char *s)
 	if (pos == -1)
 		return (-2);
 	if (s[pos + 1] == '<')
+		fd = get_heredoc_fd(s + pos);
+	else
 	{
-		fd = -1;
-		aux_fd = extract_input(s + pos + 2);
-		if (aux_fd > 0)
-			fd = aux_fd;
-		return (fd);
+		filename = extract_element(s, pos);
+		if (!filename)
+			return (-2);
+		fd = open(filename, O_RDONLY);
+		free(filename);
 	}
-	filename = extract_element(s, pos);
-	if (!filename)
-		return (-2);//-1 para gestionar el error?
-	fd = open(filename, O_RDONLY);
-	free(filename);
-	//perror("minishell");//función de escritura de errores?
-	aux_fd = extract_input(s + pos + 1);
-	if (aux_fd > 0)
+	aux_fd = extract_input(s + pos + 2);
+	if (aux_fd > -2)
 		fd = aux_fd;
 	return (fd);
 }
 
-int extract_output(char *s)
+int	extract_output(char *s)
 {
 	int		fd;
 	int		pos;
@@ -70,12 +80,11 @@ int extract_output(char *s)
 	pos = locate_char_position(s, '>');
 	if (pos == -1)
 		return (-2);
-
 	if (s[pos + 1] == '>')
 		pos++;
 	filename = extract_element(s, pos);
 	if (!filename)
-		return (-2);//-1 para gestionar el error?
+		return (-2);
 	if (pos == locate_char_position(s, '>'))
 		fd = open(filename, O_WRONLY | O_TRUNC | O_CREAT, 0644);
 	else
@@ -86,4 +95,3 @@ int extract_output(char *s)
 		fd = aux_fd;
 	return (fd);
 }
-

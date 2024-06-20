@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 17:56:24 by irene             #+#    #+#             */
-/*   Updated: 2024/06/11 18:05:17 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/06/20 19:40:57 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 # include <sys/wait.h>
 # include <unistd.h>
 
-#define MAX_argv 100 
+# define MAX_argv 100
 
 extern char	**environ;
 
@@ -121,6 +121,7 @@ char    *extract_pipe(char *s, int pipe);
 //extract_utils.c
 int	is_space(char c);
 size_t	len_literal_word(char *s, int pos);
+size_t	len_delimiter(char *s, int pos);
 size_t len_quotes(char *s, int pos);
 int	something_to_add(char *s, int pos);
 

@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   extract_pipe.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 19:19:22 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/06/06 19:19:27 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/06/20 19:35:42 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int  locate_pipe_init(char *s, int pipe)
+static int	locate_pipe_init(char *s, int pipe)
 {
-	int i;
-	int p;
+	int	i;
+	int	p;
 
 	i = 0;
 	p = 0;
@@ -30,9 +30,9 @@ static int  locate_pipe_init(char *s, int pipe)
 	return (i);
 }
 
-static int  pipe_len(char *s, int pipe, int pos)
+static int	pipe_len(char *s, int pipe, int pos)
 {
-	int len;
+	int	len;
 
 	len = 0;
 	while (s[pos + len] != '|' && s[pos + len] != '\0')
@@ -42,10 +42,10 @@ static int  pipe_len(char *s, int pipe, int pos)
 	return (++len);
 }
 
-char    *extract_pipe(char *s, int pipe)
+char	*extract_pipe(char *s, int pipe)
 {
-	int pos;
-	int len;
+	int	pos;
+	int	len;
 
 	pos = 0;
 	len = 0;
