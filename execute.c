@@ -6,7 +6,7 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 19:56:56 by irene             #+#    #+#             */
-/*   Updated: 2024/06/22 21:56:22 by irene            ###   ########.fr       */
+/*   Updated: 2024/06/22 22:17:48 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ int	manage_input_output_command(int p, int *fd, char *subs, int pipes)
 	int		output;
 	char	**command;
 
-	printf("MIOC\n");
 	input = extract_input(subs);
 	if (input > 0)
 		dup2(input, STDIN_FILENO);
@@ -27,11 +26,11 @@ int	manage_input_output_command(int p, int *fd, char *subs, int pipes)
 		dup2(fd[2 * (p - 1)], STDIN_FILENO);
 		close(fd[2 * p - 1]);
 	}
+	if (p != pipes)
+		dup2(fd[2 * p + 1], STDOUT_FILENO);
 	output = extract_output(subs);
 	if (output > 0)
 		dup2(output, STDOUT_FILENO);
-	else if (p != pipes)
-		dup2(fd[2 * p + 1], STDOUT_FILENO);
 	command = extract_command(subs);
 	if (!command)
 		return (1);

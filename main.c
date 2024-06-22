@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 17:58:01 by irene             #+#    #+#             */
-/*   Updated: 2024/06/06 22:46:42 by pablgarc         ###   ########.fr       */
+/*   Updated: 2024/06/22 22:53:20 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,7 +175,10 @@ wait, waitpid, wait3, wait4,
 pid_t wait(int *wstatus);
 pid_t wait3(int *wstatus, int options, struct rusage *rusage);
 pid_t wait4(pid_t pid, int *wstatus, int options, struct rusage *rusage);
-The wait() system call suspends execution of the calling thread until one of its children terminates. The  call wait(&wstatus) is equivalent to: waitpid(-1, &wstatus, 0); The  waitpid()  system  call suspends execution of the calling thread until a child specified by pid argument has changed state.  By default, waitpid() waits only for terminated children
+The wait() system call suspends execution of the calling thread until one of its children terminates. 
+The  call wait(&wstatus) is equivalent to: waitpid(-1, &wstatus, 0); 
+The  waitpid()  system  call suspends execution of the calling thread until a child specified by pid argument has changed state.  
+By default, waitpid() waits only for terminated children
 In other words, wait3() waits of any child, while wait4() can be used to select a specific child, or children, on which to wait.
 
 
@@ -188,6 +191,7 @@ sighandler_t signal(int signum, sighandler_t handler); returns  the  previous va
 int sigaction(int signum, const struct sigaction *act, struct sigaction *oldact); => 0/-1  -> to change the action taken by a process on receipt of a specific signal. 
 int sigemptyset(sigset_t *set);=> 0/-1 -> initializes the signal set given by set to empty, with all signals excluded from the set.
 int sigaddset(sigset_t *set, int signum) => 0/-1; -> add signal signum from set.
+
 Termios
 https://blog.nelhage.com/2009/12/a-brief-introduction-to-termios-termios3-and-stty/
 int tcgetattr(int fildes, struct termios *termios_p); => 0/-1
@@ -222,21 +226,12 @@ getenv
 char *     getenv(const char *name); obtains the current value of the environment variable, name.  The application should not modify the string pointed to by the getenv() function.
 
 
-
-
-
 tgetent, tgetflag, tgetnum, tgetstr, tgoto, tputs => Seguramente se utilice para algunos built-ins
 https://www.gnu.org/software/termutils/manual/termcap-1.3/html_chapter/termcap_2.html
 
 
 Valgrind leaks:
 valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose --log-file=valgrind-out.txt ./minishell
-
-
-Observaciones:
-<< EOF
-C-c sale del heredoc
-
 
 
 Shell grammar

@@ -16,6 +16,8 @@ Conlleva la gestión de las variabes de entorno, inicialmente se obtienen con ge
 
 # Por hacer:
 ## 1a
+Heredoc vacío -> error 139
+
 
 Gestionar $? -> se puede guardar en parse_and_execute como valor de retorno de execute/execute_only_child
 
