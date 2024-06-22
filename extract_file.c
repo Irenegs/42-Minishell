@@ -6,7 +6,7 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 16:36:46 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/06/20 19:32:37 by irene            ###   ########.fr       */
+/*   Updated: 2024/06/22 19:14:54 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	extract_input(char *s)
 		return (-2);
 	pos = locate_char_position(s, '<');
 	if (pos == -1)
-		return (-2);
+		return (-1);
 	if (s[pos + 1] == '<')
 		fd = get_heredoc_fd(s + pos);
 	else
@@ -63,7 +63,7 @@ int	extract_input(char *s)
 		free(filename);
 	}
 	aux_fd = extract_input(s + pos + 2);
-	if (aux_fd > -2)
+	if (aux_fd > -1)
 		fd = aux_fd;
 	return (fd);
 }
@@ -76,10 +76,10 @@ int	extract_output(char *s)
 	int		aux_fd;
 
 	if (!s)
-		return (-1);
+		return (-2);
 	pos = locate_char_position(s, '>');
 	if (pos == -1)
-		return (-2);
+		return (-1);
 	if (s[pos + 1] == '>')
 		pos++;
 	filename = extract_element(s, pos);
@@ -91,7 +91,7 @@ int	extract_output(char *s)
 		fd = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	free(filename);
 	aux_fd = extract_output(s + pos + 1);
-	if (aux_fd > -2)
+	if (aux_fd > -1)
 		fd = aux_fd;
 	return (fd);
 }

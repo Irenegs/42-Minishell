@@ -6,7 +6,7 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 17:56:24 by irene             #+#    #+#             */
-/*   Updated: 2024/06/20 19:40:57 by irene            ###   ########.fr       */
+/*   Updated: 2024/06/22 19:25:28 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,17 +82,15 @@ char **update_entry(char **env, int i, const char *key, const char *value);
 void free_argv(char **argv);
 
 //command.c
-int	is_local(char *s);
-static int	select_variable(char **environ);
+static int	is_local(char *s);
 static char	*get_path(char *s, int i, char **path);
-static char	**get_path_variable(char **environ);
 static char	*get_route(char *s, char **path);
-char	*command_exists(char *s);
+static char	*command_exists(char *s);
+int			run_command(char **command);
 
 //execute.c
-static int	run_command(char **command);
 int execute_only_child(char *s);
-void    execute(char *s, int pipes);
+int    execute(char *s, int pipes);
 void    parse_and_execute(char *s);
 
 //extract_command.c
@@ -137,10 +135,10 @@ int redirection(char *s, int i, int insert[3]);
 int	open_quotes(char *s);
 int parser(char *s);
 
-//prueba_children.c
-
-void    execute(char *s, int pipes);
-void    parse_and_execute(char *s);
+//pipe_utils.c
+void	manage_multiple_pipes(int p, int pipes, int *fd);
+void	close_pipes(int pipes, int *fd);
+int		pipe_abortion(int *fd);
 
 //prueba_heredoc.c
 static char *get_rawtext(char *delimiter);
