@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 14:46:24 by irene             #+#    #+#             */
-/*   Updated: 2024/06/23 17:31:20 by pablgarc         ###   ########.fr       */
+/*   Updated: 2024/06/23 19:45:36 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/*
 static char	*get_rawtext(char *delimiter)
 {
 	char	*line;
@@ -40,6 +41,33 @@ static char	*get_rawtext(char *delimiter)
 		free(aux_2);
 	return (line);
 }
+*/
+
+
+
+static char	*get_rawtext(char *delimiter)
+{
+	char	*line;
+	char	*aux_1;
+	char	*aux_2;
+
+	aux_2 = get_next_line(STDIN_FILENO);
+	line = NULL;
+	while (ft_strncmp(aux_2, delimiter, ft_strlen(delimiter)) != 0
+		&& aux_2 != NULL)
+	{
+		aux_1 = line;
+		line = ft_strjoin(aux_1, aux_2);
+		if (aux_1 != NULL)
+			free(aux_1);
+		if (aux_2 != NULL)
+			free(aux_2);
+		aux_2 = get_next_line(STDIN_FILENO);
+	}
+	if (aux_2 != NULL)
+		free(aux_2);
+	return (line);
+}
 
 static char	*obtain_delimiter(char *del_str)
 {
@@ -56,9 +84,9 @@ static char	*obtain_delimiter(char *del_str)
 		len = len - 2;
 		del_str++;
 	}
-	delimiter = malloc(len + 1);//malloc(len + 2);
+	delimiter = malloc(len + 2);
 	ft_memmove(delimiter, del_str, len);
-	//delimiter[len] = '\n';
+	delimiter[len] = '\n';
 	delimiter[len + 1] = '\0';
 	return (delimiter);
 }

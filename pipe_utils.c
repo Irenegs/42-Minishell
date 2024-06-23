@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
+/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 18:45:40 by irene             #+#    #+#             */
-/*   Updated: 2024/06/22 21:57:26 by irene            ###   ########.fr       */
+/*   Updated: 2024/06/23 19:22:30 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	close_pipes(int pipes, int *fd)
 	i = 0;
 	while (i < pipes)
 	{
+		close(fd[2 * i]);
 		close(fd[2 * i + 1]);
 		i++;
 	}

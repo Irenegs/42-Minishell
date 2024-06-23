@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 16:09:28 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/06/23 18:11:00 by pablgarc         ###   ########.fr       */
+/*   Updated: 2024/06/23 19:22:37 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	execute_only_child(t_mix *data)
 		run_command(command, data);
 		//if (run_command(command, data) != 0)
 		//	ft_out(command);
-		return (-1);
+		exit(0);
 	}
 	if (waitpid(-1, &childpid, 0) != -1)
 	{
@@ -92,6 +92,7 @@ int	execute(t_mix *data, int pipes)
 			if (!command)
 				return (1);
 			run_command(command, data);
+
 			//if (run_command(command, data) != 0)
 			//	ft_out(command);
 		}
