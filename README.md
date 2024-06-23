@@ -24,7 +24,9 @@ Gestionar $? -> se puede guardar en parse_and_execute como valor de retorno de e
 heredoc + leaks: El delimitador se lee literalmente, no se transforma el delimitador. 'Delimitador' no expande las variables. 
 
 heredoc + señales:
-C-c dentro de heredoc lo corta y vuelve a la shell sin ejecutar ninguna instrucción $?=130, C-\ no hace nada y C-d cierra el heredoc con un error (bash: warning: here-document at line 160 delimited by end-of-file (wanted 'DELIMITADOR')) pero sigue con las instrucciones $?=0.
+C-c dentro de heredoc lo corta y vuelve a la shell sin ejecutar ninguna instrucción $?=130
+C-\ no hace nada
+C-d cierra el heredoc con un error (bash: warning: here-document at line 160 delimited by end-of-file (wanted 'DELIMITADOR')) pero sigue con las instrucciones $?=0.
 
 escribir errores
 separar ejecución de built-ins
