@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   extract_element.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:42:48 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/06/06 19:08:27 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/06/20 19:53:54 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ char	*extract_element(char *s, int pos)
 	char	*result;
 	char	*chunk;
 	char	*aux;
-//TODO proteger frees cuando algo es NULL
+
 	if (!s)
 		return (NULL);
 	result = NULL;

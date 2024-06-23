@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 17:36:54 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/06/06 18:56:19 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/06/22 21:53:35 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static char	*get_route(char *s, char **path)
 	return (NULL);
 }
 
-char	*command_exists(char *s)
+static char	*command_exists(char *s)
 {
 	char	*route;
 	char	**path;
@@ -86,4 +86,18 @@ char	*command_exists(char *s)
 		ft_out(path);
 	}
 	return (route);
+}
+
+int	run_command(char **command)
+{
+	char	*cmd;
+
+	if (!command)
+		return (-1);
+	cmd = command_exists(command[0]);
+	if (!cmd)
+		return (127);
+	execve(cmd, command, environ);
+	ft_out(command);
+	return (-1);
 }

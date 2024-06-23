@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   extract_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:40:20 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/06/06 19:18:51 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/06/20 19:47:20 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,27 @@ size_t	len_literal_word(char *s, int pos)
 	while (s[pos + len] != '\'' && s[pos + len] != '"' && s[pos + len] != '$'
 		&& is_space(s[pos + len]) == 0 && s[pos + len] != '\0')
 		len++;
+	return (len);
+}
+
+size_t	len_delimiter(char *s, int pos)
+{
+	size_t	len;
+
+	len = 1;
+	if (s[pos] == '\'' || s[pos] == '"')
+	{
+		len = 1;
+		while (s[pos + len] != '\0' && s[pos + len] != s[pos])
+			len++;
+	}
+	else
+	{
+		while (s[pos + len] != '\0' && s[pos + len] != '<'
+			&& s[pos + len] != '>' && s[pos + len] != '\''
+			&& s[pos + len] != '"' && is_space(s[pos + len]) == 0 && len < 10)
+			len++;
+	}
 	return (len);
 }
 

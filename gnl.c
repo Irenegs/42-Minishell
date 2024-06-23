@@ -6,11 +6,11 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 19:44:36 by irene             #+#    #+#             */
-/*   Updated: 2024/05/25 13:56:48 by irene            ###   ########.fr       */
+/*   Updated: 2024/06/20 19:41:46 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minishell.h"
+#include "minishell.h"
 
 static size_t	find_br(char *s)
 {

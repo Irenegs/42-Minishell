@@ -1,26 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   prueba_heredoc.c                                   :+:      :+:    :+:   */
+/*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 14:46:24 by irene             #+#    #+#             */
-/*   Updated: 2024/05/25 20:11:06 by irene            ###   ########.fr       */
+/*   Updated: 2024/06/20 19:39:06 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minishell.h"
+#include "minishell.h"
 
-static char *get_rawtext(char *delimiter)
+static char	*get_rawtext(char *delimiter)
 {
-	char 	*line;
+	char	*line;
 	char	*aux_1;
 	char	*aux_2;
 
-	aux_2 = get_next_line(1);
+	aux_2 = get_next_line(STDIN_FILENO);
 	line = NULL;
-	while (ft_strncmp(aux_2, delimiter, ft_strlen(delimiter)) != 0 && aux_2 != NULL)
+	while (ft_strncmp(aux_2, delimiter, ft_strlen(delimiter)) != 0
+		&& aux_2 != NULL)
 	{
 		aux_1 = line;
 		line = ft_strjoin(aux_1, aux_2);
@@ -28,15 +29,14 @@ static char *get_rawtext(char *delimiter)
 			free(aux_1);
 		if (aux_2 != NULL)
 			free(aux_2);
-		aux_2 = get_next_line(1);
+		aux_2 = get_next_line(STDIN_FILENO);
 	}
 	if (aux_2 != NULL)
 		free(aux_2);
-	//line[ft_strlen(line) - 1] = '\0';
 	return (line);
 }
 
-static char *obtain_delimiter(char *del_str)
+static char	*obtain_delimiter(char *del_str)
 {
 	char	*delimiter;
 	int		len;
@@ -45,7 +45,7 @@ static char *obtain_delimiter(char *del_str)
 		del_str++;
 	while (*del_str == '<' || is_space(*del_str))
 		del_str++;
-	len = len_literal_word(del_str, 0);
+	len = len_delimiter(del_str, 0);
 	if (del_str[0] == '\'' || del_str[0] == '"')
 	{
 		len = len - 2;

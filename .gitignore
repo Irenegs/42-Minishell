@@ -7,3 +7,6 @@ a.out
 otros/*
 out*
 tmp*
+test*
+.tmp*
+file*

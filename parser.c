@@ -6,35 +6,19 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 18:32:16 by irene             #+#    #+#             */
-/*   Updated: 2024/06/07 18:20:52 by irene            ###   ########.fr       */
+/*   Updated: 2024/06/20 19:51:27 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	is_metacharacter(char c)
+static int	valid_insertion(int var[3], char c)
 {
-	char	*metacharacter;
-	int		i;
-
-	metacharacter = "|$<>'\"\n \t";
-	i = 0;
-	while (metacharacter[i] != '\0')
-	{
-		if (c == metacharacter[i])
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
-static int	valid_insertion(int var[3], char s)
-{
-	if (s == '|' && var[0] != 1)
+	if (c == '|' && var[0] != 1)
 		return (0);
-	if (s == '<' && var[1] != 1)
+	if (c == '<' && var[1] != 1)
 		return (0);
-	if (s == '>' && var[2] != 1)
+	if (c == '>' && var[2] != 1)
 		return (0);
 	return (1);
 }
@@ -114,3 +98,21 @@ int	parser(char *s)
 		return (-1);
 	return (pipes);
 }
+
+/*
+static int	is_metacharacter(char c)
+{
+	char	*metacharacter;
+	int		i;
+
+	metacharacter = "|$<>'\"\n \t";
+	i = 0;
+	while (metacharacter[i] != '\0')
+	{
+		if (c == metacharacter[i])
+			return (1);
+		i++;
+	}
+	return (0);
+}
+*/

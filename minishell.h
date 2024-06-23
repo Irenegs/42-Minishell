@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 17:56:24 by irene             #+#    #+#             */
-/*   Updated: 2024/06/20 19:24:56 by pablgarc         ###   ########.fr       */
+/*   Updated: 2024/06/23 16:14:06 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 # include <sys/wait.h>
 # include <unistd.h>
 
-#define MAX_argv 100 
+# define MAX_argv 100
 
 extern char	**environ;
 extern int	global_signal;
@@ -89,18 +89,16 @@ char **update_entry(char **env, int i, const char *key, const char *value);
 void free_argv(char **argv);
 
 //command.c
-int	is_local(char *s);
-static int	select_variable(char **environ);
+static int	is_local(char *s);
 static char	*get_path(char *s, int i, char **path);
-static char	**get_path_variable(char **environ);
 static char	*get_route(char *s, char **path);
-char	*command_exists(char *s);
+static char	*command_exists(char *s);
+int			run_command(char **command);
 
 //execute.c
-static int	run_command(char **command);
-int execute_only_child(char *s, t_mix *data);
-void    execute(char *s, int pipes);
-void    parse_and_execute(char *s, t_mix *data);
+int execute_only_child(char *s);
+int    execute(char *s, int pipes);
+void    parse_and_execute(char *s);
 
 //extract_command.c
 static int len_cmd(char *s, int pos);
@@ -128,6 +126,7 @@ char    *extract_pipe(char *s, int pipe);
 //extract_utils.c
 int	is_space(char c);
 size_t	len_literal_word(char *s, int pos);
+size_t	len_delimiter(char *s, int pos);
 size_t len_quotes(char *s, int pos);
 int	something_to_add(char *s, int pos);
 
@@ -143,10 +142,10 @@ int redirection(char *s, int i, int insert[3]);
 int	open_quotes(char *s);
 int parser(char *s);
 
-//prueba_children.c
-
-//void    execute(char *s, int pipes);
-//void    parse_and_execute(char *s);
+//pipe_utils.c
+void	manage_multiple_pipes(int p, int pipes, int *fd);
+void	close_pipes(int pipes, int *fd);
+int		pipe_abortion(int *fd);
 
 //prueba_heredoc.c
 static char *get_rawtext(char *delimiter);
