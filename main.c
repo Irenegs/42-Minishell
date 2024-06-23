@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
+/*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 17:58:01 by irene             #+#    #+#             */
-/*   Updated: 2024/06/22 22:53:20 by irene            ###   ########.fr       */
+/*   Updated: 2024/06/23 18:08:29 by pablgarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,27 +16,27 @@ int	global_signal = -1;
 
 void prompt(t_mix *data)
 {
-    char *input;
-    char **argv;
+
+    //char **argv;
 
     while (1)
     {
         ft_signals_interactive();
-        input = readline("Minishell: ");
-        if(input == NULL) //esto seria la señal de CRTL +D
+        data->input = readline("Minishell: ");
+        if(data->input == NULL) //esto seria la señal de CRTL +D
         {
             printf("\n");
             break;
         }
         ft_signals_running();
-        if (*input)
-            add_history(input);
-        if(*input != '\0')
+        if (*data->input)
+            add_history(data->input);
+        if(*data->input != '\0')
         {
 
-            parse_and_execute(input, data);
+            parse_and_execute(data);
             
-           // argv = ft_split(input, ' ');
+           // argv = ft_split(data->input, ' ');
             //if (argv)
             //{
              //   data->m_argv = argv;
@@ -46,7 +46,7 @@ void prompt(t_mix *data)
             //}
             
 
-            free(input);
+            free(data->input);
         }
     }
 }
@@ -54,7 +54,6 @@ void prompt(t_mix *data)
 int main(int argc, char **argv, char **envp)
 {
     t_mix data;
-    char *input;
 
     if (argc != 1 || !argv)
        return (1);
@@ -98,7 +97,6 @@ void signal_handler(int signum)
 		printf("^CMinishell:");//No vuelve a la terminal
 }
 
-/*
 void show_leaks(void)
 {
 	system("leaks minishell");

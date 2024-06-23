@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   extract_pipe.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
+/*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 19:19:22 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/06/20 19:35:42 by irene            ###   ########.fr       */
+/*   Updated: 2024/06/23 16:32:31 by pablgarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static int	locate_pipe_init(char *s, int pipe)
 	return (i);
 }
 
-static int	pipe_len(char *s, int pipe, int pos)
+static int	pipe_len(char *s, int pos)
 {
 	int	len;
 
@@ -50,6 +50,6 @@ char	*extract_pipe(char *s, int pipe)
 	pos = 0;
 	len = 0;
 	pos = locate_pipe_init(s, pipe);
-	len = pipe_len(s, pipe, pos);
+	len = pipe_len(s, pos);
 	return (ft_substr(s, pos, len));
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
+/*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 17:36:54 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/06/22 21:53:35 by irene            ###   ########.fr       */
+/*   Updated: 2024/06/23 18:12:14 by pablgarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,16 +88,22 @@ static char	*command_exists(char *s)
 	return (route);
 }
 
-int	run_command(char **command)
+int	run_command(char **command, t_mix *data)
 {
 	char	*cmd;
 
 	if (!command)
 		return (-1);
+	if (is_builtin(command[0]))
+	{
+		execute_builtin(data, command);
+		//devuelve codigo de salida
+		return (0);
+	}
 	cmd = command_exists(command[0]);
 	if (!cmd)
 		return (127);
-	execve(cmd, command, environ);
+	execve(cmd, command, data->m_env);
 	ft_out(command);
 	return (-1);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   extract_command.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:36:03 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/06/06 19:10:17 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/06/23 16:31:37 by pablgarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ static char	**split_command(char *s)
 	char	**arr;
 	int		i;
 	int		pos;
-	int		len;
 
 	arr = malloc((ft_wc(s, " ") + 1) * sizeof(char *));
 	if (!arr)

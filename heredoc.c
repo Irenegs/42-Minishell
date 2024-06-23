@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
+/*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 14:46:24 by irene             #+#    #+#             */
-/*   Updated: 2024/06/20 19:39:06 by irene            ###   ########.fr       */
+/*   Updated: 2024/06/23 17:31:20 by pablgarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,18 +18,23 @@ static char	*get_rawtext(char *delimiter)
 	char	*aux_1;
 	char	*aux_2;
 
-	aux_2 = get_next_line(STDIN_FILENO);
+	//ft_interrupt(global_signal);
+	aux_2 = readline(">>");//get_next_line(STDIN_FILENO);
 	line = NULL;
 	while (ft_strncmp(aux_2, delimiter, ft_strlen(delimiter)) != 0
 		&& aux_2 != NULL)
 	{
+		printf("he leido:%s\n", aux_2);
+		printf("strncmp:%d\n", ft_strncmp(aux_2, delimiter, ft_strlen(delimiter)));
+		printf("del:%s\n", delimiter);
+		printf("strlen del:%ld\n", ft_strlen(delimiter));
 		aux_1 = line;
 		line = ft_strjoin(aux_1, aux_2);
 		if (aux_1 != NULL)
 			free(aux_1);
 		if (aux_2 != NULL)
 			free(aux_2);
-		aux_2 = get_next_line(STDIN_FILENO);
+		aux_2 = readline(">>");//get_next_line(STDIN_FILENO);
 	}
 	if (aux_2 != NULL)
 		free(aux_2);
@@ -51,9 +56,9 @@ static char	*obtain_delimiter(char *del_str)
 		len = len - 2;
 		del_str++;
 	}
-	delimiter = malloc(len + 2);
+	delimiter = malloc(len + 1);//malloc(len + 2);
 	ft_memmove(delimiter, del_str, len);
-	delimiter[len] = '\n';
+	//delimiter[len] = '\n';
 	delimiter[len + 1] = '\0';
 	return (delimiter);
 }

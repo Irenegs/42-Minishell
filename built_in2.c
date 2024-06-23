@@ -6,13 +6,13 @@
 /*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 21:56:45 by pablo             #+#    #+#             */
-/*   Updated: 2024/06/06 22:55:32 by pablgarc         ###   ########.fr       */
+/*   Updated: 2024/06/23 18:05:57 by pablgarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_echo(t_mix *data)
+void	ft_echo(char **command)
 {
 	int	new_line;
 	int	i;
@@ -20,15 +20,15 @@ void	ft_echo(t_mix *data)
 	new_line = 1;
 	i = 1;
 
-	if (data->m_argv[i] && ft_strcmp(data->m_argv[i], "-n") == 0)
+	if (command[i] && ft_strcmp(command[i], "-n") == 0)
 	{
 		new_line = 0;
 		i++;
 	}
-	while (data->m_argv[i])
+	while (command[i])
 	{
-		printf("%s", data->m_argv[i]);
-		if (data->m_argv[i + 1])
+		printf("%s", command[i]);
+		if (command[i + 1])
 			printf(" ");
 		i++;
 	}

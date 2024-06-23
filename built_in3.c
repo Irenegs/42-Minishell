@@ -6,7 +6,7 @@
 /*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 22:04:50 by pablo             #+#    #+#             */
-/*   Updated: 2024/06/06 23:06:56 by pablgarc         ###   ########.fr       */
+/*   Updated: 2024/06/23 18:06:42 by pablgarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,11 @@ int	ft_strcmp(const char *s1, const char *s2)
 void	ft_env(t_mix *data)
 {
 	int	j;
-  
-  	if (!data || !data->m_env)
-        return;
+
 	j = 0;
 	while (data->m_env[j])
 	{
-		if (ft_strchr(data->m_env[j], '='))
+		if (strchr(data->m_env[j], '='))
 			printf("%s\n", data->m_env[j]);
 		j++;
 	}
@@ -48,36 +46,32 @@ void	ft_env(t_mix *data)
 
 void	ft_exit(t_mix *data)
 {
-	    int status = 0;
+	int	status;
 
-    // Si hay un argumento después de 'exit'
-    if (data->m_argv[1])
-    {
-            printf("minishell: exit: too many arguments\n");
-            status = 1; // Código de estado para demasiados argumentos
-    }
-   
-    // Liberar recursos 
-
-    exit(status);
+	status = 0;
+	if (data->m_argv[1])
+	{
+		status = ft_atoi(data->m_argv[1]);
+	}
+	exit(status);
 }
 
-void	execute_builtin(t_mix *data)
+void	execute_builtin(t_mix *data, char **command)
 {
-	if (ft_strcmp(data->m_argv[0], "echo") == 0)
-		ft_echo(data);
-	else if (ft_strcmp(data->m_argv[0], "cd") == 0)
+	if (ft_strcmp(command[0], "echo") == 0)
+		ft_echo(command);
+	else if (ft_strcmp(command[0], "cd") == 0)
 		ft_cd(data);
-	else if (ft_strcmp(data->m_argv[0], "pwd") == 0)
+	else if (ft_strcmp(command[0], "pwd") == 0)
 		ft_pwd();
-	else if (ft_strcmp(data->m_argv[0], "exit") == 0)
+	else if (ft_strcmp(command[0], "exit") == 0)
 		ft_exit(data);
-	else if (ft_strcmp(data->m_argv[0], "export") == 0)
+	else if (ft_strcmp(command[0], "export") == 0)
 		ft_export(data);
-	else if (ft_strcmp(data->m_argv[0], "unset") == 0)
+	else if (ft_strcmp(command[0], "unset") == 0)
 		ft_unset(data);
-	else if (ft_strcmp(data->m_argv[0], "env") == 0)
+	else if (ft_strcmp(command[0], "env") == 0)
 		ft_env(data);
 	else
-		fprintf(stderr, "%s: command not found\n", data->m_argv[0]);
+		fprintf(stderr, "%s: command not found\n", command[0]);
 }

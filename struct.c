@@ -6,7 +6,7 @@
 /*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 21:50:39 by pablo             #+#    #+#             */
-/*   Updated: 2024/06/20 19:05:00 by pablgarc         ###   ########.fr       */
+/*   Updated: 2024/06/23 16:33:17 by pablgarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ char  **ft_copy_argv(int argc, char **argv)
 {
     char **new_argv;
     int i;
-    int j;
 
     new_argv = (char **)malloc((argc + 1) * sizeof(char *));
     if (!new_argv)

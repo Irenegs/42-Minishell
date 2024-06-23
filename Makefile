@@ -4,16 +4,19 @@ LIBS        := ft
 LIBS_TARGET := libft/libft.a 
 INCS        := include libft/include
 
-SRCS        := command.c extract_command.c extract_element.c extract_file.c \
-				extract_pipe.c extract_utils.c execute.c  \
-				parser.c super_split.c split_utils.c built_in.c built_in2.c \
-				built_in3.c built_in4.c struct.c signals.c gnl.c  \
-				heredoc.c main.c \
-				#prueba_children.c \
+SRCS        := command.c execute.c pipe_utils.c \
+				extract_command.c extract_element.c  extract_file.c extract_pipe.c extract_utils.c \
+				parser.c super_split.c split_utils.c \
+				built_in.c built_in2.c \
+				built_in3.c built_in4.c \
+				struct.c signals.c \
+				heredoc.c gnl.c\
+				 main.c \
+			
 
 OBJS        := $(SRCS:%.c=%.o)
 CC          := gcc
-CFLAGS      := -Wall -Wextra #-Werror
+CFLAGS      := -Wall -Wextra -Werror
 
 RM          := rm -f
 MAKEFLAGS   += --no-print-directory
