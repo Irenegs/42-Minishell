@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 21:50:39 by pablo             #+#    #+#             */
-/*   Updated: 2024/05/30 21:51:58 by pablo            ###   ########.fr       */
+/*   Updated: 2024/06/20 19:05:00 by pablgarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,11 @@ void	ft_free_env(char **env)
 //inicializar la struct
 void	ft_init_mix(t_mix *data)
 {
-	data->m_path = NULL;
+	data->exit_status = 0;
+    data->m_argc = 0;
 	data->m_env = NULL;
 	data->m_argv = NULL;
+
 
 }
 
@@ -101,4 +103,5 @@ void	ft_fill_struct(t_mix *data, int argc, char **argv, char **envp)
 {
 	data->m_env = ft_copy_env(envp);
     data->m_argv = ft_copy_argv(argc, argv);
+    data->m_argc = argc; 
 }

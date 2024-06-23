@@ -6,43 +6,44 @@
 /*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 17:58:01 by irene             #+#    #+#             */
-/*   Updated: 2024/06/14 18:28:55 by pablgarc         ###   ########.fr       */
+/*   Updated: 2024/06/06 22:46:42 by pablgarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+int	global_signal = -1;
 
 void prompt(t_mix *data)
 {
     char *input;
     char **argv;
 
-    signal_handler();
     while (1)
     {
-        
+        ft_signals_interactive();
         input = readline("Minishell: ");
         if(input == NULL) //esto seria la señal de CRTL +D
         {
             printf("\n");
             break;
         }
+        ft_signals_running();
         if (*input)
             add_history(input);
         if(*input != '\0')
         {
 
-            //parse_and_execute(input, data);
+            parse_and_execute(input, data);
             
-            argv = ft_split(input, ' ');
-            if (argv)
-            {
-                data->m_argv = argv;
-                execute_builtin(data);
-                free_argv(argv);
-                data->m_argv = NULL;
-            }
+           // argv = ft_split(input, ' ');
+            //if (argv)
+            //{
+             //   data->m_argv = argv;
+               // execute_builtin(data);
+              //  free_argv(argv);
+              //  data->m_argv = NULL;
+            //}
             
 
             free(input);
@@ -53,6 +54,7 @@ void prompt(t_mix *data)
 int main(int argc, char **argv, char **envp)
 {
     t_mix data;
+    char *input;
 
     if (argc != 1 || !argv)
        return (1);

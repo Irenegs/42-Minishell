@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 16:09:28 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/06/06 18:45:07 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/06/20 19:27:52 by pablgarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,12 @@ int execute_only_child(char *s, t_mix *data)
         output = extract_output(s);
         if (output > 0)
             dup2(output, STDOUT_FILENO);
-        if (is_builtin(command) != 0)
+        if (is_builtin(data) != 0)
             {
                 write(2, "built\n", 6);
                 execute_builtin(data);
             }
-        if (is_builtin(command) == 0)
+        if (is_builtin(data) == 0)
             {
                 run_command(command);
                 ft_out(command);

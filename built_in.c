@@ -102,29 +102,33 @@ char	**remove_env(char **env, const char *key)
 	return (new_env);
 }
 
-int is_builtin(char **m_cmd)
+int	is_builtin(t_mix *data)
 {
-    char *builtins[7] = {
-        "echo",
-        "cd",
-        "pwd",
-        "export",
-        "unset",
-        "env",
-        "exit"
-    };
-    int i;
-
-    i = 0;
-    while (i < 7)
-    {
-        if (m_cmd && m_cmd[0]) // Verifica que m_cmd no sea NULL y que m_cmd[0] no sea NULL
-        {
-            if (ft_strncmp(builtins[i], m_cmd[0], strlen(builtins[i])) == 0 
-				&& strlen(m_cmd[0]) == strlen(builtins[i]))
-                return (1);
-        }
-        i++;
-    }
-    return (0);
+	if (ft_strcmp(data->m_argv[0], "echo") == 0)
+		return (1);
+	else if (ft_strcmp(data->m_argv[0], "cd") == 0)
+		return (1);
+	else if (ft_strcmp(data->m_argv[0], "pwd") == 0)
+		return (1);
+	else if (ft_strcmp(data->m_argv[0], "export") == 0)
+		return (1);
+	else if (ft_strcmp(data->m_argv[0], "unset") == 0)
+		return (1);
+	else if (ft_strcmp(data->m_argv[0], "env") == 0)
+		return (1);
+	else if (ft_strcmp(data->m_argv[0], "exit") == 0)
+		return (1);
+	else
+		return (0);
 }
+
+/*
+int	is_builtin(char *cmd)
+{
+	if (!cmd)
+		return (0);
+	return (!ft_strcmp(cmd, "echo") || !ft_strcmp(cmd, "env")
+		|| !ft_strcmp(cmd, "cd") || !ft_strcmp(cmd, "pwd")
+		|| !ft_strcmp(cmd, "export") || !ft_strcmp(cmd, "unset")
+		|| !ft_strcmp(cmd, "exit"));
+}*/

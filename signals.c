@@ -13,119 +13,54 @@
 #include "minishell.h"
 
 
-/*
-void	ft_sigint(int signum)
+//iinterrupt the command and display a new prompt on a new line
+void	ft_interrupt(int signal)
 {
-	if (signum == SIGINT)
-	{
-		//printf("SIGINT recibida\n");
-
-		
-		//cuando el crtl+c interrumpe proceso imprime dos veces el prompt
-		//hace falta un flag de proceso en ejecuccion para poner aqui
-		//un if y un else y que lo imprima bien
-		
-		
-
-        rl_replace_line("", 0); // borra la linea actual del prompt
-        write(STDOUT_FILENO, "\n", 1);
-		rl_on_new_line(); //mueve cursor a nueva linea
-        rl_redisplay();
-		
-	}
-}
-void	ft_sigquit(int signum)
-{
-	if (signum == SIGQUIT)
-	{
-		printf("\n");
-		rl_replace_line("", 0);
-		rl_on_new_line();
-		rl_redisplay();
-	}
+	if (signal == SIGQUIT)
+		ft_putstr_fd("Quit (core dumped)\n", STDERR_FILENO);
+	if (signal == SIGINT)
+		ft_putchar_fd('\n', STDOUT_FILENO);
+	rl_on_new_line();
+	rl_replace_line("", 0);
 }
 
-void	signal_handler(void)
+// Signal handler for SIGINT (Ctrl-C)
+// When the user presses Ctrl-C, the signal is sent to the process
+// and the handler is called. The handler writes a newline character
+// to the standard output, replaces the current line with an empty
+// string, moves the cursor to the beginning of the line and redisplays
+// the prompt.
+void	ft_new_prompt(int signal)
 {
-	signal(SIGINT, ft_sigint);
-	signal(SIGQUIT, ft_sigquit);
+	write(1, "\n", 1);
+	rl_replace_line("", 0);
+	rl_on_new_line();
+	rl_redisplay();
+	if (signal == SIGINT)
+		global_signal = signal;
 }
 
-*/
-
-int sig_exit_status;
-
-void signal_default(void)
+void	ft_heredoc_handler(int signal)
 {
-    signal(SIGQUIT, SIG_DFL);
-    signal(SIGINT, SIG_DFL);
+	(void)signal;
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	global_signal = signal;
 }
 
-void handler_sigint(int sig)
+
+void	ft_signals_interactive(void)
 {
-    if (sig == SIGINT)
-    {
-        ft_putchar_fd('\n', STDOUT_FILENO);
-        rl_on_new_line();
-        rl_replace_line("", 0);
-    }
+	signal(SIGINT, ft_new_prompt);
+	signal(SIGQUIT, SIG_IGN);
 }
 
 
 
-
-void handler(int sig)
+void	ft_signals_running(void)
 {
-    if (sig == SIGINT)
-    {
-        ft_putchar_fd('\n', STDOUT_FILENO);
-        rl_on_new_line();
-        rl_replace_line("", 0);
-        rl_redisplay();
-        sig_exit_status = 130;
-    }
-}
-
-void signal_handler(void)
-{
-    struct sigaction sa;
-
-    sa.sa_flags = SA_RESTART;
-    sigemptyset(&sa.sa_mask);
-    sa.sa_handler = &handler;
-
-    if (sigaction(SIGINT, &sa, NULL) == -1) 
-	{
-        perror("sigaction");
-    }
-
-    if (signal(SIGQUIT, SIG_IGN) == SIG_ERR) 
-	{
-        perror("signal");
-    }
+	signal(SIGINT, ft_interrupt);
+	signal(SIGQUIT, ft_interrupt);
 }
 
 
-
-
-
-
-void ft_sleep(t_mix *data)
-{
-	int seconds;
-
-    if (data->m_argv[1] == NULL)
-    {
-        printf("ft_sleep: expected argument\n");
-        return;
-    }
-
-    seconds = ft_atoi(data->m_argv[1]);
-    if (seconds < 0)
-    {
-        printf("ft_sleep: invalid time '%s'\n", data->m_argv[1]);
-        return;
-    }
-
-    sleep(seconds);
-}

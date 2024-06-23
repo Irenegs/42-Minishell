@@ -6,7 +6,7 @@
 /*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 17:56:24 by irene             #+#    #+#             */
-/*   Updated: 2024/06/14 18:25:38 by pablgarc         ###   ########.fr       */
+/*   Updated: 2024/06/20 19:24:56 by pablgarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,23 +31,27 @@
 #define MAX_argv 100 
 
 extern char	**environ;
-
-
+extern int	global_signal;
 
 typedef struct s_mix
 {
 	char	**m_env;
-	char	**m_path;
 	char	**m_argv;
-	int interrupted;
+	int 	m_argc;
+	int 	exit_status;
 	char	*s_val;
 }				t_mix;
 
+//error.c
+
+
 //signals.c
-void	ft_sigint(int signum);
-void	ft_sigquit(int signum);
-void	signal_handler(void);
-void ft_sleep(t_mix *data); // para hacer pruebas con las signals
+void	ft_interrupt(int signal);
+void	ft_new_prompt(int signal);
+void	ft_heredoc_handler(int signal);
+void	ft_signals_interactive(void);
+void 	ft_signals_running(void);
+//void 	ft_sleep(t_mix *data); // para hacer pruebas con las signals
 
 
 //struct.c
@@ -62,7 +66,7 @@ int find_env_index(char **env, const char *key);
 char **add_or_update_env(char **env, const char *key, const char *value);
 char **copy_env_without_entry(char **env, int index, int size);
 char **remove_env(char **env, const char *key);
-int	is_builtin (char **m_cmd);
+int		is_builtin(t_mix *data);
 
 
 //built_in2.c

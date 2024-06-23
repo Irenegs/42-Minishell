@@ -48,14 +48,18 @@ void	ft_env(t_mix *data)
 
 void	ft_exit(t_mix *data)
 {
-	int	status;
+	    int status = 0;
 
-	status = 0;
-	if (data->m_argv[1])
-	{
-		status = ft_atoi(data->m_argv[1]);
-	}
-	exit(status);
+    // Si hay un argumento después de 'exit'
+    if (data->m_argv[1])
+    {
+            printf("minishell: exit: too many arguments\n");
+            status = 1; // Código de estado para demasiados argumentos
+    }
+   
+    // Liberar recursos 
+
+    exit(status);
 }
 
 void	execute_builtin(t_mix *data)
@@ -74,8 +78,6 @@ void	execute_builtin(t_mix *data)
 		ft_unset(data);
 	else if (ft_strcmp(data->m_argv[0], "env") == 0)
 		ft_env(data);
-	else if (ft_strcmp(data->m_argv[0], "sleep") == 0)
-		ft_sleep(data);
 	else
 		fprintf(stderr, "%s: command not found\n", data->m_argv[0]);
 }
