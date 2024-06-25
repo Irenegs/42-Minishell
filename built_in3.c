@@ -44,14 +44,22 @@ void	ft_env(t_mix *data)
 	}
 }
 
-void	ft_exit(t_mix *data)
+void	ft_exit(char **command)
 {
 	int	status;
-
+	printf ("built\n");
 	status = 0;
-	if (data->m_argv[1])
+	if (command[1])
 	{
-		status = ft_atoi(data->m_argv[1]);
+		if (ft_isnum(command[1]) == 1)
+		{
+			printf("exit: %s: numeric argument required\n", command[1]);
+			status = 255; // Código de salida para error de argumento no numérico
+		}
+		else
+		{
+			status = ft_atoi(command[1]);
+		}
 	}
 	exit(status);
 }
@@ -61,17 +69,32 @@ void	execute_builtin(t_mix *data, char **command)
 	if (ft_strcmp(command[0], "echo") == 0)
 		ft_echo(command);
 	else if (ft_strcmp(command[0], "cd") == 0)
-		ft_cd(data);
+		ft_cd(command);
 	else if (ft_strcmp(command[0], "pwd") == 0)
 		ft_pwd();
 	else if (ft_strcmp(command[0], "exit") == 0)
-		ft_exit(data);
+		ft_exit(command);
 	else if (ft_strcmp(command[0], "export") == 0)
-		ft_export(data);
+		ft_export(data, command);
 	else if (ft_strcmp(command[0], "unset") == 0)
-		ft_unset(data);
+		ft_unset(data, command);
 	else if (ft_strcmp(command[0], "env") == 0)
 		ft_env(data);
 	else
 		fprintf(stderr, "%s: command not found\n", command[0]);
+}
+
+int	ft_isnum(char *str)
+{
+	{
+    if (*str == '-' || *str == '+')
+        str++;
+    while (*str)
+    {
+        if (isdigit(*str))
+            return 0;
+        str++;
+    }
+    return 1;
+}
 }

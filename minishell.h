@@ -30,7 +30,6 @@
 
 # define MAX_argv 100
 
-extern char	**environ;
 extern int	global_signal;
 
 typedef struct s_mix
@@ -51,7 +50,7 @@ void	ft_new_prompt(int signal);
 void	ft_heredoc_handler(int signal);
 void	ft_signals_interactive(void);
 void 	ft_signals_running(void);
-//void 	ft_sleep(t_mix *data); // para hacer pruebas con las signals
+
 
 
 //struct.c
@@ -71,16 +70,17 @@ int		is_builtin(char *cmd);
 
 //built_in2.c
 void ft_echo(char **command);
-void ft_cd(t_mix *data);
+void ft_cd(char **command);
 void ft_pwd(void);
-void ft_export(t_mix *data);
-void ft_unset(t_mix *data);
+void ft_export(t_mix *data, char **command);
+void ft_unset(t_mix *data, char** command);
 
 //built_in3.c
 int ft_strcmp(const char *s1, const char *s2);
 void ft_env(t_mix *data);
-void ft_exit(t_mix *data);
+void ft_exit(char **command);
 void execute_builtin(t_mix *data, char **command);
+int ft_isnum(char *str);
 
 //built_in4.c
 char *create_env_entry(const char *key, const char *value);

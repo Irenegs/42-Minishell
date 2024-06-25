@@ -36,14 +36,25 @@ void	ft_echo(char **command)
 		printf("\n");
 }
 
-void	ft_cd(t_mix *data)
+void	ft_cd(char **command)
 {
-	if (!data->m_argv[1])
+	printf("builtin\n");
+	if (!command[1] || command[1][0] == '\0')
 	{
-		printf("cd: missing argument\n");
-		return ;
+		// Si no hay argumento o el argumento está vacío, cambiar al directorio home
+		char *home_dir = getenv("HOME");
+		if (home_dir == NULL)
+		{
+			printf("cd: HOME not set\n");
+			return;
+		}
+		if (chdir(home_dir) != 0)
+		{
+			perror("cd");
+		}
+		return;
 	}
-	if (chdir(data->m_argv[1]) != 0)
+	if (chdir(command[1]) != 0)
 	{
 		perror("cd");
 	}
@@ -53,6 +64,7 @@ void	ft_pwd(void)
 {
 	char	*pwd;
 
+	printf("builtin\n");
 	pwd = getcwd(NULL, 0);
 	if (pwd)
 	{
@@ -65,20 +77,21 @@ void	ft_pwd(void)
 	}
 }
 
-void	ft_export(t_mix *data)
+void	ft_export(t_mix *data, char **command)
 {
 	char	**str;
 	int		i;
 
+	printf("builtin\n");
 	i = 1;
-	if (!data->m_argv[1])
+	if (!command[1])
 	{
 		printf("export: missing argument\n");
 		return ;
 	}
-	while (data->m_argv[i])
+	while (command[i])
 	{
-		str = ft_split(data->m_argv[i], '=');
+		str = ft_split(command[i], '=');
 		if (str[0] && str[1])
 		{
 			data->m_env = add_or_update_env(data->m_env, str[0], str[1]);
@@ -89,26 +102,26 @@ void	ft_export(t_mix *data)
 			}
 		}
 		else
-			printf("export: invalid argument '%s'\n", data->m_argv[i]);
+			printf("export: invalid argument '%s'\n", command[i]);
 		free_argv(str);
 		i++;
 	}
 }
 
-void	ft_unset(t_mix *data)
+void	ft_unset(t_mix *data, char **command)
 {
 	int	i;
 
 	i = 1;
-	if (!data->m_argv[1])
+	if (!command[1])
 	{
 		printf("unset: missing argument\n");
 		return ;
 	}
 
-	while (data->m_argv[i])
+	while (command[i])
 	{
-		data->m_env = remove_env(data->m_env, data->m_argv[i]);
+		data->m_env = remove_env(data->m_env, command[i]);
 		if (!data->m_env)
 		{
 			perror("unset");
