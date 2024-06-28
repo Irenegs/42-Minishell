@@ -1,49 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   heredoc.c                                          :+:      :+:    :+:   */
+/*   heredoc_text.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 14:46:24 by irene             #+#    #+#             */
-/*   Updated: 2024/06/23 19:45:36 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/06/28 19:55:54 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/*
-static char	*get_rawtext(char *delimiter)
-{
-	char	*line;
-	char	*aux_1;
-	char	*aux_2;
-
-	//ft_interrupt(global_signal);
-	aux_2 = readline(">>");//get_next_line(STDIN_FILENO);
-	line = NULL;
-	while (ft_strncmp(aux_2, delimiter, ft_strlen(delimiter)) != 0
-		&& aux_2 != NULL)
-	{
-		printf("he leido:%s\n", aux_2);
-		printf("strncmp:%d\n", ft_strncmp(aux_2, delimiter, ft_strlen(delimiter)));
-		printf("del:%s\n", delimiter);
-		printf("strlen del:%ld\n", ft_strlen(delimiter));
-		aux_1 = line;
-		line = ft_strjoin(aux_1, aux_2);
-		if (aux_1 != NULL)
-			free(aux_1);
-		if (aux_2 != NULL)
-			free(aux_2);
-		aux_2 = readline(">>");//get_next_line(STDIN_FILENO);
-	}
-	if (aux_2 != NULL)
-		free(aux_2);
-	return (line);
-}
-*/
-
-
 
 static char	*get_rawtext(char *delimiter)
 {
@@ -91,59 +58,7 @@ static char	*obtain_delimiter(char *del_str)
 	return (delimiter);
 }
 
-static char	*expand_string(char *s)
-{
-	char	*expanded;
-	char	*aux;
-	char	*chunk;
-	int		pos;
-	int		len;
-
-	if (!s)
-		return (NULL);
-	expanded = NULL;
-	pos = 0;
-	while (s[pos] != '\0')
-	{
-		if (s[pos] != '$')
-		{
-			len = len_literal_word(s, pos);
-			chunk = ft_substr(s, pos, len);
-			pos = pos + len;
-			aux = expanded;
-			expanded = ft_strjoin(aux, chunk);
-			if (aux)
-				free(aux);
-			if (chunk)
-				free(chunk);
-		}
-		else
-		{
-			chunk = obtain_variable(s, pos + 1);
-			pos += len_literal_word(s, pos + 1) + 1;
-			aux = expanded;
-			expanded = ft_strjoin(aux, chunk);
-			if (aux)
-				free(aux);
-		}
-	}
-	return (expanded);
-}
-
-static int	must_expand(char *s)
-{
-	if (!s)
-		return (0);
-	while (*s != '<' && *s != '\0')
-		s++;
-	while (*s == '<' || is_space(*s) == 1)
-		s++;
-	if (*s == '"' || *s == '\'')
-		return (0);
-	return (1);
-}
-
-char	*get_heredoc(char *s)
+static char	*get_heredoc(char *s)
 {
 	char	*heredoc_text;
 	char	*delimiter;
@@ -161,6 +76,28 @@ char	*get_heredoc(char *s)
 	return (heredoc_text);
 }
 
+int	write_heredoc_file(char *s, char *filename)
+{
+	char	*heredoc_text;
+	int		fd;
+
+	if (!s || !filename)
+		return (-1);
+	heredoc_text = get_heredoc(s);
+	if (!heredoc_text)
+		return (1);
+	fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (fd == -1)
+	{
+		free(heredoc_text);
+		return (1);
+	}
+	write(fd, heredoc_text, ft_strlen(heredoc_text));
+	close(fd);
+	free(heredoc_text);
+	return (0);
+}
+
 /*
 int main(int argc, char **argv)
 {
@@ -169,4 +106,36 @@ int main(int argc, char **argv)
 	printf("%p\n", heredoc);
 	free(heredoc);
 	return (0);
-}*/
+}
+*/
+/*
+static char	*get_rawtext(char *delimiter)
+{
+	char	*line;
+	char	*aux_1;
+	char	*aux_2;
+
+	//ft_interrupt(global_signal);
+	aux_2 = readline(">>");//get_next_line(STDIN_FILENO);
+	line = NULL;
+	while (ft_strncmp(aux_2, delimiter, ft_strlen(delimiter)) != 0
+		&& aux_2 != NULL)
+	{
+		printf("he leido:%s\n", aux_2);
+		printf("strncmp:%d\n", ft_strncmp(aux_2, delimiter, \
+		ft_strlen(delimiter)));
+		printf("del:%s\n", delimiter);
+		printf("strlen del:%ld\n", ft_strlen(delimiter));
+		aux_1 = line;
+		line = ft_strjoin(aux_1, aux_2);
+		if (aux_1 != NULL)
+			free(aux_1);
+		if (aux_2 != NULL)
+			free(aux_2);
+		aux_2 = readline(">>");//get_next_line(STDIN_FILENO);
+	}
+	if (aux_2 != NULL)
+		free(aux_2);
+	return (line);
+}
+*/

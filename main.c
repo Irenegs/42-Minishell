@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 17:58:01 by irene             #+#    #+#             */
-/*   Updated: 2024/06/23 18:08:29 by pablgarc         ###   ########.fr       */
+/*   Updated: 2024/06/28 19:32:24 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,9 @@ void prompt(t_mix *data)
     while (1)
     {
         ft_signals_interactive();
+        printf("\033[0;32m");
         data->input = readline("Minishell: ");
+        printf("\033[0m"); 
         if(data->input == NULL) //esto seria la señal de CRTL +D
         {
             printf("\n");

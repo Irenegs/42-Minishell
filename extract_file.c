@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   extract_file.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
+/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 16:36:46 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/06/22 19:14:54 by irene            ###   ########.fr       */
+/*   Updated: 2024/06/28 20:08:54 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,21 +26,19 @@ static int	locate_char_position(char *s, char c)
 	return (-1);
 }
 
-static int	get_heredoc_fd(char *s)
+static int	get_heredoc_fd(char	**heredocs, int p)
 {
-	char	*heredoc_text;
-	int		fd;
+	int	fd;
 
-	heredoc_text = get_heredoc(s);
-	fd = open(".tmpfile", O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	write(fd, heredoc_text, ft_strlen(heredoc_text));
-	close(fd);
-	fd = open(".tmpfile", O_RDONLY);
-	free(heredoc_text);
+	if (p == -1)
+		p = 0;
+	if (!heredocs || !heredocs[p])
+		return (-2);
+	fd = open(heredocs[p], O_RDONLY);
 	return (fd);
 }
 
-int	extract_input(char *s)
+int	extract_input(char *s, char	**heredocs, int p)
 {
 	int		fd;
 	int		pos;
@@ -53,7 +51,7 @@ int	extract_input(char *s)
 	if (pos == -1)
 		return (-1);
 	if (s[pos + 1] == '<')
-		fd = get_heredoc_fd(s + pos);
+		fd = get_heredoc_fd(heredocs, p);
 	else
 	{
 		filename = extract_element(s, pos);
@@ -62,7 +60,8 @@ int	extract_input(char *s)
 		fd = open(filename, O_RDONLY);
 		free(filename);
 	}
-	aux_fd = extract_input(s + pos + 2);
+	printf("input fd %d\n", fd);
+	aux_fd = extract_input(s + pos + 2, heredocs, p);
 	if (aux_fd > -1)
 		fd = aux_fd;
 	return (fd);

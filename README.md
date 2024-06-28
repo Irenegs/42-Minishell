@@ -18,6 +18,10 @@ Conlleva la gestión de las variabes de entorno, inicialmente se obtienen con ge
 ## 1a
 Heredoc vacío -> error 139
 
+Probar
+< /dev/urandom cat | head -1
+cat | cat | ls
+
 
 Gestionar $? -> se puede guardar en parse_and_execute como valor de retorno de execute/execute_only_child
 
@@ -35,6 +39,7 @@ probar pipes sin comando, solo con redirecciones
 revisar si no necesitamos extern environ al tener la función getenv
 revisar super_split porque la gestión de las \, que ya no es necesaria
 proteger fallos de malloc y free de NULL -> extract element + norminette
+valgrind --track-fds=yes --trace-children=yes
 
 # Listado de archivos:
 command.c -> buscar el archivo y devuelve la ruta

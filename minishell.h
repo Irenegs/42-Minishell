@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 17:56:24 by irene             #+#    #+#             */
-/*   Updated: 2024/06/23 18:06:13 by pablgarc         ###   ########.fr       */
+/*   Updated: 2024/06/28 19:04:27 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ char *obtain_variable(char *s, int i);
 char *extract_element(char *s, int pos);
 
 //extract_file.c
-int extract_input(char *s);
+int	extract_input(char *s, char	**heredocs, int p);
 int extract_output(char *s);
 
 //extract_pipe.c
@@ -134,8 +134,20 @@ void	manage_multiple_pipes(int p, int pipes, int *fd);
 void	close_pipes(int pipes, int *fd);
 int		pipe_abortion(int *fd);
 
-//heredoc.c
-char	*get_heredoc(char *s);
+//heredocs.c
+void	clean_and_free_heredocs(char **heredocs, int pipes);
+int	get_heredocs(char **heredocs, t_mix *data, int pipes);
+
+//heredoc_text.c
+int	write_heredoc_file(char *s, char *filename);
+
+//heredoc_expand.c
+int	must_expand(char *s);
+char	*expand_string(char *s);
+
+//heredoc_utils.c
+int	number_of_heredocs(char *subs);
+int	locate_nth_heredoc(char *subs, int n);
 
 //split_utils.c
 int	is_escaped(char const *s, int i);
