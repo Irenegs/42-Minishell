@@ -6,7 +6,7 @@
 /*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 17:56:24 by irene             #+#    #+#             */
-/*   Updated: 2024/06/28 19:04:27 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/06/29 17:25:42 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,10 +139,10 @@ void	clean_and_free_heredocs(char **heredocs, int pipes);
 int	get_heredocs(char **heredocs, t_mix *data, int pipes);
 
 //heredoc_text.c
-int	write_heredoc_file(char *s, char *filename);
+int	write_hd_file(char *s, char *filename);
 
 //heredoc_expand.c
-int	must_expand(char *s);
+int	must_expand(char *delimiter, char *text);
 char	*expand_string(char *s);
 
 //heredoc_utils.c

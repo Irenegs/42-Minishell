@@ -6,7 +6,7 @@
 /*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 16:09:28 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/06/28 20:13:20 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/06/29 16:08:32 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,11 @@ int	execute_only_child(t_mix *data)
 		exit(0);
 	}
 	if (waitpid(-1, &status, 0) != -1)
+	{
+		clean_and_free_heredocs(heredocs, 0);
 		return (status);
-	clean_and_free_heredocs(heredocs, 0);	
+	}
+	clean_and_free_heredocs(heredocs, 0);
 	return (0);
 }
 

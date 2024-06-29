@@ -6,7 +6,7 @@
 /*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 14:46:24 by irene             #+#    #+#             */
-/*   Updated: 2024/06/28 19:55:54 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/06/29 17:25:20 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,14 @@ static char	*get_rawtext(char *delimiter)
 		aux_2 = get_next_line(STDIN_FILENO);
 	}
 	if (aux_2 != NULL)
+	{
+		if (line == NULL)
+		{
+			line = malloc(1 * sizeof(char));
+			line[0] = '\0';
+		}
 		free(aux_2);
+	}
 	return (line);
 }
 
@@ -66,7 +73,7 @@ static char	*get_heredoc(char *s)
 
 	delimiter = obtain_delimiter(s);
 	heredoc_text = get_rawtext(delimiter);
-	if (must_expand(s) == 1)
+	if (must_expand(s, heredoc_text) == 1)
 	{
 		aux = heredoc_text;
 		heredoc_text = expand_string(aux);
@@ -76,26 +83,30 @@ static char	*get_heredoc(char *s)
 	return (heredoc_text);
 }
 
-int	write_heredoc_file(char *s, char *filename)
+int	write_hd_file(char *s, char *filename)
 {
 	char	*heredoc_text;
 	int		fd;
+	int		return_value;
 
+	return_value = 0;
 	if (!s || !filename)
 		return (-1);
 	heredoc_text = get_heredoc(s);
 	if (!heredoc_text)
-		return (1);
-	fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		return (-1);
+	printf("Creando %s\n", filename);
+	fd = open(filename, O_WRONLY | O_TRUNC | O_CREAT, 0644);
 	if (fd == -1)
 	{
 		free(heredoc_text);
 		return (1);
 	}
-	write(fd, heredoc_text, ft_strlen(heredoc_text));
+	if (write(fd, heredoc_text, ft_strlen(heredoc_text)) == -1)
+		return_value = 1;
 	close(fd);
 	free(heredoc_text);
-	return (0);
+	return (return_value);
 }
 
 /*

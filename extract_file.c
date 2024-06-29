@@ -6,7 +6,7 @@
 /*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 16:36:46 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/06/28 20:08:54 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/06/29 16:37:42 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,9 @@ static int	get_heredoc_fd(char	**heredocs, int p)
 		p = 0;
 	if (!heredocs || !heredocs[p])
 		return (-2);
+	printf("heredocs[%d]: %s\n", p, heredocs[p]);
 	fd = open(heredocs[p], O_RDONLY);
+	printf("heredoc fd %d\n", fd);
 	return (fd);
 }
 

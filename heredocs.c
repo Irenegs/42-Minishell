@@ -6,13 +6,13 @@
 /*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 17:50:11 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/06/28 20:12:17 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/06/29 17:26:02 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int get_heredocs_texts(char **heredocs, int pipes, char *s)
+static int	get_heredocs_texts(char **heredocs, int pipes, char *s)
 {
 	int		p;
 	char	*subs;
@@ -24,12 +24,12 @@ static int get_heredocs_texts(char **heredocs, int pipes, char *s)
 	{
 		subs = extract_pipe(s, p);
 		if (!subs)
-			return (1);	
+			return (1);
 		n_heredocs = number_of_heredocs(subs);
 		n = 0;
 		while (n < n_heredocs)
 		{
-			if (write_heredoc_file(subs + locate_nth_heredoc(subs, n), heredocs[p]) != 0)
+			if (write_hd_file(subs + locate_n_hd(subs, n), heredocs[p]) != 0)
 				return (-1);
 			n++;
 		}
@@ -44,7 +44,7 @@ static int	get_heredocs_filenames(char **heredocs, int pipes)
 {
 	int		n;
 	char	*number;
-	
+
 	n = 0;
 	if (!heredocs)
 		return (1);
@@ -81,7 +81,7 @@ void	clean_and_free_heredocs(char **heredocs, int pipes)
 			if (access(heredocs[p], F_OK) != -1)
 			{
 				printf("Borrando %s\n", heredocs[p]);
-				printf("unlink ret %d\n",unlink(heredocs[p]));
+				printf("unlink ret %d\n", unlink(heredocs[p]));
 			}
 			free(heredocs[p]);
 		}

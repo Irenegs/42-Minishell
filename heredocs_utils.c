@@ -6,7 +6,7 @@
 /*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 18:57:55 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/06/28 19:03:37 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/06/29 17:24:44 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	number_of_heredocs(char *subs)
 	return (hd);
 }
 
-int	locate_nth_heredoc(char *subs, int n)
+int	locate_n_hd(char *subs, int n)
 {
 	int	pos;
 	int	hd_counter;
