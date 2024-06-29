@@ -16,21 +16,16 @@ Conlleva la gestión de las variabes de entorno, inicialmente se obtienen con ge
 
 # Por hacer:
 ## 1a
-Heredoc vacío -> error 139
+- Probar (ya funciona, pero probar cada vez que se toquen redirecciones): < /dev/urandom cat | head -1; cat | cat | ls
 
-Probar
-< /dev/urandom cat | head -1
-cat | cat | ls
+- Gestionar $? -> se puede guardar en parse_and_execute como valor de retorno de execute/execute_only_child
 
-
-Gestionar $? -> se puede guardar en parse_and_execute como valor de retorno de execute/execute_only_child
-
-heredoc + leaks: El delimitador se lee literalmente, no se transforma el delimitador. 'Delimitador' no expande las variables. 
-
-heredoc + señales:
+- heredoc + señales:
 C-c dentro de heredoc lo corta y vuelve a la shell sin ejecutar ninguna instrucción $?=130
 C-\ no hace nada
 C-d cierra el heredoc con un error (bash: warning: here-document at line 160 delimited by end-of-file (wanted 'DELIMITADOR')) pero sigue con las instrucciones $?=0.
+
+- command con la struct en lugar de getenv
 
 escribir errores
 separar ejecución de built-ins

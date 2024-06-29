@@ -6,7 +6,7 @@
 /*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 14:46:24 by irene             #+#    #+#             */
-/*   Updated: 2024/06/29 18:18:56 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/06/29 19:21:01 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,27 +19,23 @@ static char	*get_rawtext(char *delimiter)
 	char	*aux_2;
 
 	aux_2 = get_next_line(STDIN_FILENO);
-	line = NULL;
+	line = malloc(1 * sizeof(char));
+	line[0] = '\0';
 	while (ft_strncmp(aux_2, delimiter, ft_strlen(delimiter)) != 0
 		&& aux_2 != NULL)
 	{
 		aux_1 = line;
 		line = ft_strjoin(aux_1, aux_2);
-		if (aux_1 != NULL)
-			free(aux_1);
-		if (aux_2 != NULL)
-			free(aux_2);
+		free(aux_1);
+		free(aux_2);
 		aux_2 = get_next_line(STDIN_FILENO);
 	}
-	if (aux_2 != NULL)
+	if (aux_2 == NULL)
 	{
-		if (line == NULL)
-		{
-			line = malloc(1 * sizeof(char));
-			line[0] = '\0';
-		}
-		free(aux_2);
+		free(line);
+		return (NULL);
 	}
+	free(aux_2);
 	return (line);
 }
 
@@ -72,6 +68,7 @@ static char	*get_heredoc(char *s)
 	char	*aux;
 
 	delimiter = obtain_delimiter(s);
+	printf("delimiter %s\n", delimiter);
 	heredoc_text = get_rawtext(delimiter);
 	if (must_expand(s, heredoc_text) == 1)
 	{
@@ -107,18 +104,62 @@ int	write_hd_file(char *s, char *filename)
 	free(heredoc_text);
 	return (return_value);
 }
-
 /*
+void show_leaks(void)
+{
+	system("leaks a.out");
+}
 int main(int argc, char **argv)
 {
-	char *heredoc = get_heredoc(argv[1]);
-	printf("4\n");
-	printf("%p\n", heredoc);
-	free(heredoc);
+	atexit(show_leaks);
+	if (argc >1)
+	{
+		printf("hola\n");
+		char *heredoc = get_heredoc(argv[1]);
+		printf("4\n");
+		printf("%s\n", heredoc);
+		free(heredoc);
+	}
 	return (0);
 }
 */
 /*
+BIEN, PERO INCUMPLE NORMA
+
+static char	*get_rawtext(char *delimiter)
+{
+	char	*line;
+	char	*aux_1;
+	char	*aux_2;
+
+	aux_2 = get_next_line(STDIN_FILENO);
+	line = NULL;
+	while (ft_strncmp(aux_2, delimiter, ft_strlen(delimiter)) != 0
+		&& aux_2 != NULL)
+	{
+		aux_1 = line;
+		line = ft_strjoin(aux_1, aux_2);
+		if (aux_1 != NULL)
+			free(aux_1);
+		if (aux_2 != NULL)
+			free(aux_2);
+		aux_2 = get_next_line(STDIN_FILENO);
+	}
+	if (aux_2 != NULL)
+	{
+		if (line == NULL)
+		{
+			line = malloc(1 * sizeof(char));
+			line[0] = '\0';
+		}
+		free(aux_2);
+	}
+	return (line);
+}
+*/
+/*
+VERSIÓN ANTERIOR CON READLINE, FALTAN LOS SALTOS DE LINEA
+
 static char	*get_rawtext(char *delimiter)
 {
 	char	*line;
