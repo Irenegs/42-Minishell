@@ -6,7 +6,7 @@
 /*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 17:50:11 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/06/29 17:26:02 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/06/29 18:19:28 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,10 +79,7 @@ void	clean_and_free_heredocs(char **heredocs, int pipes)
 		if (heredocs[p] != NULL)
 		{
 			if (access(heredocs[p], F_OK) != -1)
-			{
-				printf("Borrando %s\n", heredocs[p]);
-				printf("unlink ret %d\n", unlink(heredocs[p]));
-			}
+				unlink(heredocs[p]);
 			free(heredocs[p]);
 		}
 		p++;

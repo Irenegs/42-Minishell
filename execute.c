@@ -6,7 +6,7 @@
 /*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 16:09:28 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/06/29 16:08:32 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/06/29 18:57:20 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,54 +18,19 @@ int	manage_redirections(int p, int *fd, char *subs, int pipes, char **heredocs)
 	int		output;
 
 	input = extract_input(subs, heredocs, p);
-	if (input > 0)
+	if (input == -2)
+		return (1);
+	else if (input > 0)
 		dup2(input, STDIN_FILENO);
-	else if (p != -1)
-	{
+	else if (p > 0)
 		dup2(fd[2 * (p - 1)], STDIN_FILENO);
-		close(fd[2 * p - 1]);
-	}
-	if (p != pipes && p != -1)
-		dup2(fd[2 * p + 1], STDOUT_FILENO);
 	output = extract_output(subs);
+	if (output == -2)
+		return (1);
+	if (p != pipes)
+		dup2(fd[2 * p + 1], STDOUT_FILENO);
 	if (output > 0)
 		dup2(output, STDOUT_FILENO);
-	return (0);
-}
-
-int	execute_only_child(t_mix *data)
-{
-	int		childpid;
-	char	**command;
-	int		status;
-	char	**heredocs;
-
-	heredocs = malloc(1 * sizeof(char*));
-	if (!heredocs)
-		return (1);
-	if (get_heredocs(heredocs, data, 0) != 0)
-	{
-		free(heredocs);
-		return (1);
-	}
-	childpid = fork();
-	if (childpid == -1)
-		exit(1);
-	if (childpid == 0)
-	{
-		manage_redirections(-1, NULL, data->input, 0, heredocs);
-		command = extract_command(data->input);
-		if (!command)
-			return (1);
-		run_command(command, data);
-		exit(0);
-	}
-	if (waitpid(-1, &status, 0) != -1)
-	{
-		clean_and_free_heredocs(heredocs, 0);
-		return (status);
-	}
-	clean_and_free_heredocs(heredocs, 0);
 	return (0);
 }
 
@@ -78,7 +43,8 @@ int	extract_pipe_and_execute(int p, int *fd, t_mix *data, int pipes, char **here
 	subs = extract_pipe(data->input, p);
 	if (!subs)
 		return (1);
-	manage_redirections(p, fd, subs, pipes, heredocs);
+	if (manage_redirections(p, fd, subs, pipes, heredocs) != 0)
+		exit(errno);
 	command = extract_command(subs);
 	if (!command)
 	{

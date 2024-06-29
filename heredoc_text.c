@@ -6,7 +6,7 @@
 /*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 14:46:24 by irene             #+#    #+#             */
-/*   Updated: 2024/06/29 17:25:20 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/06/29 18:18:56 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,6 @@ int	write_hd_file(char *s, char *filename)
 	heredoc_text = get_heredoc(s);
 	if (!heredoc_text)
 		return (-1);
-	printf("Creando %s\n", filename);
 	fd = open(filename, O_WRONLY | O_TRUNC | O_CREAT, 0644);
 	if (fd == -1)
 	{
