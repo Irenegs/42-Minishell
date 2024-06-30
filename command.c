@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 17:36:54 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/06/23 18:12:14 by pablgarc         ###   ########.fr       */
+/*   Updated: 2024/06/30 19:21:39 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,12 +98,13 @@ int	run_command(char **command, t_mix *data)
 	{
 		execute_builtin(data, command);
 		//devuelve codigo de salida
-		return (0);
+		exit(0);
 	}
 	cmd = command_exists(command[0]);
 	if (!cmd)
-		return (127);
+		exit (127);
+	printf("antes execve\n");
 	execve(cmd, command, data->m_env);
-	ft_out(command);
+	free(cmd);
 	return (-1);
 }

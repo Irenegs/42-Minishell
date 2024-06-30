@@ -10,3 +10,5 @@ tmp*
 test*
 .tmp*
 file*
+input
+output
