@@ -34,7 +34,7 @@ probar pipes sin comando, solo con redirecciones
 revisar si no necesitamos extern environ al tener la función getenv
 revisar super_split porque la gestión de las \, que ya no es necesaria
 proteger fallos de malloc y free de NULL -> extract element + norminette
-valgrind --track-fds=yes --trace-children=yes
+valgrind --track-fds=yes --trace-children=yes; --child-silent-after-fork=yes
 
 # Listado de archivos:
 command.c -> buscar el archivo y devuelve la ruta

@@ -6,7 +6,7 @@
 /*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 17:56:24 by irene             #+#    #+#             */
-/*   Updated: 2024/06/29 19:01:10 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/06/30 16:42:24 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ int    execute(t_mix *data, int pipes);
 void    parse_and_execute(t_mix *data);
 
 //execute_simple.c
-int	execute_only_child(t_mix *data);
+int	execute_only_child(t_mix *data, char **heredocs);
 
 //extract_command.c
 

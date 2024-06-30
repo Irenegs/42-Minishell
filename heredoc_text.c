@@ -6,7 +6,7 @@
 /*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 14:46:24 by irene             #+#    #+#             */
-/*   Updated: 2024/06/29 19:21:01 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/06/30 16:51:21 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ static char	*get_heredoc(char *s)
 	char	*aux;
 
 	delimiter = obtain_delimiter(s);
-	printf("delimiter %s\n", delimiter);
 	heredoc_text = get_rawtext(delimiter);
 	if (must_expand(s, heredoc_text) == 1)
 	{
@@ -84,9 +83,9 @@ int	write_hd_file(char *s, char *filename)
 {
 	char	*heredoc_text;
 	int		fd;
-	int		return_value;
+	int		ret_value;
 
-	return_value = 0;
+	ret_value = 0;
 	if (!s || !filename)
 		return (-1);
 	heredoc_text = get_heredoc(s);
@@ -99,10 +98,10 @@ int	write_hd_file(char *s, char *filename)
 		return (1);
 	}
 	if (write(fd, heredoc_text, ft_strlen(heredoc_text)) == -1)
-		return_value = 1;
+		ret_value = 1;
 	close(fd);
 	free(heredoc_text);
-	return (return_value);
+	return (ret_value);
 }
 /*
 void show_leaks(void)

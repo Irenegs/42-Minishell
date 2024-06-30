@@ -6,7 +6,7 @@
 /*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 17:36:54 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/06/23 19:43:30 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/06/30 19:21:39 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,8 +102,9 @@ int	run_command(char **command, t_mix *data)
 	}
 	cmd = command_exists(command[0]);
 	if (!cmd)
-		return (127);
+		exit (127);
+	printf("antes execve\n");
 	execve(cmd, command, data->m_env);
-	ft_out(command);
+	free(cmd);
 	return (-1);
 }
