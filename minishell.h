@@ -6,7 +6,7 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 17:56:24 by irene             #+#    #+#             */
-/*   Updated: 2024/07/01 18:33:16 by irene            ###   ########.fr       */
+/*   Updated: 2024/07/01 19:33:14 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ typedef struct s_mix
 	char 	*input;
 	int 	m_argc;
 	int 	exit_status;
+	char	**heredocs;
+	int		*pipesfd;
 }				t_mix;
 
 //error.c
@@ -91,12 +93,16 @@ void free_argv(char **argv);
 //command.c
 int	run_command(char **command, t_mix *data);
 
+//command_utils.c
+int	is_local(char *s);
+char	**get_path_variable(char **environ);
+
 //execute.c
 int    execute(t_mix *data, int pipes);
 void    parse_and_execute(t_mix *data);
 
 //execute_simple.c
-int	execute_only_child(t_mix *data, char **heredocs);
+int	execute_only_child(t_mix *data);
 
 //extract_command.c
 

@@ -6,28 +6,11 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 17:36:54 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/07/01 18:32:20 by irene            ###   ########.fr       */
+/*   Updated: 2024/07/01 19:32:43 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	is_local(char *s)
-{
-	int	i;
-
-	i = 0;
-	if (s)
-	{
-		while (s[i] != '\0')
-		{
-			if (s[i] == '/')
-				return (0);
-			i++;
-		}
-	}
-	return (1);
-}
 
 static char	*get_path(char *s, int i, char **path)
 {
@@ -67,7 +50,7 @@ static char	*get_route(char *s, char **path)
 	return (NULL);
 }
 
-static char	*command_exists(char *s)
+static char	*command_exists(char *s, char **env)
 {
 	char	*route;
 	char	**path;
@@ -75,7 +58,7 @@ static char	*command_exists(char *s)
 	route = NULL;
 	if (s)
 	{
-		path = ft_super_split(getenv("PATH"), "=:");
+		path = get_path_variable(env);
 		if (!path || is_local(s) == 0)
 		{
 			if (path)
@@ -100,7 +83,7 @@ int	run_command(char **command, t_mix *data)
 		//devuelve codigo de salida
 		exit(0);
 	}
-	cmd = command_exists(command[0]);
+	cmd = command_exists(command[0], data->m_env);
 	if (!cmd)
 		exit (127);
 	execve(cmd, command, data->m_env);

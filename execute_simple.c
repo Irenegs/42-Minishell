@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_simple.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 18:56:55 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/06/30 19:21:50 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/07/01 18:49:47 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static int	manage_simple_redirections(char *input_str, char **heredocs)
 	return (0);
 }
 
-int	execute_only_child(t_mix *data, char **heredocs)
+int	execute_only_child(t_mix *data)
 {
 	int		childpid;
 	char	**command;
@@ -41,7 +41,7 @@ int	execute_only_child(t_mix *data, char **heredocs)
 		exit(1);
 	if (childpid == 0)
 	{
-		if (manage_simple_redirections(data->input, heredocs) != 0)
+		if (manage_simple_redirections(data->input, data->heredocs) != 0)
 			exit(1);
 		command = extract_command(data->input);
 		if (!command)

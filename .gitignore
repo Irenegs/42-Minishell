@@ -9,6 +9,7 @@ out*
 tmp*
 test*
 .tmp*
-file*
+file1
+file3
 input
 output

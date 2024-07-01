@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 21:50:39 by pablo             #+#    #+#             */
-/*   Updated: 2024/06/23 16:33:17 by pablgarc         ###   ########.fr       */
+/*   Updated: 2024/07/01 18:45:41 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ void	ft_init_mix(t_mix *data)
     data->m_argc = 0;
 	data->m_env = NULL;
 	data->m_argv = NULL;
-
-
+    data->heredocs = NULL;
+    data->pipesfd = NULL;
 }
 
 //hace una copia del entorno
@@ -102,5 +102,5 @@ void	ft_fill_struct(t_mix *data, int argc, char **argv, char **envp)
 {
 	data->m_env = ft_copy_env(envp);
     data->m_argv = ft_copy_argv(argc, argv);
-    data->m_argc = argc; 
+    data->m_argc = argc;
 }

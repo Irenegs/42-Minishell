@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   gnl.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 19:44:36 by irene             #+#    #+#             */
-/*   Updated: 2024/06/23 17:37:20 by pablgarc         ###   ########.fr       */
+/*   Updated: 2024/07/01 18:39:47 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ ssize_t	read_line(char **rem, int fd)
 	//ft_signals_running();
 	buffer = malloc((11) * sizeof(char));
 	if (!buffer)
-		return(-1);
+		return (-1);
 	bytes = read(fd, buffer, 10);
 	if (bytes >= 0)
 	{
