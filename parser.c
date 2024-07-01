@@ -6,7 +6,7 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 18:32:16 by irene             #+#    #+#             */
-/*   Updated: 2024/07/01 18:33:27 by irene            ###   ########.fr       */
+/*   Updated: 2024/07/01 18:36:58 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,10 +80,8 @@ int	parser(char *s)
 	insert[1] = 1;
 	insert[2] = 1;
 	pipes = open_quotes(s);
-	while (s[++i] != '\0' && pipes >= 0)
+	while (s[++i] != '\0' && pipes >= 0 && valid_insertion(insert, s[i]) == 1)
 	{
-		if (valid_insertion(insert, s[i]) == 0)
-			return (-1);
 		if (s[i] == '|')
 		{
 			pipes++;
