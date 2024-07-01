@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 17:56:24 by irene             #+#    #+#             */
-/*   Updated: 2024/06/30 16:42:24 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/07/01 18:33:16 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ char **update_entry(char **env, int i, const char *key, const char *value);
 void free_argv(char **argv);
 
 //command.c
-int			run_command(char **command, t_mix *data);
+int	run_command(char **command, t_mix *data);
 
 //execute.c
 int    execute(t_mix *data, int pipes);
@@ -126,9 +126,6 @@ void	prepare_line(char *array[], char *rem);
 char	*get_next_line(int fd);
 
 //parser.c
-void change_insert(int *var, int pipe, int input, int output);
-int redirection(char *s, int i, int insert[3]);
-int	open_quotes(char *s);
 int parser(char *s);
 
 //pipe_utils.c

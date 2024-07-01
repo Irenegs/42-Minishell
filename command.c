@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 17:36:54 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/06/30 19:21:39 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/07/01 18:32:20 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,6 @@ int	run_command(char **command, t_mix *data)
 	cmd = command_exists(command[0]);
 	if (!cmd)
 		exit (127);
-	printf("antes execve\n");
 	execve(cmd, command, data->m_env);
 	free(cmd);
 	return (-1);
