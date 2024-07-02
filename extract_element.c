@@ -6,7 +6,7 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:42:48 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/06/20 19:53:54 by irene            ###   ########.fr       */
+/*   Updated: 2024/07/02 19:30:19 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,12 +59,29 @@ static char	*expand_double_quotes(char *s, int pos)
 	return (result);
 }
 
+char	*add_chunk(char *original, char *input, int pos, int len)
+{
+	char	*chunk;
+	char	*aux;
+
+	if (len > 0)
+		chunk = ft_substr(input, pos, len);
+	else if (len == 0)
+		chunk = expand_double_quotes(input, pos);
+	else
+		chunk = obtain_variable(input, pos + 1);
+	aux = original;
+	original = ft_strjoin(aux, chunk);
+	free(aux);
+	if (len >= 0)
+		free(chunk);
+	return (original);
+}
+
 char	*extract_element(char *s, int pos)
 {
 	size_t	len;
 	char	*result;
-	char	*chunk;
-	char	*aux;
 
 	if (!s)
 		return (NULL);
@@ -73,42 +90,25 @@ char	*extract_element(char *s, int pos)
 		pos++;
 	while (something_to_add(s, pos) == 1)
 	{
-		if (s[pos] == '\'')
+		if (s[pos] == '\'' || s[pos] == '"')
 		{
 			len = len_quotes(s, pos);
-			chunk = ft_substr(s, pos + 1, len);
+			if (s[pos] == '\'')
+				result = add_chunk(result, s, pos + 1, len);
+			else
+				result = add_chunk(result, s, pos, 0);
 			pos = pos + len + 2;
-			aux = result;
-			result = ft_strjoin(aux, chunk);
-			free(aux);
-			free(chunk);
-		}
-		else if (s[pos] == '"')
-		{
-			chunk = expand_double_quotes(s, pos);
-			pos += len_quotes(s, pos) + 2;
-			aux = result;
-			result = ft_strjoin(aux, chunk);
-			free(aux);
-			free(chunk);
 		}
 		else if (s[pos] == '$')
 		{
-			chunk = obtain_variable(s, pos + 1);
+			result = add_chunk(result, s, pos, -1);
 			pos += len_literal_word(s, pos + 1) + 1;
-			aux = result;
-			result = ft_strjoin(aux, chunk);
-			free(aux);
 		}
 		else
 		{
 			len = len_literal_word(s, pos);
-			chunk = ft_substr(s, pos, len);
+			result = add_chunk(result, s, pos, len);
 			pos = pos + len;
-			aux = result;
-			result = ft_strjoin(aux, chunk);
-			free(aux);
-			free(chunk);
 		}
 	}
 	return (result);

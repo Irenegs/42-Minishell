@@ -25,7 +25,6 @@ C-c dentro de heredoc lo corta y vuelve a la shell sin ejecutar ninguna instrucc
 C-\ no hace nada
 C-d cierra el heredoc con un error (bash: warning: here-document at line 160 delimited by end-of-file (wanted 'DELIMITADOR')) pero sigue con las instrucciones $?=0.
 
-- command con la struct en lugar de getenv
 
 escribir errores
 separar ejecución de built-ins

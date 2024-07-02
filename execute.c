@@ -6,7 +6,7 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 16:09:28 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/07/01 19:11:57 by irene            ###   ########.fr       */
+/*   Updated: 2024/07/02 21:30:40 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,36 +57,48 @@ int	extract_pipe_and_execute(int p, t_mix *data, int pipes)
 	exit (0);
 }
 
+int last_command(t_mix *data, int pipes)
+{
+	int		childpid;
+	int		status;
+
+	childpid = fork();
+	if (childpid == -1)
+		return (1);
+	if (childpid == 0)
+		extract_pipe_and_execute(pipes, data, pipes);
+	while (waitpid(childpid, &status, 0) > 0)
+		return (WEXITSTATUS(status));
+	return (0);
+}
+
 int	execute_several_pipes(t_mix *data, int pipes)
 {
 	int		p;
 	int		childpid;
 	int		status;
-	int		last_childpid;
-	//int		last_status;
+	int		last_status;
 
 	p = 0;
 	while (p <= pipes)
 	{
-		pipe(data->pipesfd + 2 * p);
-		childpid = fork();
-		if (childpid == -1)
-			return (1);
-		if (p == pipes)
-			last_childpid = childpid;
-		if (childpid == 0)
-			extract_pipe_and_execute(p, data, pipes);
+		if (p < pipes)
+		{
+			pipe(data->pipesfd + 2 * p);
+			childpid = fork();
+			if (childpid == -1)
+				return (1);
+			if (childpid == 0)
+				extract_pipe_and_execute(p, data, pipes);
+		}
+		else
+			last_status = last_command(data, pipes);
 		p++;
 	}
 	close_pipes(pipes, data->pipesfd);
-	while (wait(&status) > 0)// || waitpid(last_childpid, &last_status, 0) > 0)
-	{
-		printf("last_childpid %d\n", last_childpid);
+	while (wait(&status) > 0)
 		printf("Exit: %d\n", status);
-		//if (WIFEXITED(last_status) != 0)
-		//	return (WEXITSTATUS(last_status));
-	}
-	return (0);
+	return (last_status);
 }
 
 int	execute(t_mix *data, int pipes)
