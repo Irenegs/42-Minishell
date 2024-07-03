@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
+/*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 17:56:24 by irene             #+#    #+#             */
-/*   Updated: 2024/07/01 19:33:14 by irene            ###   ########.fr       */
+/*   Updated: 2024/07/03 22:28:36 by pablgarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,9 @@ void	ft_new_prompt(int signal);
 void	ft_heredoc_handler(int signal);
 void	ft_signals_interactive(void);
 void 	ft_signals_running(void);
-
+void ft_signals_new (void);
+void ft_sig_def(void);
+void ft_ignore_sigquit(void);
 
 
 //struct.c

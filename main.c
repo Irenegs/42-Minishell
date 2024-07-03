@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 17:58:01 by irene             #+#    #+#             */
-/*   Updated: 2024/06/30 19:08:35 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/07/03 22:39:35 by pablgarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	global_signal = -1;
+int	global_signal = 0;
 
 void prompt(t_mix *data)
 {
@@ -33,23 +33,9 @@ void prompt(t_mix *data)
             add_history(data->input);
         
         if(*data->input != '\0')
-        {
-
             parse_and_execute(data);
-            
-           // argv = ft_split(data->input, ' ');
-            //if (argv)
-            //{
-             //   data->m_argv = argv;
-               // execute_builtin(data);
-              //  free_argv(argv);
-              //  data->m_argv = NULL;
-            //}
-            
 
-            free(data->input);
-        }
-       
+        free(data->input);
     }
 }
 
