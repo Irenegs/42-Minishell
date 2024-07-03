@@ -6,7 +6,7 @@
 /*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 17:56:24 by irene             #+#    #+#             */
-/*   Updated: 2024/07/03 22:28:36 by pablgarc         ###   ########.fr       */
+/*   Updated: 2024/07/03 23:33:31 by pablgarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,17 +73,17 @@ int		is_builtin(char *cmd);
 
 
 //built_in2.c
-void ft_echo(char **command);
-void ft_cd(char **command);
-void ft_pwd(void);
-void ft_export(t_mix *data, char **command);
-void ft_unset(t_mix *data, char** command);
+int ft_echo(char **command);
+int ft_cd(char **command);
+int ft_pwd(void);
+int ft_export(t_mix *data, char **command);
+int ft_unset(t_mix *data, char** command);
 
 //built_in3.c
 int ft_strcmp(const char *s1, const char *s2);
-void ft_env(t_mix *data);
-void ft_exit(char **command);
-void execute_builtin(t_mix *data, char **command);
+int ft_env(t_mix *data);
+int ft_exit(char **command);
+int execute_builtin(t_mix *data, char **command);
 int ft_isnum(char *str);
 
 //built_in4.c

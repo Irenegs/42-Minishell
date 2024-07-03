@@ -6,13 +6,13 @@
 /*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 21:56:45 by pablo             #+#    #+#             */
-/*   Updated: 2024/06/23 18:05:57 by pablgarc         ###   ########.fr       */
+/*   Updated: 2024/07/03 23:37:05 by pablgarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_echo(char **command)
+int	ft_echo(char **command)
 {
 	int	new_line;
 	int	i;
@@ -34,9 +34,10 @@ void	ft_echo(char **command)
 	}
 	if (new_line)
 		printf("\n");
+	return(0);
 }
 
-void	ft_cd(char **command)
+int	ft_cd(char **command)
 {
 	printf("builtin\n");
 	if (!command[1] || command[1][0] == '\0')
@@ -46,21 +47,22 @@ void	ft_cd(char **command)
 		if (home_dir == NULL)
 		{
 			printf("cd: HOME not set\n");
-			return;
+			return(1);
 		}
 		if (chdir(home_dir) != 0)
 		{
 			perror("cd");
 		}
-		return;
+		return(1);
 	}
 	if (chdir(command[1]) != 0)
 	{
 		perror("cd");
 	}
+	return(0);
 }
 
-void	ft_pwd(void)
+int	ft_pwd(void)
 {
 	char	*pwd;
 
@@ -74,10 +76,13 @@ void	ft_pwd(void)
 	else
 	{
 		perror("pwd");
+		return(1);
 	}
+	return(0);
 }
 
-void	ft_export(t_mix *data, char **command)
+
+int	ft_export(t_mix *data, char **command)
 {
 	char	**str;
 	int		i;
@@ -87,7 +92,7 @@ void	ft_export(t_mix *data, char **command)
 	if (!command[1])
 	{
 		printf("export: missing argument\n");
-		return ;
+		return(1) ;
 	}
 	while (command[i])
 	{
@@ -98,7 +103,7 @@ void	ft_export(t_mix *data, char **command)
 			if (!data->m_env)
 			{
 				perror("export");
-				return ;
+				return (1);
 			}
 		}
 		else
@@ -106,17 +111,19 @@ void	ft_export(t_mix *data, char **command)
 		free_argv(str);
 		i++;
 	}
+	return(0);
 }
 
-void	ft_unset(t_mix *data, char **command)
+int	ft_unset(t_mix *data, char **command)
 {
 	int	i;
 
 	i = 1;
+	printf("builtin\n");
 	if (!command[1])
 	{
 		printf("unset: missing argument\n");
-		return ;
+		return (1) ;
 	}
 
 	while (command[i])
@@ -125,8 +132,9 @@ void	ft_unset(t_mix *data, char **command)
 		if (!data->m_env)
 		{
 			perror("unset");
-			return ;
+			return(1) ;
 		}
 		i++;
 	}
+	return(0);
 }
