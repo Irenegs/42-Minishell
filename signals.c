@@ -12,7 +12,6 @@
 
 #include "minishell.h"
 
-
 //iinterrupt the command and display a new prompt on a new line
 void	ft_interrupt(int signal)
 {
@@ -37,22 +36,24 @@ void	ft_new_prompt(int signal)
 		global_signal = signal; // Actualiza la variable global con la señal
 }
 
-void ft_heredoc_handler(int signal)
+void	ft_heredoc_handler(int signal)
 {
     (void)signal;
     rl_on_new_line();
     rl_replace_line("", 0);
 }
 
-void ft_signals_new (void)
+void	ft_signals_new(void)
 
 {
 	struct sigaction	sa_int;
 
-    sa_int.sa_handler = ft_heredoc_handler;
-    sa_int.sa_flags = 0;
-    sigemptyset(&sa_int.sa_mask);
-    sigaction(SIGINT, &sa_int, NULL);
+	sa_int.sa_flags = 0;
+	sigemptyset(&sa_int.sa_mask);
+	sa_int.sa_handler = &ft_heredoc_handler;
+	sigaddset(&sa_int.sa_mask, SIGINT);
+	sigaction(SIGINT, &sa_int, NULL);
+	signal(SIGQUIT, SIG_IGN);
 }
 
 void ft_ignore_sigquit(void)
@@ -75,8 +76,9 @@ void ft_sig_def(void)
     sigaction(SIGQUIT, &sa_quit, NULL);
 
 }
+
 // Configura las señales en modo interactivo (esperando comandos del usuario)
-void	ft_signals_interactive(void)
+void	ft_signals_start(void)
 {
 	signal(SIGINT, ft_new_prompt); // Asigna ft_new_prompt a SIGINT
 	signal(SIGQUIT, SIG_IGN); // Ignora SIGQUIT

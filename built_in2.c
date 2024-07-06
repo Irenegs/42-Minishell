@@ -6,7 +6,7 @@
 /*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 21:56:45 by pablo             #+#    #+#             */
-/*   Updated: 2024/07/03 23:37:05 by pablgarc         ###   ########.fr       */
+/*   Updated: 2024/07/06 13:25:35 by pablgarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,32 +34,35 @@ int	ft_echo(char **command)
 	}
 	if (new_line)
 		printf("\n");
-	return(0);
+	return (0);
 }
 
 int	ft_cd(char **command)
 {
-	printf("builtin\n");
+	char	*home_dir;
+
+	printf("command:%s\n", command[1]);
+
 	if (!command[1] || command[1][0] == '\0')
 	{
 		// Si no hay argumento o el argumento está vacío, cambiar al directorio home
-		char *home_dir = getenv("HOME");
+		home_dir = getenv("HOME");
 		if (home_dir == NULL)
 		{
 			printf("cd: HOME not set\n");
-			return(1);
+			return (1);
 		}
 		if (chdir(home_dir) != 0)
 		{
 			perror("cd");
 		}
-		return(1);
+		return (1);
 	}
 	if (chdir(command[1]) != 0)
 	{
 		perror("cd");
 	}
-	return(0);
+	return (0);
 }
 
 int	ft_pwd(void)
@@ -76,9 +79,9 @@ int	ft_pwd(void)
 	else
 	{
 		perror("pwd");
-		return(1);
+		return (1);
 	}
-	return(0);
+	return (0);
 }
 
 
@@ -87,12 +90,11 @@ int	ft_export(t_mix *data, char **command)
 	char	**str;
 	int		i;
 
-	printf("builtin\n");
 	i = 1;
 	if (!command[1])
 	{
 		printf("export: missing argument\n");
-		return(1) ;
+		return (1);
 	}
 	while (command[i])
 	{
@@ -111,7 +113,7 @@ int	ft_export(t_mix *data, char **command)
 		free_argv(str);
 		i++;
 	}
-	return(0);
+	return (0);
 }
 
 int	ft_unset(t_mix *data, char **command)
@@ -123,7 +125,7 @@ int	ft_unset(t_mix *data, char **command)
 	if (!command[1])
 	{
 		printf("unset: missing argument\n");
-		return (1) ;
+		return (1);
 	}
 
 	while (command[i])
@@ -132,9 +134,9 @@ int	ft_unset(t_mix *data, char **command)
 		if (!data->m_env)
 		{
 			perror("unset");
-			return(1) ;
+			return (1);
 		}
 		i++;
 	}
-	return(0);
+	return (0);
 }

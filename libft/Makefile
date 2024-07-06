@@ -32,8 +32,8 @@ $(NAME): $(OBJS)
 	$(AR) $(ARFLAGS) $(NAME) $(OBJS)
 
 
-#%.o: %.c
-#	$(CC) $(CFLAGS) -c $< 
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< 
 
 clean:
 	$(RM) $(OBJS) $(BOBJS) libft.h.gch

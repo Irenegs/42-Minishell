@@ -25,7 +25,7 @@ MAKEFLAGS   += --no-print-directory
 all: $(NAME)
 
 $(NAME): $(OBJS) $(LIBS_TARGET)
-	$(CC) -L $(dir $(LIBS_TARGET)) $(OBJS) -lreadline -l$(LIBS) -o $(NAME)
+	$(CC) $(CFLAGS) -L $(dir $(LIBS_TARGET)) $(OBJS) -lreadline -l$(LIBS) -o $(NAME)
 
 $(LIBS_TARGET):
 	$(MAKE) -C $(@D)

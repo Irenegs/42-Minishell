@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   gnl.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
+/*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 19:44:36 by irene             #+#    #+#             */
-/*   Updated: 2024/07/01 18:39:47 by irene            ###   ########.fr       */
+/*   Updated: 2024/07/06 11:35:52 by pablgarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ ssize_t	read_line(char **rem, int fd)
 	char	*buffer;
 	char	*line;
 
-	//ft_signals_running();
 	buffer = malloc((11) * sizeof(char));
 	if (!buffer)
 		return (-1);
