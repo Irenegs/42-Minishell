@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_text.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 14:46:24 by irene             #+#    #+#             */
-/*   Updated: 2024/07/06 14:49:54 by pablgarc         ###   ########.fr       */
+/*   Updated: 2024/07/06 18:43:48 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,17 @@ static char	*get_rawtext(char *delimiter)
 
 	ft_signals_new ();
 	//ft_ignore_sigquit();
-	aux_2 = get_next_line(STDIN_FILENO);
+	aux_2 = readline("Heredoc>");
 	line = malloc(1 * sizeof(char));
 	line[0] = '\0';
 	while (aux_2 != NULL && ft_strncmp(aux_2, delimiter, ft_strlen(delimiter)) != 0)
 	{
-		aux_1 = line;
-		line = ft_strjoin(aux_1, aux_2);
-		free(aux_1);
+		aux_1 = ft_strjoin(line, aux_2);
+		free(line);
 		free(aux_2);
-		aux_2 = get_next_line(STDIN_FILENO);
+		line = ft_strjoin(aux_1, "\n");
+		free(aux_1);
+		aux_2 = readline("Heredoc>");
 	}
 	if (aux_2 == NULL)
 	{
@@ -56,10 +57,9 @@ static char	*obtain_delimiter(char *del_str)
 		len = len - 2;
 		del_str++;
 	}
-	delimiter = malloc(len + 2);
+	delimiter = malloc(len + 1);
 	ft_memmove(delimiter, del_str, len);
-	delimiter[len] = '\n';
-	delimiter[len + 1] = '\0';
+	delimiter[len] = '\0';
 	return (delimiter);
 }
 
@@ -113,6 +113,66 @@ int	write_hd_file(char *s, char *filename)
 	free(heredoc_text);
 	return (ret_value);
 }
+
+/*
+GNL version
+static char	*get_rawtext(char *delimiter)
+{
+	char	*line;
+	char	*aux_1;
+	char	*aux_2;
+
+	ft_signals_new ();
+	//ft_ignore_sigquit();
+	aux_2 = get_next_line(STDIN_FILENO);
+	line = malloc(1 * sizeof(char));
+	line[0] = '\0';
+	while (aux_2 != NULL && ft_strncmp(aux_2, delimiter, ft_strlen(delimiter)) != 0)
+	{
+		aux_1 = line;
+		line = ft_strjoin(aux_1, aux_2);
+		free(aux_1);
+		free(aux_2);
+		aux_2 = get_next_line(STDIN_FILENO);
+	}
+	if (aux_2 == NULL)
+	{
+		free(line);
+		return (NULL);
+	}
+	free(aux_2);
+	ft_sig_def();// Restaura el manejador de señal predeterminado después del heredoc
+	return (line);
+}
+
+static char	*obtain_delimiter(char *del_str)
+{
+	char	*delimiter;
+	int		len;
+
+	while (*del_str != '<')
+		del_str++;
+	while (*del_str == '<' || is_space(*del_str))
+		del_str++;
+	len = len_delimiter(del_str, 0);
+	if (del_str[0] == '\'' || del_str[0] == '"')
+	{
+		len = len - 2;
+		del_str++;
+	}
+	delimiter = malloc(len + 2);
+	ft_memmove(delimiter, del_str, len);
+	delimiter[len] = '\n';
+	delimiter[len + 1] = '\0';
+	return (delimiter);
+}
+
+*/
+
+
+
+
+
 /*
 void show_leaks(void)
 {
