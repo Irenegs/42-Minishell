@@ -6,7 +6,7 @@
 /*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 17:56:24 by irene             #+#    #+#             */
-/*   Updated: 2024/07/06 11:47:19 by pablgarc         ###   ########.fr       */
+/*   Updated: 2024/07/07 10:48:33 by pablgarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,12 @@ typedef struct s_mix
 
 //signals.c
 void	ft_interrupt(int signal);
-void	ft_new_prompt(int signal);
+void	ft_new_prompt(void);
 void	ft_heredoc_handler(int signal);
 void	ft_signals_start(void);
 void 	ft_signals_running(void);
 void 	ft_signals_new (void);
 void 	ft_sig_def(void);
-void 	ft_ignore_sigquit(void);
 
 
 //struct.c

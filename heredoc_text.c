@@ -6,7 +6,7 @@
 /*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 14:46:24 by irene             #+#    #+#             */
-/*   Updated: 2024/07/06 14:49:54 by pablgarc         ###   ########.fr       */
+/*   Updated: 2024/07/07 10:20:34 by pablgarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,17 @@ static char	*get_rawtext(char *delimiter)
 	char	*aux_2;
 
 	ft_signals_new ();
-	//ft_ignore_sigquit();
-	aux_2 = get_next_line(STDIN_FILENO);
+	aux_2 = readline("Heredoc>");
 	line = malloc(1 * sizeof(char));
 	line[0] = '\0';
 	while (aux_2 != NULL && ft_strncmp(aux_2, delimiter, ft_strlen(delimiter)) != 0)
 	{
-		aux_1 = line;
-		line = ft_strjoin(aux_1, aux_2);
-		free(aux_1);
+		aux_1 = ft_strjoin(line, aux_2);
+		free(line);
 		free(aux_2);
-		aux_2 = get_next_line(STDIN_FILENO);
+		line = ft_strjoin(aux_1, "\n");
+		free(aux_1);
+		aux_2 = readline("Heredoc>");
 	}
 	if (aux_2 == NULL)
 	{
@@ -58,7 +58,6 @@ static char	*obtain_delimiter(char *del_str)
 	}
 	delimiter = malloc(len + 2);
 	ft_memmove(delimiter, del_str, len);
-	delimiter[len] = '\n';
 	delimiter[len + 1] = '\0';
 	return (delimiter);
 }
@@ -98,7 +97,7 @@ int	write_hd_file(char *s, char *filename)
 	heredoc_text = get_heredoc(s);
 	if (heredoc_text == NULL)
 	{
-		printf("\nHeredoc interrupted by SIGINT\n"); // Mensaje de interrupción
+		printf("\nHeredoc interrupted by signal\n"); // Mensaje de interrupción
 		return (-1); // Interrupción manejada aquí
 	}
 	fd = open(filename, O_WRONLY | O_TRUNC | O_CREAT, 0644);
@@ -113,6 +112,7 @@ int	write_hd_file(char *s, char *filename)
 	free(heredoc_text);
 	return (ret_value);
 }
+
 /*
 void show_leaks(void)
 {
