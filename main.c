@@ -3,73 +3,54 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 17:58:01 by irene             #+#    #+#             */
-/*   Updated: 2024/06/30 19:08:35 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/07/06 11:46:38 by pablgarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	global_signal = -1;
+int	global_signal = 0;
 
-void prompt(t_mix *data)
+void	prompt(t_mix *data)
 {
-
-    //char **argv;
-
-    while (1)
-    {
-        ft_signals_interactive();
-        data->input = readline("\033[0;32mMinishell:\033[0m ");
-        if(data->input == NULL) //esto seria la señal de CRTL +D
-        {
-            printf("\n");
-            break;
-        }
-        ft_signals_running();
-        if (*data->input)
-            add_history(data->input);
-        
-        if(*data->input != '\0')
-        {
-
-            parse_and_execute(data);
-            
-           // argv = ft_split(data->input, ' ');
-            //if (argv)
-            //{
-             //   data->m_argv = argv;
-               // execute_builtin(data);
-              //  free_argv(argv);
-              //  data->m_argv = NULL;
-            //}
-            
-
-            free(data->input);
-        }
-       
-    }
+	while (1)
+	{
+		ft_signals_start();
+		data->input = readline("\033[0;32mMinishell:\033[0m ");
+		if (data->input == NULL) //esto seria la señal de CRTL +D
+		{
+			printf("\n");
+			break ;
+		}
+		ft_signals_running();
+		if (*data->input)
+			add_history(data->input);
+		if (*data->input != '\0')
+			parse_and_execute(data);
+		free(data->input);
+	}
 }
 
-int main(int argc, char **argv, char **envp)
+int	main(int argc, char **argv, char **envp)
 {
-    t_mix data;
+	t_mix	data;
 
-    if (argc != 1 || !argv)
-       return (1);
+	if (argc != 1 || !argv)
+		return (1);
 
-    ft_init_mix(&data);
-    ft_fill_struct(&data, argc, argv, envp);
-    prompt(&data);
-    ft_free_env(data.m_env);
-    if (data.m_argv) // Solo libera si no es NULL
-    {
-        free_argv(data.m_argv);
-        data.m_argv = NULL; // para no referenciar memoria liberada, doble free si crlt+d 2 vces en un sleep
-    }
-    return (0);
+	ft_init_mix(&data);
+	ft_fill_struct(&data, argc, argv, envp);
+	prompt(&data);
+	ft_free_env(data.m_env);
+	if (data.m_argv) // Solo libera si no es NULL
+	{
+		free_argv(data.m_argv);
+		data.m_argv = NULL; // para no referenciar memoria liberada, doble free si crlt+d 2 vces en un sleep
+	}
+	return (0);
 }
 
 

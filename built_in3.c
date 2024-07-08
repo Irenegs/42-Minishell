@@ -6,7 +6,7 @@
 /*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 22:04:50 by pablo             #+#    #+#             */
-/*   Updated: 2024/06/23 18:06:42 by pablgarc         ###   ########.fr       */
+/*   Updated: 2024/07/06 13:16:39 by pablgarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,20 +31,21 @@ int	ft_strcmp(const char *s1, const char *s2)
 	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 }
 
-void	ft_env(t_mix *data)
+int	ft_env(t_mix *data)
 {
 	int	j;
 
 	j = 0;
 	while (data->m_env[j])
 	{
-		if (strchr(data->m_env[j], '='))
+		if (ft_strchr(data->m_env[j], '='))
 			printf("%s\n", data->m_env[j]);
 		j++;
 	}
+	return (0);
 }
 
-void	ft_exit(char **command)
+int	ft_exit(char **command)
 {
 	int	status;
 	printf ("built\n");
@@ -61,40 +62,47 @@ void	ft_exit(char **command)
 			status = ft_atoi(command[1]);
 		}
 	}
+	//free de lo necesario
 	exit(status);
 }
 
-void	execute_builtin(t_mix *data, char **command)
+int	execute_builtin(t_mix *data, char **command)
 {
 	if (ft_strcmp(command[0], "echo") == 0)
-		ft_echo(command);
+		return (ft_echo(command));
 	else if (ft_strcmp(command[0], "cd") == 0)
-		ft_cd(command);
+		return (ft_cd(command));
 	else if (ft_strcmp(command[0], "pwd") == 0)
-		ft_pwd();
+		return (ft_pwd());
 	else if (ft_strcmp(command[0], "exit") == 0)
-		ft_exit(command);
+		return (ft_exit(command));
 	else if (ft_strcmp(command[0], "export") == 0)
-		ft_export(data, command);
+		return (ft_export(data, command));
 	else if (ft_strcmp(command[0], "unset") == 0)
-		ft_unset(data, command);
+		return (ft_unset(data, command));
 	else if (ft_strcmp(command[0], "env") == 0)
-		ft_env(data);
+		return (ft_env(data));
 	else
+	{
 		fprintf(stderr, "%s: command not found\n", command[0]);
+		return (1);
+	}
 }
+
 
 int	ft_isnum(char *str)
 {
+
+	if (*str == '-' || *str == '+')
+		str++;
+	if (*str == '\0')
+		return (0);
+	while (*str)
 	{
-    if (*str == '-' || *str == '+')
-        str++;
-    while (*str)
-    {
-        if (isdigit(*str))
-            return 0;
-        str++;
-    }
-    return 1;
-}
+		if (ft_isdigit(*str))
+			return (0);
+		str++;
+	}
+	return (1);
+
 }
