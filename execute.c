@@ -6,7 +6,7 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 16:09:28 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/07/08 22:08:09 by irene            ###   ########.fr       */
+/*   Updated: 2024/07/10 17:00:05 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int	execute(t_mix *data, int pipes)
 	ret_value = 0;
 	if (pipes != 0)
 		data->heredocs = malloc(pipes * sizeof(char *));
-	else 
+	else
 		data->heredocs = malloc(1 * sizeof(char *));
 	if (!data->heredocs)
 		ret_value = 1;
