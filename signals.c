@@ -25,7 +25,7 @@ void	ft_interrupt(int signal)
 
 
 // Maneja la señal de interrupción (SIGINT) para mostrar un nuevo prompt
-void	ft_new_prompt(void)
+void	ft_new_prompt()
 {
 	ft_putchar_fd('\n', STDOUT_FILENO); // Escribe una nueva línea en la salida estándar
 	rl_replace_line("", 0); // Reemplaza la línea actual en la entrada
