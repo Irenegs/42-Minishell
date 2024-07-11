@@ -6,7 +6,7 @@
 /*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 14:46:24 by irene             #+#    #+#             */
-/*   Updated: 2024/07/11 17:53:41 by pablgarc         ###   ########.fr       */
+/*   Updated: 2024/07/11 19:06:33 by pablgarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,7 @@ static char	*get_rawtext(char *delimiter)
 	char	*aux_1;
 	char	*aux_2;
 
-	ft_signals_new ();
-	//ft_ignore_sigquit();
+	ft_signals_new();
 	aux_2 = readline("Heredoc>");
 	line = malloc(1 * sizeof(char));
 	line[0] = '\0';
