@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   extract_file.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 16:36:46 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/06/29 18:56:00 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/07/10 17:14:58 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ int	extract_input(char *s, char	**heredocs, int p)
 	else
 	{
 		filename = extract_element(s, pos);
+		printf("Filename:%s\n", filename);
 		if (!filename)
 			return (-2);
 		fd = ft_open(filename, O_RDONLY);

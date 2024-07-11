@@ -6,7 +6,7 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:42:48 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/07/02 19:30:19 by irene            ###   ########.fr       */
+/*   Updated: 2024/07/10 17:19:05 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static char	*expand_double_quotes(char *s, int pos)
 	return (result);
 }
 
-char	*add_chunk(char *original, char *input, int pos, int len)
+static char	*add_chunk(char *original, char *input, int pos, int len)
 {
 	char	*chunk;
 	char	*aux;
@@ -73,14 +73,42 @@ char	*add_chunk(char *original, char *input, int pos, int len)
 	aux = original;
 	original = ft_strjoin(aux, chunk);
 	free(aux);
-	if (len >= 0)
+	if (len >= 0 && chunk != NULL)
 		free(chunk);
 	return (original);
 }
 
-char	*extract_element(char *s, int pos)
+static int	function(char **result, char *s, int *pos)
 {
 	size_t	len;
+
+	if (s[*pos] == '\'' || s[*pos] == '"')
+	{
+		len = len_quotes(s, *pos);
+		if (s[*pos] == '\'')
+			*result = add_chunk(*result, s, *pos + 1, len);
+		else
+			*result = add_chunk(*result, s, *pos, 0);
+		*pos = *pos + len + 2;
+	}
+	else if (s[*pos] == '$')
+	{
+		*result = add_chunk(*result, s, *pos, -1);
+		*pos += len_literal_word(s, *pos + 1) + 1;
+	}
+	else
+	{
+		len = len_literal_word(s, *pos);
+		*result = add_chunk(*result, s, *pos, len);
+		*pos = *pos + len;
+	}
+	if (!(*result))
+		return (1);
+	return (0);
+}
+
+char	*extract_element(char *s, int pos)
+{
 	char	*result;
 
 	if (!s)
@@ -90,26 +118,8 @@ char	*extract_element(char *s, int pos)
 		pos++;
 	while (something_to_add(s, pos) == 1)
 	{
-		if (s[pos] == '\'' || s[pos] == '"')
-		{
-			len = len_quotes(s, pos);
-			if (s[pos] == '\'')
-				result = add_chunk(result, s, pos + 1, len);
-			else
-				result = add_chunk(result, s, pos, 0);
-			pos = pos + len + 2;
-		}
-		else if (s[pos] == '$')
-		{
-			result = add_chunk(result, s, pos, -1);
-			pos += len_literal_word(s, pos + 1) + 1;
-		}
-		else
-		{
-			len = len_literal_word(s, pos);
-			result = add_chunk(result, s, pos, len);
-			pos = pos + len;
-		}
+		if (function(&result, s, &pos) != 0)
+			return (NULL);
 	}
 	return (result);
 }
