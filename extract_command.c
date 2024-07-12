@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   extract_command.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:36:03 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/06/23 16:31:37 by pablgarc         ###   ########.fr       */
+/*   Updated: 2024/07/11 20:27:38 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static int	locate_cmd_position(char *s)
 	return (-1);
 }
 
-static char	**split_command(char *s)
+static char	**split_command(char *s, t_mix *data)
 {
 	char	**arr;
 	int		i;
@@ -70,7 +70,7 @@ static char	**split_command(char *s)
 	{
 		while (new_word(s, " ", pos, 0) == 0)
 			pos++;
-		arr[i] = extract_element(s, pos);
+		arr[i] = extract_element(s, pos, data);
 		if (!arr[i])
 			return (ft_out(arr));
 		pos += len_literal_word(s, pos);
@@ -81,7 +81,7 @@ static char	**split_command(char *s)
 	return (arr);
 }
 
-char	**extract_command(char *s)
+char	**extract_command(char *s, t_mix *data)
 {
 	int		pos;
 	int		len;
@@ -95,7 +95,7 @@ char	**extract_command(char *s)
 	cmd_string = ft_substr(s, pos, len);
 	if (!cmd_string)
 		return (NULL);
-	command = split_command(cmd_string);
+	command = split_command(cmd_string, data);
 	free(cmd_string);
 	return (command);
 }

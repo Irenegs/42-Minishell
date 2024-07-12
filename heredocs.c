@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   heredocs.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 17:50:11 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/06/29 18:19:28 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/07/11 20:33:50 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	get_heredocs_texts(char **heredocs, int pipes, char *s)
+static int	get_heredocs_texts(char **heredocs, int pipes, char *s, t_mix *data)
 {
 	int		p;
 	char	*subs;
@@ -29,7 +29,7 @@ static int	get_heredocs_texts(char **heredocs, int pipes, char *s)
 		n = 0;
 		while (n < n_heredocs)
 		{
-			if (write_hd_file(subs + locate_n_hd(subs, n), heredocs[p]) != 0)
+			if (write_hd_file(subs + locate_n_hd(subs, n), heredocs[p], data) != 0)
 				return (-1);
 			n++;
 		}
@@ -66,7 +66,7 @@ int	get_heredocs(char **heredocs, t_mix *data, int pipes)
 {
 	if (get_heredocs_filenames(heredocs, pipes) != 0)
 		return (-1);
-	return (get_heredocs_texts(heredocs, pipes, data->input));
+	return (get_heredocs_texts(heredocs, pipes, data->input, data));
 }
 
 void	clean_and_free_heredocs(char **heredocs, int pipes)

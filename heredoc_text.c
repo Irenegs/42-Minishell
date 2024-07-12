@@ -6,7 +6,7 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 14:46:24 by irene             #+#    #+#             */
-/*   Updated: 2024/07/06 18:43:48 by irene            ###   ########.fr       */
+/*   Updated: 2024/07/11 20:32:46 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static char	*obtain_delimiter(char *del_str)
 	return (delimiter);
 }
 
-static char	*get_heredoc(char *s)
+static char	*get_heredoc(char *s, t_mix *data)
 {
 	char	*heredoc_text;
 	char	*delimiter;
@@ -79,14 +79,14 @@ static char	*get_heredoc(char *s)
 	if (must_expand(s, heredoc_text) == 1)
 	{
 		aux = heredoc_text;
-		heredoc_text = expand_string(aux);
+		heredoc_text = expand_string(aux, data);
 		free(aux);
 	}
 	free(delimiter);
 	return (heredoc_text);
 }
 
-int	write_hd_file(char *s, char *filename)
+int	write_hd_file(char *s, char *filename, t_mix *data)
 {
 	char	*heredoc_text;
 	int		fd;
@@ -95,7 +95,7 @@ int	write_hd_file(char *s, char *filename)
 	ret_value = 0;
 	if (!s || !filename)
 		return (-1);
-	heredoc_text = get_heredoc(s);
+	heredoc_text = get_heredoc(s, data);
 	if (heredoc_text == NULL)
 	{
 		printf("\nHeredoc interrupted by SIGINT\n"); // Mensaje de interrupción

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 17:56:24 by irene             #+#    #+#             */
-/*   Updated: 2024/07/06 11:47:19 by pablgarc         ###   ########.fr       */
+/*   Updated: 2024/07/12 18:53:40 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ typedef struct s_mix
 	int 	exit_status;
 	char	**heredocs;
 	int		*pipesfd;
+	int		pipes;
 }				t_mix;
 
 //error.c
@@ -97,10 +98,11 @@ int	run_command(char **command, t_mix *data);
 
 //command_utils.c
 int	is_local(char *s);
+int	select_variable(char *var_name, char **environ);
 char	**get_path_variable(char **environ);
 
 //execute.c
-int    execute(t_mix *data, int pipes);
+int    execute(t_mix *data);
 void    parse_and_execute(t_mix *data);
 
 //execute_simple.c
@@ -108,15 +110,15 @@ int	execute_only_child(t_mix *data);
 
 //extract_command.c
 
-char **extract_command(char *s);
+char **extract_command(char *s, t_mix *data);
 
 //extract_elements.c
-char *obtain_variable(char *s, int i);
-char *extract_element(char *s, int pos);
+char *obtain_variable(char *s, int i, t_mix *data);
+char *extract_element(char *s, int pos, t_mix *data);
 
 //extract_file.c
-int	extract_input(char *s, char	**heredocs, int p);
-int extract_output(char *s);
+int	extract_input(char *s, t_mix *data, int p);
+int extract_output(char *s, t_mix *data);
 
 //extract_pipe.c
 char    *extract_pipe(char *s, int pipe);
@@ -146,11 +148,11 @@ void	clean_and_free_heredocs(char **heredocs, int pipes);
 int	get_heredocs(char **heredocs, t_mix *data, int pipes);
 
 //heredoc_text.c
-int	write_hd_file(char *s, char *filename);
+int	write_hd_file(char *s, char *filename, t_mix *data);
 
 //heredoc_expand.c
 int	must_expand(char *delimiter, char *text);
-char	*expand_string(char *s);
+char	*expand_string(char *input_str, t_mix *data);
 
 //heredoc_utils.c
 int	number_of_heredocs(char *subs);

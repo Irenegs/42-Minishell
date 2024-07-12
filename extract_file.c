@@ -6,7 +6,7 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 16:36:46 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/07/10 17:14:58 by irene            ###   ########.fr       */
+/*   Updated: 2024/07/11 20:20:01 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static int	get_heredoc_fd(char	**heredocs, int p)
 	return (fd);
 }
 
-int	extract_input(char *s, char	**heredocs, int p)
+int	extract_input(char *s, t_mix *data, int p)
 {
 	int		fd;
 	int		pos;
@@ -68,23 +68,23 @@ int	extract_input(char *s, char	**heredocs, int p)
 	if (pos == -1)
 		return (-1);
 	if (s[pos + 1] == '<')
-		fd = get_heredoc_fd(heredocs, p);
+		fd = get_heredoc_fd(data->heredocs, p);
 	else
 	{
-		filename = extract_element(s, pos);
+		filename = extract_element(s, pos, data);
 		printf("Filename:%s\n", filename);
 		if (!filename)
 			return (-2);
 		fd = ft_open(filename, O_RDONLY);
 		free(filename);
 	}
-	aux_fd = extract_input(s + pos + 2, heredocs, p);
+	aux_fd = extract_input(s + pos + 2, data, p);
 	if (aux_fd != -1)
 		fd = aux_fd;
 	return (fd);
 }
 
-int	extract_output(char *s)
+int	extract_output(char *s, t_mix *data)
 {
 	int		fd;
 	int		pos;
@@ -98,7 +98,7 @@ int	extract_output(char *s)
 		return (-1);
 	if (s[pos + 1] == '>')
 		pos++;
-	filename = extract_element(s, pos);
+	filename = extract_element(s, pos, data);
 	if (!filename)
 		return (-2);
 	if (pos == locate_char_position(s, '>'))
@@ -106,7 +106,7 @@ int	extract_output(char *s)
 	else
 		fd = ft_open(filename, 2);
 	free(filename);
-	aux_fd = extract_output(s + pos + 1);
+	aux_fd = extract_output(s + pos + 1, data);
 	if (aux_fd != -1)
 		fd = aux_fd;
 	return (fd);
