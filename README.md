@@ -18,20 +18,16 @@ Conlleva la gestión de las variabes de entorno, inicialmente se obtienen con ge
 ## 1a
 - Probar (ya funciona, pero probar cada vez que se toquen redirecciones): < /dev/urandom cat | head -1; cat | cat | ls
 
-- Gestionar $? -> se puede guardar en parse_and_execute como valor de retorno de execute/execute_only_child
-
 - heredoc + señales:
 C-c dentro de heredoc lo corta y vuelve a la shell sin ejecutar ninguna instrucción $?=130
 C-\ no hace nada
 C-d cierra el heredoc con un error (bash: warning: here-document at line 160 delimited by end-of-file (wanted 'DELIMITADOR')) pero sigue con las instrucciones $?=0.
 
+- Revisar casos de comillas, especialmente "$variable"
 
 escribir errores
 separar ejecución de built-ins
-probar con varias pipes
 probar pipes sin comando, solo con redirecciones
-revisar si no necesitamos extern environ al tener la función getenv
-revisar super_split porque la gestión de las \, que ya no es necesaria
 proteger fallos de malloc y free de NULL -> extract element + norminette
 valgrind --track-fds=yes --trace-children=yes; --child-silent-after-fork=yes
 

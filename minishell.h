@@ -6,7 +6,7 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 17:56:24 by irene             #+#    #+#             */
-/*   Updated: 2024/07/12 18:53:40 by irene            ###   ########.fr       */
+/*   Updated: 2024/07/13 19:51:11 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,6 @@ int	run_command(char **command, t_mix *data);
 
 //command_utils.c
 int	is_local(char *s);
-int	select_variable(char *var_name, char **environ);
 char	**get_path_variable(char **environ);
 
 //execute.c
@@ -114,7 +113,8 @@ char **extract_command(char *s, t_mix *data);
 
 //extract_elements.c
 char *obtain_variable(char *s, int i, t_mix *data);
-char *extract_element(char *s, int pos, t_mix *data);
+char *extract_element(char *s, int *pos, t_mix *data);
+int	something_to_add(char *s, int pos);
 
 //extract_file.c
 int	extract_input(char *s, t_mix *data, int p);
@@ -128,7 +128,7 @@ int	is_space(char c);
 size_t	len_literal_word(char *s, int pos);
 size_t	len_delimiter(char *s, int pos);
 size_t len_quotes(char *s, int pos);
-int	something_to_add(char *s, int pos);
+int	len_cmd(char *s, int pos);
 
 //gnl.c
 ssize_t	read_line(char **rem, int fd);
@@ -153,6 +153,7 @@ int	write_hd_file(char *s, char *filename, t_mix *data);
 //heredoc_expand.c
 int	must_expand(char *delimiter, char *text);
 char	*expand_string(char *input_str, t_mix *data);
+char	*expand_variable(char *orig, char *input_str, int pos, t_mix *data);
 
 //heredoc_utils.c
 int	number_of_heredocs(char *subs);
@@ -168,5 +169,9 @@ int	end_word(char const *s, char *sep, int i, int quot);
 char	**ft_out(char **arr);
 char	**ft_super_split(char const *s, char *sep);
 
+//variable_utils.c
+int	select_variable(char *var_name, char **environ);
+char	*ft_getenv(char *var_name, t_mix *data);
+char	*obtain_variable(char *s, int i, t_mix *data);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 14:46:24 by irene             #+#    #+#             */
-/*   Updated: 2024/07/11 20:32:46 by irene            ###   ########.fr       */
+/*   Updated: 2024/07/12 19:52:41 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ static char	*get_heredoc(char *s, t_mix *data)
 	if (heredoc_text == NULL)
 	{
 		free(delimiter);
-		return (NULL); // Interrupción manejada aquí
+		return (NULL);//Interrupción manejada aquí
 	}
 	if (must_expand(s, heredoc_text) == 1)
 	{
@@ -113,149 +113,3 @@ int	write_hd_file(char *s, char *filename, t_mix *data)
 	free(heredoc_text);
 	return (ret_value);
 }
-
-/*
-GNL version
-static char	*get_rawtext(char *delimiter)
-{
-	char	*line;
-	char	*aux_1;
-	char	*aux_2;
-
-	ft_signals_new ();
-	//ft_ignore_sigquit();
-	aux_2 = get_next_line(STDIN_FILENO);
-	line = malloc(1 * sizeof(char));
-	line[0] = '\0';
-	while (aux_2 != NULL && ft_strncmp(aux_2, delimiter, ft_strlen(delimiter)) != 0)
-	{
-		aux_1 = line;
-		line = ft_strjoin(aux_1, aux_2);
-		free(aux_1);
-		free(aux_2);
-		aux_2 = get_next_line(STDIN_FILENO);
-	}
-	if (aux_2 == NULL)
-	{
-		free(line);
-		return (NULL);
-	}
-	free(aux_2);
-	ft_sig_def();// Restaura el manejador de señal predeterminado después del heredoc
-	return (line);
-}
-
-static char	*obtain_delimiter(char *del_str)
-{
-	char	*delimiter;
-	int		len;
-
-	while (*del_str != '<')
-		del_str++;
-	while (*del_str == '<' || is_space(*del_str))
-		del_str++;
-	len = len_delimiter(del_str, 0);
-	if (del_str[0] == '\'' || del_str[0] == '"')
-	{
-		len = len - 2;
-		del_str++;
-	}
-	delimiter = malloc(len + 2);
-	ft_memmove(delimiter, del_str, len);
-	delimiter[len] = '\n';
-	delimiter[len + 1] = '\0';
-	return (delimiter);
-}
-
-*/
-
-
-
-
-
-/*
-void show_leaks(void)
-{
-	system("leaks a.out");
-}
-int main(int argc, char **argv)
-{
-	atexit(show_leaks);
-	if (argc >1)
-	{
-		printf("hola\n");
-		char *heredoc = get_heredoc(argv[1]);
-		printf("4\n");
-		printf("%s\n", heredoc);
-		free(heredoc);
-	}
-	return (0);
-}
-*/
-/*
-BIEN, PERO INCUMPLE NORMA
-
-static char	*get_rawtext(char *delimiter)
-{
-	char	*line;
-	char	*aux_1;
-	char	*aux_2;
-
-	aux_2 = get_next_line(STDIN_FILENO);
-	line = NULL;
-	while (ft_strncmp(aux_2, delimiter, ft_strlen(delimiter)) != 0
-		&& aux_2 != NULL)
-	{
-		aux_1 = line;
-		line = ft_strjoin(aux_1, aux_2);
-		if (aux_1 != NULL)
-			free(aux_1);
-		if (aux_2 != NULL)
-			free(aux_2);
-		aux_2 = get_next_line(STDIN_FILENO);
-	}
-	if (aux_2 != NULL)
-	{
-		if (line == NULL)
-		{
-			line = malloc(1 * sizeof(char));
-			line[0] = '\0';
-		}
-		free(aux_2);
-	}
-	return (line);
-}
-*/
-/*
-VERSIÓN ANTERIOR CON READLINE, FALTAN LOS SALTOS DE LINEA
-
-static char	*get_rawtext(char *delimiter)
-{
-	char	*line;
-	char	*aux_1;
-	char	*aux_2;
-
-	//ft_interrupt(global_signal);
-	aux_2 = readline(">>");//get_next_line(STDIN_FILENO);
-	line = NULL;
-	while (ft_strncmp(aux_2, delimiter, ft_strlen(delimiter)) != 0
-		&& aux_2 != NULL)
-	{
-		printf("he leido:%s\n", aux_2);
-		printf("strncmp:%d\n", ft_strncmp(aux_2, delimiter, \
-		ft_strlen(delimiter)));
-		printf("del:%s\n", delimiter);
-		printf("strlen del:%ld\n", ft_strlen(delimiter));
-		aux_1 = line;
-		line = ft_strjoin(aux_1, aux_2);
-		if (aux_1 != NULL)
-			free(aux_1);
-		if (aux_2 != NULL)
-			free(aux_2);
-		aux_2 = readline(">>");//get_next_line(STDIN_FILENO);
-	}
-	if (aux_2 != NULL)
-		free(aux_2);
-	return (line);
-}
-*/

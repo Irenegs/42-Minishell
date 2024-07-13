@@ -4,7 +4,7 @@ LIBS        := ft
 LIBS_TARGET := libft/libft.a 
 INCS        := include libft/include
 
-SRCS        := command.c command_utils.c \
+SRCS        := command.c command_utils.c variable_utils.c\
 				execute.c execute_simple.c pipe_utils.c \
 				extract_command.c extract_element.c  extract_file.c extract_pipe.c extract_utils.c \
 				parser.c super_split.c split_utils.c \

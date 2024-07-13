@@ -6,7 +6,7 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:40:20 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/06/20 19:47:20 by irene            ###   ########.fr       */
+/*   Updated: 2024/07/13 19:56:02 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,16 @@ size_t	len_quotes(char *s, int pos)
 	return (len);
 }
 
-int	something_to_add(char *s, int pos)
+int	len_cmd(char *s, int pos)
 {
-	if (is_space(s[pos]) == 0 && s[pos] != '<' && s[pos] != '>'
-		&& s[pos] != '|')
-		return (1);
-	return (0);
+	int	len;
+
+	len = 0;
+	while (s[pos + len] != '\0' && s[pos + len] != '<'
+		&& s[pos + len] != '>' && s[pos + len] != '|')
+		len++;
+	while (is_space(s[pos + len]) == 1 || s[pos + len] == '|'
+		|| s[pos + len] == '<' || s[pos + len] == '>')
+		len--;
+	return (++len);
 }

@@ -6,25 +6,11 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:36:03 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/07/11 20:27:38 by irene            ###   ########.fr       */
+/*   Updated: 2024/07/13 19:55:31 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static int	len_cmd(char *s, int pos)
-{
-	int	len;
-
-	len = 0;
-	while (s[pos + len] != '\0' && s[pos + len] != '<'
-		&& s[pos + len] != '>' && s[pos + len] != '|')
-		len++;
-	while (is_space(s[pos + len]) == 1 || s[pos + len] == '|'
-		|| s[pos + len] == '<' || s[pos + len] == '>')
-		len--;
-	return (++len);
-}
 
 static int	skip_word(char *s, int pos)
 {
@@ -55,25 +41,48 @@ static int	locate_cmd_position(char *s)
 	return (-1);
 }
 
+static int	count_arguments(char *cmd_str)
+{
+	int	i;
+	int	args;
+
+	if (!cmd_str)
+		return (0);
+	args = 1;
+	i = 0;
+	while (cmd_str[i] != '\0')
+	{
+		if (cmd_str[i] == '\'' || cmd_str[i] == '"')
+			i += len_quotes(cmd_str, i) + 2;
+		else
+			i += len_literal_word(cmd_str, i);
+		while (is_space(cmd_str[i]) == 1 && cmd_str[i] != '\0')
+		{
+			args++;
+			i++;
+		}
+	}
+	return (args);
+}
+
 static char	**split_command(char *s, t_mix *data)
 {
 	char	**arr;
 	int		i;
 	int		pos;
 
-	arr = malloc((ft_wc(s, " ") + 1) * sizeof(char *));
+	arr = malloc((count_arguments(s) + 1) * sizeof(char *));
 	if (!arr)
 		return (NULL);
 	i = -1;
 	pos = 0;
-	while (++i < ft_wc(s, " "))
+	while (++i < count_arguments(s))
 	{
 		while (new_word(s, " ", pos, 0) == 0)
 			pos++;
-		arr[i] = extract_element(s, pos, data);
+		arr[i] = extract_element(s, &pos, data);
 		if (!arr[i])
 			return (ft_out(arr));
-		pos += len_literal_word(s, pos);
 		while (s[pos] != '\0' && is_space(s[pos]) == 0)
 			pos++;
 	}

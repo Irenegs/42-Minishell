@@ -6,25 +6,22 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 17:52:42 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/07/12 18:54:04 by irene            ###   ########.fr       */
+/*   Updated: 2024/07/12 20:32:57 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	*do_expansion(char *original, char *input_str, int pos, int len, t_mix *data)
+static char	*normal_expansion(char *orig, char *input_str, int pos, int len)
 {
 	char	*result;
 	char	*chunk;
 
-	if (len == 0)
-		chunk = obtain_variable(input_str, pos + 1, data);
-	else
-		chunk = ft_substr(input_str, pos, len);
+	chunk = ft_substr(input_str, pos, len);
 	if (!chunk)
 		return (NULL);
-	result = ft_strjoin(original, chunk);
-	free(original);
+	result = ft_strjoin(orig, chunk);
+	free(orig);
 	free(chunk);
 	return (result);
 }
@@ -56,13 +53,13 @@ char	*expand_string(char *input_str, t_mix *data)
 	{
 		if (input_str[pos] == '$')
 		{
-			expanded = do_expansion(expanded, input_str, pos, 0, data);
+			expanded = expand_variable(expanded, input_str, pos, data);
 			pos += len_literal_word(input_str, pos + 1) + 1;
 		}
 		else
 		{
 			len = len_until_dollar(input_str, pos);
-			expanded = do_expansion(expanded, input_str, pos, len, data);
+			expanded = normal_expansion(expanded, input_str, pos, len);
 			pos = pos + len;
 		}
 	}

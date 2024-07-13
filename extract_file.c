@@ -6,7 +6,7 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 16:36:46 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/07/11 20:20:01 by irene            ###   ########.fr       */
+/*   Updated: 2024/07/13 19:38:44 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,7 @@ int	extract_input(char *s, t_mix *data, int p)
 		fd = get_heredoc_fd(data->heredocs, p);
 	else
 	{
-		filename = extract_element(s, pos, data);
-		printf("Filename:%s\n", filename);
+		filename = extract_element(s, &pos, data);
 		if (!filename)
 			return (-2);
 		fd = ft_open(filename, O_RDONLY);
@@ -98,7 +97,7 @@ int	extract_output(char *s, t_mix *data)
 		return (-1);
 	if (s[pos + 1] == '>')
 		pos++;
-	filename = extract_element(s, pos, data);
+	filename = extract_element(s, &pos, data);
 	if (!filename)
 		return (-2);
 	if (pos == locate_char_position(s, '>'))

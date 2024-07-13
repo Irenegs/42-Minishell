@@ -6,7 +6,7 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 16:09:28 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/07/11 20:26:04 by irene            ###   ########.fr       */
+/*   Updated: 2024/07/12 19:13:29 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	extract_pipe_and_execute(int p, t_mix *data)
 		exit (1);
 	}
 	run_command(command, data);
-	free(subs);//llegará a aquí cuando es builtin?
+	free(subs);
 	ft_out(command);
 	exit (0);
 }
@@ -79,8 +79,7 @@ int	execute_several_pipes(t_mix *data)
 	if (waitpid(childpid, &status, 0) == -1)
 		exit(1);
 	last_status = WEXITSTATUS(status);
-	while (wait(&status) > 0)
-		printf("Exit: %d\n", status);
+	while (wait(&status) > 0);
 	return (last_status);
 }
 
