@@ -6,7 +6,7 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 17:56:24 by irene             #+#    #+#             */
-/*   Updated: 2024/07/13 19:51:11 by irene            ###   ########.fr       */
+/*   Updated: 2024/07/13 20:01:42 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ void	ft_signals_start(void);
 void 	ft_signals_running(void);
 void 	ft_signals_new (void);
 void 	ft_sig_def(void);
-void 	ft_ignore_sigquit(void);
 
 
 //struct.c

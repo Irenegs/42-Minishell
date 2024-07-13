@@ -6,7 +6,7 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 14:46:24 by irene             #+#    #+#             */
-/*   Updated: 2024/07/12 19:52:41 by irene            ###   ########.fr       */
+/*   Updated: 2024/07/13 20:09:12 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,7 @@ static char	*get_rawtext(char *delimiter)
 	char	*aux_1;
 	char	*aux_2;
 
-	ft_signals_new ();
-	//ft_ignore_sigquit();
+	ft_signals_new();
 	aux_2 = readline("Heredoc>");
 	line = malloc(1 * sizeof(char));
 	line[0] = '\0';
@@ -98,7 +97,7 @@ int	write_hd_file(char *s, char *filename, t_mix *data)
 	heredoc_text = get_heredoc(s, data);
 	if (heredoc_text == NULL)
 	{
-		printf("\nHeredoc interrupted by SIGINT\n"); // Mensaje de interrupción
+		printf("\nHeredoc interrupted by signal\n"); // Mensaje de interrupción
 		return (-1); // Interrupción manejada aquí
 	}
 	fd = open(filename, O_WRONLY | O_TRUNC | O_CREAT, 0644);

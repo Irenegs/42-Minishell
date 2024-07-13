@@ -16,7 +16,7 @@
 void	ft_interrupt(int signal)
 {
 	if (signal == SIGQUIT)
-		ft_putstr_fd("Quit (core dumped)\n", STDERR_FILENO);
+		ft_putstr_fd("Quit (SIGQUIT)\n", STDERR_FILENO);
 	if (signal == SIGINT)
 		ft_putchar_fd('\n', STDOUT_FILENO);
 	rl_on_new_line();
@@ -27,53 +27,12 @@ void	ft_interrupt(int signal)
 // Maneja la señal de interrupción (SIGINT) para mostrar un nuevo prompt
 void	ft_new_prompt(int signal)
 {
-	write(1, "\n", 1); // Escribe una nueva línea en la salida estándar
+	ft_putchar_fd('\n', STDOUT_FILENO); // Escribe una nueva línea en la salida estándar
 	rl_replace_line("", 0); // Reemplaza la línea actual en la entrada
 	rl_on_new_line(); // Mueve el cursor a una nueva línea
 	rl_redisplay(); // Redibuja el prompt
-
 	if (signal == SIGINT)
-		global_signal = signal; // Actualiza la variable global con la señal
-}
-
-void	ft_heredoc_handler(int signal)
-{
-    (void)signal;
-    rl_on_new_line();
-    rl_replace_line("", 0);
-}
-
-void	ft_signals_new(void)
-
-{
-	struct sigaction	sa_int;
-
-	sa_int.sa_flags = 0;
-	sigemptyset(&sa_int.sa_mask);
-	sa_int.sa_handler = &ft_heredoc_handler;
-	sigaddset(&sa_int.sa_mask, SIGINT);
-	sigaction(SIGINT, &sa_int, NULL);
-	signal(SIGQUIT, SIG_IGN);
-}
-
-void ft_ignore_sigquit(void)
-{
-	struct sigaction	sa_quit;
-
-    sa_quit.sa_handler = SIG_IGN;
-    sa_quit.sa_flags = 0;
-    sigemptyset(&sa_quit.sa_mask);
-    sigaction(SIGQUIT, &sa_quit, NULL);
-}
-
-void ft_sig_def(void)
-{
-	struct sigaction sa_int, sa_quit;
-
-	sa_int.sa_handler = SIG_DFL;
-	sa_quit.sa_handler = SIG_DFL;
-    sigaction(SIGINT, &sa_int, NULL);
-    sigaction(SIGQUIT, &sa_quit, NULL);
+		global_signal = signal;
 
 }
 
@@ -90,6 +49,41 @@ void	ft_signals_running(void)
 	signal(SIGINT, ft_interrupt); // Asigna ft_interrupt a SIGINT
 	signal(SIGQUIT, ft_interrupt); // Asigna ft_interrupt a SIGQUIT
 }
+
+
+void	ft_heredoc_handler(int signal)
+{
+   if (signal == SIGINT)
+	{
+		ft_putchar_fd('\n', STDOUT_FILENO);
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+		printf("sigint");
+
+	}
+}
+
+void	ft_signals_new(void)
+
+{
+	struct sigaction	sa;
+
+	sa.sa_flags = 0;
+	sigemptyset(&sa.sa_mask);
+	sa.sa_handler = &ft_heredoc_handler;
+	sigaddset(&sa.sa_mask, SIGINT);
+	sigaction(SIGINT, &sa, NULL);
+	signal(SIGQUIT, SIG_IGN);
+}
+
+void ft_sig_def(void)
+{
+	signal(SIGQUIT, SIG_DFL);
+	signal(SIGINT, SIG_DFL);
+
+}
+
 
 
 

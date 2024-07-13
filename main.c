@@ -6,7 +6,7 @@
 /*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 17:58:01 by irene             #+#    #+#             */
-/*   Updated: 2024/07/06 11:46:38 by pablgarc         ###   ########.fr       */
+/*   Updated: 2024/07/11 18:45:44 by pablgarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	prompt(t_mix *data)
 {
 	while (1)
 	{
+		//ft_signals_new();
 		ft_signals_start();
 		data->input = readline("\033[0;32mMinishell:\033[0m ");
 		if (data->input == NULL) //esto seria la señal de CRTL +D
