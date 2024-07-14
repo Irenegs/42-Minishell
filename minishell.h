@@ -6,7 +6,7 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 17:56:24 by irene             #+#    #+#             */
-/*   Updated: 2024/07/13 20:01:42 by irene            ###   ########.fr       */
+/*   Updated: 2024/07/14 14:09:44 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,7 @@ extern int	global_signal;
 typedef struct s_mix
 {
 	char	**m_env;
-	char	**m_argv;
 	char 	*input;
-	int 	m_argc;
 	int 	exit_status;
 	char	**heredocs;
 	int		*pipesfd;
@@ -58,11 +56,8 @@ void 	ft_sig_def(void);
 
 
 //struct.c
-void	ft_free_env(char **env);
-void	ft_init_mix(t_mix *data);
-char	**ft_copy_env(char **envp);
-char  **ft_copy_argv(int argc, char **argv);
-void	ft_fill_struct(t_mix *data, int argc, char **argv, char **envp);
+void	*ft_free_env(char **env);
+void	ft_init_mix(t_mix *data, char **envp);
 
 //buil_in.c
 int find_env_index(char **env, const char *key);

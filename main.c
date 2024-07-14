@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 17:58:01 by irene             #+#    #+#             */
-/*   Updated: 2024/07/11 18:45:44 by pablgarc         ###   ########.fr       */
+/*   Updated: 2024/07/14 14:07:33 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,19 +41,11 @@ int	main(int argc, char **argv, char **envp)
 
 	if (argc != 1 || !argv)
 		return (1);
-
-	ft_init_mix(&data);
-	ft_fill_struct(&data, argc, argv, envp);
+	ft_init_mix(&data, envp);
 	prompt(&data);
 	ft_free_env(data.m_env);
-	if (data.m_argv) // Solo libera si no es NULL
-	{
-		free_argv(data.m_argv);
-		data.m_argv = NULL; // para no referenciar memoria liberada, doble free si crlt+d 2 vces en un sleep
-	}
 	return (0);
 }
-
 
 /*
 void	prompt(void)
@@ -72,7 +64,6 @@ void	prompt(void)
 	//rl_clear_history();
 }
 
-
 void signal_handler(int signum)
 {
 	if (signum == SIGQUIT)
@@ -85,24 +76,6 @@ void show_leaks(void)
 {
 	system("leaks minishell");
 }
-
-int main(void)
-{
-	struct sigaction sa;
-
-	//atexit(show_leaks);
-    sa.sa_handler = signal_handler;
-    sigemptyset(&sa.sa_mask);
-	//sigaddset(&sa.sa_mask, SA_RESTART);
-	if (sigaction(SIGQUIT, &sa, NULL) == -1)
-		exit(3);
-	if (sigaction(SIGINT, &sa, NULL) == -1)
-		exit(4);
-	prompt();
-	return (0);
-}
-
-
 
 Prompt:
 readline lee y devuelve la línea de stdin (malloc).
