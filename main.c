@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
+/*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 17:58:01 by irene             #+#    #+#             */
-/*   Updated: 2024/07/14 14:07:33 by irene            ###   ########.fr       */
+/*   Updated: 2024/07/16 00:13:01 by pablgarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ int	global_signal = 0;
 
 void	prompt(t_mix *data)
 {
+	char **command;
+
 	while (1)
 	{
 		//ft_signals_new();
@@ -30,7 +32,11 @@ void	prompt(t_mix *data)
 		if (*data->input)
 			add_history(data->input);
 		if (*data->input != '\0')
-			parse_and_execute(data);
+		{	
+			command = extract_command (data->input, data);
+			execute_builtin(data, command);
+			//parse_and_execute(data);
+		}
 		free(data->input);
 	}
 }

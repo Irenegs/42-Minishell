@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
+/*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 17:36:54 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/07/13 19:56:53 by irene            ###   ########.fr       */
+/*   Updated: 2024/07/15 23:55:44 by pablgarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ int	run_command(char **command, t_mix *data)
 	if (is_builtin(command[0]))
 	{
 		execute_builtin(data, command);
-		//devuelve codigo de salida
 		exit(0);
 	}
 	cmd = command_exists(command[0], data->m_env);
