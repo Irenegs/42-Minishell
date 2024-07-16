@@ -6,7 +6,7 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 17:58:01 by irene             #+#    #+#             */
-/*   Updated: 2024/07/14 14:07:33 by irene            ###   ########.fr       */
+/*   Updated: 2024/07/14 20:21:12 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,20 @@ void	prompt(t_mix *data)
 	}
 }
 
+void show_leaks(void)
+{
+	system("leaks minishell");
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	t_mix	data;
-
+	atexit(show_leaks);
 	if (argc != 1 || !argv)
 		return (1);
 	ft_init_mix(&data, envp);
 	prompt(&data);
+	printf("Liberamos el entorno\n");
 	ft_free_env(data.m_env);
 	return (0);
 }

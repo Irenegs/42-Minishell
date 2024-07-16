@@ -6,7 +6,7 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 16:36:46 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/07/13 19:38:44 by irene            ###   ########.fr       */
+/*   Updated: 2024/07/16 20:07:54 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int	ft_open(char *filename, int mode)
 	else
 		fd = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (fd == -1)
-		return (-2);
+		return (perror_int(-2));
 	return (fd);
 }
 
@@ -73,12 +73,12 @@ int	extract_input(char *s, t_mix *data, int p)
 	{
 		filename = extract_element(s, &pos, data);
 		if (!filename)
-			return (-2);
+			return (write_error_int(1, -2));
 		fd = ft_open(filename, O_RDONLY);
 		free(filename);
 	}
 	aux_fd = extract_input(s + pos + 2, data, p);
-	if (aux_fd != -1)
+	if (aux_fd != -1 && fd != -2)
 		fd = aux_fd;
 	return (fd);
 }
@@ -99,14 +99,14 @@ int	extract_output(char *s, t_mix *data)
 		pos++;
 	filename = extract_element(s, &pos, data);
 	if (!filename)
-		return (-2);
+		return (write_error_int(1, -2));
 	if (pos == locate_char_position(s, '>'))
 		fd = ft_open(filename, 1);
 	else
 		fd = ft_open(filename, 2);
 	free(filename);
 	aux_fd = extract_output(s + pos + 1, data);
-	if (aux_fd != -1)
+	if (aux_fd != -1 && fd != -2)
 		fd = aux_fd;
 	return (fd);
 }

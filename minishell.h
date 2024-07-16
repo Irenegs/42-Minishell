@@ -6,7 +6,7 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 17:56:24 by irene             #+#    #+#             */
-/*   Updated: 2024/07/14 14:09:44 by irene            ###   ########.fr       */
+/*   Updated: 2024/07/16 19:59:17 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,9 @@ typedef struct s_mix
 }				t_mix;
 
 //error.c
-
+void	*write_error_null(int error_code);
+int		perror_int(int return_value);
+int	write_error_int(int error_code, int return_value);
 
 //signals.c
 void	ft_interrupt(int signal);
