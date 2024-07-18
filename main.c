@@ -6,36 +6,36 @@
 /*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 17:58:01 by irene             #+#    #+#             */
-/*   Updated: 2024/07/18 17:36:23 by pablgarc         ###   ########.fr       */
+/*   Updated: 2024/07/18 17:54:25 by pablgarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	global_signal = 0;
+int	g_exit_status = 0;
 
 void	prompt(t_mix *data)
 {
-	char **command;
+	//char **command;
 
 	while (1)
 	{
-		//ft_signals_new();
-		ft_signals_start();
+		ft_signals_new();
+		//ft_signals_start();
 		data->input = readline("\033[0;32mMinishell:\033[0m ");
 		if (data->input == NULL) //esto seria la señal de CRTL +D
 		{
 			printf("\n");
 			break ;
 		}
-		ft_signals_running();
+		//ft_signals_running();
 		if (*data->input)
 			add_history(data->input);
 		if (*data->input != '\0')
-		{	
-			command = extract_command (data->input, data);
-			execute_builtin(data, command);
-			//parse_and_execute(data);
+		{
+			//command = extract_command (data->input, data);
+			//execute_builtin(data, command);
+			parse_and_execute(data);
 		}
 		free(data->input);
 	}

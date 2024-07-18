@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_text.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
+/*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 14:46:24 by irene             #+#    #+#             */
-/*   Updated: 2024/07/16 20:06:06 by irene            ###   ########.fr       */
+/*   Updated: 2024/07/18 17:54:46 by pablgarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static char	*get_rawtext(char *delimiter)
 	char	*aux_1;
 	char	*aux_2;
 
-	ft_signals_new();
+	//ft_signals_new();
 	aux_2 = readline("Heredoc>");
 	line = malloc(1 * sizeof(char));
 	if (!line)
@@ -43,7 +43,7 @@ static char	*get_rawtext(char *delimiter)
 		return (NULL);
 	}
 	free(aux_2);
-	ft_sig_def();// Restaura el manejador de señal predeterminado después del heredoc
+	ft_sig_def();
 	return (line);
 }
 

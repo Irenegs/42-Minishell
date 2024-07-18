@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
+/*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 18:31:28 by pablgarc          #+#    #+#             */
-/*   Updated: 2024/07/16 20:05:42 by irene            ###   ########.fr       */
+/*   Updated: 2024/07/18 17:43:21 by pablgarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	*write_error_null(int error_code)
 		write(2, "Malloc error\n", 13);
 	return (NULL);
 }
+
 /*
 void	cd_error(t_mix *data, char **cmd_args)
 {

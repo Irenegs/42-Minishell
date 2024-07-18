@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
+/*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 17:56:24 by irene             #+#    #+#             */
-/*   Updated: 2024/07/16 19:59:17 by irene            ###   ########.fr       */
+/*   Updated: 2024/07/18 17:53:30 by pablgarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 
 # define MAX_argv 100
 
-extern int	global_signal;
+extern int	g_exit_status;
 
 typedef struct s_mix
 {
@@ -50,11 +50,13 @@ int	write_error_int(int error_code, int return_value);
 //signals.c
 void	ft_interrupt(int signal);
 void	ft_new_prompt(int signal);
-void	ft_heredoc_handler(int signal);
+void 	ft_sig_def(void);
 void	ft_signals_start(void);
 void 	ft_signals_running(void);
-void 	ft_signals_new (void);
-void 	ft_sig_def(void);
+void 	ft_signals_new(void);
+void	handler_sigint(int sig);
+void	handler(int sig);
+
 
 
 //struct.c
