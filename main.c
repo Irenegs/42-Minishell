@@ -6,7 +6,7 @@
 /*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 17:58:01 by irene             #+#    #+#             */
-/*   Updated: 2024/07/16 00:13:01 by pablgarc         ###   ########.fr       */
+/*   Updated: 2024/07/18 17:36:23 by pablgarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,20 @@ void	prompt(t_mix *data)
 	}
 }
 
+void show_leaks(void)
+{
+	system("leaks minishell");
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	t_mix	data;
-
+	atexit(show_leaks);
 	if (argc != 1 || !argv)
 		return (1);
 	ft_init_mix(&data, envp);
 	prompt(&data);
+	printf("Liberamos el entorno\n");
 	ft_free_env(data.m_env);
 	return (0);
 }

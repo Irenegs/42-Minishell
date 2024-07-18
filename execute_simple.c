@@ -6,7 +6,7 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 18:56:55 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/07/13 19:56:43 by irene            ###   ########.fr       */
+/*   Updated: 2024/07/16 22:36:47 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,9 @@ int	execute_only_child(t_mix *data)
 		command = extract_command(data->input, data);
 		if (!command)
 			exit (1);
-		run_command(command, data);
+		status = run_command(command, data);
 		ft_out(command);
-		exit(1);
+		exit(status);
 	}
 	if (waitpid(childpid, &status, 0) != -1)
 		return (WEXITSTATUS(status));

@@ -6,7 +6,7 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 16:09:28 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/07/12 19:13:29 by irene            ###   ########.fr       */
+/*   Updated: 2024/07/16 20:42:41 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,12 @@ int	extract_pipe_and_execute(int p, t_mix *data)
 {
 	char	*subs;
 	char	**command;
+	int		ret_value;
 
 	manage_multiple_pipes(p, data->pipes, data->pipesfd);
 	subs = extract_pipe(data->input, p);
 	if (!subs)
-		exit (1);
+		exit(write_error_int(1, 1));
 	if (manage_redirections(p, data, subs) != 0)
 		exit(1);
 	command = extract_command(subs, data);
@@ -51,10 +52,10 @@ int	extract_pipe_and_execute(int p, t_mix *data)
 		free(subs);
 		exit (1);
 	}
-	run_command(command, data);
+	ret_value = run_command(command, data);
 	free(subs);
 	ft_out(command);
-	exit (0);
+	exit(ret_value);
 }
 
 int	execute_several_pipes(t_mix *data)
@@ -67,7 +68,7 @@ int	execute_several_pipes(t_mix *data)
 	p = 0;
 	while (p <= data->pipes)
 	{
-		pipe(data->pipesfd + 2 * p);
+		pipe(data->pipesfd + 2 * p);//pipe error?
 		childpid = fork();
 		if (childpid == -1)
 			return (1);
@@ -93,7 +94,7 @@ int	execute(t_mix *data)
 	else
 		data->heredocs = malloc(1 * sizeof(char *));
 	if (!data->heredocs)
-		ret_value = 1;
+		ret_value = write_error_int(1, 1);
 	if (ret_value == 0 && get_heredocs(data->heredocs, data, data->pipes) == 0)
 	{
 		data->pipesfd = malloc((data->pipes - 1) * 2 * sizeof(int));
@@ -104,8 +105,12 @@ int	execute(t_mix *data)
 		}
 		else if (data->pipes == 0)
 			ret_value = execute_only_child(data);
-		clean_and_free_heredocs(data->heredocs, data->pipes);
+		else
+			ret_value = write_error_int(1, 1);
 	}
+	else
+		ret_value = 1;
+	clean_and_free_heredocs(data->heredocs, data->pipes);
 	return (ret_value);
 }
 
@@ -121,7 +126,7 @@ void	parse_and_execute(t_mix *data)
 		return ;
 	}
 	data->exit_status = execute(data);
-	printf("echo $?:%d\n", data->exit_status);
+	printf("Echo $?:%d\n", data->exit_status);
 }
 
 /*

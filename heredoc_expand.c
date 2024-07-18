@@ -6,7 +6,7 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 17:52:42 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/07/12 20:32:57 by irene            ###   ########.fr       */
+/*   Updated: 2024/07/16 13:48:19 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,12 @@ static char	*normal_expansion(char *orig, char *input_str, int pos, int len)
 
 	chunk = ft_substr(input_str, pos, len);
 	if (!chunk)
-		return (NULL);
+		return (write_error_null(1));
 	result = ft_strjoin(orig, chunk);
 	free(orig);
 	free(chunk);
+	if (!result)
+		return (write_error_null(1));
 	return (result);
 }
 
@@ -47,6 +49,8 @@ char	*expand_string(char *input_str, t_mix *data)
 	if (!input_str)
 		return (NULL);
 	expanded = malloc(1 * sizeof(char));
+	if (!expanded)
+		return (write_error_null(1));
 	expanded[0] = '\0';
 	pos = 0;
 	while (input_str[pos] != '\0' && expanded)

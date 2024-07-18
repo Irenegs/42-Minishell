@@ -6,7 +6,7 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:36:03 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/07/13 19:55:31 by irene            ###   ########.fr       */
+/*   Updated: 2024/07/16 20:13:00 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ static char	**split_command(char *s, t_mix *data)
 
 	arr = malloc((count_arguments(s) + 1) * sizeof(char *));
 	if (!arr)
-		return (NULL);
+		return (write_error_null(1));
 	i = -1;
 	pos = 0;
 	while (++i < count_arguments(s))
@@ -82,7 +82,10 @@ static char	**split_command(char *s, t_mix *data)
 			pos++;
 		arr[i] = extract_element(s, &pos, data);
 		if (!arr[i])
-			return (ft_out(arr));
+		{
+			ft_out(arr);
+			return (write_error_null(1));
+		}
 		while (s[pos] != '\0' && is_space(s[pos]) == 0)
 			pos++;
 	}
@@ -103,13 +106,8 @@ char	**extract_command(char *s, t_mix *data)
 	len = len_cmd(s, pos);
 	cmd_string = ft_substr(s, pos, len);
 	if (!cmd_string)
-		return (NULL);
+		return (write_error_null(1));
 	command = split_command(cmd_string, data);
 	free(cmd_string);
 	return (command);
 }
-
-/*
-extract command: 
-devolver {NULL, NULL, NULL} para diferenciar de fallo en el malloc ?
-*/

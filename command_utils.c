@@ -6,7 +6,7 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 19:32:15 by irene             #+#    #+#             */
-/*   Updated: 2024/07/12 20:34:10 by irene            ###   ########.fr       */
+/*   Updated: 2024/07/16 20:30:38 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,13 @@ int	is_local(char *s)
 char	**get_path_variable(char **environ)
 {
 	int		path_var;
+	char	**path_value;
 
 	path_var = select_variable("PATH", environ);
 	if (path_var < 0)
 		return (NULL);
-	return (ft_super_split(environ[path_var], "=:"));
+	path_value = ft_super_split(environ[path_var], "=:");
+	if (!path_value)
+		return (write_error_null(1));
+	return (path_value);
 }

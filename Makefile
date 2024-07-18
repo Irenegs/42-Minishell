@@ -11,7 +11,7 @@ SRCS        := command.c command_utils.c variable_utils.c\
 				built_in.c built_in2.c built_in3.c built_in4.c \
 				struct.c signals.c \
 				heredocs.c heredocs_utils.c heredoc_text.c heredoc_expand.c gnl.c\
-				main.c \
+				main.c error.c\
 			
 
 OBJS        := $(SRCS:%.c=%.o)
