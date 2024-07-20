@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
+/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 17:56:24 by irene             #+#    #+#             */
-/*   Updated: 2024/07/16 19:59:17 by irene            ###   ########.fr       */
+/*   Updated: 2024/07/20 19:00:17 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int ft_unset(t_mix *data, char** command);
 //built_in3.c
 int ft_strcmp(const char *s1, const char *s2);
 int ft_env(t_mix *data);
-int ft_exit(char **command);
+int ft_exit(char **command, t_mix *data);
 int execute_builtin(t_mix *data, char **command);
 int ft_isnum(char *str);
 
@@ -102,6 +102,7 @@ void    parse_and_execute(t_mix *data);
 
 //execute_simple.c
 int	execute_only_child(t_mix *data);
+int	status_treatment(int *status);
 
 //extract_command.c
 

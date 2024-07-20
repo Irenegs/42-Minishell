@@ -3,14 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   execute_simple.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
+/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 18:56:55 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/07/16 22:36:47 by irene            ###   ########.fr       */
+/*   Updated: 2024/07/20 18:39:43 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	status_treatment(int *status)
+{
+	if (WIFEXITED(*status) != 0)
+		return (WEXITSTATUS(*status));
+	if (WIFSIGNALED(*status) != 0)
+	{
+		if (WTERMSIG(*status) == 2)
+			return (130);
+		if (WTERMSIG(*status) == 3)
+			return (131);
+		return (WTERMSIG(*status));
+	}
+	return (0);
+}
 
 static int	manage_simple_redirections(t_mix *data)
 {
@@ -51,6 +66,6 @@ int	execute_only_child(t_mix *data)
 		exit(status);
 	}
 	if (waitpid(childpid, &status, 0) != -1)
-		return (WEXITSTATUS(status));
+		return (status_treatment(&status));
 	return (0);
 }
