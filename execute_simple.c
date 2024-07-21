@@ -6,7 +6,7 @@
 /*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 18:56:55 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/07/20 18:39:43 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/07/21 17:10:37 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,47 @@ static int	manage_simple_redirections(t_mix *data)
 	return (0);
 }
 
-int	execute_only_child(t_mix *data)
+static int	execute_only_child(t_mix *data, char **command)
+{
+	int		childpid;
+	int		status;
+
+	childpid = fork();
+	if (childpid == -1)
+	{
+		perror(NULL);
+		return (1);
+	}
+	if (childpid == 0)
+	{
+		if (manage_simple_redirections(data) != 0)
+			exit(1);
+		status = run_command(command, data);
+		exit(status);
+	}
+	if (waitpid(childpid, &status, 0) != -1)
+		return (status_treatment(&status));
+	return (0);
+}
+
+int	execute_zero_pipes(t_mix *data)
+{
+	char	**command;
+	int		status;
+
+	command = extract_command(data->input, data);
+	if (!command)
+		return (write_error_int(1, 1));
+	if (is_special_builtin(command[0]) == 1)
+		status = execute_builtin(data, command);
+	else
+		status = execute_only_child(data, command);
+	ft_out(command);
+	return (status);
+}
+
+/*
+int	execute_zero_pipes(t_mix *data)
 {
 	int		childpid;
 	char	**command;
@@ -69,3 +109,4 @@ int	execute_only_child(t_mix *data)
 		return (status_treatment(&status));
 	return (0);
 }
+*/

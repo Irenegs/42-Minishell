@@ -72,12 +72,12 @@ Handle $? which should expand to the exit status of the most recently executed f
 
 Builtins:
 echo with option -n
-cd with only a relative or absolute path
 pwd with no options
-export with no options
-unset with no options
 env with no options or arguments
-exit with no options -> cuando exit está en una pipe no tiene efecto. Tiene que ejecutarse desde execute_only_child y matar el proceso padre (o ser llamado desde ese proceso).
+cd with only a relative or absolute path -> cuando exit está en una pipe no tiene efecto. Tiene que ejecutarse desde execute_zero_pipes.
+export with no options -> cuando exit está en una pipe no tiene efecto. Tiene que ejecutarse desde execute_zero_pipes.
+unset with no options -> cuando exit está en una pipe no tiene efecto. Tiene que ejecutarse desde execute_zero_pipes.
+exit with no options -> cuando exit está en una pipe no tiene efecto. Tiene que ejecutarse desde execute_zero_pipes y matar el proceso padre (o ser llamado desde ese proceso).
 
 
 FUNCIONES PERMITIDAS

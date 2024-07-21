@@ -6,7 +6,7 @@
 /*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 16:09:28 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/07/20 18:44:14 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/07/21 17:05:17 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ int	execute(t_mix *data)
 			free(data->pipesfd);
 		}
 		else if (data->pipes == 0)
-			ret_value = execute_only_child(data);
+			ret_value = execute_zero_pipes(data);
 		else
 			ret_value = write_error_int(1, 1);
 	}
