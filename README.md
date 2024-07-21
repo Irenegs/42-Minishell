@@ -24,9 +24,9 @@ C-\ no hace nada
 C-d cierra el heredoc con un error (bash: warning: here-document at line 160 delimited by end-of-file (wanted 'DELIMITADOR')) pero sigue con las instrucciones $?=0.
 
 escribir errores
-separar ejecución de built-ins
-probar pipes sin comando, solo con redirecciones
 proteger fallos de malloc y free de NULL
+Valgrind leaks:
+valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose --log-file=valgrind-out.txt ./minishell
 valgrind --track-fds=yes --trace-children=yes; --child-silent-after-fork=yes
 
 # Listado de archivos:
@@ -152,10 +152,6 @@ char *     getenv(const char *name); obtains the current value of the environmen
 
 tgetent, tgetflag, tgetnum, tgetstr, tgoto, tputs => Seguramente se utilice para algunos built-ins
 https://www.gnu.org/software/termutils/manual/termcap-1.3/html_chapter/termcap_2.html
-
-
-Valgrind leaks:
-valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose --log-file=valgrind-out.txt ./minishell
 
 
 Shell grammar

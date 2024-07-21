@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredocs.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
+/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 17:50:11 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/07/16 22:38:26 by irene            ###   ########.fr       */
+/*   Updated: 2024/07/21 19:29:51 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ static int	get_heredocs_texts(char **heredocs, int pipes, char *s, t_mix *data)
 			n++;
 		}
 		free(subs);
-		if (n_heredocs == 0)
-			heredocs[p] = NULL;
+		//if (n_heredocs == 0)
+		//	heredocs[p] = NULL;
 		p++;
 	}
 	return (0);
@@ -66,14 +66,15 @@ static int	get_heredocs_filenames(char **heredocs, int pipes)
 			return (1);
 		n++;
 	}
+	heredocs[pipes + 1] = NULL;
 	return (0);
 }
 
-int	get_heredocs(char **heredocs, t_mix *data, int pipes)
+int	get_heredocs(t_mix *data)
 {
-	if (get_heredocs_filenames(heredocs, pipes) != 0)
+	if (get_heredocs_filenames(data->heredocs, data->pipes) != 0)
 		return (1);
-	return (get_heredocs_texts(heredocs, pipes, data->input, data));
+	return (get_heredocs_texts(data->heredocs, data->pipes, data->input, data));
 }
 
 void	clean_and_free_heredocs(char **heredocs, int pipes)

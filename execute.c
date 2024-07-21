@@ -6,7 +6,7 @@
 /*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 16:09:28 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/07/21 17:05:17 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/07/21 19:35:07 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,15 +90,13 @@ int	execute(t_mix *data)
 	int		ret_value;
 
 	ret_value = 0;
-	if (data->pipes != 0)
-		data->heredocs = malloc(data->pipes * sizeof(char *));
-	else
-		data->heredocs = malloc(1 * sizeof(char *));
+	data->heredocs = malloc((data->pipes + 2) * sizeof(char *));
 	if (!data->heredocs)
 		ret_value = write_error_int(1, 1);
-	if (ret_value == 0 && get_heredocs(data->heredocs, data, data->pipes) == 0)
+	if (ret_value == 0 && get_heredocs(data) == 0)
 	{
-		data->pipesfd = malloc((data->pipes - 1) * 2 * sizeof(int));
+		if (data->pipes != 0)
+			data->pipesfd = malloc((data->pipes) * 2 * sizeof(int));
 		if (data->pipes != 0 && data->pipesfd)
 		{
 			ret_value = execute_several_pipes(data);

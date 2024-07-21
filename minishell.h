@@ -6,7 +6,7 @@
 /*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 17:56:24 by irene             #+#    #+#             */
-/*   Updated: 2024/07/21 17:52:08 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/07/21 19:10:23 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,7 @@ int		pipe_abortion(int *fd);
 
 //heredocs.c
 void	clean_and_free_heredocs(char **heredocs, int pipes);
-int	get_heredocs(char **heredocs, t_mix *data, int pipes);
+int	get_heredocs(t_mix *data);
 
 //heredoc_text.c
 int	write_hd_file(char *s, char *filename, t_mix *data);
