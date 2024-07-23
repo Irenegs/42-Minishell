@@ -6,7 +6,7 @@
 /*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 21:56:45 by pablo             #+#    #+#             */
-/*   Updated: 2024/07/23 18:14:16 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/07/23 19:24:53 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,22 +66,22 @@ int	ft_cd(char **command, t_mix *data)
 	return (0);
 }
 
-int	ft_pwd(void)
+int	ft_pwd(t_mix *data)
 {
 	char	*pwd;
 
-	pwd = getcwd(NULL, 0);
+	
+	pwd = ft_getenv("PWD", data);
+	if (!pwd)
+		pwd = getcwd(NULL, 0);
 	if (pwd)
 	{
 		printf("%s\n", pwd);
 		free(pwd);
+		return (0);
 	}
-	else
-	{
-		perror("pwd");
-		return (1);
-	}
-	return (0);
+	return (perror_int(1));
+	
 }
 
 
@@ -122,11 +122,7 @@ int	ft_unset(t_mix *data, char **command)
 
 	i = 1;
 	if (!command[1])
-	{
-		printf("unset: missing argument\n");
-		return (1);
-	}
-
+		return (0);
 	while (command[i])
 	{
 		data->m_env = remove_env(data->m_env, command[i]);

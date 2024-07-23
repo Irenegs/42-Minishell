@@ -6,7 +6,7 @@
 /*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 17:56:24 by irene             #+#    #+#             */
-/*   Updated: 2024/07/23 17:14:24 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/07/23 19:01:27 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int is_special_builtin(char *cmd);
 //built_in2.c
 int ft_echo(char **command);
 int	ft_cd(char **command, t_mix *data);
-int ft_pwd(void);
+int	ft_pwd(t_mix *data);
 int ft_export(t_mix *data, char **command);
 int ft_unset(t_mix *data, char** command);
 

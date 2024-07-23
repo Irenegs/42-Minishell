@@ -6,7 +6,7 @@
 /*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 22:04:50 by pablo             #+#    #+#             */
-/*   Updated: 2024/07/21 17:51:40 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/07/23 19:01:45 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int	execute_builtin(t_mix *data, char **command)
 	else if (ft_strcmp(command[0], "cd") == 0)
 		return (ft_cd(command, data));
 	else if (ft_strcmp(command[0], "pwd") == 0)
-		return (ft_pwd());
+		return (ft_pwd(data));
 	else if (ft_strcmp(command[0], "exit") == 0)
 		return (ft_exit(command, data));
 	else if (ft_strcmp(command[0], "export") == 0)

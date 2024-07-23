@@ -23,7 +23,9 @@ C-c dentro de heredoc lo corta y vuelve a la shell sin ejecutar ninguna instrucc
 C-\ no hace nada
 C-d cierra el heredoc con un error (bash: warning: here-document at line 160 delimited by end-of-file (wanted 'DELIMITADOR')) pero sigue con las instrucciones $?=0.
 
-escribir errores
+export sin argumentos o sin aaa=aaaa
+void	free_argv(char **argv)  es igual que ft_out
+escribir errores => perror(NULL) y cambiar printf;
 proteger fallos de malloc y free de NULL
 Valgrind leaks:
 valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose --log-file=valgrind-out.txt ./minishell
