@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_text.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
+/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 14:46:24 by irene             #+#    #+#             */
-/*   Updated: 2024/07/16 20:06:06 by irene            ###   ########.fr       */
+/*   Updated: 2024/07/23 17:15:39 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	*get_rawtext(char *delimiter)
+static char	*get_rawtext(char *del)
 {
 	char	*line;
 	char	*aux_1;
@@ -24,7 +24,7 @@ static char	*get_rawtext(char *delimiter)
 	if (!line)
 		return (write_error_null(1));
 	line[0] = '\0';
-	while (aux_2 != NULL && ft_strncmp(aux_2, delimiter, ft_strlen(delimiter) + 1) != 0)
+	while (aux_2 != NULL && ft_strncmp(aux_2, del, ft_strlen(del) + 1) != 0)
 	{
 		aux_1 = ft_strjoin(line, aux_2);
 		free(line);
@@ -96,19 +96,19 @@ static char	*get_heredoc(char *s, t_mix *data)
 	return (heredoc_text);
 }
 
-int	write_hd_file(char *s, char *filename, t_mix *data)
+int	write_hd_file(char *s, int hd_number, t_mix *data)
 {
 	char	*heredoc_text;
 	int		fd;
 	int		ret_value;
 
 	ret_value = 0;
-	if (!s || !filename || !data)
+	if (!s || !data->heredocs[hd_number] || !data)
 		return (-1);
 	heredoc_text = get_heredoc(s, data);
 	if (heredoc_text == NULL)
 		return (-1);
-	fd = open(filename, O_WRONLY | O_TRUNC | O_CREAT, 0644);
+	fd = open(data->heredocs[hd_number], O_WRONLY | O_TRUNC | O_CREAT, 0644);
 	if (fd == -1)
 	{
 		free(heredoc_text);

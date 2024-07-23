@@ -16,7 +16,7 @@ SRCS        := command.c command_utils.c variable_utils.c\
 
 OBJS        := $(SRCS:%.c=%.o)
 CC          := gcc
-CFLAGS      := -Wall -Wextra -Werror -fsanitize=address -g3
+CFLAGS      := -Wall -Wextra -Werror
 
 RM          := rm -f
 MAKEFLAGS   += --no-print-directory

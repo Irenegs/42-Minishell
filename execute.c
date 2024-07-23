@@ -6,7 +6,7 @@
 /*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 16:09:28 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/07/21 19:35:07 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/07/23 17:55:24 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	execute_several_pipes(t_mix *data)
 	p = 0;
 	while (p <= data->pipes)
 	{
-		if (pipe(data->pipesfd + 2 * p) == -1)
+		if (p != data->pipes && pipe(data->pipesfd + 2 * p) == -1)
 			return (1);
 		childpid = fork();
 		if (childpid == -1)
@@ -81,7 +81,8 @@ int	execute_several_pipes(t_mix *data)
 	if (waitpid(childpid, &status, 0) == -1)
 		exit(1);
 	last_status = status_treatment(&status);
-	while (wait(&status) > 0);
+	while (wait(&status) > 0)
+		;
 	return (last_status);
 }
 

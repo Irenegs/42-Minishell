@@ -6,7 +6,7 @@
 /*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 18:56:55 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/07/21 17:10:37 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/07/23 17:55:53 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,7 @@ int	status_treatment(int *status)
 	if (WIFEXITED(*status) != 0)
 		return (WEXITSTATUS(*status));
 	if (WIFSIGNALED(*status) != 0)
-	{
-		if (WTERMSIG(*status) == 2)
-			return (130);
-		if (WTERMSIG(*status) == 3)
-			return (131);
-		return (WTERMSIG(*status));
-	}
+		return (WTERMSIG(*status) + 128);
 	return (0);
 }
 
@@ -83,30 +77,3 @@ int	execute_zero_pipes(t_mix *data)
 	ft_out(command);
 	return (status);
 }
-
-/*
-int	execute_zero_pipes(t_mix *data)
-{
-	int		childpid;
-	char	**command;
-	int		status;
-
-	childpid = fork();
-	if (childpid == -1)
-		exit(1);
-	if (childpid == 0)
-	{
-		if (manage_simple_redirections(data) != 0)
-			exit(1);
-		command = extract_command(data->input, data);
-		if (!command)
-			exit (1);
-		status = run_command(command, data);
-		ft_out(command);
-		exit(status);
-	}
-	if (waitpid(childpid, &status, 0) != -1)
-		return (status_treatment(&status));
-	return (0);
-}
-*/

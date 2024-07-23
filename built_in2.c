@@ -6,7 +6,7 @@
 /*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 21:56:45 by pablo             #+#    #+#             */
-/*   Updated: 2024/07/21 18:38:43 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/07/23 18:14:16 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	ft_cd(char **command, t_mix *data)
 {
 	char	*home_dir;
 
-	if (!command[1])// || command[1][0] == '\0') cd "" no cambia de directorio
+	if (!command[1])
 	{
 		home_dir = ft_getenv("HOME", data);
 		if (home_dir == NULL)

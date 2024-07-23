@@ -59,8 +59,7 @@ void	ft_heredoc_handler(int signal)
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
-		printf("sigint");
-
+		
 	}
 }
 

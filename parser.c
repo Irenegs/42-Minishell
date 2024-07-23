@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
+/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 18:32:16 by irene             #+#    #+#             */
-/*   Updated: 2024/07/01 18:36:58 by irene            ###   ########.fr       */
+/*   Updated: 2024/07/23 16:53:50 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,21 +97,3 @@ int	parser(char *s)
 		return (-1);
 	return (pipes);
 }
-
-/*
-static int	is_metacharacter(char c)
-{
-	char	*metacharacter;
-	int		i;
-
-	metacharacter = "|$<>'\"\n \t";
-	i = 0;
-	while (metacharacter[i] != '\0')
-	{
-		if (c == metacharacter[i])
-			return (1);
-		i++;
-	}
-	return (0);
-}
-*/
