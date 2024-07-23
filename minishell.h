@@ -6,7 +6,7 @@
 /*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 17:56:24 by irene             #+#    #+#             */
-/*   Updated: 2024/07/18 17:53:30 by pablgarc         ###   ########.fr       */
+/*   Updated: 2024/07/23 19:04:21 by pablgarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,11 +69,11 @@ char **add_or_update_env(char **env, const char *key, const char *value);
 char **copy_env_without_entry(char **env, int index, int size);
 char **remove_env(char **env, const char *key);
 int		is_builtin(char *cmd);
-
+int is_special_builtin(char *cmd);
 
 //built_in2.c
 int ft_echo(char **command);
-int ft_cd(char **command);
+int	ft_cd(char **command, t_mix *data);
 int ft_pwd(void);
 int ft_export(t_mix *data, char **command);
 int ft_unset(t_mix *data, char** command);
@@ -81,7 +81,7 @@ int ft_unset(t_mix *data, char** command);
 //built_in3.c
 int ft_strcmp(const char *s1, const char *s2);
 int ft_env(t_mix *data);
-int ft_exit(char **command);
+int ft_exit(char **command, t_mix *data);
 int execute_builtin(t_mix *data, char **command);
 int ft_isnum(char *str);
 
@@ -103,7 +103,8 @@ int    execute(t_mix *data);
 void    parse_and_execute(t_mix *data);
 
 //execute_simple.c
-int	execute_only_child(t_mix *data);
+int	execute_zero_pipes(t_mix *data);
+int	status_treatment(int *status);
 
 //extract_command.c
 
@@ -143,10 +144,10 @@ int		pipe_abortion(int *fd);
 
 //heredocs.c
 void	clean_and_free_heredocs(char **heredocs, int pipes);
-int	get_heredocs(char **heredocs, t_mix *data, int pipes);
+int	get_heredocs(t_mix *data);
 
 //heredoc_text.c
-int	write_hd_file(char *s, char *filename, t_mix *data);
+int	write_hd_file(char *s, int number_of_hd, t_mix *data);
 
 //heredoc_expand.c
 int	must_expand(char *delimiter, char *text);

@@ -38,7 +38,7 @@ static char	**ft_copy_env(char **envp)
 	env_copy = (char **)malloc((total_variables + 1) * sizeof(char *));
 	if (!env_copy)
 		return (NULL);
-    i = 0;
+	i = 0;
 	while (i < total_variables)
 	{
 		env_copy[i] = ft_strdup(envp[i]);
@@ -56,7 +56,7 @@ void	ft_init_mix(t_mix *data, char **envp)
 	data->m_env = NULL;
 	data->heredocs = NULL;
 	data->pipesfd = NULL;
-    data->m_env = ft_copy_env(envp);
+	data->m_env = ft_copy_env(envp);
 }
 
 //pasamos los datos a la struct

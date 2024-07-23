@@ -102,6 +102,20 @@ char	**remove_env(char **env, const char *key)
 	return (new_env);
 }
 
+int is_special_builtin(char *cmd)
+{
+	if (ft_strcmp(cmd, "cd") == 0)
+		return (1);
+	else if (ft_strcmp(cmd, "export") == 0)
+		return (1);
+	else if (ft_strcmp(cmd, "unset") == 0)
+		return (1);
+	else if (ft_strcmp(cmd, "exit") == 0)
+		return (1);
+	else
+		return (0);
+}
+
 int	is_builtin(char *cmd)
 {
 	if (ft_strcmp(cmd, "echo") == 0)
