@@ -6,7 +6,7 @@
 /*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/07/23 19:04:56 by pablgarc         ###   ########.fr       */
+/*   Updated: 2024/07/23 21:24:57 by pablgarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@ int	g_exit_status = 0;
 
 void	prompt(t_mix *data)
 {
-	//char **command;
-
 	while (1)
 	{
 		ft_signals_new();
@@ -33,11 +31,7 @@ void	prompt(t_mix *data)
 		if (*data->input)
 			add_history(data->input);
 		if (*data->input != '\0')
-		{
-			//command = extract_command (data->input, data);
-			//execute_builtin(data, command);
 			parse_and_execute(data);
-		}
 		free(data->input);
 	}
 }

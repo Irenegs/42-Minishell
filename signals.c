@@ -27,14 +27,15 @@ void	ft_interrupt(int signal)
 // Maneja la señal de interrupción (SIGINT) para mostrar un nuevo prompt
 void	ft_new_prompt(int signal)
 {
+
 	ft_putchar_fd('\n', STDOUT_FILENO); // Escribe una nueva línea en la salida estándar
 	rl_replace_line("", 0); // Reemplaza la línea actual en la entrada
 	rl_on_new_line(); // Mueve el cursor a una nueva línea
 	rl_redisplay(); // Redibuja el prompt
 	if (signal == SIGINT)
-		signal = 2;
-
+		g_exit_status = 130;
 }
+	
 
 // Configura las señales en modo interactivo (esperando comandos del usuario)
 void	ft_signals_start(void)
@@ -46,8 +47,8 @@ void	ft_signals_start(void)
 // Configura las señales cuando un comando está en ejecución
 void	ft_signals_running(void)
 {
-	signal(SIGINT, ft_interrupt); // Asigna ft_interrupt a SIGINT
-	signal(SIGQUIT, ft_interrupt); // Asigna ft_interrupt a SIGQUIT
+	signal(SIGINT, ft_interrupt);
+	signal(SIGQUIT, ft_interrupt);
 }
 
 void ft_sig_def(void)
@@ -76,7 +77,9 @@ void	handler(int sig)
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
-		
+		printf("señal");
+		g_exit_status = 130;
+	
 	}
 }
 
