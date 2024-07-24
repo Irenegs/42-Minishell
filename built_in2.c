@@ -6,7 +6,7 @@
 /*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 21:56:45 by pablo             #+#    #+#             */
-/*   Updated: 2024/07/23 19:24:53 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/07/24 17:04:09 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	ft_cd(char **command, t_mix *data)
 			write(2, "cd: HOME not set\n", 17);
 			return (1);
 		}
-		if (chdir(home_dir) != 0)
+		else
 		{
 			free(home_dir);
 			return (perror_int(1));

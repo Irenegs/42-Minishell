@@ -3,30 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/12 17:58:01 by irene             #+#    #+#             */
-/*   Updated: 2024/07/21 18:54:56 by irgonzal         ###   ########.fr       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2024/07/23 21:24:57 by pablgarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+
 #include "minishell.h"
 
-int	global_signal = 0;
+int	g_exit_status = 0;
 
 void	prompt(t_mix *data)
 {
 	while (1)
 	{
-		//ft_signals_new();
-		ft_signals_start();
+		ft_signals_new();
+		//ft_signals_start();
 		data->input = readline("\033[0;32mMinishell:\033[0m ");
 		if (data->input == NULL) //esto seria la señal de CRTL +D
 		{
 			printf("\n");
 			break ;
 		}
-		ft_signals_running();
+		//ft_signals_running();
 		if (*data->input)
 			add_history(data->input);
 		if (*data->input != '\0')

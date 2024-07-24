@@ -27,14 +27,15 @@ void	ft_interrupt(int signal)
 // Maneja la señal de interrupción (SIGINT) para mostrar un nuevo prompt
 void	ft_new_prompt(int signal)
 {
+
 	ft_putchar_fd('\n', STDOUT_FILENO); // Escribe una nueva línea en la salida estándar
 	rl_replace_line("", 0); // Reemplaza la línea actual en la entrada
 	rl_on_new_line(); // Mueve el cursor a una nueva línea
 	rl_redisplay(); // Redibuja el prompt
 	if (signal == SIGINT)
-		global_signal = signal;
-
+		g_exit_status = 130;
 }
+	
 
 // Configura las señales en modo interactivo (esperando comandos del usuario)
 void	ft_signals_start(void)
@@ -46,34 +47,8 @@ void	ft_signals_start(void)
 // Configura las señales cuando un comando está en ejecución
 void	ft_signals_running(void)
 {
-	signal(SIGINT, ft_interrupt); // Asigna ft_interrupt a SIGINT
-	signal(SIGQUIT, ft_interrupt); // Asigna ft_interrupt a SIGQUIT
-}
-
-
-void	ft_heredoc_handler(int signal)
-{
-   if (signal == SIGINT)
-	{
-		ft_putchar_fd('\n', STDOUT_FILENO);
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
-		
-	}
-}
-
-void	ft_signals_new(void)
-
-{
-	struct sigaction	sa;
-
-	sa.sa_flags = 0;
-	sigemptyset(&sa.sa_mask);
-	sa.sa_handler = &ft_heredoc_handler;
-	sigaddset(&sa.sa_mask, SIGINT);
-	sigaction(SIGINT, &sa, NULL);
-	signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, ft_interrupt);
+	signal(SIGQUIT, ft_interrupt);
 }
 
 void ft_sig_def(void)
@@ -82,6 +57,66 @@ void ft_sig_def(void)
 	signal(SIGINT, SIG_DFL);
 
 }
+
+
+void	handler_sigint(int sig)
+{
+	if (sig == SIGINT)
+	{
+		ft_putchar_fd('\n', STDOUT_FILENO);
+		rl_on_new_line();
+		rl_replace_line("", 0);
+	}
+}
+
+void	handler(int sig)
+{
+	if (sig == SIGINT)
+	{
+		ft_putchar_fd('\n', STDOUT_FILENO);
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+		printf("señal");
+		g_exit_status = 130;
+	
+	}
+}
+
+void	ft_signals_new(void)
+{
+	struct sigaction	sa;
+
+	sa.sa_flags = SA_RESTART;
+	sigemptyset(&sa.sa_mask);
+	sa.sa_handler = &handler;
+	sigaddset(&sa.sa_mask, SIGINT);
+	sigaction(SIGINT, &sa, NULL);
+	signal(SIGQUIT, SIG_IGN);
+}
+
+/*
+void	get_exit_status(t_mix *data)
+{
+	int		i;
+	pid_t	j;
+	int		status;
+
+	i = 0;
+	status = 0;
+	while (i < data->pipes)
+	{
+		signal(SIGINT, &handler_sigint);
+		j = waitpid(data->childpid[i++], &status, 0);
+		if (j < 0)
+			continue ;
+		if (WIFEXITED(status))
+			g_exit_status = WEXITSTATUS(status);
+		else if (WIFSIGNALED(status))
+			g_exit_status = 128 + WTERMSIG(status);
+	}
+}
+*/
 
 
 
