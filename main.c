@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/07/23 21:24:57 by pablgarc         ###   ########.fr       */
+/*   Updated: 2024/07/24 18:53:03 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,12 @@ int	g_exit_status = 0;
 
 void	prompt(t_mix *data)
 {
+	int copy_stdin;
+
+	copy_stdin = dup(STDIN_FILENO);
 	while (1)
 	{
+		dup2(copy_stdin, 0);
 		ft_signals_new();
 		//ft_signals_start();
 		data->input = readline("\033[0;32mMinishell:\033[0m ");

@@ -6,7 +6,7 @@
 /*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 21:56:45 by pablo             #+#    #+#             */
-/*   Updated: 2024/07/24 17:04:09 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/07/24 17:19:13 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@ int	ft_pwd(t_mix *data)
 {
 	char	*pwd;
 
-	
 	pwd = ft_getenv("PWD", data);
 	if (!pwd)
 		pwd = getcwd(NULL, 0);
@@ -81,9 +80,28 @@ int	ft_pwd(t_mix *data)
 		return (0);
 	}
 	return (perror_int(1));
-	
 }
 
+void	empty_export(t_mix *data)
+{
+	int	n_var;
+	int	pos_eq;
+
+	if (!data || !data->m_env)
+		return ;
+	n_var = 0;
+	while(data->m_env[n_var] != NULL)
+	{
+		pos_eq = locate_char_position(data->m_env[n_var], '=') + 1;
+		write(1, "declare -x ", 11);
+		write(1, data->m_env[n_var], pos_eq);
+		write(1, "\"", 1);
+		write(1, data->m_env[n_var] + pos_eq, ft_strlen(data->m_env[n_var] + pos_eq));
+		write(1, "\"", 1);
+		write(1, "\n", 1);
+		n_var++;
+	}	
+}
 
 int	ft_export(t_mix *data, char **command)
 {
@@ -92,10 +110,7 @@ int	ft_export(t_mix *data, char **command)
 
 	i = 1;
 	if (!command[1])
-	{
-		printf("export: missing argument\n");
-		return (1);
-	}
+		empty_export(data);
 	while (command[i])
 	{
 		str = ft_split(command[i], '=');

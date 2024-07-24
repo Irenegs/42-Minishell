@@ -24,6 +24,8 @@ C-\ no hace nada
 C-d cierra el heredoc con un error (bash: warning: here-document at line 160 delimited by end-of-file (wanted 'DELIMITADOR')) pero sigue con las instrucciones $?=0.
 
 export sin argumentos o sin aaa=aaaa
+generar entorno por defecto
+idea: heredocs dentro de hijo para que la señal C-c haga un exit que solo salga del hijo
 void	free_argv(char **argv)  es igual que ft_out
 escribir errores => perror(NULL) y cambiar printf;
 proteger fallos de malloc y free de NULL

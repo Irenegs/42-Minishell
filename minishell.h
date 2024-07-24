@@ -6,7 +6,7 @@
 /*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 17:56:24 by irene             #+#    #+#             */
-/*   Updated: 2024/07/24 17:04:28 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/07/24 17:45:37 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void 	ft_signals_running(void);
 void 	ft_signals_new(void);
 void	handler_sigint(int sig);
 void	handler(int sig);
-
+void	ft_signals_hd(void);
 
 
 //struct.c
@@ -118,6 +118,7 @@ int	something_to_add(char *s, int pos);
 //extract_file.c
 int	extract_input(char *s, t_mix *data, int p);
 int extract_output(char *s, t_mix *data);
+int	locate_char_position(char *s, char c);
 
 //extract_pipe.c
 char    *extract_pipe(char *s, int pipe);

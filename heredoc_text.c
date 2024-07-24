@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_text.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 14:46:24 by irene             #+#    #+#             */
-/*   Updated: 2024/07/23 21:25:05 by pablgarc         ###   ########.fr       */
+/*   Updated: 2024/07/24 19:12:46 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static char	*get_rawtext(char *del)
 	char	*aux_1;
 	char	*aux_2;
 
-	//ft_signals_start();
+	ft_signals_hd();
 	aux_2 = readline("Heredoc>");
 	line = malloc(1 * sizeof(char));
 	if (!line)
@@ -37,13 +37,13 @@ static char	*get_rawtext(char *del)
 			return (write_error_null(1));
 		aux_2 = readline("Heredoc>");
 	}
-	if (aux_2 == NULL)
-	{
-		free(line);
-		return (NULL);
-	}
+	//if (aux_2 == NULL)
+	//{
+	//	free(line);
+	//	return (NULL);
+	//}
 	free(aux_2);
-	//ft_sig_def();
+	ft_sig_def();
 	return (line);
 }
 
@@ -80,6 +80,7 @@ static char	*get_heredoc(char *s, t_mix *data)
 	if (!delimiter)
 		return (write_error_null(1));
 	heredoc_text = get_rawtext(delimiter);
+	printf("Despues  de get_rawtext\n");
 	if (heredoc_text == NULL)
 	{
 		free(delimiter);

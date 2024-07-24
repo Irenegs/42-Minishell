@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   extract_file.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
+/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 16:36:46 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/07/16 20:07:54 by irene            ###   ########.fr       */
+/*   Updated: 2024/07/24 17:12:26 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static int	ft_open(char *filename, int mode)
 	return (fd);
 }
 
-static int	locate_char_position(char *s, char c)
+int	locate_char_position(char *s, char c)
 {
 	int	i;
 

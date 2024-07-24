@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 16:09:28 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/07/23 21:02:21 by pablgarc         ###   ########.fr       */
+/*   Updated: 2024/07/24 19:14:54 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,14 +98,14 @@ int	execute(t_mix *data)
 	{
 		if (data->pipes != 0)
 			data->pipesfd = malloc((data->pipes) * 2 * sizeof(int));
-		if (data->pipes != 0 && data->pipesfd)
+		if (data->pipes != 0 && data->pipesfd && g_exit_status != 130)
 		{
 			ret_value = execute_several_pipes(data);
 			free(data->pipesfd);
 		}
-		else if (data->pipes == 0)
+		else if (data->pipes == 0 && g_exit_status != 130)
 			ret_value = execute_zero_pipes(data);
-		else
+		else if (g_exit_status != 130)
 			ret_value = write_error_int(1, 1);
 	}
 	else
@@ -118,6 +118,7 @@ void	parse_and_execute(t_mix *data)
 {
 	if (!data || !data->input || ft_strlen(data->input) == 0)
 		return ;
+	g_exit_status = 0;
 	data->pipes = parser(data->input);
 	if (data->pipes == -1)
 	{
@@ -126,5 +127,5 @@ void	parse_and_execute(t_mix *data)
 		return ;
 	}
 	data->exit_status = execute(data);
-	printf("Echo $?:%d\n", data->exit_status);
+	//printf("Echo $?:%d\n", data->exit_status);
 }
