@@ -6,7 +6,7 @@
 /*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/07/24 18:53:03 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/07/24 19:43:35 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,18 @@ void	prompt(t_mix *data)
 	int copy_stdin;
 
 	copy_stdin = dup(STDIN_FILENO);
+	ft_signals_start();
 	while (1)
 	{
 		dup2(copy_stdin, 0);
-		ft_signals_new();
-		//ft_signals_start();
+		ft_signals_start();
 		data->input = readline("\033[0;32mMinishell:\033[0m ");
 		if (data->input == NULL) //esto seria la señal de CRTL +D
 		{
 			printf("\n");
 			break ;
 		}
-		//ft_signals_running();
+		ft_signals_running();
 		if (*data->input)
 			add_history(data->input);
 		if (*data->input != '\0')

@@ -6,7 +6,7 @@
 /*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 14:46:24 by irene             #+#    #+#             */
-/*   Updated: 2024/07/24 19:12:46 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/07/24 19:43:38 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static char	*get_rawtext(char *del)
 	//	return (NULL);
 	//}
 	free(aux_2);
-	ft_sig_def();
+	ft_signals_running();
 	return (line);
 }
 

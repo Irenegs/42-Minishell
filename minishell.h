@@ -6,7 +6,7 @@
 /*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 17:56:24 by irene             #+#    #+#             */
-/*   Updated: 2024/07/24 17:45:37 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/07/24 19:27:29 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,14 +49,10 @@ int	write_error_int(int error_code, int return_value);
 
 //signals.c
 void	ft_interrupt(int signal);
-void	ft_new_prompt(int signal);
-void 	ft_sig_def(void);
 void	ft_signals_start(void);
 void 	ft_signals_running(void);
-void 	ft_signals_new(void);
-void	handler_sigint(int sig);
-void	handler(int sig);
 void	ft_signals_hd(void);
+void ft_sig_def(void);
 
 
 //struct.c
