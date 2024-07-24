@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 21:56:45 by pablo             #+#    #+#             */
-/*   Updated: 2024/07/24 17:19:13 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/07/24 20:24:19 by pablgarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void	empty_export(t_mix *data)
 	if (!data || !data->m_env)
 		return ;
 	n_var = 0;
-	while(data->m_env[n_var] != NULL)
+	while (data->m_env[n_var] != NULL)
 	{
 		pos_eq = locate_char_position(data->m_env[n_var], '=') + 1;
 		write(1, "declare -x ", 11);
@@ -100,7 +100,7 @@ void	empty_export(t_mix *data)
 		write(1, "\"", 1);
 		write(1, "\n", 1);
 		n_var++;
-	}	
+	}
 }
 
 int	ft_export(t_mix *data, char **command)

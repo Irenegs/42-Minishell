@@ -12,30 +12,6 @@
 
 #include "minishell.h"
 
-// Maneja la señal de interrupción (SIGINT) para mostrar un nuevo prompt
-static void	ft_sigint_hd(int signal)
-{
-
-	ft_putchar_fd('\n', STDOUT_FILENO); // Escribe una nueva línea en la salida estándar
-	//rl_replace_line("", 0); // Reemplaza la línea actual en la entrada
-	//rl_on_new_line(); // Mueve el cursor a una nueva línea
-	//rl_redisplay(); // Redibuja el prompt
-	if (signal == SIGINT)
-	{ 	
-		printf("sigint");
-		g_exit_status = 130;
-	}
-	close(STDIN_FILENO);
-}
-	
-void	ft_signals_hd(void)
-{
-	signal(SIGINT, ft_sigint_hd); // Asigna ft_sigint_hd a SIGINT
-	signal(SIGQUIT, SIG_IGN); // Ignora SIGQUIT
-
-}
-
-//iinterrupt the command and display a new prompt on a new line
 void	ft_interrupt(int signal)
 {
 	if (signal == SIGQUIT)
@@ -46,14 +22,13 @@ void	ft_interrupt(int signal)
 	rl_replace_line("", 0);
 }
 
-// Configura las señales cuando un comando está en ejecución
 void	ft_signals_running(void)
 {
 	signal(SIGINT, ft_interrupt);
 	signal(SIGQUIT, ft_interrupt);
 }
 
-void ft_sig_def(void)
+void	ft_sig_def(void)
 {
 	signal(SIGQUIT, SIG_DFL);
 	signal(SIGINT, SIG_DFL);
@@ -68,7 +43,6 @@ static void	start_handler(int sig)
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
-		//printf("señal");
 		g_exit_status = 130;
 	}
 }

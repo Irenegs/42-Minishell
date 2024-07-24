@@ -9,7 +9,7 @@ SRCS        := command.c command_utils.c variable_utils.c\
 				extract_command.c extract_element.c  extract_file.c extract_pipe.c extract_utils.c \
 				parser.c super_split.c split_utils.c \
 				built_in.c built_in2.c built_in3.c built_in4.c \
-				struct.c signals.c \
+				struct.c signals.c signals_hd.c\
 				heredocs.c heredocs_utils.c heredoc_text.c heredoc_expand.c gnl.c\
 				main.c error.c\
 			

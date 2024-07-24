@@ -21,7 +21,6 @@ void	*ft_free_env(char **env)
 		return (NULL);
 	while (env[++i])
 		free(env[i]);
-	//*env = NULL;
 	free(env);
 	return (NULL);
 }
@@ -58,10 +57,3 @@ void	ft_init_mix(t_mix *data, char **envp)
 	data->pipesfd = NULL;
 	data->m_env = ft_copy_env(envp);
 }
-
-//pasamos los datos a la struct
-/*
-void	ft_fill_struct(t_mix *data, char **envp)
-{
-	data->m_env = ft_copy_env(envp);
-}*/

@@ -3,13 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/07/24 19:43:35 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/07/24 20:27:14 by pablgarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "minishell.h"
 
@@ -17,7 +16,7 @@ int	g_exit_status = 0;
 
 void	prompt(t_mix *data)
 {
-	int copy_stdin;
+	int	copy_stdin;
 
 	copy_stdin = dup(STDIN_FILENO);
 	ft_signals_start();
@@ -26,7 +25,7 @@ void	prompt(t_mix *data)
 		dup2(copy_stdin, 0);
 		ft_signals_start();
 		data->input = readline("\033[0;32mMinishell:\033[0m ");
-		if (data->input == NULL) //esto seria la señal de CRTL +D
+		if (data->input == NULL)
 		{
 			printf("\n");
 			break ;
@@ -51,34 +50,3 @@ int	main(int argc, char **argv, char **envp)
 	ft_free_env(data.m_env);
 	return (0);
 }
-
-/*
-void	prompt(void)
-{
-	char *s;
-
-	s = readline("Minishell:");
-	while (s)
-	{
-		//printf("String:\n%s\n", s);
-		add_history(s);
-		parse_and_execute(s);
-		free(s);
-		s = readline("Minishell:");
-	}
-	//rl_clear_history();
-}
-
-void signal_handler(int signum)
-{
-	if (signum == SIGQUIT)
-		printf("Minishell:");//Esto no funciona bien
-	else if (signum == SIGINT)
-		printf("^CMinishell:");//No vuelve a la terminal
-}
-
-void show_leaks(void)
-{
-	system("leaks minishell");
-}
-*/
