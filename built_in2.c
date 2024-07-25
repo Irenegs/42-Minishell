@@ -6,7 +6,7 @@
 /*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 21:56:45 by pablo             #+#    #+#             */
-/*   Updated: 2024/07/06 13:25:35 by pablgarc         ###   ########.fr       */
+/*   Updated: 2024/07/24 20:24:19 by pablgarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,53 +37,71 @@ int	ft_echo(char **command)
 	return (0);
 }
 
-int	ft_cd(char **command)
+int	ft_cd(char **command, t_mix *data)
 {
 	char	*home_dir;
 
-	printf("command:%s\n", command[1]);
-
-	if (!command[1] || command[1][0] == '\0')
+	if (!command[1])
 	{
-		// Si no hay argumento o el argumento está vacío, cambiar al directorio home
-		home_dir = getenv("HOME");
+		home_dir = ft_getenv("HOME", data);
 		if (home_dir == NULL)
 		{
-			printf("cd: HOME not set\n");
+			write(2, "cd: HOME not set\n", 17);
 			return (1);
 		}
-		if (chdir(home_dir) != 0)
+		else
 		{
-			perror("cd");
+			free(home_dir);
+			return (perror_int(1));
 		}
-		return (1);
+		free(home_dir);
 	}
-	if (chdir(command[1]) != 0)
-	{
-		perror("cd");
-	}
+	else if (chdir(command[1]) != 0)
+		return (perror_int(1));
+	home_dir = getcwd(NULL, 0);
+	if (!home_dir)
+		return (perror_int(1));
+	add_or_update_env(data->m_env, "PWD", home_dir);
+	free(home_dir);
 	return (0);
 }
 
-int	ft_pwd(void)
+int	ft_pwd(t_mix *data)
 {
 	char	*pwd;
 
-	printf("builtin\n");
-	pwd = getcwd(NULL, 0);
+	pwd = ft_getenv("PWD", data);
+	if (!pwd)
+		pwd = getcwd(NULL, 0);
 	if (pwd)
 	{
 		printf("%s\n", pwd);
 		free(pwd);
+		return (0);
 	}
-	else
-	{
-		perror("pwd");
-		return (1);
-	}
-	return (0);
+	return (perror_int(1));
 }
 
+void	empty_export(t_mix *data)
+{
+	int	n_var;
+	int	pos_eq;
+
+	if (!data || !data->m_env)
+		return ;
+	n_var = 0;
+	while (data->m_env[n_var] != NULL)
+	{
+		pos_eq = locate_char_position(data->m_env[n_var], '=') + 1;
+		write(1, "declare -x ", 11);
+		write(1, data->m_env[n_var], pos_eq);
+		write(1, "\"", 1);
+		write(1, data->m_env[n_var] + pos_eq, ft_strlen(data->m_env[n_var] + pos_eq));
+		write(1, "\"", 1);
+		write(1, "\n", 1);
+		n_var++;
+	}
+}
 
 int	ft_export(t_mix *data, char **command)
 {
@@ -92,10 +110,7 @@ int	ft_export(t_mix *data, char **command)
 
 	i = 1;
 	if (!command[1])
-	{
-		printf("export: missing argument\n");
-		return (1);
-	}
+		empty_export(data);
 	while (command[i])
 	{
 		str = ft_split(command[i], '=');
@@ -121,13 +136,8 @@ int	ft_unset(t_mix *data, char **command)
 	int	i;
 
 	i = 1;
-	printf("builtin\n");
 	if (!command[1])
-	{
-		printf("unset: missing argument\n");
-		return (1);
-	}
-
+		return (0);
 	while (command[i])
 	{
 		data->m_env = remove_env(data->m_env, command[i]);

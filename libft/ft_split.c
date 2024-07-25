@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irgonzal <irgonzal@student.42madrid.com>   +#+  +:+       +#+        */
+/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 10:53:17 by irgonzal          #+#    #+#             */
-/*   Updated: 2022/09/30 08:36:59 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/07/23 19:31:05 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static size_t	ft_len_next(char const *s, size_t pos, char c)
 	return (i);
 }
 
-static	char	**ft_out(char **arr, int i)
+static	char	**ft_out_limit(char **arr, int i)
 {
 	int	j;
 
@@ -73,7 +73,7 @@ char	**ft_split(char const *s, char c)
 		len = ft_len_next(s, pos, c);
 		arr[i] = malloc((len + 1) * sizeof(char));
 		if (!arr[i])
-			return (ft_out(arr, i));
+			return (ft_out_limit(arr, i));
 		arr[i] = ft_memmove(arr[i], s + pos, len);
 		arr[i][len] = '\0';
 		pos += len;

@@ -6,29 +6,25 @@
 /*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 17:52:42 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/06/29 17:18:36 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/07/23 17:05:58 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*do_expansion(char *original, char *input_str, int pos, int len)
+static char	*normal_expansion(char *orig, char *input_str, int pos, int len)
 {
 	char	*result;
 	char	*chunk;
 
-	if (len == 0)
-		chunk = obtain_variable(input_str, pos + 1);
-	else
-	{
-		chunk = ft_substr(input_str, pos, len);
-		if (!chunk)
-			return (NULL);
-	}
-	result = ft_strjoin(original, chunk);
-	free(original);
-	if (len != 0)
-		free(chunk);
+	chunk = ft_substr(input_str, pos, len);
+	if (!chunk)
+		return (write_error_null(1));
+	result = ft_strjoin(orig, chunk);
+	free(orig);
+	free(chunk);
+	if (!result)
+		return (write_error_null(1));
 	return (result);
 }
 
@@ -44,29 +40,29 @@ static int	len_until_dollar(char *str, int pos)
 	return (len);
 }
 
-char	*expand_string(char *input_str)
+char	*expand_string(char *input_str, t_mix *data)
 {
 	char	*expanded;
 	int		pos;
-	int		len;
 
 	if (!input_str)
 		return (NULL);
 	expanded = malloc(1 * sizeof(char));
+	if (!expanded)
+		return (write_error_null(1));
 	expanded[0] = '\0';
 	pos = 0;
 	while (input_str[pos] != '\0' && expanded)
 	{
 		if (input_str[pos] == '$')
 		{
-			expanded = do_expansion(expanded, input_str, pos, 0);
+			expanded = expand_variable(expanded, input_str, pos, data);
 			pos += len_literal_word(input_str, pos + 1) + 1;
 		}
 		else
 		{
-			len = len_until_dollar(input_str, pos);
-			expanded = do_expansion(expanded, input_str, pos, len);
-			pos = pos + len;
+			expanded = normal_expansion(expanded, input_str, pos, len_until_dollar(input_str, pos));
+			pos += len_until_dollar(input_str, pos);
 		}
 	}
 	return (expanded);

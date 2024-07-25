@@ -1,106 +1,59 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   struct.c                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/30 21:50:39 by pablo             #+#    #+#             */
-/*   Updated: 2024/07/01 18:45:41 by irene            ###   ########.fr       */
-/*                                                                            */
+/*																			*/
+/*														:::	  ::::::::   */
+/*   struct.c										   :+:	  :+:	:+:   */
+/*													+:+ +:+		 +:+	 */
+/*   By: irene <irgonzal@student.42madrid.com>	  +#+  +:+	   +#+		*/
+/*												+#+#+#+#+#+   +#+		   */
+/*   Created: 2024/05/30 21:50:39 by pablo			 #+#	#+#			 */
+/*   Updated: 2024/07/14 14:03:25 by irene			###   ########.fr	   */
+/*																			*/
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_free_env(char **env)
+void	*ft_free_env(char **env)
 {
 	int	i;
 
 	i = -1;
 	if (!env)
-		return ;
+		return (NULL);
 	while (env[++i])
-	{
 		free(env[i]);
-	}
-	*env = NULL;
 	free(env);
+	return (NULL);
 }
 
-//inicializar la struct
-void	ft_init_mix(t_mix *data)
-{
-	data->exit_status = 0;
-    data->m_argc = 0;
-	data->m_env = NULL;
-	data->m_argv = NULL;
-    data->heredocs = NULL;
-    data->pipesfd = NULL;
-}
-
-//hace una copia del entorno
-char	**ft_copy_env(char **envp)
+static char	**ft_copy_env(char **envp)
 {
 	char	**env_copy;
 	int		i;
-	int		j;
+	int		total_variables;
 
-	j = 0;
-	i = 0;
-	while (envp[j])
-		j++;
-	env_copy = (char **)malloc((j + 1) * sizeof(char *));
+	total_variables = 0;
+	while (envp[total_variables])
+		total_variables++;
+	env_copy = (char **)malloc((total_variables + 1) * sizeof(char *));
 	if (!env_copy)
-		return (ft_free_env(env_copy), NULL);
-	 while (i < j)
-    {
-        env_copy[i] = strdup(envp[i]);
-        if (!env_copy[i])
-        {
-            while (i--)
-                free(env_copy[i]);
-            free(env_copy);
-            return NULL;
-        }
-        i++;
-    }
-    env_copy[j] = NULL;
-    return env_copy;
+		return (NULL);
+	i = 0;
+	while (i < total_variables)
+	{
+		env_copy[i] = ft_strdup(envp[i]);
+		if (!env_copy[i])
+			return (ft_free_env(env_copy));
+		i++;
+	}
+	env_copy[total_variables] = NULL;
+	return (env_copy);
 }
 
-//hace copia de argumentos
-char  **ft_copy_argv(int argc, char **argv)
+void	ft_init_mix(t_mix *data, char **envp)
 {
-    char **new_argv;
-    int i;
-
-    new_argv = (char **)malloc((argc + 1) * sizeof(char *));
-    if (!new_argv)
-    {
-        perror("Error en la asignación de memoria");
-        return (NULL);
-    }
-    i = 0;
-    while ( i < argc)
-    {
-        new_argv[i] = strdup(argv[i]);
-        if (!new_argv[i])
-        {
-            while (i--)
-                free(new_argv[i]);
-            free(new_argv);
-            return NULL;
-        }
-        i++;
-    }
-    new_argv[argc] = NULL;
-    return (new_argv);
-}
-
-//pasamos los datos a la struct
-void	ft_fill_struct(t_mix *data, int argc, char **argv, char **envp)
-{
+	data->exit_status = 0;
+	data->m_env = NULL;
+	data->heredocs = NULL;
+	data->pipesfd = NULL;
 	data->m_env = ft_copy_env(envp);
-    data->m_argv = ft_copy_argv(argc, argv);
-    data->m_argc = argc;
 }

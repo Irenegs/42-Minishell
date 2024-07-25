@@ -3,28 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   extract_command.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:36:03 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/06/23 16:31:37 by pablgarc         ###   ########.fr       */
+/*   Updated: 2024/07/16 20:13:00 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static int	len_cmd(char *s, int pos)
-{
-	int	len;
-
-	len = 0;
-	while (s[pos + len] != '\0' && s[pos + len] != '<'
-		&& s[pos + len] != '>' && s[pos + len] != '|')
-		len++;
-	while (is_space(s[pos + len]) == 1 || s[pos + len] == '|'
-		|| s[pos + len] == '<' || s[pos + len] == '>')
-		len--;
-	return (++len);
-}
 
 static int	skip_word(char *s, int pos)
 {
@@ -55,25 +41,51 @@ static int	locate_cmd_position(char *s)
 	return (-1);
 }
 
-static char	**split_command(char *s)
+static int	count_arguments(char *cmd_str)
+{
+	int	i;
+	int	args;
+
+	if (!cmd_str)
+		return (0);
+	args = 1;
+	i = 0;
+	while (cmd_str[i] != '\0')
+	{
+		if (cmd_str[i] == '\'' || cmd_str[i] == '"')
+			i += len_quotes(cmd_str, i) + 2;
+		else
+			i += len_literal_word(cmd_str, i);
+		while (is_space(cmd_str[i]) == 1 && cmd_str[i] != '\0')
+		{
+			args++;
+			i++;
+		}
+	}
+	return (args);
+}
+
+static char	**split_command(char *s, t_mix *data)
 {
 	char	**arr;
 	int		i;
 	int		pos;
 
-	arr = malloc((ft_wc(s, " ") + 1) * sizeof(char *));
+	arr = malloc((count_arguments(s) + 1) * sizeof(char *));
 	if (!arr)
-		return (NULL);
+		return (write_error_null(1));
 	i = -1;
 	pos = 0;
-	while (++i < ft_wc(s, " "))
+	while (++i < count_arguments(s))
 	{
 		while (new_word(s, " ", pos, 0) == 0)
 			pos++;
-		arr[i] = extract_element(s, pos);
+		arr[i] = extract_element(s, &pos, data);
 		if (!arr[i])
-			return (ft_out(arr));
-		pos += len_literal_word(s, pos);
+		{
+			ft_out(arr);
+			return (write_error_null(1));
+		}
 		while (s[pos] != '\0' && is_space(s[pos]) == 0)
 			pos++;
 	}
@@ -81,7 +93,7 @@ static char	**split_command(char *s)
 	return (arr);
 }
 
-char	**extract_command(char *s)
+char	**extract_command(char *s, t_mix *data)
 {
 	int		pos;
 	int		len;
@@ -94,13 +106,8 @@ char	**extract_command(char *s)
 	len = len_cmd(s, pos);
 	cmd_string = ft_substr(s, pos, len);
 	if (!cmd_string)
-		return (NULL);
-	command = split_command(cmd_string);
+		return (write_error_null(1));
+	command = split_command(cmd_string, data);
 	free(cmd_string);
 	return (command);
 }
-
-/*
-extract command: 
-devolver {NULL, NULL, NULL} para diferenciar de fallo en el malloc ?
-*/

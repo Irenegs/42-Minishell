@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in4.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 22:08:38 by pablo             #+#    #+#             */
-/*   Updated: 2024/07/03 22:48:07 by pablgarc         ###   ########.fr       */
+/*   Updated: 2024/07/25 18:24:45 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,4 +87,18 @@ char	**update_entry(char **env, int i, const char *key, const char *value)
 	if (!env[i])
 		return (NULL);
 	return (env);
+}
+
+int is_special_builtin(char *cmd)
+{
+	if (ft_strcmp(cmd, "cd") == 0)
+		return (1);
+	else if (ft_strcmp(cmd, "export") == 0)
+		return (1);
+	else if (ft_strcmp(cmd, "unset") == 0)
+		return (1);
+	else if (ft_strcmp(cmd, "exit") == 0)
+		return (1);
+	else
+		return (0);
 }

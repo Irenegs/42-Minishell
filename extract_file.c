@@ -6,7 +6,7 @@
 /*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 16:36:46 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/06/29 18:56:00 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/07/24 17:12:26 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,11 @@ static int	ft_open(char *filename, int mode)
 	else
 		fd = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (fd == -1)
-		return (-2);
+		return (perror_int(-2));
 	return (fd);
 }
 
-static int	locate_char_position(char *s, char c)
+int	locate_char_position(char *s, char c)
 {
 	int	i;
 
@@ -55,7 +55,7 @@ static int	get_heredoc_fd(char	**heredocs, int p)
 	return (fd);
 }
 
-int	extract_input(char *s, char	**heredocs, int p)
+int	extract_input(char *s, t_mix *data, int p)
 {
 	int		fd;
 	int		pos;
@@ -68,22 +68,22 @@ int	extract_input(char *s, char	**heredocs, int p)
 	if (pos == -1)
 		return (-1);
 	if (s[pos + 1] == '<')
-		fd = get_heredoc_fd(heredocs, p);
+		fd = get_heredoc_fd(data->heredocs, p);
 	else
 	{
-		filename = extract_element(s, pos);
+		filename = extract_element(s, &pos, data);
 		if (!filename)
-			return (-2);
+			return (write_error_int(1, -2));
 		fd = ft_open(filename, O_RDONLY);
 		free(filename);
 	}
-	aux_fd = extract_input(s + pos + 2, heredocs, p);
-	if (aux_fd != -1)
+	aux_fd = extract_input(s + pos + 2, data, p);
+	if (aux_fd != -1 && fd != -2)
 		fd = aux_fd;
 	return (fd);
 }
 
-int	extract_output(char *s)
+int	extract_output(char *s, t_mix *data)
 {
 	int		fd;
 	int		pos;
@@ -97,16 +97,16 @@ int	extract_output(char *s)
 		return (-1);
 	if (s[pos + 1] == '>')
 		pos++;
-	filename = extract_element(s, pos);
+	filename = extract_element(s, &pos, data);
 	if (!filename)
-		return (-2);
+		return (write_error_int(1, -2));
 	if (pos == locate_char_position(s, '>'))
 		fd = ft_open(filename, 1);
 	else
 		fd = ft_open(filename, 2);
 	free(filename);
-	aux_fd = extract_output(s + pos + 1);
-	if (aux_fd != -1)
+	aux_fd = extract_output(s + pos + 1, data);
+	if (aux_fd != -1 && fd != -2)
 		fd = aux_fd;
 	return (fd);
 }

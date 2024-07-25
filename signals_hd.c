@@ -1,35 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   signals_hd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/24 20:28:17 by pablgarc          #+#    #+#             */
-/*   Updated: 2024/07/24 20:28:21 by pablgarc         ###   ########.fr       */
+/*   Created: 2024/05/22 18:31:25 by pablo             #+#    #+#             */
+/*   Updated: 2024/07/24 20:14:18 by pablgarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	perror_int(int return_value)
+static void	ft_sigint_hd(int signal)
 {
-	perror(NULL);
-	return (return_value);
+	ft_putchar_fd('\n', STDOUT_FILENO);
+	if (signal == SIGINT)
+		g_exit_status = 130;
+	close(STDIN_FILENO);
 }
 
-int	write_error_int(int error_code, int return_value)
+void	ft_signals_hd(void)
 {
-	if (error_code == 1)
-		write(2, "Malloc error\n", 13);
-	if (error_code == 2)
-		write(2, "Write heredoc error\n", 20);
-	return (return_value);
-}
+	signal(SIGINT, ft_sigint_hd);
+	signal(SIGQUIT, SIG_IGN);
 
-void	*write_error_null(int error_code)
-{
-	if (error_code == 1)
-		write(2, "Malloc error\n", 13);
-	return (NULL);
 }

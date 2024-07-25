@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
+/*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 17:36:54 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/07/01 19:32:43 by irene            ###   ########.fr       */
+/*   Updated: 2024/07/18 17:36:39 by pablgarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,12 @@ static char	*get_path(char *s, int i, char **path)
 	if (s && path && path[i])
 	{
 		folder = ft_strjoin(path[i], "/");
-		if (folder)
-		{
-			route = ft_strjoin(folder, s);
-			free(folder);
-		}
+		if (!folder)
+			return (write_error_null(1));
+		route = ft_strjoin(folder, s);
+		free(folder);
+		if (!route)
+			return (write_error_null(1));
 	}
 	return (route);
 }
@@ -58,13 +59,11 @@ static char	*command_exists(char *s, char **env)
 	route = NULL;
 	if (s)
 	{
-		path = get_path_variable(env);
-		if (!path || is_local(s) == 0)
-		{
-			if (path)
-				ft_out(path);
+		if (is_local(s) == 0)
 			return (s);
-		}
+		path = get_path_variable(env);
+		if (!path)
+			return (s);
 		route = get_route(s, path);
 		ft_out(path);
 	}
@@ -77,16 +76,14 @@ int	run_command(char **command, t_mix *data)
 
 	if (!command)
 		return (-1);
-	if (is_builtin(command[0]))
-	{
-		execute_builtin(data, command);
-		//devuelve codigo de salida
-		exit(0);
-	}
+	if (is_builtin(command[0]) == 1)
+		return (execute_builtin(data, command));
 	cmd = command_exists(command[0], data->m_env);
 	if (!cmd)
-		exit (127);
+		cmd = command[0];
 	execve(cmd, command, data->m_env);
-	free(cmd);
-	return (-1);
+	perror(NULL);
+	if (ft_strncmp(cmd, command[0], ft_strlen(command[0])) != 0)
+		free(cmd);
+	return (127);
 }
