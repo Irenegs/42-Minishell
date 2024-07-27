@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   extract_element.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
+/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:42:48 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/07/13 19:55:50 by irene            ###   ########.fr       */
+/*   Updated: 2024/07/27 17:39:08 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ static int	select_and_expand(char **result, char *s, int *pos, t_mix *data)
 		chunk = expand_double_quotes(s, *pos, data);
 	else if (s[*pos] == '$')
 		chunk = obtain_variable(s, *pos + 1, data);
+	else if (s[*pos] == '\'')
+		chunk = ft_substr(s, *pos + 1, len);
 	else
 		chunk = ft_substr(s, *pos, len);
 	*result = add_chunk(*result, chunk);

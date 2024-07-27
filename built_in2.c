@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 21:56:45 by pablo             #+#    #+#             */
-/*   Updated: 2024/07/25 19:04:21 by pablo            ###   ########.fr       */
+/*   Updated: 2024/07/27 18:57:21 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,11 @@ int	ft_cd(char **command, t_mix *data)
 			write(2, "cd: HOME not set\n", 17);
 			return (1);
 		}
-		else
+		if (chdir(home_dir) != 0)
 		{
 			free(home_dir);
 			return (perror_int(1));
 		}
-		free(home_dir);
 	}
 	else if (chdir(command[1]) != 0)
 		return (perror_int(1));
@@ -103,29 +102,54 @@ void	empty_export(t_mix *data)
 	}
 }
 
+int	valid_varname(char *str)
+{
+	int	i;
+
+	if (!str)
+		return (-1);
+	i = 0;
+	while (str[i] != '\0')
+	{
+		if (i == 0 && ft_isdigit(str[i]) != 0)
+			return (0);
+		if (ft_isalnum(str[i]) == 0 && str[i] != '_')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
 int	ft_export(t_mix *data, char **command)
 {
-	char	**str;
+	char	*var_name;
 	int		i;
+	int		len;
 
-	i = 1;
-	if (!command[1])
+	if (!command || !command[1])
 		empty_export(data);
+	i = 1;
 	while (command[i])
 	{
-		str = ft_split(command[i], '=');
-		if (str[0] && str[1])
+		len = locate_char_position(command[i], '=');
+		var_name = ft_substr(command[i], 0, len);
+		if (!var_name)
+			return (write_error_int(1, 1));
+		if (valid_varname(var_name) == 1)
 		{
-			data->m_env = add_or_update_env(data->m_env, str[0], str[1]);
-			if (!data->m_env)
+			if (len != -1)
 			{
-				perror("export");
-				return (1);
-			}
+				data->m_env = add_or_update_env(data->m_env, var_name, command[i] + len + 1);
+				if (!data->m_env)
+				{
+					free(var_name);
+					return (perror_int(1));//cambiar hacer que add_or_update_env escriba el error
+				}
+			}	
 		}
 		else
-			printf("export: invalid argument '%s'\n", command[i]);
-		free_argv(str);
+			write(2, "Not a valid identifier\n", 23);
+		free(var_name);
 		i++;
 	}
 	return (0);

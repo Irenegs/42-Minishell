@@ -3,30 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   built_in4.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 22:08:38 by pablo             #+#    #+#             */
-/*   Updated: 2024/07/25 18:24:45 by pablo            ###   ########.fr       */
+/*   Updated: 2024/07/27 18:14:59 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-
-void	free_argv(char **argv)
-{
-	int	i;
-
-	i = 0;
-	if (!argv)
-		return ;
-	while (argv[i])
-	{
-		free(argv[i]);
-		i++;
-	}
-	free(argv);
-}
 
 char	*create_env_entry(const char *key, const char *value)
 {
@@ -36,11 +20,13 @@ char	*create_env_entry(const char *key, const char *value)
 	size_t	k;
 	char	*entry;
 
+	if (!key)
+		return (NULL);
 	key_len = ft_strlen(key);
 	entry_len = key_len + ft_strlen(value) + 2;
 	entry = (char *)malloc(entry_len);
 	if (!entry)
-		return (NULL);
+		return (write_error_null(1));
 	j = 0;
 	while (j < key_len)
 	{
@@ -62,8 +48,7 @@ char	**new_entry(char **env, const char *key, const char *value, int size)
 
 	new_env = (char **)malloc((size + 2) * sizeof(char *));
 	if (!new_env)
-		return (NULL);
-
+		return (write_error_null(1));
 	i = 0;
 	while (env[i])
 	{
@@ -82,10 +67,14 @@ char	**new_entry(char **env, const char *key, const char *value, int size)
 
 char	**update_entry(char **env, int i, const char *key, const char *value)
 {
-	free(env[i]);
-	env[i] = create_env_entry(key, value);
-	if (!env[i])
-		return (NULL);
+	char	*new_entry;
+
+	new_entry = create_env_entry(key, value);
+	if (new_entry)
+	{
+		free(env[i]);
+		env[i] = new_entry;
+	}
 	return (env);
 }
 

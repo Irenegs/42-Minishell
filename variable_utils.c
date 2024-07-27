@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   variable_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
+/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 20:32:38 by irene             #+#    #+#             */
-/*   Updated: 2024/07/16 22:21:51 by irene            ###   ########.fr       */
+/*   Updated: 2024/07/27 18:00:22 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	select_variable(char *var_name, char **environ)
 		var = ft_super_split(environ[i], "=:");
 		if (!var)
 			return (write_error_int(1, -1));
-		if (ft_strncmp(var[0], var_name, ft_strlen(var_name)) == 0)
+		if (ft_strncmp(var[0], var_name, ft_strlen(var_name) + 1) == 0)
 		{
 			ft_out(var);
 			return (i);

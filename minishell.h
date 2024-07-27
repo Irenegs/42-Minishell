@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 17:56:24 by irene             #+#    #+#             */
-/*   Updated: 2024/07/25 19:10:33 by pablo            ###   ########.fr       */
+/*   Updated: 2024/07/27 18:15:05 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,6 @@ int		ft_isnum(char *str);
 char	*create_env_entry(const char *key, const char *value);
 char	**new_entry(char **env, const char *key, const char *value, int size);
 char	**update_entry(char **env, int i, const char *key, const char *value);
-void	free_argv(char **argv);
 int		is_special_builtin(char *cmd);
 
 //command.c
