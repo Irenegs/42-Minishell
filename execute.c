@@ -6,7 +6,7 @@
 /*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 16:09:28 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/07/24 19:14:54 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/07/27 19:13:55 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ void	parse_and_execute(t_mix *data)
 	data->pipes = parser(data->input);
 	if (data->pipes == -1)
 	{
-		printf("Parse error\n");
+		printf("Parse error\n");//cambiar por write en 2
 		data->exit_status = 2;
 		return ;
 	}

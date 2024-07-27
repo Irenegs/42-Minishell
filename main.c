@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/07/24 20:27:14 by pablgarc         ###   ########.fr       */
+/*   Updated: 2024/07/27 19:35:06 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,6 @@ int	main(int argc, char **argv, char **envp)
 		return (1);
 	ft_init_mix(&data, envp);
 	prompt(&data);
-	ft_free_env(data.m_env);
+	ft_out(data.m_env);
 	return (0);
 }

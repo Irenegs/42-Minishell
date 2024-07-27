@@ -5,7 +5,8 @@ Valgrind leaks:
 valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose --log-file=valgrind-out.txt ./minishell
 valgrind --track-fds=yes --trace-children=yes; --child-silent-after-fork=yes
 
-- generar entorno por defecto
+- parser permitir cosas raras entrecomilladas
+- generar entorno por defecto => leer https://unix.stackexchange.com/questions/280453/understand-the-meaning-of para la gestión inicial de $_ pasamos de todo y hardcodeamos
 escribir errores => perror(NULL) y cambiar printf;
 proteger fallos de malloc y free de NULL
 

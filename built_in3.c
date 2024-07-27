@@ -6,7 +6,7 @@
 /*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 22:04:50 by pablo             #+#    #+#             */
-/*   Updated: 2024/07/23 19:01:45 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/07/27 19:10:52 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	ft_exit(char **command, t_mix *data)
 	close_pipes(data->pipes, data->pipesfd);
 	clean_and_free_heredocs(data->heredocs, data->pipes);
 	free(data->input);
-	ft_free_env(data->m_env);
+	ft_out(data->m_env);
 	exit(status);
 }
 

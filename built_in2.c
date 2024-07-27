@@ -6,7 +6,7 @@
 /*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 21:56:45 by pablo             #+#    #+#             */
-/*   Updated: 2024/07/27 18:57:21 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/07/27 19:19:24 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,7 @@ int	ft_export(t_mix *data, char **command)
 				if (!data->m_env)
 				{
 					free(var_name);
-					return (perror_int(1));//cambiar hacer que add_or_update_env escriba el error
+					return (1);
 				}
 			}	
 		}
