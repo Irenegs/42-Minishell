@@ -6,7 +6,7 @@
 /*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 21:56:45 by pablo             #+#    #+#             */
-/*   Updated: 2024/07/27 20:11:42 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/07/27 20:20:35 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,11 @@ int	ft_cd(char **command, t_mix *data)
 {
 	char	*home_dir;
 
+	if (command[2])
+	{
+		printf("cd: too many arguments\n");
+		return (1);
+	}
 	if (!command[1])
 	{
 		home_dir = ft_getenv("HOME", data);

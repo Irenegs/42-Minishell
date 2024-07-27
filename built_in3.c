@@ -6,7 +6,7 @@
 /*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 22:04:50 by pablo             #+#    #+#             */
-/*   Updated: 2024/07/27 19:10:52 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/07/27 20:20:45 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,12 @@ int	ft_exit(char **command, t_mix *data)
 		else
 			status = ft_atoi(command[1]);
 	}
+	if (command[2])
+	{
+		printf("exit: too many arguments\n");
+		return (1);
+	}
+
 	close_pipes(data->pipes, data->pipesfd);
 	clean_and_free_heredocs(data->heredocs, data->pipes);
 	free(data->input);

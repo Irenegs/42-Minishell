@@ -10,6 +10,14 @@ valgrind --track-fds=yes --trace-children=yes; --child-silent-after-fork=yes
 - escribir errores => perror(NULL) y cambiar printf;
 - proteger fallos de malloc y free de NULL
 
+- parseo de cadenas como estas, con diferentes comillas:
+"exit_code ->$? user ->$USER home -> $HOME"
+'exit_code ->$? user ->$USER home -> $HOME'
+
+- mirar variable $?: 
+    echo $?HOLA  en bash imprime 0HOLA  y la nuestra solo 0
+    echo $ bash imprime $ y la nuestra nada
+
 
 ## Signals:
 Ctrl - \ debe no hacer nada
