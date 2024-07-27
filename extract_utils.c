@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   extract_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
+/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:40:20 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/07/13 19:56:02 by irene            ###   ########.fr       */
+/*   Updated: 2024/07/27 19:57:27 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,23 @@ size_t	len_quotes(char *s, int pos)
 int	len_cmd(char *s, int pos)
 {
 	int	len;
+	int	quotes;
 
 	len = 0;
-	while (s[pos + len] != '\0' && s[pos + len] != '<'
-		&& s[pos + len] != '>' && s[pos + len] != '|')
+	quotes = 0;
+	while (s[pos + len] != '\0')
+	{ 
+		if (quotes == 0)
+		{
+			if (s[pos + len] == '<' || s[pos + len] == '>' || s[pos + len] == '|')
+				break;
+		}
+		if (s[pos + len] == quotes && quotes != 0)
+			quotes = 0;
+		else if (quotes == 0 && (s[pos + len] == '\'' || s[pos + len] == '"'))
+			quotes = s[pos + len];
 		len++;
+	}
 	while (is_space(s[pos + len]) == 1 || s[pos + len] == '|'
 		|| s[pos + len] == '<' || s[pos + len] == '>')
 		len--;

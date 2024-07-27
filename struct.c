@@ -42,10 +42,10 @@ static char	**ft_copy_env(char **envp)
 	int		total_variables;
 
 	total_variables = 0;
-	if (total_variables == 0)
-		return (default_env());
 	while (envp[total_variables])
 		total_variables++;
+	if (total_variables == 0)
+		return (default_env());
 	env_copy = (char **)malloc((total_variables + 1) * sizeof(char *));
 	if (!env_copy)
 		return (write_error_null(1));

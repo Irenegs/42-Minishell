@@ -6,7 +6,7 @@
 /*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 16:36:46 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/07/24 17:12:26 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/07/27 20:08:29 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,27 @@ static int	ft_open(char *filename, int mode)
 		return (perror_int(-2));
 	return (fd);
 }
+
+int	locate_char_position_quotes(char *s, char c)
+{
+	int	i;
+	int	quotes;
+
+	i = 0;
+	quotes = 0;
+	while (s && s[i] != '\0')
+	{
+		if (s[i] == c && quotes == 0)
+			return (i);
+		if (s[i] == quotes && quotes != 0)
+			quotes = 0;
+		else if (quotes == 0 && (s[i] == '\'' || s[i] == '"'))
+			quotes = s[i];
+		i++;
+	}
+	return (-1);
+}
+
 
 int	locate_char_position(char *s, char c)
 {
@@ -64,7 +85,7 @@ int	extract_input(char *s, t_mix *data, int p)
 
 	if (!s)
 		return (-2);
-	pos = locate_char_position(s, '<');
+	pos = locate_char_position_quotes(s, '<');
 	if (pos == -1)
 		return (-1);
 	if (s[pos + 1] == '<')
@@ -92,7 +113,7 @@ int	extract_output(char *s, t_mix *data)
 
 	if (!s)
 		return (-2);
-	pos = locate_char_position(s, '>');
+	pos = locate_char_position_quotes(s, '>');
 	if (pos == -1)
 		return (-1);
 	if (s[pos + 1] == '>')

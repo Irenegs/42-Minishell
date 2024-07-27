@@ -7,8 +7,8 @@ valgrind --track-fds=yes --trace-children=yes; --child-silent-after-fork=yes
 
 - parser permitir cosas raras entrecomilladas
 - generar entorno por defecto => leer https://unix.stackexchange.com/questions/280453/understand-the-meaning-of para la gestión inicial de $_ pasamos de todo y hardcodeamos
-escribir errores => perror(NULL) y cambiar printf;
-proteger fallos de malloc y free de NULL
+- escribir errores => perror(NULL) y cambiar printf;
+- proteger fallos de malloc y free de NULL
 
 
 ## Signals:

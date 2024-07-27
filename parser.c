@@ -6,7 +6,7 @@
 /*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 18:32:16 by irene             #+#    #+#             */
-/*   Updated: 2024/07/23 16:53:50 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/07/27 19:49:26 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,24 +74,33 @@ int	parser(char *s)
 	int	i;
 	int	insert[3];
 	int	pipes;
+	int	quotes;
 
 	i = -1;
+	quotes = 0;
 	insert[0] = 0;
 	insert[1] = 1;
 	insert[2] = 1;
 	pipes = open_quotes(s);
 	while (s[++i] != '\0' && pipes >= 0 && valid_insertion(insert, s[i]) == 1)
 	{
-		if (s[i] == '|')
+		if (quotes == 0)
 		{
-			pipes++;
-			change_insert(insert, 0, 1, 1);
+			if (s[i] == '|')
+			{
+				pipes++;
+				change_insert(insert, 0, 1, 1);
+			}
+			i += redirection(s, i, insert);
+			if (i < 0)
+				return (-1);
+			if (ft_isalnum(s[i]) == 1)
+				change_insert(insert, 1, 1, 1);
 		}
-		i += redirection(s, i, insert);
-		if (i < 0)
-			return (-1);
-		if (ft_isalnum(s[i]) == 1)
-			change_insert(insert, 1, 1, 1);
+		if (s[i] == quotes && quotes != 0)
+			quotes = 0;
+		else if (quotes == 0 && (s[i] == '\'' || s[i] == '"'))
+			quotes = s[i];
 	}
 	if (s[i] != '\0')
 		return (-1);
