@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in4.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 22:08:38 by pablo             #+#    #+#             */
-/*   Updated: 2024/07/27 18:14:59 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/07/28 19:39:36 by pablgarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,16 +78,35 @@ char	**update_entry(char **env, int i, const char *key, const char *value)
 	return (env);
 }
 
-int is_special_builtin(char *cmd)
+int	ft_isnum(char *str)
 {
-	if (ft_strcmp(cmd, "cd") == 0)
-		return (1);
-	else if (ft_strcmp(cmd, "export") == 0)
-		return (1);
-	else if (ft_strcmp(cmd, "unset") == 0)
-		return (1);
-	else if (ft_strcmp(cmd, "exit") == 0)
-		return (1);
-	else
+	if (*str == '-' || *str == '+')
+		str++;
+	if (*str == '\0')
 		return (0);
+	while (*str)
+	{
+		if (ft_isdigit(*str))
+			return (0);
+		str++;
+	}
+	return (1);
+}
+
+int	ft_strcmp(const char *s1, const char *s2)
+{
+	size_t			i;
+	unsigned char	c;
+	unsigned char	d;
+
+	i = 0;
+	while (s1[i] != '\0' && s2[i] != '\0')
+	{
+		c = (unsigned char)s1[i];
+		d = (unsigned char)s2[i];
+		if (c != d)
+			return (c - d);
+		i++;
+	}
+	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 }

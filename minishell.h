@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 17:56:24 by irene             #+#    #+#             */
-/*   Updated: 2024/07/28 17:50:02 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/07/28 20:08:00 by pablgarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,33 +61,37 @@ void	ft_signals_hd(void);
 void	*ft_free_env(char **env);
 void	ft_init_mix(t_mix *data, char **envp);
 
-//buil_in.c
-int		find_env_index(char **env, const char *key);
-char	**add_or_update_env(char **env, const char *key, const char *value);
-char	**copy_env_without_entry(char **env, int index, int size);
-char	**remove_env(char **env, const char *key);
+//built_in_check.c
 int		is_builtin(char *cmd);
+int		is_special_builtin(char *cmd);
+int		execute_builtin(t_mix *data, char **command);
 
 
-//built_in2.c
+//built_in.c
 int		ft_echo(char **command);
 int		ft_cd(char **command, t_mix *data);
 int		ft_pwd(t_mix *data);
 int		ft_export(t_mix *data, char **command);
 int		ft_unset(t_mix *data, char **command);
 
-//built_in3.c
-int		ft_strcmp(const char *s1, const char *s2);
+//built_in_env_exit.c
 int		ft_env(t_mix *data);
 int		ft_exit(char **command, t_mix *data);
-int		execute_builtin(t_mix *data, char **command);
-int		ft_isnum(char *str);
 
-//built_in4.c
+//built_in_utils1.c
 char	*create_env_entry(const char *key, const char *value);
 char	**new_entry(char **env, const char *key, const char *value, int size);
 char	**update_entry(char **env, int i, const char *key, const char *value);
-int		is_special_builtin(char *cmd);
+int		ft_strcmp(const char *s1, const char *s2);
+int		ft_isnum(char *str);
+
+//built_in_utils2.c
+int		find_env_index(char **env, const char *key);
+char	**add_or_update_env(char **env, const char *key, const char *value);
+char	**copy_env_without_entry(char **env, int index, int size);
+char	**remove_env(char **env, const char *key);
+int		valid_varname(char *str);
+
 
 //command.c
 int		run_command(char **command, t_mix *data);
