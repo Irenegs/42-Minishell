@@ -6,35 +6,11 @@
 /*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:42:48 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/07/27 17:39:08 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/07/28 17:09:39 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static char	*expand_double_quotes(char *s, int pos, t_mix *data)
-{
-	int		len;
-	char	*result;
-
-	len = 0;
-	while (s[pos + len + 1] != '"')
-	{
-		while (s[pos + len + 1] != '"' && s[pos + len + 1] != '$')
-			len++;
-		result = ft_substr(s, pos + 1, len);
-		pos = pos + len + 1;
-		if (s[pos] == '"')
-			return (result);
-		if (s[pos] == '$')
-		{
-			result = expand_variable(result, s, pos, data);
-			pos += len_literal_word(s, pos + 1);
-		}
-		len = 0;
-	}
-	return (result);
-}
 
 static char	*add_chunk(char *original, char *chunk)
 {
@@ -46,6 +22,33 @@ static char	*add_chunk(char *original, char *chunk)
 	if (chunk != NULL)
 		free(chunk);
 	return (aux);
+}
+
+static char	*expand_double_quotes(char *s, int pos, t_mix *data)
+{
+	int		len;
+	char	*result;
+	char	*chunk;
+
+	len = 0;
+	result = NULL;
+	while (s[pos + len + 1] != '"')
+	{
+		while (s[pos + len + 1] != '"' && s[pos + len + 1] != '$')
+			len++;
+		chunk = ft_substr(s, pos + 1, len);
+		result = add_chunk(result, chunk);
+		pos = pos + len + 1;
+		if (s[pos] == '"')
+			return (result);
+		if (s[pos] == '$')
+		{
+			result = expand_variable(result, s, pos, data);
+			pos += len_literal_word(s, pos + 1);
+		}
+		len = 0;
+	}
+	return (result);
 }
 
 static int	select_and_expand(char **result, char *s, int *pos, t_mix *data)

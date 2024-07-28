@@ -6,7 +6,7 @@
 /*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 22:04:50 by pablo             #+#    #+#             */
-/*   Updated: 2024/07/27 20:20:45 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/07/28 17:16:59 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,20 +51,19 @@ int	ft_exit(char **command, t_mix *data)
 	status = data->exit_status;
 	if (command[1])
 	{
+		if (command[2])
+		{
+			write(2, "exit: too many arguments\n", 25);
+			return (1);
+		}
 		if (ft_isnum(command[1]) == 1)
 		{
-			printf("exit: %s: numeric argument required\n", command[1]);
+			write(2, "exit: numeric argument required\n", 32);
 			status = 2;
 		}
 		else
 			status = ft_atoi(command[1]);
 	}
-	if (command[2])
-	{
-		printf("exit: too many arguments\n");
-		return (1);
-	}
-
 	close_pipes(data->pipes, data->pipesfd);
 	clean_and_free_heredocs(data->heredocs, data->pipes);
 	free(data->input);
