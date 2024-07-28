@@ -6,7 +6,7 @@
 /*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:36:03 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/07/27 19:58:00 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/07/28 17:27:35 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ char	**extract_command(char *s, t_mix *data)
 	if (pos == -1)
 		return (NULL);
 	len = len_cmd(s, pos);
-	cmd_string = ft_substr(s, pos, len);
+	cmd_string = ft_substr(s, pos, len);//cambiar
 	if (!cmd_string)
 		return (write_error_null(1));
 	command = split_command(cmd_string, data);

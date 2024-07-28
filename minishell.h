@@ -6,7 +6,7 @@
 /*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 17:56:24 by irene             #+#    #+#             */
-/*   Updated: 2024/07/27 18:15:05 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/07/28 17:50:02 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,5 +171,5 @@ char	**ft_super_split(char const *s, char *sep);
 int		select_variable(char *var_name, char **environ);
 char	*ft_getenv(char *var_name, t_mix *data);
 char	*obtain_variable(char *s, int i, t_mix *data);
-
+size_t	len_variable(char *str, int pos);
 #endif

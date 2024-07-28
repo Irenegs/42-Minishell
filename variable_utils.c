@@ -6,7 +6,7 @@
 /*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 20:32:38 by irene             #+#    #+#             */
-/*   Updated: 2024/07/27 18:00:22 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/07/28 18:12:30 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,17 +58,43 @@ char	*ft_getenv(char *var_name, t_mix *data)
 	return (var_value);
 }
 
+size_t	len_variable(char *str, int pos)
+{
+	size_t	len;
+
+	if (!str)
+		return (0);
+	if (str[pos] == '?')
+		return (1);
+	if (str[pos] != '_' && ft_isalpha(str[pos]) == 0)
+		return (0);
+	len = 1;
+	while(str[pos + len] == '_' || ft_isalnum(str[pos + len]))
+		len++;
+	printf("str[pos + len]:%c\n", str[pos + len]);
+	return (len);
+}
+
 char	*obtain_variable(char *s, int i, t_mix *data)
 {
 	char	*var_name;
 	char	*var_value;
 	size_t	len;
 
-	len = len_literal_word(s, i);
+	len = len_variable(s, i);
+	printf("len obtain variable: %ld\n", len);
+	if (len == 0)
+	{
+		var_value = malloc(2 * sizeof(char));
+		var_value[0] = '$';
+		var_value[1] = '\0';
+		return (var_value);
+	}
 	if (len > 0 && s[i] == '{')
 		var_name = ft_substr(s, i + 1, len - 2);
 	else
 		var_name = ft_substr(s, i, len);
+	printf("var_name:%s\n", var_name);
 	if (!var_name)
 		return (write_error_null(1));
 	var_value = ft_getenv(var_name, data);

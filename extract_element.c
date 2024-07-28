@@ -6,7 +6,7 @@
 /*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:42:48 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/07/28 17:09:39 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/07/28 18:13:42 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static char	*add_chunk(char *original, char *chunk)
 {
 	char	*aux;
-
+	printf("chunk:%s\n", chunk);
 	aux = ft_strjoin(original, chunk);
 	if (original != NULL)
 		free(original);
@@ -74,7 +74,7 @@ static int	select_and_expand(char **result, char *s, int *pos, t_mix *data)
 	if (s[*pos] == '\'' || s[*pos] == '"')
 		*pos = *pos + len + 2;
 	else if (s[*pos] == '$')
-		*pos = *pos + len_literal_word(s, *pos + 1) + 1;
+		*pos = *pos + len_variable(s, *pos + 1) + 1;
 	else
 		*pos = *pos + len;
 	return (0);
@@ -101,6 +101,7 @@ char	*extract_element(char *s, int *pos, t_mix *data)
 	{
 		if (select_and_expand(&result, s, pos, data) != 0)
 			return (NULL);
+		printf("something to add sobre:%c\n", s[*pos]);
 	}
 	return (result);
 }
