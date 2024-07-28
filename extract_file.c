@@ -6,7 +6,7 @@
 /*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 16:36:46 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/07/27 20:08:29 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/07/28 18:31:02 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static int	ft_open(char *filename, int mode)
 {
 	int	fd;
-
+	printf("mode:%d\n", mode);
 	if (!filename || mode < 0 || mode > 2)
 		return (-2);
 	if (mode == 0)
@@ -98,6 +98,7 @@ int	extract_input(char *s, t_mix *data, int p)
 		fd = ft_open(filename, O_RDONLY);
 		free(filename);
 	}
+	pos = locate_char_position_quotes(s, '<');
 	aux_fd = extract_input(s + pos + 2, data, p);
 	if (aux_fd != -1 && fd != -2)
 		fd = aux_fd;
@@ -116,12 +117,13 @@ int	extract_output(char *s, t_mix *data)
 	pos = locate_char_position_quotes(s, '>');
 	if (pos == -1)
 		return (-1);
-	if (s[pos + 1] == '>')
-		pos++;
 	filename = extract_element(s, &pos, data);
 	if (!filename)
 		return (write_error_int(1, -2));
-	if (pos == locate_char_position(s, '>'))
+	pos = locate_char_position_quotes(s, '>');
+	if (s[pos + 1] == '>')
+		pos++;
+	if (pos == locate_char_position_quotes(s, '>'))
 		fd = ft_open(filename, 1);
 	else
 		fd = ft_open(filename, 2);

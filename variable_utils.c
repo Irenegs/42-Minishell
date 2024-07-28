@@ -6,7 +6,7 @@
 /*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 20:32:38 by irene             #+#    #+#             */
-/*   Updated: 2024/07/28 18:12:30 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/07/28 18:22:39 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ size_t	len_variable(char *str, int pos)
 	len = 1;
 	while(str[pos + len] == '_' || ft_isalnum(str[pos + len]))
 		len++;
-	printf("str[pos + len]:%c\n", str[pos + len]);
 	return (len);
 }
 
@@ -82,7 +81,6 @@ char	*obtain_variable(char *s, int i, t_mix *data)
 	size_t	len;
 
 	len = len_variable(s, i);
-	printf("len obtain variable: %ld\n", len);
 	if (len == 0)
 	{
 		var_value = malloc(2 * sizeof(char));
@@ -94,7 +92,6 @@ char	*obtain_variable(char *s, int i, t_mix *data)
 		var_name = ft_substr(s, i + 1, len - 2);
 	else
 		var_name = ft_substr(s, i, len);
-	printf("var_name:%s\n", var_name);
 	if (!var_name)
 		return (write_error_null(1));
 	var_value = ft_getenv(var_name, data);
