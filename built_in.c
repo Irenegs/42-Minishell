@@ -3,114 +3,162 @@
 /*                                                        :::      ::::::::   */
 /*   built_in.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/22 18:31:25 by pablo             #+#    #+#             */
-/*   Updated: 2024/05/23 23:00:52 by pablo            ###   ########.fr       */
+/*   Created: 2024/05/30 21:56:45 by pablo             #+#    #+#             */
+/*   Updated: 2024/07/28 20:07:34 by pablgarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	find_env_index(char **env, const char *key)
+int	ft_echo(char **command)
 {
-	size_t	key_len;
-	int		i;
+	int	new_line;
+	int	i;
 
-	key_len = ft_strlen(key);
-	i = 0;
-	while (env[i])
+	new_line = 1;
+	i = 1;
+	if (command[i] && ft_strcmp(command[i], "-n") == 0)
 	{
-		if (ft_strncmp(env[i], key, key_len) == 0 && env[i][key_len] == '=')
-			return (i);
+		new_line = 0;
 		i++;
 	}
-	return (-1);
-}
-
-char	**add_or_update_env(char **env, const char *key, const char *value)
-{
-	int		index;
-	int		size;
-	char	**new_env;
-
-	index = find_env_index(env, key);
-	if (index != -1)
-		return (update_entry(env, index, key, value));
-	size = 0;
-	while (env[size])
-		size++;
-	new_env = new_entry(env, key, value, size);
-	if (!new_env)
-		return (NULL);
-	free(env);
-	return (new_env);
-}
-
-char	**copy_env_without_entry(char **env, int index, int size)
-{
-	char	**new_env;
-	int		j;
-	int		i;
-
-	i = 0;
-	j = 0;
-	new_env = (char **)malloc(size * sizeof(char *));
-	if (!new_env)
-		return (NULL);
-	while (i < index)
+	while (command[i])
 	{
-		new_env[j] = env[i];
+		printf("%s", command[i]);
+		if (command[i + 1])
+			printf(" ");
 		i++;
-		j++;
 	}
-	free(env[index]);
-	while (env[++i])
+	if (new_line)
+		printf("\n");
+	return (0);
+}
+
+int	ft_cd(char **command, t_mix *data)
+{
+	char	*home_dir;
+
+	if (!command[1])
 	{
-		new_env[j] = env[i];
-		j++;
+		home_dir = ft_getenv("HOME", data);
+		if (home_dir == NULL)
+		{
+			write(2, "cd: HOME not set\n", 17);
+			return (1);
+		}
+		if (chdir(home_dir) != 0)
+		{
+			free(home_dir);
+			return (perror_int(1));
+		}
 	}
-	new_env[j] = NULL;
-	return (new_env);
+	else if (command[2])
+	{
+		printf("cd: too many arguments\n");
+		return (1);
+	}
+	else if (chdir(command[1]) != 0)
+		return (perror_int(1));
+	home_dir = getcwd(NULL, 0);
+	if (!home_dir)
+		return (perror_int(1));
+	add_or_update_env(data->m_env, "PWD", home_dir);
+	free(home_dir);
+	return (0);
 }
 
-char	**remove_env(char **env, const char *key)
+int	ft_pwd(t_mix *data)
 {
-	int		index;
-	int		size;
-	char	**new_env;
+	char	*pwd;
 
-	size = 0;
-
-	index = find_env_index(env, key);
-	if (index == -1)
-		return (env);
-	while (env[size])
-		size++;
-
-	new_env = copy_env_without_entry(env, index, size);
-	if (!new_env)
-		return (NULL);
-	free(env);
-	return (new_env);
-}
-
-int	is_builtin(char *cmd)
-{
-	if (ft_strcmp(cmd, "echo") == 0)
-		return (1);
-	else if (ft_strcmp(cmd, "cd") == 0)
-		return (1);
-	else if (ft_strcmp(cmd, "pwd") == 0)
-		return (1);
-	else if (ft_strcmp(cmd, "export") == 0)
-		return (1);
-	else if (ft_strcmp(cmd, "unset") == 0)
-		return (1);
-	else if (ft_strcmp(cmd, "env") == 0)
-		return (1);
-	else if (ft_strcmp(cmd, "exit") == 0)
-		return (1);
-	else
+	pwd = ft_getenv("PWD", data);
+	if (!pwd)
+		pwd = getcwd(NULL, 0);
+	if (pwd)
+	{
+		printf("%s\n", pwd);
+		free(pwd);
 		return (0);
+	}
+	return (perror_int(1));
+}
+
+void	empty_export(t_mix *data)
+{
+	int	n_var;
+	int	pos_eq;
+
+	if (!data || !data->m_env)
+		return ;
+	n_var = 0;
+	while (data->m_env[n_var] != NULL)
+	{
+		pos_eq = locate_char_position(data->m_env[n_var], '=') + 1;
+		write(1, "declare -x ", 11);
+		write(1, data->m_env[n_var], pos_eq);
+		write(1, "\"", 1);
+		write(1, data->m_env[n_var] + pos_eq, ft_strlen(data->m_env[n_var] + pos_eq));
+		write(1, "\"", 1);
+		write(1, "\n", 1);
+		n_var++;
+	}
+}
+
+
+
+int	ft_export(t_mix *data, char **command)
+{
+	char	*var_name;
+	int		i;
+	int		len;
+
+	if (!command || !command[1])
+		empty_export(data);
+	i = 1;
+	while (command[i])
+	{
+		len = locate_char_position(command[i], '=');
+		var_name = ft_substr(command[i], 0, len);
+		if (!var_name)
+			return (write_error_int(1, 1));
+		if (valid_varname(var_name) == 1)
+		{
+			if (len != -1)
+			{
+				data->m_env = add_or_update_env(data->m_env, var_name, command[i] + len + 1);
+				if (!data->m_env)
+				{
+					free(var_name);
+					return (1);
+				}
+			}
+		}
+		else
+			write(2, "Not a valid identifier\n", 23);
+		free(var_name);
+		i++;
+	}
+	return (0);
+}
+
+int	ft_unset(t_mix *data, char **command)
+{
+	int	i;
+
+	i = 1;
+	if (!command[1])
+		return (0);
+	while (command[i])
+	{
+		data->m_env = remove_env(data->m_env, command[i]);
+		if (!data->m_env)
+		{
+			perror("unset");
+			return (1);
+		}
+		i++;
+	}
+	return (0);
 }
