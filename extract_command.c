@@ -6,7 +6,7 @@
 /*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:36:03 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/07/28 17:27:35 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/07/29 19:34:38 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,21 +45,26 @@ static int	count_arguments(char *cmd_str)
 {
 	int	i;
 	int	args;
+	int quotes;
 
 	if (!cmd_str)
 		return (0);
-	args = 1;
 	i = 0;
-	while (cmd_str[i] != '\0')
+	args = 0;
+	quotes = 0;
+	while(cmd_str[i] != '\0')
 	{
-		if (cmd_str[i] == '\'' || cmd_str[i] == '"')
-			i += len_quotes(cmd_str, i) + 2;
-		else
-			i += len_literal_word(cmd_str, i);
-		while (is_space(cmd_str[i]) == 1 && cmd_str[i] != '\0')
+		while(cmd_str[i] == ' ')
+			i++;
+		if (cmd_str[i] != ' ' && cmd_str[i] != '\0')
 		{
 			args++;
-			i++;
+			manage_quotes(&quotes, cmd_str[i]);
+			while (cmd_str[i] != '\0' && (quotes != 0 || cmd_str[i] != ' '))
+			{
+				manage_quotes(&quotes, cmd_str[i]);
+				i++;
+			}
 		}
 	}
 	return (args);
@@ -96,15 +101,13 @@ static char	**split_command(char *s, t_mix *data)
 char	**extract_command(char *s, t_mix *data)
 {
 	int		pos;
-	int		len;
 	char	*cmd_string;
 	char	**command;
 
 	pos = locate_cmd_position(s);
 	if (pos == -1)
 		return (NULL);
-	len = len_cmd(s, pos);
-	cmd_string = ft_substr(s, pos, len);//cambiar
+	cmd_string = extract_cmd_str(s);
 	if (!cmd_string)
 		return (write_error_null(1));
 	command = split_command(cmd_string, data);

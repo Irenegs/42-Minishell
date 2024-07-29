@@ -6,7 +6,7 @@
 /*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 17:56:24 by irene             #+#    #+#             */
-/*   Updated: 2024/07/28 17:50:02 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/07/29 19:28:25 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,9 @@ size_t	len_literal_word(char *s, int pos);
 size_t	len_delimiter(char *s, int pos);
 size_t	len_quotes(char *s, int pos);
 int		len_cmd(char *s, int pos);
+char	*extract_cmd_str(char *str);
+void	manage_quotes(int *quotes, char c);
+int	len_skip_word(char *str, int pos);
 
 //gnl.c
 ssize_t	read_line(char **rem, int fd);

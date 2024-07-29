@@ -6,7 +6,7 @@
 /*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:40:20 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/07/27 19:57:27 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/07/29 19:34:51 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,28 +61,92 @@ size_t	len_quotes(char *s, int pos)
 	return (len);
 }
 
-int	len_cmd(char *s, int pos)
+void	manage_quotes(int *quotes, char c)
 {
-	int	len;
-	int	quotes;
+	if (c == *quotes && *quotes != 0)
+		*quotes = 0;
+	else if (*quotes == 0 && (c == '\'' || c == '"'))
+		*quotes = c;
+}
 
-	len = 0;
+int	len_skip_word(char *str, int pos)
+{
+	int quotes;
+	int	len;
+
+	if (!str)
+		return (0);
 	quotes = 0;
-	while (s[pos + len] != '\0')
-	{ 
-		if (quotes == 0)
-		{
-			if (s[pos + len] == '<' || s[pos + len] == '>' || s[pos + len] == '|')
-				break;
-		}
-		if (s[pos + len] == quotes && quotes != 0)
-			quotes = 0;
-		else if (quotes == 0 && (s[pos + len] == '\'' || s[pos + len] == '"'))
-			quotes = s[pos + len];
+	len = 1;
+	while (str[pos + len] == ' ')
+		len++;
+	while (str[pos + len] != '\0' && (quotes != 0 || str[pos + len] != ' '))
+	{
+		manage_quotes(&quotes, str[pos + len]);
 		len++;
 	}
-	while (is_space(s[pos + len]) == 1 || s[pos + len] == '|'
-		|| s[pos + len] == '<' || s[pos + len] == '>')
-		len--;
-	return (++len);
+	return (len);
+}
+
+int	len_cmd_str(char *str)
+{
+	int	len;
+	int	i;
+	int	quotes;
+
+	if (!str)
+		return (0);
+	len = 1;
+	i = 0;
+	quotes = 0;
+	while(str[i] != '\0' && str[i] != '|')
+	{
+		i++;
+		while (str[i] != '\0' && str[i] != '|' && quotes == 0 && (str[i] == '<' || str[i] == '>'))
+			i += len_skip_word(str, i);
+		manage_quotes(&quotes, str[i]);
+		//printf("len++ cuando i=%d->%c:%d\n", i, str[i], str[i]);
+		len++;
+	}
+	return (len);
+}
+
+void	copy_cmd(char *orig, char *res)
+{
+	int	len;
+	int	i;
+	int	quotes;
+
+	if (!orig || !res)
+		return ;
+	len = 0;
+	i = 0;
+	quotes = 0;
+	while(orig[i] != '\0' && orig[i] != '|')
+	{
+
+		while (orig[i] != '\0' && orig[i] != '|' && quotes == 0 && (orig[i] == '<' || orig[i] == '>'))
+			i += len_skip_word(orig, i);
+		manage_quotes(&quotes, orig[i]);
+		res[len] = orig[i];
+		len++;
+		if (orig[i] != '\0')
+			i++;
+	}
+	res[len] = '\0';
+}
+
+char	*extract_cmd_str(char *str)
+{
+	int	len;
+	char	*cmd;
+
+	if (!str || len_cmd_str(str) == 0)
+		return (NULL);
+	len = len_cmd_str(str);
+	cmd = malloc((len + 1) * sizeof(char));
+	if (!cmd)
+		return (NULL);//write_error_null(1)
+	copy_cmd(str, cmd);
+	return (cmd);
 }
