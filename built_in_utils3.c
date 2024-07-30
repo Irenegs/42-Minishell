@@ -6,7 +6,7 @@
 /*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 18:04:24 by pablgarc          #+#    #+#             */
-/*   Updated: 2024/07/30 18:24:41 by pablgarc         ###   ########.fr       */
+/*   Updated: 2024/07/30 20:48:55 by pablgarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	process_export_command(t_mix *data, char *cmd)
 		}
 	}
 	else
-		write(2, "Not a valid identifier\n", 23);
+		return (write_error_int(5, 1));
 	free(var_name);
 	return (0);
 }

@@ -13,10 +13,12 @@ valgrind --track-fds=yes --trace-children=yes; --child-silent-after-fork=yes
 - parseo de cadenas como estas, con diferentes comillas:
 "exit_code ->$? user ->$USER home -> $HOME"
 'exit_code ->$? user ->$USER home -> $HOME'
+ echo "> >> < * ? [ ] | ; [ ] || && ( ) & # $  <<"  esto da seg fault
+ echo "Hello wold" y 'Hello wolrd' --- sacan un espacio en blanco al final
+
 
 funciones  get_heredocs_texts, paerser y ft_copy_env mas de 25 lineas, no me atrevo a tocarlas...
 
-Continuar limpiando y revisando desde parser.c
 
 
 ## Signals:
