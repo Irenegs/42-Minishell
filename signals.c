@@ -32,7 +32,6 @@ void	ft_sig_def(void)
 {
 	signal(SIGQUIT, SIG_DFL);
 	signal(SIGINT, SIG_DFL);
-
 }
 
 static void	start_handler(int sig)

@@ -6,7 +6,7 @@
 /*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 21:56:45 by pablo             #+#    #+#             */
-/*   Updated: 2024/07/30 18:23:58 by pablgarc         ###   ########.fr       */
+/*   Updated: 2024/07/30 19:59:50 by pablgarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ int	ft_cd(char **command, t_mix *data)
 	return (0);
 }
 
-
 int	ft_pwd(t_mix *data)
 {
 	char	*pwd;
@@ -109,7 +108,6 @@ int	ft_export(t_mix *data, char **command)
 		empty_export(data);
 		return (0);
 	}
-
 	i = 1;
 	while (command[i])
 	{
@@ -119,38 +117,3 @@ int	ft_export(t_mix *data, char **command)
 	}
 	return (0);
 }
-
-/*int	ft_export(t_mix *data, char **command)
-{
-	char	*var_name;
-	int		i;
-	int		len;
-
-	if (!command || !command[1])
-		empty_export(data);
-	i = 1;
-	while (command[i])
-	{
-		len = locate_char_position(command[i], '=');
-		var_name = ft_substr(command[i], 0, len);
-		if (!var_name)
-			return (write_error_int(1, 1));
-		if (valid_varname(var_name) == 1)
-		{
-			if (len != -1)
-			{
-				data->m_env = add_or_update_env(data->m_env, var_name, command[i] + len + 1);
-				if (!data->m_env)
-				{
-					free(var_name);
-					return (1);
-				}
-			}
-		}
-		else
-			write(2, "Not a valid identifier\n", 23);
-		free(var_name);
-		i++;
-	}
-	return (0);
-}*/

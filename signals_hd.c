@@ -6,7 +6,7 @@
 /*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 18:31:25 by pablo             #+#    #+#             */
-/*   Updated: 2024/07/30 19:44:25 by pablgarc         ###   ########.fr       */
+/*   Updated: 2024/07/30 19:57:24 by pablgarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,4 @@ void	ft_signals_hd(void)
 {
 	signal(SIGINT, ft_sigint_hd);
 	signal(SIGQUIT, SIG_IGN);
-
 }

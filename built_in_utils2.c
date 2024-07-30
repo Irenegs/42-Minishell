@@ -6,7 +6,7 @@
 /*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 19:35:07 by pablgarc          #+#    #+#             */
-/*   Updated: 2024/07/30 18:22:15 by pablgarc         ###   ########.fr       */
+/*   Updated: 2024/07/30 20:00:20 by pablgarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,13 +81,11 @@ char	**remove_env(char **env, const char *key)
 	char	**new_env;
 
 	size = 0;
-
 	index = find_env_index(env, key);
 	if (index == -1)
 		return (env);
 	while (env[size])
 		size++;
-
 	new_env = copy_env_without_entry(env, index, size);
 	if (!new_env)
 		return (NULL);

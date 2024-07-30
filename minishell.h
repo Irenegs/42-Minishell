@@ -6,7 +6,7 @@
 /*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 17:56:24 by irene             #+#    #+#             */
-/*   Updated: 2024/07/30 19:23:27 by pablgarc         ###   ########.fr       */
+/*   Updated: 2024/07/30 20:05:46 by pablgarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ void	ft_sig_def(void);
 //signals_hd.c
 void	ft_signals_hd(void);
 
-
 //struct.c
 void	*ft_free_env(char **env);
 void	ft_init_mix(t_mix *data, char **envp);
@@ -65,7 +64,6 @@ void	ft_init_mix(t_mix *data, char **envp);
 int		is_builtin(char *cmd);
 int		is_special_builtin(char *cmd);
 int		execute_builtin(t_mix *data, char **command);
-
 
 //built_in.c
 int		ft_echo(char **command);
@@ -112,7 +110,6 @@ int		execute_zero_pipes(t_mix *data);
 int		status_treatment(int *status);
 
 //extract_command.c
-
 char	**extract_command(char *s, t_mix *data);
 
 //extract_elements.c
@@ -136,14 +133,12 @@ size_t	len_delimiter(char *s, int pos);
 size_t	len_quotes(char *s, int pos);
 int		len_cmd_str(char *str);
 
-
 //extract_utils2.c
 char	*extract_cmd_str(char *str);
 void	manage_quotes(int *quotes, char c);
 int		len_skip_word(char *str, int pos);
 void	copy_cmd(char *orig, char *res);
 int		locate_char_position(char *s, char c);
-
 
 //gnl.c
 ssize_t	read_line(char **rem, int fd);

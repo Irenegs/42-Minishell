@@ -6,7 +6,7 @@
 /*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 22:04:50 by pablo             #+#    #+#             */
-/*   Updated: 2024/07/30 18:15:49 by pablgarc         ###   ########.fr       */
+/*   Updated: 2024/07/30 19:57:56 by pablgarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,5 +52,3 @@ int	ft_exit(char **command, t_mix *data)
 	ft_out(data->m_env);
 	exit(status);
 }
-
-
