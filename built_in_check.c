@@ -12,7 +12,6 @@
 
 #include "minishell.h"
 
-
 int	is_builtin(char *cmd)
 {
 	if (ft_strcmp(cmd, "echo") == 0)
@@ -33,7 +32,7 @@ int	is_builtin(char *cmd)
 		return (0);
 }
 
-int is_special_builtin(char *cmd)
+int	is_special_builtin(char *cmd)
 {
 	if (ft_strcmp(cmd, "cd") == 0)
 		return (1);

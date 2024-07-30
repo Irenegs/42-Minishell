@@ -25,7 +25,7 @@ static char	**default_env(void)
 	{
 		ft_out(env);
 		perror(NULL);
-		return(NULL);
+		return (NULL);
 	}
 	env[0] = create_env_entry("PWD", aux);
 	free(aux);

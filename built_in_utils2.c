@@ -6,7 +6,7 @@
 /*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 19:35:07 by pablgarc          #+#    #+#             */
-/*   Updated: 2024/07/28 20:07:48 by pablgarc         ###   ########.fr       */
+/*   Updated: 2024/07/30 18:22:15 by pablgarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	find_env_index(char **env, const char *key)
 	return (-1);
 }
 
-char	**add_or_update_env(char **env, const char *key, const char *value)
+char	**au_env(char **env, const char *key, const char *value)
 {
 	int		index;
 	int		size;
@@ -57,7 +57,7 @@ char	**copy_env_without_entry(char **env, int index, int size)
 	j = 0;
 	new_env = (char **)malloc(size * sizeof(char *));
 	if (!new_env)
-		return (NULL);
+		return (write_error_null(1));
 	while (i < index)
 	{
 		new_env[j] = env[i];

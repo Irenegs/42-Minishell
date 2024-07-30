@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 17:56:24 by irene             #+#    #+#             */
-/*   Updated: 2024/07/29 19:38:54 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/07/30 19:23:27 by pablgarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,11 +87,14 @@ int		ft_isnum(char *str);
 
 //built_in_utils2.c
 int		find_env_index(char **env, const char *key);
-char	**add_or_update_env(char **env, const char *key, const char *value);
+char	**au_env(char **env, const char *key, const char *value);
 char	**copy_env_without_entry(char **env, int index, int size);
 char	**remove_env(char **env, const char *key);
 int		valid_varname(char *str);
 
+//built_in_utils3.c
+void	empty_export(t_mix *data);
+int		process_export_command(t_mix *data, char *cmd);
 
 //command.c
 int		run_command(char **command, t_mix *data);
@@ -119,8 +122,9 @@ int		something_to_add(char *s, int pos);
 
 //extract_file.c
 int		extract_input(char *s, t_mix *data, int p);
-int		extract_output(char *s, t_mix *data);
 int		locate_char_position(char *s, char c);
+int		locate_char_position_quotes(char *s, char c);
+int		extract_output(char *s, t_mix *data);
 
 //extract_pipe.c
 char	*extract_pipe(char *s, int pipe);
@@ -130,10 +134,16 @@ int		is_space(char c);
 size_t	len_literal_word(char *s, int pos);
 size_t	len_delimiter(char *s, int pos);
 size_t	len_quotes(char *s, int pos);
-int		len_cmd(char *s, int pos);
+int		len_cmd_str(char *str);
+
+
+//extract_utils2.c
 char	*extract_cmd_str(char *str);
 void	manage_quotes(int *quotes, char c);
-int	len_skip_word(char *str, int pos);
+int		len_skip_word(char *str, int pos);
+void	copy_cmd(char *orig, char *res);
+int		locate_char_position(char *s, char c);
+
 
 //gnl.c
 ssize_t	read_line(char **rem, int fd);

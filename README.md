@@ -14,6 +14,10 @@ valgrind --track-fds=yes --trace-children=yes; --child-silent-after-fork=yes
 "exit_code ->$? user ->$USER home -> $HOME"
 'exit_code ->$? user ->$USER home -> $HOME'
 
+funciones  get_heredocs_texts, paerser y ft_copy_env mas de 25 lineas, no me atrevo a tocarlas...
+
+Continuar limpiando y revisando desde parser.c
+
 
 ## Signals:
 Ctrl - \ debe no hacer nada

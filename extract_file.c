@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   extract_file.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 16:36:46 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/07/28 18:31:02 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/07/30 19:32:34 by pablgarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 static int	ft_open(char *filename, int mode)
 {
 	int	fd;
+
 	printf("mode:%d\n", mode);
 	if (!filename || mode < 0 || mode > 2)
 		return (-2);
@@ -44,21 +45,6 @@ int	locate_char_position_quotes(char *s, char c)
 			quotes = 0;
 		else if (quotes == 0 && (s[i] == '\'' || s[i] == '"'))
 			quotes = s[i];
-		i++;
-	}
-	return (-1);
-}
-
-
-int	locate_char_position(char *s, char c)
-{
-	int	i;
-
-	i = 0;
-	while (s && s[i] != '\0')
-	{
-		if (s[i] == c)
-			return (i);
 		i++;
 	}
 	return (-1);

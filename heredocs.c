@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredocs.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 17:50:11 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/07/24 18:22:33 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/07/30 19:40:35 by pablgarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,6 @@ static int	get_heredocs_texts(int pipes, char *s, t_mix *data)
 			n++;
 		}
 		free(subs);
-		//if (n_heredocs == 0)
-		//	heredocs[p] = NULL;
 		p++;
 	}
 	return (0);

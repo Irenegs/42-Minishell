@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_text.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 14:46:24 by irene             #+#    #+#             */
-/*   Updated: 2024/07/24 19:43:38 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/07/30 19:39:41 by pablgarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,6 @@ static char	*get_rawtext(char *del)
 			return (write_error_null(1));
 		aux_2 = readline("Heredoc>");
 	}
-	//if (aux_2 == NULL)
-	//{
-	//	free(line);
-	//	return (NULL);
-	//}
 	free(aux_2);
 	ft_signals_running();
 	return (line);
@@ -64,7 +59,7 @@ static char	*obtain_delimiter(char *del_str)
 	}
 	delimiter = malloc(len + 1);
 	if (!delimiter)
-		return (NULL);
+		return (write_error_null(1));
 	ft_memmove(delimiter, del_str, len);
 	delimiter[len] = '\0';
 	return (delimiter);
@@ -80,12 +75,10 @@ static char	*get_heredoc(char *s, t_mix *data)
 	if (!delimiter)
 		return (write_error_null(1));
 	heredoc_text = get_rawtext(delimiter);
-	printf("Despues  de get_rawtext\n");
 	if (heredoc_text == NULL)
 	{
 		free(delimiter);
-		printf("\nHeredoc interrupted by signal\n"); // Mensaje de interrupción
-		return (NULL);//Interrupción manejada aquí
+		return (NULL);
 	}
 	if (must_expand(s, heredoc_text) == 1)
 	{

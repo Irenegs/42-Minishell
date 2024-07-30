@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   variable_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 20:32:38 by irene             #+#    #+#             */
-/*   Updated: 2024/07/28 18:22:39 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/07/30 19:52:23 by pablgarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ size_t	len_variable(char *str, int pos)
 	if (str[pos] != '_' && ft_isalpha(str[pos]) == 0)
 		return (0);
 	len = 1;
-	while(str[pos + len] == '_' || ft_isalnum(str[pos + len]))
+	while (str[pos + len] == '_' || ft_isalnum(str[pos + len]))
 		len++;
 	return (len);
 }
@@ -84,6 +84,8 @@ char	*obtain_variable(char *s, int i, t_mix *data)
 	if (len == 0)
 	{
 		var_value = malloc(2 * sizeof(char));
+		if (!var_value)
+			return (write_error_null(1));
 		var_value[0] = '$';
 		var_value[1] = '\0';
 		return (var_value);

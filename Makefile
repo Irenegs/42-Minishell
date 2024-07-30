@@ -4,12 +4,13 @@ LIBS        := ft
 LIBS_TARGET := libft/libft.a 
 INCS        := include libft/include
 
-SRCS        := command.c command_utils.c variable_utils.c\
+SRCS        := command.c command_utils.c variable_utils.c \
 				execute.c execute_simple.c pipe_utils.c \
-				extract_command.c extract_element.c  extract_file.c extract_pipe.c extract_utils.c \
+				extract_command.c extract_element.c  extract_file.c extract_pipe.c \
+				extract_utils.c extract_utils2.c \
 				parser.c super_split.c split_utils.c \
 				built_in_check.c built_in.c built_in_env_exit.c \
-				built_in_utils1.c built_in_utils2.c \
+				built_in_utils1.c built_in_utils2.c built_in_utils3.c \
 				struct.c signals.c signals_hd.c\
 				heredocs.c heredocs_utils.c heredoc_text.c heredoc_expand.c gnl.c\
 				main.c error.c\

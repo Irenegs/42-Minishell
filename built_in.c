@@ -6,7 +6,7 @@
 /*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 21:56:45 by pablo             #+#    #+#             */
-/*   Updated: 2024/07/28 20:07:34 by pablgarc         ###   ########.fr       */
+/*   Updated: 2024/07/30 18:23:58 by pablgarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,7 @@ int	ft_cd(char **command, t_mix *data)
 	{
 		home_dir = ft_getenv("HOME", data);
 		if (home_dir == NULL)
-		{
-			write(2, "cd: HOME not set\n", 17);
-			return (1);
-		}
+			return (write_error_int(4, 1));
 		if (chdir(home_dir) != 0)
 		{
 			free(home_dir);
@@ -55,19 +52,17 @@ int	ft_cd(char **command, t_mix *data)
 		}
 	}
 	else if (command[2])
-	{
-		printf("cd: too many arguments\n");
-		return (1);
-	}
+		return (write_error_int(3, 1));
 	else if (chdir(command[1]) != 0)
 		return (perror_int(1));
 	home_dir = getcwd(NULL, 0);
 	if (!home_dir)
 		return (perror_int(1));
-	add_or_update_env(data->m_env, "PWD", home_dir);
+	au_env(data->m_env, "PWD", home_dir);
 	free(home_dir);
 	return (0);
 }
+
 
 int	ft_pwd(t_mix *data)
 {
@@ -85,30 +80,47 @@ int	ft_pwd(t_mix *data)
 	return (perror_int(1));
 }
 
-void	empty_export(t_mix *data)
+int	ft_unset(t_mix *data, char **command)
 {
-	int	n_var;
-	int	pos_eq;
+	int	i;
 
-	if (!data || !data->m_env)
-		return ;
-	n_var = 0;
-	while (data->m_env[n_var] != NULL)
+	i = 1;
+	if (!command[1])
+		return (0);
+	while (command[i])
 	{
-		pos_eq = locate_char_position(data->m_env[n_var], '=') + 1;
-		write(1, "declare -x ", 11);
-		write(1, data->m_env[n_var], pos_eq);
-		write(1, "\"", 1);
-		write(1, data->m_env[n_var] + pos_eq, ft_strlen(data->m_env[n_var] + pos_eq));
-		write(1, "\"", 1);
-		write(1, "\n", 1);
-		n_var++;
+		data->m_env = remove_env(data->m_env, command[i]);
+		if (!data->m_env)
+		{
+			perror("unset");
+			return (1);
+		}
+		i++;
 	}
+	return (0);
 }
 
-
-
 int	ft_export(t_mix *data, char **command)
+{
+	int	i;
+
+	if (!command || !command[1])
+	{
+		empty_export(data);
+		return (0);
+	}
+
+	i = 1;
+	while (command[i])
+	{
+		if (process_export_command(data, command[i]) != 0)
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+/*int	ft_export(t_mix *data, char **command)
 {
 	char	*var_name;
 	int		i;
@@ -141,24 +153,4 @@ int	ft_export(t_mix *data, char **command)
 		i++;
 	}
 	return (0);
-}
-
-int	ft_unset(t_mix *data, char **command)
-{
-	int	i;
-
-	i = 1;
-	if (!command[1])
-		return (0);
-	while (command[i])
-	{
-		data->m_env = remove_env(data->m_env, command[i]);
-		if (!data->m_env)
-		{
-			perror("unset");
-			return (1);
-		}
-		i++;
-	}
-	return (0);
-}
+}*/

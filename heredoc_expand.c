@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_expand.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 17:52:42 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/07/23 17:05:58 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/07/30 19:36:07 by pablgarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,8 @@ char	*expand_string(char *input_str, t_mix *data)
 		}
 		else
 		{
-			expanded = normal_expansion(expanded, input_str, pos, len_until_dollar(input_str, pos));
+			expanded = normal_expansion(expanded, input_str, pos,
+					len_until_dollar(input_str, pos));
 			pos += len_until_dollar(input_str, pos);
 		}
 	}

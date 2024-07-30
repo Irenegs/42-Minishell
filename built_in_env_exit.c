@@ -1,17 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   built_in3.c                                        :+:      :+:    :+:   */
+/*   built_in_env_exit.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 22:04:50 by pablo             #+#    #+#             */
-/*   Updated: 2024/07/28 19:41:05 by pablgarc         ###   ########.fr       */
+/*   Updated: 2024/07/30 18:15:49 by pablgarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 int	ft_env(t_mix *data)
 {
@@ -53,3 +52,5 @@ int	ft_exit(char **command, t_mix *data)
 	ft_out(data->m_env);
 	exit(status);
 }
+
+

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   extract_command.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:36:03 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/07/29 19:34:38 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/07/30 19:03:50 by pablgarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,16 +45,16 @@ static int	count_arguments(char *cmd_str)
 {
 	int	i;
 	int	args;
-	int quotes;
+	int	quotes;
 
 	if (!cmd_str)
 		return (0);
 	i = 0;
 	args = 0;
 	quotes = 0;
-	while(cmd_str[i] != '\0')
+	while (cmd_str[i] != '\0')
 	{
-		while(cmd_str[i] == ' ')
+		while (cmd_str[i] == ' ')
 			i++;
 		if (cmd_str[i] != ' ' && cmd_str[i] != '\0')
 		{
