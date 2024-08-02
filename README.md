@@ -7,17 +7,19 @@ valgrind --track-fds=yes --trace-children=yes; --child-silent-after-fork=yes
 
 - parser permitir cosas raras entrecomilladas
 - generar entorno por defecto => leer https://unix.stackexchange.com/questions/280453/understand-the-meaning-of para la gestión inicial de $_ pasamos de todo y hardcodeamos
-- escribir errores => perror(NULL) y cambiar printf;
-- proteger fallos de malloc y free de NULL
 
 - parseo de cadenas como estas, con diferentes comillas:
 "exit_code ->$? user ->$USER home -> $HOME"
 'exit_code ->$? user ->$USER home -> $HOME'
+
  echo "> >> < * ? [ ] | ; [ ] || && ( ) & # $  <<"  esto da seg fault
- echo "Hello wold" y 'Hello wolrd' --- sacan un espacio en blanco al final
+ echo '> >> < * ? [ ] | ; [ ] || && ( ) & # $  <<'  esto da seg fault
 
+ echo "Hello world" y 'Hello world' --- sacan un espacio en blanco al final
 
-funciones  get_heredocs_texts, paerser y ft_copy_env mas de 25 lineas, no me atrevo a tocarlas...
+-Cambiar environ por struct
+
+-funciones  get_heredocs_texts, paerser y ft_copy_env mas de 25 lineas, no me atrevo a tocarlas...
 
 
 
