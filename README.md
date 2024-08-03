@@ -17,9 +17,9 @@ valgrind --track-fds=yes --trace-children=yes; --child-silent-after-fork=yes
 
  echo "Hello world" y 'Hello world' --- sacan un espacio en blanco al final
 
--Cambiar environ por struct
+-funcion parser mas de 25 lineas -- esta ha sido la unica que no me atrevo a tocar...
 
--funciones  get_heredocs_texts, paerser y ft_copy_env mas de 25 lineas, no me atrevo a tocarlas...
+-tester de 76/146 a 110/146
 
 
 

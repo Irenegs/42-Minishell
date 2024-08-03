@@ -6,23 +6,23 @@
 /*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 20:32:38 by irene             #+#    #+#             */
-/*   Updated: 2024/07/31 17:50:24 by pablgarc         ###   ########.fr       */
+/*   Updated: 2024/08/03 17:05:45 by pablgarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	select_variable(char *var_name, char **environ)
+int	select_variable(char *var_name, t_mix *data)
 {
 	int		i;
 	char	**var;
 
-	if (!environ || environ[0] == NULL)
+	if (!data->m_env || data->m_env[0] == NULL)
 		return (-2);
 	i = 0;
-	while (environ[i])
+	while (data->m_env[i])
 	{
-		var = ft_super_split(environ[i], "=:");
+		var = ft_super_split(data->m_env[i], "=:");
 		if (!var)
 			return (write_error_int(1, -1));
 		if (ft_strncmp(var[0], var_name, ft_strlen(var_name) + 1) == 0)
@@ -46,7 +46,7 @@ char	*ft_getenv(char *var_name, t_mix *data)
 		var_value = ft_itoa(data->exit_status);
 	else
 	{
-		var_number = select_variable(var_name, data->m_env);
+		var_number = select_variable(var_name, data);
 		if (var_number < 0)
 			return (NULL);
 		len_var = ft_strlen(var_name);

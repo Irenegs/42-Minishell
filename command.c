@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 17:36:54 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/07/27 20:10:21 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/08/03 16:59:26 by pablgarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static char	*get_route(char *s, char **path)
 	return (NULL);
 }
 
-static char	*command_exists(char *s, char **env)
+static char	*command_exists(char *s, t_mix *data)
 {
 	char	*route;
 	char	**path;
@@ -61,7 +61,7 @@ static char	*command_exists(char *s, char **env)
 	{
 		if (is_local(s) == 0)
 			return (s);
-		path = get_path_variable(env);
+		path = get_path_variable(data);
 		if (!path)
 			return (s);
 		route = get_route(s, path);
@@ -78,7 +78,7 @@ int	run_command(char **command, t_mix *data)
 		return (-1);
 	if (is_builtin(command[0]) == 1)
 		return (execute_builtin(data, command));
-	cmd = command_exists(command[0], data->m_env);
+	cmd = command_exists(command[0], data);
 	if (!cmd)
 		cmd = command[0];
 	execve(cmd, command, data->m_env);

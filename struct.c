@@ -35,15 +35,21 @@ static char	**default_env(void)
 	return (env);
 }
 
-static char	**ft_copy_env(char **envp)
+static int	count_env_variables(char **envp)
 {
-	char	**env_copy;
-	int		i;
-	int		total_variables;
+	int	total_variables;
 
 	total_variables = 0;
 	while (envp[total_variables])
 		total_variables++;
+	return (total_variables);
+}
+
+static char	**copy_env_variables(char **envp, int total_variables)
+{
+	char	**env_copy;
+	int		i;
+
 	if (total_variables == 0)
 		return (default_env());
 	env_copy = (char **)malloc((total_variables + 1) * sizeof(char *));
@@ -63,6 +69,14 @@ static char	**ft_copy_env(char **envp)
 	}
 	env_copy[total_variables] = NULL;
 	return (env_copy);
+}
+
+static	char	**ft_copy_env(char **envp)
+{
+	int	total_variables;
+
+	total_variables = count_env_variables(envp);
+	return (copy_env_variables(envp, total_variables));
 }
 
 void	ft_init_mix(t_mix *data, char **envp)

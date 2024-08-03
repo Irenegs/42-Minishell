@@ -6,11 +6,17 @@
 /*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 14:46:24 by irene             #+#    #+#             */
-/*   Updated: 2024/07/30 19:39:41 by pablgarc         ###   ########.fr       */
+/*   Updated: 2024/08/03 18:00:46 by pablgarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static void	free_mult(char *ptr1, char *ptr2)
+{
+	free(ptr1);
+	free(ptr2);
+}
 
 static char	*get_rawtext(char *del)
 {
@@ -27,8 +33,7 @@ static char	*get_rawtext(char *del)
 	while (aux_2 != NULL && ft_strncmp(aux_2, del, ft_strlen(del) + 1) != 0)
 	{
 		aux_1 = ft_strjoin(line, aux_2);
-		free(line);
-		free(aux_2);
+		free_mult(line, aux_2);
 		if (!aux_1)
 			return (write_error_null(1));
 		line = ft_strjoin(aux_1, "\n");

@@ -6,7 +6,7 @@
 /*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 17:56:24 by irene             #+#    #+#             */
-/*   Updated: 2024/07/31 17:50:16 by pablgarc         ###   ########.fr       */
+/*   Updated: 2024/08/03 17:05:28 by pablgarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ int		run_command(char **command, t_mix *data);
 
 //command_utils.c
 int		is_local(char *s);
-char	**get_path_variable(char **environ);
+char	**get_path_variable(t_mix *data);
 
 //execute.c
 int		execute(t_mix *data);
@@ -180,7 +180,7 @@ char	**ft_out(char **arr);
 char	**ft_super_split(char const *s, char *sep);
 
 //variable_utils.c
-int		select_variable(char *var_name, char **environ);
+int		select_variable(char *var_name, t_mix *data);
 char	*ft_getenv(char *var_name, t_mix *data);
 char	*obtain_variable(char *s, int i, t_mix *data);
 size_t	len_variable(char *str, int pos);

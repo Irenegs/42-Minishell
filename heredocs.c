@@ -6,11 +6,17 @@
 /*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 17:50:11 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/07/30 19:40:35 by pablgarc         ###   ########.fr       */
+/*   Updated: 2024/08/03 17:49:52 by pablgarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static	int	ft_free_sub(char *subs)
+{
+	free(subs);
+	return (-1);
+}
 
 static int	get_heredocs_texts(int pipes, char *s, t_mix *data)
 {
@@ -30,10 +36,7 @@ static int	get_heredocs_texts(int pipes, char *s, t_mix *data)
 		while (n < n_heredocs)
 		{
 			if (write_hd_file(subs + locate_n_hd(subs, n), p, data) != 0)
-			{
-				free(subs);
-				return (-1);
-			}
+				return (ft_free_sub(subs));
 			n++;
 		}
 		free(subs);

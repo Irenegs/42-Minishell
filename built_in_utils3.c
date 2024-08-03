@@ -6,7 +6,7 @@
 /*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 18:04:24 by pablgarc          #+#    #+#             */
-/*   Updated: 2024/07/30 20:48:55 by pablgarc         ###   ########.fr       */
+/*   Updated: 2024/08/03 16:22:40 by pablgarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ int	process_export_command(t_mix *data, char *cmd)
 	char	*var_name;
 	int		len;
 
+	if (ft_strlen(cmd) == 1 && cmd[0] == '=')
+		return (write_error_int(5, 1));
 	len = locate_char_position(cmd, '=');
 	var_name = ft_substr(cmd, 0, len);
 	if (!var_name)

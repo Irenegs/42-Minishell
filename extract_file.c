@@ -6,7 +6,7 @@
 /*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 16:36:46 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/07/30 19:32:34 by pablgarc         ###   ########.fr       */
+/*   Updated: 2024/08/03 17:04:30 by pablgarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static int	ft_open(char *filename, int mode)
 {
 	int	fd;
 
-	printf("mode:%d\n", mode);
+	//printf("mode:%d\n", mode);
 	if (!filename || mode < 0 || mode > 2)
 		return (-2);
 	if (mode == 0)
