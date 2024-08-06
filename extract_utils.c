@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   extract_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:40:20 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/07/30 19:25:23 by pablgarc         ###   ########.fr       */
+/*   Updated: 2024/08/06 17:03:21 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,15 @@ size_t	len_delimiter(char *s, int pos)
 size_t	len_quotes(char *s, int pos)
 {
 	size_t	len;
+	char	quote;
 
 	len = 0;
-	while (s[pos + 1 + len] != '\0' && s[pos + 1 + len] != s[pos])
+	quote = s[pos];
+	while (s[pos + 1 + len] != '\0' && s[pos + 1 + len] != quote)
+	{
+		//printf("c:%c\n", s[pos + 1 + len]);
 		len++;
+	}
 	return (len);
 }
 
@@ -72,7 +77,7 @@ int	len_cmd_str(char *str)
 	len = 1;
 	i = 0;
 	quotes = 0;
-	while (str[i] != '\0' && str[i] != '|')
+	while (str[i] != '\0' && (str[i] != '|' || quotes != 0))
 	{
 		i++;
 		while (str[i] != '\0' && str[i] != '|' && quotes == 0

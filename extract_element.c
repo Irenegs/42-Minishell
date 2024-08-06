@@ -6,7 +6,7 @@
 /*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:42:48 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/07/29 19:38:42 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/08/06 16:59:40 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,10 @@ static int	select_and_expand(char **result, char *s, int *pos, t_mix *data)
 	else if (s[*pos] == '$')
 		chunk = obtain_variable(s, *pos + 1, data);
 	else if (s[*pos] == '\'')
+	{
+		//printf("len:%ld\n", len);
 		chunk = ft_substr(s, *pos + 1, len);
+	}
 	else
 		chunk = ft_substr(s, *pos, len);
 	*result = add_chunk(*result, chunk);

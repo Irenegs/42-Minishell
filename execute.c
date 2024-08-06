@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 16:09:28 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/07/30 20:03:01 by pablgarc         ###   ########.fr       */
+/*   Updated: 2024/08/06 16:59:18 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,7 @@ void	parse_and_execute(t_mix *data)
 		return ;
 	g_exit_status = 0;
 	data->pipes = parser(data->input);
+	printf("pipes:%d\n", data->pipes);
 	if (data->pipes == -1)
 	{
 		write(2, "Parse error\n", 12);
