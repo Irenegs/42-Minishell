@@ -6,7 +6,7 @@
 /*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:36:03 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/08/06 17:31:32 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/08/06 18:03:04 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,26 +47,25 @@ static int	count_arguments(char *cmd_str)
 	int	args;
 	int	quotes;
 
+	//printf("cmd_str:%s\n", cmd_str);
 	if (!cmd_str)
 		return (0);
 	i = 0;
 	args = 0;
 	quotes = 0;
-	while (cmd_str[i] != '\0' && args < 10)
+	while (cmd_str[i] != '\0')
 	{
 		while (cmd_str[i] == ' ')
 			i++;
 		if (cmd_str[i] != ' ' && cmd_str[i] != '\0')
 		{
 			args++;
-			//printf("args++:%d cuando %c\n", args, cmd_str[i]);
+			//printf("args++ cuando %c\n", cmd_str[i]);
 			manage_quotes(&quotes, cmd_str[i]);
-			//printf("quotes %d\n", quotes);
-			while (cmd_str[i] != '\0' && quotes != 0 && args < 10)
+			while (cmd_str[i] != '\0' && (cmd_str[i] != ' ' || quotes != 0))
 			{
-				manage_quotes(&quotes, cmd_str[i]);
-				//printf("quotes %d\n", quotes);
 				i++;
+				manage_quotes(&quotes, cmd_str[i]);
 			}
 			i++;
 		}
@@ -80,7 +79,7 @@ static char	**split_command(char *s, t_mix *data)
 	int		i;
 	int		pos;
 
-	printf("split_command->count arguments:%d\n", count_arguments(s));
+	//printf("split_command->count arguments:%d\n", count_arguments(s));
 	arr = malloc((count_arguments(s) + 1) * sizeof(char *));
 	if (!arr)
 		return (write_error_null(1));
@@ -113,11 +112,11 @@ char	**extract_command(char *s, t_mix *data)
 	if (pos == -1)
 		return (NULL);
 	cmd_string = extract_cmd_str(s);
-	printf("cmd_string %s\n", cmd_string);
+	//printf("cmd_string %s\n", cmd_string);
 	if (!cmd_string)
 		return (write_error_null(1));
 	command = split_command(cmd_string, data);
-	printf("command[0]:%s\ncommand[1]:%s\n", command[0], command[0]);
+	//printf("command[0]:%s\ncommand[1]:%s\n", command[0], command[1]);
 	free(cmd_string);
 	return (command);
 }

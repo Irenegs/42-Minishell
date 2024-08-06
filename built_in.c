@@ -6,7 +6,7 @@
 /*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 21:56:45 by pablo             #+#    #+#             */
-/*   Updated: 2024/08/06 16:52:40 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/08/06 18:13:57 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	ft_echo(char **command)
 {
 	int	new_line;
 	int	i;
-	printf("echo:%s\n", command[1]);
+
 	new_line = 1;
 	i = 1;
 	if (command[i] && ft_strcmp(command[i], "-n") == 0)
