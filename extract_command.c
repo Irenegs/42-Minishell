@@ -6,7 +6,7 @@
 /*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:36:03 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/08/06 18:03:04 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/08/15 18:28:10 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static int	count_arguments(char *cmd_str)
 	int	args;
 	int	quotes;
 
-	//printf("cmd_str:%s\n", cmd_str);
+	//printf("cmd_str:%s->%ld\n", cmd_str, ft_strlen(cmd_str));
 	if (!cmd_str)
 		return (0);
 	i = 0;
@@ -67,7 +67,8 @@ static int	count_arguments(char *cmd_str)
 				i++;
 				manage_quotes(&quotes, cmd_str[i]);
 			}
-			i++;
+			if (cmd_str[i] != '\0')
+				i++;
 		}
 	}
 	return (args);
@@ -116,7 +117,14 @@ char	**extract_command(char *s, t_mix *data)
 	if (!cmd_string)
 		return (write_error_null(1));
 	command = split_command(cmd_string, data);
-	//printf("command[0]:%s\ncommand[1]:%s\n", command[0], command[1]);
+	/*
+	int i = 0;
+	while (command[i])
+	{
+		printf("command[%d]:%s\n", i, command[i]);
+		i++;
+	}
 	free(cmd_string);
+	*/
 	return (command);
 }
