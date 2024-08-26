@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 17:56:24 by irene             #+#    #+#             */
-/*   Updated: 2024/08/03 17:05:28 by pablgarc         ###   ########.fr       */
+/*   Updated: 2024/08/26 18:59:43 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,6 @@ char	*extract_pipe(char *s, int pipe);
 //extract_utils.c
 int		is_space(char c);
 size_t	len_literal_word(char *s, int pos);
-size_t	len_delimiter(char *s, int pos);
 size_t	len_quotes(char *s, int pos);
 int		len_cmd_str(char *str);
 
@@ -153,9 +152,12 @@ void	manage_multiple_pipes(int p, int pipes, int *fd);
 void	close_pipes(int pipes, int *fd);
 int		pipe_abortion(int *fd);
 
-//heredocs.c
+//heredoc_files.c
 void	clean_and_free_heredocs(char **heredocs, int pipes);
 int		get_heredocs(t_mix *data);
+
+//heredoc_delimiter.c
+char	*obtain_delimiter(char *del_str);
 
 //heredoc_text.c
 int		write_hd_file(char *s, int number_of_hd, t_mix *data);

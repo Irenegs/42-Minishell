@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 16:09:28 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/08/06 18:03:34 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/08/26 19:37:15 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,5 +126,6 @@ void	parse_and_execute(t_mix *data)
 		data->exit_status = 2;
 		return ;
 	}
-	data->exit_status = execute(data);
+	else if (data->pipes != -2)
+		data->exit_status = execute(data);
 }
