@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
+/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 18:32:16 by irene             #+#    #+#             */
-/*   Updated: 2024/08/26 19:37:36 by irene            ###   ########.fr       */
+/*   Updated: 2024/08/28 15:51:49 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,9 +123,7 @@ int	parser_errors(char *s)
 
 	i = -1;
 	quotes = 0;
-	insert[0] = 0;
-	insert[1] = 1;
-	insert[2] = 1;
+	change_insert(insert, 0, 1, 1);
 	while (s[++i] != '\0' && valid_insertion(insert, s[i]) == 1)
 	{
 		if (quotes == 0 && s[i] != '\'' && s[i] != '"')
@@ -139,6 +137,8 @@ int	parser_errors(char *s)
 				change_insert(insert, 1, 1, 1);
 		}
 		i = parser_manage_quotes(s, i, quotes);
+		if (s[i] == '\'' || s[i] == '"' )
+			change_insert(insert, 1, 1, 1);
 	}
 	if (s[i] != '\0' || valid_insertion(insert, '|') != 1)
 		return (-1);

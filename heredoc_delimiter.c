@@ -3,14 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_delimiter.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
+/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 18:07:59 by irene             #+#    #+#             */
-/*   Updated: 2024/08/26 18:58:51 by irene            ###   ########.fr       */
+/*   Updated: 2024/08/28 16:00:30 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static int	is_separator(char c)
+{
+	return ((c != ' ' && c != '<' && c != '>' && c != '|'));
+}
 
 static size_t	len_delimiter(char *s)
 {
@@ -20,13 +25,12 @@ static size_t	len_delimiter(char *s)
 
 	len = 0;
 	quotes_quantity = 0;
-	while (s[len] != '\0' && (s[len] != ' ' && s[len] != '<' && s[len] != '>' && s[len] != '|'))
+	while (s[len] != '\0' && is_separator(s[len]))
 	{
 		if (s[len] == '\'' || s[len] == '"')
 		{
 			quotes_quantity++;
-			quotes = s[len];
-			len++;
+			quotes = s[len++];
 			while (s[len] != '\0' && s[len] != quotes)
 				len++;
 			len++;
@@ -45,12 +49,12 @@ static size_t	len_delimiter(char *s)
 static void	copy_delimiter(char *orig, char *res, size_t len)
 {
 	int	i;
-	int j;
+	int	j;
 	int	quotes;
 
 	i = 0;
 	j = 0;
-	while (orig[i] != '\0' && (orig[i] != ' ' && orig[i] != '<' && orig[i] != '>' && orig[i] != '|'))
+	while (orig[i] != '\0' && is_separator(orig[i]))
 	{
 		if (orig[i] == '\'' || orig[i] == '"')
 		{
@@ -85,6 +89,5 @@ char	*obtain_delimiter(char *del_str)
 	if (!delimiter)
 		return (write_error_null(1));
 	copy_delimiter(del_str, delimiter, len);
-	printf("Delimiter:%s\n", delimiter);
 	return (delimiter);
 }

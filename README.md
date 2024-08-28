@@ -7,14 +7,36 @@ valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose -
 valgrind --track-fds=yes --trace-children=yes; --child-silent-after-fork=yes
 
 - parser permitir cosas raras entrecomilladas
-- generar entorno por defecto => leer https://unix.stackexchange.com/questions/280453/understand-the-meaning-of para la gestión inicial de $_ pasamos de todo y hardcodeamos
+echo "> >> < * ? [ ] | ; [ ] || && ( ) & # $  <<"  esto da seg fault
+echo '> >> < * ? [ ] | ; [ ] || && ( ) & # $  <<'  esto da seg fault
+
+- Variables
+echo $"HOME" -> HOME
+echo $'HOME' -> HOME
+
+- Heredoc variables
+irgonzal@c1r13s6:~$ <<d cat
+$USER
+${HOME}
+$"SHELL"
+$'LANGUAGE'
+'$TERM'
+'${SHLVL}'
+-> Resultado:
+irgonzal
+/home/irgonzal
+$"SHELL"
+$'LANGUAGE'
+'xterm-256color'
+'2'
+
+
+
 
 - parseo de cadenas como estas, con diferentes comillas:
 "exit_code ->$? user ->$USER home -> $HOME"
 'exit_code ->$? user ->$USER home -> $HOME'
 
- echo "> >> < * ? [ ] | ; [ ] || && ( ) & # $  <<"  esto da seg fault
- echo '> >> < * ? [ ] | ; [ ] || && ( ) & # $  <<'  esto da seg fault
 
  echo "Hello world" y 'Hello world' --- sacan un espacio en blanco al final
 
@@ -22,6 +44,7 @@ valgrind --track-fds=yes --trace-children=yes; --child-silent-after-fork=yes
 
 -tester de 76/146 a 110/146
 
+- generar entorno por defecto => leer https://unix.stackexchange.com/questions/280453/understand-the-meaning-of para la gestión inicial de $_ pasamos de todo y hardcodeamos
 
 
 ## Signals:

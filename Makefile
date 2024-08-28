@@ -11,7 +11,8 @@ SRCS        := built_in_check.c built_in.c built_in_env_exit.c built_in_echo.c\
 				execute.c execute_simple.c \
 				extract_command.c extract_element.c  extract_file.c extract_pipe.c \
 				extract_utils.c extract_utils2.c \
-				heredoc_delimiter.c heredoc_files.c heredoc_utils.c heredoc_text.c heredoc_expand.c\
+				general_utils.c \
+				heredoc_delimiter.c heredoc_files.c heredoc_files_utils.c heredoc_text.c heredoc_expand.c\
 				pipe_utils.c \
 				parser.c super_split.c split_utils.c \
 				struct.c signals.c signals_hd.c\

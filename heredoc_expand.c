@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_expand.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 17:52:42 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/07/30 19:36:07 by pablgarc         ###   ########.fr       */
+/*   Updated: 2024/08/28 18:41:18 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static int	len_until_dollar(char *str, int pos)
 	return (len);
 }
 
-char	*expand_string(char *input_str, t_mix *data)
+char	*expand_heredoc(char *input_str, t_mix *data)
 {
 	char	*expanded;
 	int		pos;
@@ -54,10 +54,15 @@ char	*expand_string(char *input_str, t_mix *data)
 	pos = 0;
 	while (input_str[pos] != '\0' && expanded)
 	{
-		if (input_str[pos] == '$')
+		if (input_str[pos] == '$' && input_str[pos + 1] != '\'' && input_str[pos + 1] != '"')
 		{
 			expanded = expand_variable(expanded, input_str, pos, data);
-			pos += len_literal_word(input_str, pos + 1) + 1;
+			pos += len_variable(input_str, pos + 1) + 1;
+		}
+		else if (input_str[pos] == '$')
+		{
+			expanded = normal_expansion(expanded, input_str, pos, 1);
+			pos++;
 		}
 		else
 		{
@@ -79,7 +84,7 @@ int	must_expand(char *delimiter, char *text)
 		delimiter++;
 	while (*delimiter == '<' || is_space(*delimiter) == 1)
 		delimiter++;
-	if (*delimiter == '"' || *delimiter == '\'')
+	if (ft_strrchr(delimiter, '\'') != 0 || ft_strrchr(delimiter, '"') != 0)
 		return (0);
 	return (1);
 }

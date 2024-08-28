@@ -6,7 +6,7 @@
 /*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:42:48 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/08/06 16:59:40 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/08/28 18:23:18 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ static char	*expand_double_quotes(char *s, int pos, t_mix *data)
 			result = expand_variable(result, s, pos, data);
 			pos += len_literal_word(s, pos + 1);
 		}
+		if (!result)
+			return (NULL);
 		len = 0;
 	}
 	return (result);
@@ -65,12 +67,11 @@ static int	select_and_expand(char **result, char *s, int *pos, t_mix *data)
 	else if (s[*pos] == '$')
 		chunk = obtain_variable(s, *pos + 1, data);
 	else if (s[*pos] == '\'')
-	{
-		//printf("len:%ld\n", len);
 		chunk = ft_substr(s, *pos + 1, len);
-	}
 	else
 		chunk = ft_substr(s, *pos, len);
+	if (!chunk)
+		return (1);
 	*result = add_chunk(*result, chunk);
 	if (!(*result))
 		return (1);

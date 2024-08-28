@@ -3,21 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   extract_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
+/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:40:20 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/08/26 18:07:49 by irene            ###   ########.fr       */
+/*   Updated: 2024/08/28 18:08:19 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	is_space(char c)
-{
-	if (c == 32 || (c < 14 && c > 8) || c == '\0')
-		return (1);
-	return (0);
-}
 
 size_t	len_literal_word(char *s, int pos)
 {

@@ -6,7 +6,7 @@
 /*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 18:56:55 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/07/27 20:12:57 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/08/28 18:27:52 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	execute_zero_pipes(t_mix *data)
 
 	command = extract_command(data->input, data);
 	if (!command)
-		return (write_error_int(1, 1));
+		return (1);//write_error_int(1, 1));
 	if (is_special_builtin(command[0]) == 1)
 		status = execute_builtin(data, command);
 	else

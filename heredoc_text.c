@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_text.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
+/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 14:46:24 by irene             #+#    #+#             */
-/*   Updated: 2024/08/26 19:11:05 by irene            ###   ########.fr       */
+/*   Updated: 2024/08/28 17:28:31 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,11 @@ static char	*get_rawtext(char *del)
 	char	*aux_2;
 
 	ft_signals_hd();
-	aux_2 = readline("Heredoc>");
 	line = malloc(1 * sizeof(char));
 	if (!line)
 		return (write_error_null(1));
 	line[0] = '\0';
+	aux_2 = readline("Heredoc>");
 	while (aux_2 != NULL && ft_strncmp(aux_2, del, ft_strlen(del) + 1) != 0)
 	{
 		aux_1 = ft_strjoin(line, aux_2);
@@ -65,7 +65,7 @@ static char	*get_heredoc(char *s, t_mix *data)
 	if (must_expand(s, heredoc_text) == 1)
 	{
 		aux = heredoc_text;
-		heredoc_text = expand_string(aux, data);
+		heredoc_text = expand_heredoc(aux, data);
 		free(aux);
 	}
 	free(delimiter);

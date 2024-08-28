@@ -6,7 +6,7 @@
 /*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:36:03 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/08/15 18:28:10 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/08/28 18:33:51 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ static char	**split_command(char *s, t_mix *data)
 	int		i;
 	int		pos;
 
-	//printf("split_command->count arguments:%d\n", count_arguments(s));
 	arr = malloc((count_arguments(s) + 1) * sizeof(char *));
 	if (!arr)
 		return (write_error_null(1));
@@ -94,7 +93,7 @@ static char	**split_command(char *s, t_mix *data)
 		if (!arr[i])
 		{
 			ft_out(arr);
-			return (write_error_null(1));
+			return (NULL);//write_error_null(1));
 		}
 		while (s[pos] != '\0' && is_space(s[pos]) == 0)
 			pos++;
@@ -115,7 +114,7 @@ char	**extract_command(char *s, t_mix *data)
 	cmd_string = extract_cmd_str(s);
 	//printf("cmd_string %s\n", cmd_string);
 	if (!cmd_string)
-		return (write_error_null(1));
+		return (NULL);
 	command = split_command(cmd_string, data);
 	/*
 	int i = 0;

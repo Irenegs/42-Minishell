@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 20:28:17 by pablgarc          #+#    #+#             */
-/*   Updated: 2024/07/30 20:43:52 by pablgarc         ###   ########.fr       */
+/*   Updated: 2024/08/28 18:12:24 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,7 @@ void	*write_error_null(int error_code)
 {
 	if (error_code == 1)
 		write(2, "Malloc error\n", 13);
+	if (error_code == 2)
+		write(2, "Bad substitution\n", 17);
 	return (NULL);
 }
