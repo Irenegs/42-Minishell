@@ -6,16 +6,11 @@
 /*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 18:07:59 by irene             #+#    #+#             */
-/*   Updated: 2024/08/28 16:00:30 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/08/30 19:12:43 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static int	is_separator(char c)
-{
-	return ((c != ' ' && c != '<' && c != '>' && c != '|'));
-}
 
 static size_t	len_delimiter(char *s)
 {

@@ -6,7 +6,7 @@
 /*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:36:03 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/08/28 18:33:51 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/08/30 20:20:45 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ static char	**split_command(char *s, t_mix *data)
 	int		pos;
 
 	arr = malloc((count_arguments(s) + 1) * sizeof(char *));
-	if (!arr)
+	if (!arr || !data)
 		return (write_error_null(1));
 	i = -1;
 	pos = 0;
@@ -89,7 +89,7 @@ static char	**split_command(char *s, t_mix *data)
 	{
 		while (new_word(s, " ", pos, 0) == 0)
 			pos++;
-		arr[i] = extract_element(s, &pos, data);
+		//arr[i] = extract_element(s, &pos, data);
 		if (!arr[i])
 		{
 			ft_out(arr);

@@ -6,7 +6,7 @@
 /*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 17:56:24 by irene             #+#    #+#             */
-/*   Updated: 2024/08/28 18:09:26 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/08/30 20:20:05 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,8 @@ char	**extract_command(char *s, t_mix *data);
 
 //extract_elements.c
 char	*obtain_variable(char *s, int i, t_mix *data);
-char	*extract_element(char *s, int *pos, t_mix *data);
+//char	*extract_element(char *s, int *pos, t_mix *data);
+char    **extract_element(char *s, int pos, t_mix *data);
 int		something_to_add(char *s, int pos);
 
 //extract_file.c
@@ -149,6 +150,7 @@ int		pipe_abortion(int *fd);
 //general_utils.c
 int 	is_quote(char c);
 int		is_space(char c);
+int		is_separator(char c);
 
 //heredoc_files.c
 void	clean_and_free_heredocs(char **heredocs, int pipes);

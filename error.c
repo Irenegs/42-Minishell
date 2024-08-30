@@ -6,7 +6,7 @@
 /*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 20:28:17 by pablgarc          #+#    #+#             */
-/*   Updated: 2024/08/28 18:12:24 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/08/30 18:07:29 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,7 @@ void	*write_error_null(int error_code)
 		write(2, "Malloc error\n", 13);
 	if (error_code == 2)
 		write(2, "Bad substitution\n", 17);
+	if (error_code == 3)
+		write(2, "Ambiguos redirect\n", 18);
 	return (NULL);
 }

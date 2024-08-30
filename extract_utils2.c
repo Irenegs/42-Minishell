@@ -6,7 +6,7 @@
 /*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 19:08:50 by pablgarc          #+#    #+#             */
-/*   Updated: 2024/08/06 17:08:22 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/08/30 19:23:06 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,6 @@ char	*extract_cmd_str(char *str)
 		return (write_error_null(1));
 	copy_cmd(str, cmd);
 	return (cmd);
-}
-
-void	manage_quotes(int *quotes, char c)
-{
-	if (c == *quotes && *quotes != 0)
-		*quotes = 0;
-	else if (*quotes == 0 && (c == '\'' || c == '"'))
-		*quotes = c;
 }
 
 int	len_skip_word(char *str, int pos)

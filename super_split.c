@@ -3,28 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   super_split.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 15:23:01 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/07/30 19:50:39 by pablgarc         ###   ########.fr       */
+/*   Updated: 2024/08/30 20:04:02 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-char	**ft_out(char **arr)
-{
-	int	j;
-
-	j = 0;
-	while (arr[j])
-	{
-		free(arr[j]);
-		j++;
-	}
-	free(arr);
-	return (NULL);
-}
 
 static int	ch_to_print(char const *s, int i)
 {

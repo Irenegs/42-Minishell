@@ -6,7 +6,7 @@
 /*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 20:32:38 by irene             #+#    #+#             */
-/*   Updated: 2024/08/28 18:18:44 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/08/30 20:08:55 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,6 +138,7 @@ char	*obtain_variable(char *s, int i, t_mix *data)
 		var_name = ft_substr(s, i, len);
 	if (!var_name)
 		return (write_error_null(1));
+	printf("var_name:%s\n", var_name);
 	var_value = ft_getenv(var_name, data);
 	free(var_name);
 	return (var_value);

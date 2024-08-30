@@ -6,13 +6,13 @@
 /*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 15:23:01 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/06/06 19:22:14 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/08/30 20:05:30 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	is_separator(char c, char *sep)
+static int	is_split_separator(char c, char *sep)
 {
 	int	i;
 
@@ -38,11 +38,11 @@ int	new_word(char const *s, char *sep, int i, int quotes)
 {
 	if (s && sep)
 	{
-		if (is_separator(s[i], sep) == -1 && quotes == 0)
+		if (is_split_separator(s[i], sep) == -1 && quotes == 0)
 		{
 			if (i == 0)
 				return (1);
-			if (is_separator(s[i - 1], sep) != -1 && is_escaped(s, i - 1) == 0)
+			if (is_split_separator(s[i - 1], sep) != -1 && is_escaped(s, i - 1) == 0)
 				return (1);
 		}
 		return (0);
@@ -76,7 +76,7 @@ int	end_word(char const *s, char *sep, int i, int quot)
 {
 	if (s && sep && s[i] != '\0')
 	{
-		if (quot == 1 || is_separator(s[i], sep) == -1 || is_escaped(s, i) == 1)
+		if (quot == 1 || is_split_separator(s[i], sep) == -1 || is_escaped(s, i) == 1)
 			return (0);
 	}
 	return (1);
