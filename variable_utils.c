@@ -6,7 +6,7 @@
 /*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 20:32:38 by irene             #+#    #+#             */
-/*   Updated: 2024/08/30 20:08:55 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/09/01 16:56:12 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ size_t	len_variable(char *str, int pos)
 	return (len);
 }
 
-static size_t	len_varname(char *str, int *pos)
+size_t	len_varname(char *str, int *pos)
 {
 	size_t	len;
 

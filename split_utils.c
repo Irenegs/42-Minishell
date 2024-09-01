@@ -6,7 +6,7 @@
 /*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 15:23:01 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/08/30 20:05:30 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/09/01 18:33:45 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static int	is_split_separator(char c, char *sep)
 
 int	is_escaped(char const *s, int i)
 {
-	if (s[i - 1] == '\\')
+	if (i != 0 && s[i - 1] == '\\')
 		return (1);
 	return (0);
 }

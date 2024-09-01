@@ -6,11 +6,12 @@
 /*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:42:48 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/08/30 20:21:44 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/09/01 16:29:06 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
 /*
 static char	*add_chunk(char *original, char *chunk)
 {
@@ -84,6 +85,7 @@ static int	select_and_expand(char **result, char *s, int *pos, t_mix *data)
 	return (0);
 }
 */
+
 int	something_to_add(char *s, int pos)
 {
 	if (is_space(s[pos]) == 0 && s[pos] != '<' && s[pos] != '>'
