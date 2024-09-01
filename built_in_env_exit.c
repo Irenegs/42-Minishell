@@ -6,7 +6,7 @@
 /*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 22:04:50 by pablo             #+#    #+#             */
-/*   Updated: 2024/07/30 19:57:56 by pablgarc         ###   ########.fr       */
+/*   Updated: 2024/09/01 18:42:57 by pablgarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,10 @@ int	ft_exit(char **command, t_mix *data)
 		if (command[2])
 		{
 			write(2, "exit: too many arguments\n", 25);
-			return (1);
+			if (data->exit_status == 0)
+				return (1);
+			else
+				return (data->exit_status);
 		}
 		if (ft_isnum(command[1]) == 1)
 		{

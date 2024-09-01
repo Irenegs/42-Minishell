@@ -5,26 +5,13 @@ Valgrind leaks:
 valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose --log-file=valgrind-out.txt ./minishell
 valgrind --track-fds=yes --trace-children=yes; --child-silent-after-fork=yes
 
-- parser permitir cosas raras entrecomilladas
-- generar entorno por defecto => leer https://unix.stackexchange.com/questions/280453/understand-the-meaning-of para la gestión inicial de $_ pasamos de todo y hardcodeamos
 
-- parseo de cadenas como estas, con diferentes comillas:
-"exit_code ->$? user ->$USER home -> $HOME"
-'exit_code ->$? user ->$USER home -> $HOME'
-
- echo "> >> < * ? [ ] | ; [ ] || && ( ) & # $  <<"  esto da seg fault
- echo '> >> < * ? [ ] | ; [ ] || && ( ) & # $  <<'  esto da seg fault
-
- echo "Hello world" y 'Hello world' --- sacan un espacio en blanco al final
-
--funcion parser mas de 25 lineas -- esta ha sido la unica que no me atrevo a tocar...
-
--tester de 76/146 a 110/146
-
+sumar shlvl al abrir varios bash en archivo struct funcion copy_env_variables
 
 
 ## Signals:
 Ctrl - \ debe no hacer nada
+ctrl + c da error 130 y a nosotros 0
 
 ### heredoc + señales:
 C-c dentro de heredoc lo corta y vuelve a la shell sin ejecutar ninguna instrucción $?=130

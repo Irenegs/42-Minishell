@@ -6,7 +6,7 @@
 /*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 17:36:54 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/08/03 16:59:26 by pablgarc         ###   ########.fr       */
+/*   Updated: 2024/09/01 18:21:31 by pablgarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,7 @@ int	run_command(char **command, t_mix *data)
 	if (!cmd)
 		cmd = command[0];
 	execve(cmd, command, data->m_env);
-	perror(NULL);
 	if (ft_strncmp(cmd, command[0], ft_strlen(command[0])) != 0)
 		free(cmd);
-	return (127);
+	return (write_error_int(6, 127));
 }
