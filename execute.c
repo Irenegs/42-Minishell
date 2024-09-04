@@ -6,7 +6,7 @@
 /*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 16:09:28 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/08/30 20:18:43 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/09/04 17:37:13 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,16 +120,12 @@ void	parse_and_execute(t_mix *data)
 		return ;
 	g_exit_status = 0;
 	data->pipes = parser(data->input);
-	char **elements = extract_element(data->input, 0, data);
-	printf("elements[0]:%s\n", elements[0]);
-	printf("elements[1]:%s\n", elements[1]);
-	/*
-	if (data->pipes == -1)
+		if (data->pipes == -1)
 	{
 		write(2, "Parse error\n", 12);
 		data->exit_status = 2;
 		return ;
 	}
 	else if (data->pipes != -2)
-		data->exit_status = execute(data);*/
+		data->exit_status = execute(data);
 }

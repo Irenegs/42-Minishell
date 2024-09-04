@@ -6,7 +6,7 @@
 /*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 17:56:24 by irene             #+#    #+#             */
-/*   Updated: 2024/08/30 20:20:05 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/09/04 18:05:43 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,6 +151,7 @@ int		pipe_abortion(int *fd);
 int 	is_quote(char c);
 int		is_space(char c);
 int		is_separator(char c);
+char **join_arrays(char ***array);
 
 //heredoc_files.c
 void	clean_and_free_heredocs(char **heredocs, int pipes);
@@ -186,4 +187,5 @@ int		select_variable(char *var_name, t_mix *data);
 char	*ft_getenv(char *var_name, t_mix *data);
 char	*obtain_variable(char *s, int i, t_mix *data);
 size_t	len_variable(char *str, int pos);
+size_t	len_varname(char *str, int *pos);
 #endif

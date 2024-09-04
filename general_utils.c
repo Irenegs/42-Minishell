@@ -6,7 +6,7 @@
 /*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 18:06:33 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/08/30 20:04:05 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/09/04 18:07:20 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,65 @@ char	**ft_out(char **arr)
 	}
 	free(arr);
 	return (NULL);
+}
+
+int	join_arrays_size(char ***array)
+{
+	int size;
+	int	i;
+	int	j;
+
+	if (!array)
+		return (0);
+	size = 0;
+	i = 0;
+	while (array[i])
+	{
+		j = 0;
+		while (array[i][j])
+		{
+			j++;
+			size++;
+		}
+		i++;
+	}
+	return (size);
+}
+
+void	fill_joined_array(char ***array, char **joined)
+{
+	int size;
+	int	i;
+	int	j;
+
+	if (!array || !joined)
+		return ;
+	size = 0;
+	i = 0;
+	while (array[i])
+	{
+		j = 0;
+		while (array[i][j])
+		{
+			joined[size] = array[i][j];
+			j++;
+			size++;
+		}
+		i++;
+	}
+}
+
+char **join_arrays(char ***array)
+{
+	int		size;
+	char	**joined;
+
+	if (!array)
+		return (NULL);
+	size = join_arrays_size(array);
+	joined = malloc(size * sizeof(char *));
+	if (!joined)
+		return (write_error_null(1));
+	fill_joined_array(array, joined);
+	return (joined);
 }

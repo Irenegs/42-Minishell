@@ -6,7 +6,7 @@
 /*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 19:01:32 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/09/01 18:36:20 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/09/04 18:06:00 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,7 @@ static void add_variable(char *result, char *orig, int pos, t_mix *data)
     char    *variable;
     char    *new;
 
-    variable = variable_escaped_quotes(orig, pos, data);
+    variable = variable_escaped_quote(orig, pos, data);
     new = ft_strjoin(result, variable);
     free(variable);
     free(result);
@@ -160,7 +160,7 @@ char	*expand_str(char *str, t_mix *data)
         if (str[pos] == '$')
         {
             add_variable(expanded, str, pos, data);
-            pos += len_varname(str, pos) + 1;
+            pos += len_varname(str, &pos) + 1;
         }
         else if (quotes != 0 && is_quote(str[pos]) == 1 && quotes != str[pos])
         {
@@ -179,8 +179,8 @@ char	*expand_str(char *str, t_mix *data)
 
 static char    *unquote_str(char *str)
 {
-    int i;
-    int unquoted;
+    int     i;
+    char    *unquoted;
 
     i = 0;
 	if (!str)
@@ -191,16 +191,23 @@ static char    *unquote_str(char *str)
 	unquoted[0] = '\0';
     while (str[i] != '\0')
     {
-        //comilla escapada -> sin \ 
-        //comilla normal -> saltar
-        //otros copiar normal
+        if (str[i] == '\'' && is_quote(str[i + 1]))
+        {
+            add_char(unquoted, str, i + 1);
+            i++;
+        }
+        else if (is_quote(str[i]) == 0)
+            add_char(unquoted, str, i);
+        i++;
     }
+    return (unquoted);
 }
 
 static char    **unquote(char **element)
 {
     int n;
 
+    n = 0;
     while (element[n])
     {
         element[n] = unquote_str(element[n]);
@@ -227,9 +234,9 @@ char    **extract_element(char *s, int pos, t_mix *data)
         free(str);
         str = aux_str;    
     }
-    element = ft_super_split(str, " ");//cambiar super split?
+    element = ft_super_split(str, " ");//cambiar super split para gestionar ambos tipos de comillas?
     free(str);
-    unquoted_element = NULL;//unquote(element);
+    unquoted_element = unquote(element);
     ft_out(element);
     return (unquoted_element);
 }
