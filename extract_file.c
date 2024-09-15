@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   extract_file.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 16:36:46 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/08/30 20:22:12 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/09/15 16:30:40 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ int	extract_input(char *s, t_mix *data, int p)
 	int		pos;
 	char	*filename;
 	int		aux_fd;
-
+	printf("extract_input\n");
 	if (!s)
 		return (-2);
 	pos = locate_char_position_quotes(s, '<');

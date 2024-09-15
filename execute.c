@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 16:09:28 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/09/04 17:37:13 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/09/15 16:26:37 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ int	execute(t_mix *data)
 	int		ret_value;
 
 	ret_value = 0;
+	printf("Execute");
 	data->heredocs = malloc((data->pipes + 2) * sizeof(char *));
 	if (!data->heredocs)
 		ret_value = write_error_int(1, 1);
@@ -120,7 +121,8 @@ void	parse_and_execute(t_mix *data)
 		return ;
 	g_exit_status = 0;
 	data->pipes = parser(data->input);
-		if (data->pipes == -1)
+	printf("Parser:%d\n", data->pipes);
+	if (data->pipes == -1)
 	{
 		write(2, "Parse error\n", 12);
 		data->exit_status = 2;

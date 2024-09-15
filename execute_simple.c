@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_simple.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 18:56:55 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/08/28 18:27:52 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/09/15 16:30:21 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int	manage_simple_redirections(t_mix *data)
 {
 	int		input;
 	int		output;
-
+	printf("manage_simple_redirections\n");
 	input = extract_input(data->input, data, -1);
 	if (input > 0)
 		dup2(input, STDIN_FILENO);
@@ -43,7 +43,7 @@ static int	execute_only_child(t_mix *data, char **command)
 {
 	int		childpid;
 	int		status;
-
+	printf("Execute only child\n");
 	childpid = fork();
 	if (childpid == -1)
 	{
@@ -66,11 +66,11 @@ int	execute_zero_pipes(t_mix *data)
 {
 	char	**command;
 	int		status;
-
+	printf("Execute zero pipes\n");
 	command = extract_command(data->input, data);
 	if (!command)
 		return (1);//write_error_int(1, 1));
-	if (is_special_builtin(command[0]) == 1)
+	if (is_builtin(command[0]) == 1)
 		status = execute_builtin(data, command);
 	else
 		status = execute_only_child(data, command);

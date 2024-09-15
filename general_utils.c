@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   general_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 18:06:33 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/09/04 18:07:20 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/09/15 16:45:12 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ char **join_arrays(char ***array)
 {
 	int		size;
 	char	**joined;
-
+	printf("join_arrays\n");
 	if (!array)
 		return (NULL);
 	size = join_arrays_size(array);

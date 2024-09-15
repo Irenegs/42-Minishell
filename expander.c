@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 19:01:32 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/09/04 18:06:00 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/09/15 16:48:16 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,16 @@ static int  variables_to_expand(char *str)
 {
     int quotes;
     int i;
-    
+    printf("variables_to_expand\n");
     quotes = 0;
     i = 0;
     while (str[i] != '\0')
     {
         if (str[i] == '$' && quotes != '\'')
             return (1);
+        i++;
     }
+    printf("varialbes to expand = 0\n");
     return (0);
 }
 
@@ -200,13 +202,14 @@ static char    *unquote_str(char *str)
             add_char(unquoted, str, i);
         i++;
     }
+    printf("unquoted:%s\n", unquoted);
     return (unquoted);
 }
 
 static char    **unquote(char **element)
 {
     int n;
-
+    printf("unquote\n");
     n = 0;
     while (element[n])
     {
@@ -216,6 +219,7 @@ static char    **unquote(char **element)
             ft_out(element);//hay que liberar también los posteriores...
             return (NULL);
         }
+        n++;
     }
     return (element);
 }
@@ -226,17 +230,22 @@ char    **extract_element(char *s, int pos, t_mix *data)
     char    *aux_str;
     char    **element;
     char    **unquoted_element;
-
+    printf("extract_element\n");
     str = extract_str_element(s, pos);
+    printf("extract_str_element:%s\n", str);
     if (variables_to_expand(str) == 1)
     {
+        printf("hay variables a expandir\n");
         aux_str = expand_str(str, data);
         free(str);
         str = aux_str;    
     }
-    element = ft_super_split(str, " ");//cambiar super split para gestionar ambos tipos de comillas?
+    element = ft_split(str, ' ');//cambiar super split para gestionar ambos tipos de comillas?
     free(str);
+    printf("element[0]:%s\n", element[0]);
     unquoted_element = unquote(element);
-    ft_out(element);
+    printf("despues unquote\n");
+    //ft_out(element);
+    printf("deps ft_out\n");
     return (unquoted_element);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   extract_command.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:36:03 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/09/04 18:06:55 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/09/15 16:45:00 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,8 @@ static char	**split_command(char *s, t_mix *data)
 	int		i;
 	int		pos;
 	char	**element;
-
+	printf("split_command\n");
+	printf("count_arguments:%d\n", count_arguments(s));
 	arr = malloc((count_arguments(s) + 1) * sizeof(char **));
 	if (!arr || !data)
 		return (write_error_null(1));
@@ -110,16 +111,15 @@ char	**extract_command(char *s, t_mix *data)
 	int		pos;
 	char	*cmd_string;
 	char	**command;
-
+	printf("Extract_command\n");
 	pos = locate_cmd_position(s);
 	if (pos == -1)
 		return (NULL);
 	cmd_string = extract_cmd_str(s);
-	//printf("cmd_string %s\n", cmd_string);
+	printf("cmd_string %s\n", cmd_string);
 	if (!cmd_string)
 		return (NULL);
 	command = split_command(cmd_string, data);
-	/*
 	int i = 0;
 	while (command[i])
 	{
@@ -127,6 +127,5 @@ char	**extract_command(char *s, t_mix *data)
 		i++;
 	}
 	free(cmd_string);
-	*/
 	return (command);
 }
