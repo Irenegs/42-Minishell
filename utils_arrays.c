@@ -1,43 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   general_utils.c                                    :+:      :+:    :+:   */
+/*   utils_arrays.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/28 18:06:33 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/09/15 16:45:12 by irene            ###   ########.fr       */
+/*   Created: 2024/09/15 18:33:19 by irene             #+#    #+#             */
+/*   Updated: 2024/09/15 18:46:07 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int is_quote(char c)
-{
-    if (c == '\'' || c == '"')
-        return ((int) c);
-    return (0);
-}
-
-int	is_space(char c)
-{
-	if (c == 32 || (c < 14 && c > 8) || c == '\0')
-		return (1);
-	return (0);
-}
-
-int	is_separator(char c)
-{
-	return ((c != ' ' && c != '<' && c != '>' && c != '|'));
-}
-
-void	manage_quotes(int *quotes, char c)
-{
-	if (c == *quotes && *quotes != 0)
-		*quotes = 0;
-	else if (*quotes == 0 && (c == '\'' || c == '"'))
-		*quotes = c;
-}
 
 char	**ft_out(char **arr)
 {
@@ -53,7 +26,7 @@ char	**ft_out(char **arr)
 	return (NULL);
 }
 
-int	join_arrays_size(char ***array)
+static int	join_arrays_size(char ***array)
 {
 	int size;
 	int	i;
@@ -68,6 +41,7 @@ int	join_arrays_size(char ***array)
 		j = 0;
 		while (array[i][j])
 		{
+			printf("i,j:%d,%d\n",i, j);
 			j++;
 			size++;
 		}
@@ -76,12 +50,12 @@ int	join_arrays_size(char ***array)
 	return (size);
 }
 
-void	fill_joined_array(char ***array, char **joined)
+static void	fill_joined_array(char ***array, char **joined)
 {
 	int size;
 	int	i;
 	int	j;
-
+	printf("fill_joined_array\n");
 	if (!array || !joined)
 		return ;
 	size = 0;
@@ -107,9 +81,11 @@ char **join_arrays(char ***array)
 	if (!array)
 		return (NULL);
 	size = join_arrays_size(array);
+	printf("array size:%d\n", size);
 	joined = malloc(size * sizeof(char *));
 	if (!joined)
 		return (write_error_null(1));
 	fill_joined_array(array, joined);
+	printf("joined\n");
 	return (joined);
 }

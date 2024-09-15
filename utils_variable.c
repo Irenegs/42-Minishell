@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   variable_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 20:32:38 by irene             #+#    #+#             */
-/*   Updated: 2024/09/01 16:56:12 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/09/15 18:29:56 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,18 +89,18 @@ size_t	len_variable(char *str, int pos)
 size_t	len_varname(char *str, int *pos)
 {
 	size_t	len;
-
+	printf("len_varname:%s,%d\n", str, *pos);
 	if (!str)
 		return (0);
-	if (str[*pos] == '?')
+	if (str[*pos + 1] == '?')
 		return (1);
-	if (str[*pos] == '{' && str[*pos + 1] != '_' && ft_isalpha(str[*pos + 1]) == 0)
+	if (str[*pos + 1] == '{' && str[*pos + 1] != '_' && ft_isalpha(str[*pos + 1]) == 0)
 		return (0);
-	if (str[*pos] == '{')
+	if (str[*pos + 1] == '{')
 		(*pos)++;
-	if (str[*pos] != '_' && ft_isalpha(str[*pos]) == 0)
+	if (str[*pos + 1] != '_' && ft_isalpha(str[*pos + 1]) == 0)
 		return (0);
-	len = 1;
+	len = 2;
 	while (str[*pos + len] == '_' || ft_isalnum(str[*pos + len]))
 		len++;
 	return (len);

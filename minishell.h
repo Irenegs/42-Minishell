@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 17:56:24 by irene             #+#    #+#             */
-/*   Updated: 2024/09/04 18:05:43 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/09/15 18:02:46 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,4 +188,10 @@ char	*ft_getenv(char *var_name, t_mix *data);
 char	*obtain_variable(char *s, int i, t_mix *data);
 size_t	len_variable(char *str, int pos);
 size_t	len_varname(char *str, int *pos);
+
+//expander_quotes.c
+char    **unquote(char **element);
+char	*expand_str(char *str, t_mix *data);
+int  variables_to_expand(char *str);
+void add_char(char **result, char *orig, int pos);
 #endif
