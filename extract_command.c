@@ -6,7 +6,7 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:36:03 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/09/15 18:42:55 by irene            ###   ########.fr       */
+/*   Updated: 2024/09/22 17:45:45 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,7 @@ static char	**split_command(char *s, t_mix *data)
 	int		i;
 	int		pos;
 	char	**element;
-	printf("split_command\n");
-	printf("count_arguments:%d\n", count_arguments(s));
+
 	arr = malloc((count_arguments(s) + 1) * sizeof(char **));
 	if (!arr || !data)
 		return (write_error_null(1));
@@ -120,12 +119,15 @@ char	**extract_command(char *s, t_mix *data)
 	if (!cmd_string)
 		return (NULL);
 	command = split_command(cmd_string, data);
+	
+	printf("printeamos el comando\n");
 	int i = 0;
 	while (command[i])
 	{
 		printf("command[%d]:%s\n", i, command[i]);
 		i++;
 	}
+	
 	free(cmd_string);
 	return (command);
 }

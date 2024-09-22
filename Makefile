@@ -17,6 +17,7 @@ SRCS        := built_in_check.c built_in.c built_in_env_exit.c built_in_echo.c\
 				parser.c super_split.c split_utils.c \
 				struct.c signals.c signals_hd.c\
 				main.c \
+				split_element.c \
 				utils_arrays.c utils_char.c utils_variable.c \
 			
 

@@ -6,7 +6,7 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 16:36:46 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/09/15 16:30:40 by irene            ###   ########.fr       */
+/*   Updated: 2024/09/22 17:03:57 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ char	*extract_filename(char *s, int *pos, t_mix *data)
 
 	element = extract_element(s, *pos, data);
 	if (!element)
-		return (NULL);//write malloc error debería estar en extract element
+		return (NULL);
 	if (element[1] != NULL)
 	{
 		ft_out(element);
@@ -78,25 +78,6 @@ char	*extract_filename(char *s, int *pos, t_mix *data)
 	ft_out(element);
 	return (filename);
 }
-
-/*
-char	*extract_filename(char *s, int *pos, t_mix *data)
-{
-	char *element;
-
-	element = extract_element(s, pos, data);
-	printf("element:%s\n", element);
-	if (!element)
-		return (write_error_null(1));
-	printf("ftwc:%d\n", ft_wc(element, " "));
-	if (ft_wc(element, " ") != 1)
-	{
-		free(element);
-		return (write_error_null(3));
-	}
-	return (element);
-}
-*/
 
 int	extract_input(char *s, t_mix *data, int p)
 {

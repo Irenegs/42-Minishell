@@ -6,7 +6,7 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 17:56:24 by irene             #+#    #+#             */
-/*   Updated: 2024/09/15 18:02:46 by irene            ###   ########.fr       */
+/*   Updated: 2024/09/22 17:00:39 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,4 +194,7 @@ char    **unquote(char **element);
 char	*expand_str(char *str, t_mix *data);
 int  variables_to_expand(char *str);
 void add_char(char **result, char *orig, int pos);
+
+//split_element.c
+char	**split_element(char *str);
 #endif

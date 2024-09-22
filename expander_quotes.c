@@ -6,7 +6,7 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/15 17:53:19 by irene             #+#    #+#             */
-/*   Updated: 2024/09/15 17:54:19 by irene            ###   ########.fr       */
+/*   Updated: 2024/09/22 17:44:13 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static char    *unquote_str(char *str)
 {
     int     i;
     char    *unquoted;
-    printf("unquote_str\n");
+
     i = 0;
 	if (!str)
 		return (NULL);
@@ -57,7 +57,7 @@ static int quote_in_element(char *str)
 char    **unquote(char **element)
 {
     int n;
-    printf("unquote\n");
+
     n = 0;
     while (element[n])
     {
