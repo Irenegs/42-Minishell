@@ -3,38 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   built_in.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 21:56:45 by pablo             #+#    #+#             */
-/*   Updated: 2024/07/30 19:59:50 by pablgarc         ###   ########.fr       */
+/*   Updated: 2024/08/23 11:17:02 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	ft_echo(char **command)
-{
-	int	new_line;
-	int	i;
-
-	new_line = 1;
-	i = 1;
-	if (command[i] && ft_strcmp(command[i], "-n") == 0)
-	{
-		new_line = 0;
-		i++;
-	}
-	while (command[i])
-	{
-		printf("%s", command[i]);
-		if (command[i + 1])
-			printf(" ");
-		i++;
-	}
-	if (new_line)
-		printf("\n");
-	return (0);
-}
 
 int	ft_cd(char **command, t_mix *data)
 {

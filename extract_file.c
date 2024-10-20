@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   extract_file.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 16:36:46 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/08/03 17:04:30 by pablgarc         ###   ########.fr       */
+/*   Updated: 2024/09/22 17:03:57 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ static int	ft_open(char *filename, int mode)
 {
 	int	fd;
 
-	//printf("mode:%d\n", mode);
 	if (!filename || mode < 0 || mode > 2)
 		return (-2);
 	if (mode == 0)
@@ -62,13 +61,31 @@ static int	get_heredoc_fd(char	**heredocs, int p)
 	return (fd);
 }
 
+char	*extract_filename(char *s, int *pos, t_mix *data)
+{
+	char	**element;
+	char	*filename;
+
+	element = extract_element(s, *pos, data);
+	if (!element)
+		return (NULL);
+	if (element[1] != NULL)
+	{
+		ft_out(element);
+		return (write_error_null(3));
+	}
+	filename = ft_strdup(element[0]);
+	ft_out(element);
+	return (filename);
+}
+
 int	extract_input(char *s, t_mix *data, int p)
 {
 	int		fd;
 	int		pos;
 	char	*filename;
 	int		aux_fd;
-
+	printf("extract_input\n");
 	if (!s)
 		return (-2);
 	pos = locate_char_position_quotes(s, '<');
@@ -78,9 +95,9 @@ int	extract_input(char *s, t_mix *data, int p)
 		fd = get_heredoc_fd(data->heredocs, p);
 	else
 	{
-		filename = extract_element(s, &pos, data);
+		filename = extract_filename(s, &pos, data);
 		if (!filename)
-			return (write_error_int(1, -2));
+			return (-2);
 		fd = ft_open(filename, O_RDONLY);
 		free(filename);
 	}
@@ -103,9 +120,9 @@ int	extract_output(char *s, t_mix *data)
 	pos = locate_char_position_quotes(s, '>');
 	if (pos == -1)
 		return (-1);
-	filename = extract_element(s, &pos, data);
+	filename = extract_filename(s, &pos, data);
 	if (!filename)
-		return (write_error_int(1, -2));
+		return (-2);
 	pos = locate_char_position_quotes(s, '>');
 	if (s[pos + 1] == '>')
 		pos++;

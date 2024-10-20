@@ -6,12 +6,13 @@
 /*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:42:48 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/07/29 19:38:42 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/09/01 16:29:06 by irgonzal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/*
 static char	*add_chunk(char *original, char *chunk)
 {
 	char	*aux;
@@ -46,6 +47,8 @@ static char	*expand_double_quotes(char *s, int pos, t_mix *data)
 			result = expand_variable(result, s, pos, data);
 			pos += len_literal_word(s, pos + 1);
 		}
+		if (!result)
+			return (NULL);
 		len = 0;
 	}
 	return (result);
@@ -68,6 +71,8 @@ static int	select_and_expand(char **result, char *s, int *pos, t_mix *data)
 		chunk = ft_substr(s, *pos + 1, len);
 	else
 		chunk = ft_substr(s, *pos, len);
+	if (!chunk)
+		return (1);
 	*result = add_chunk(*result, chunk);
 	if (!(*result))
 		return (1);
@@ -79,6 +84,7 @@ static int	select_and_expand(char **result, char *s, int *pos, t_mix *data)
 		*pos = *pos + len;
 	return (0);
 }
+*/
 
 int	something_to_add(char *s, int pos)
 {
@@ -87,7 +93,7 @@ int	something_to_add(char *s, int pos)
 		return (1);
 	return (0);
 }
-
+/*
 char	*extract_element(char *s, int *pos, t_mix *data)
 {
 	char	*result;
@@ -104,3 +110,4 @@ char	*extract_element(char *s, int *pos, t_mix *data)
 	}
 	return (result);
 }
+*/

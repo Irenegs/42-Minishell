@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 17:56:24 by irene             #+#    #+#             */
-/*   Updated: 2024/08/03 17:05:28 by pablgarc         ###   ########.fr       */
+/*   Updated: 2024/09/22 17:00:39 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,8 @@ char	**extract_command(char *s, t_mix *data);
 
 //extract_elements.c
 char	*obtain_variable(char *s, int i, t_mix *data);
-char	*extract_element(char *s, int *pos, t_mix *data);
+//char	*extract_element(char *s, int *pos, t_mix *data);
+char    **extract_element(char *s, int pos, t_mix *data);
 int		something_to_add(char *s, int pos);
 
 //extract_file.c
@@ -127,9 +128,7 @@ int		extract_output(char *s, t_mix *data);
 char	*extract_pipe(char *s, int pipe);
 
 //extract_utils.c
-int		is_space(char c);
 size_t	len_literal_word(char *s, int pos);
-size_t	len_delimiter(char *s, int pos);
 size_t	len_quotes(char *s, int pos);
 int		len_cmd_str(char *str);
 
@@ -140,11 +139,6 @@ int		len_skip_word(char *str, int pos);
 void	copy_cmd(char *orig, char *res);
 int		locate_char_position(char *s, char c);
 
-//gnl.c
-ssize_t	read_line(char **rem, int fd);
-void	prepare_line(char *array[], char *rem);
-char	*get_next_line(int fd);
-
 //parser.c
 int		parser(char *s);
 
@@ -153,16 +147,25 @@ void	manage_multiple_pipes(int p, int pipes, int *fd);
 void	close_pipes(int pipes, int *fd);
 int		pipe_abortion(int *fd);
 
-//heredocs.c
+//general_utils.c
+int 	is_quote(char c);
+int		is_space(char c);
+int		is_separator(char c);
+char **join_arrays(char ***array);
+
+//heredoc_files.c
 void	clean_and_free_heredocs(char **heredocs, int pipes);
 int		get_heredocs(t_mix *data);
+
+//heredoc_delimiter.c
+char	*obtain_delimiter(char *del_str);
 
 //heredoc_text.c
 int		write_hd_file(char *s, int number_of_hd, t_mix *data);
 
 //heredoc_expand.c
 int		must_expand(char *delimiter, char *text);
-char	*expand_string(char *input_str, t_mix *data);
+char	*expand_heredoc(char *input_str, t_mix *data);
 char	*expand_variable(char *orig, char *input_str, int pos, t_mix *data);
 
 //heredoc_utils.c
@@ -184,4 +187,14 @@ int		select_variable(char *var_name, t_mix *data);
 char	*ft_getenv(char *var_name, t_mix *data);
 char	*obtain_variable(char *s, int i, t_mix *data);
 size_t	len_variable(char *str, int pos);
+size_t	len_varname(char *str, int *pos);
+
+//expander_quotes.c
+char    **unquote(char **element);
+char	*expand_str(char *str, t_mix *data);
+int  variables_to_expand(char *str);
+void add_char(char **result, char *orig, int pos);
+
+//split_element.c
+char	**split_element(char *str);
 #endif

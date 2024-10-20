@@ -1,0 +1,124 @@
+PARSER
+
+- tomaremos los caracteres \ y ; como texto plano
+
+
+EXPANDER
+
+- madremia que follon esto es mas dificil de lo que pensaba
+- '' dejan el input tal cual esta
+- "" expanden $
+- las variables solo pueden tener valores alphanumericos o _ (salvo el primer caracter que no puede ser un numero), cuando se expande se corta cuando se llega a uno que no lo sea
+- $? expande al ultimo exit code
+- $" o $' se ignora el $
+- word_split: hay que splittear las variables expandidas.
+- ambiguos redirect: si splitteas una variable en la parte del redirect
+- un dolar solo se printea solo
+
+
+HERE_DOC
+
+- "" y '' anywhere in delimiter avoids expansions
+- delimiter is not expanded
+- the only way in which the input is edited is expanding variables when there are no quotes
+- when we are inside heredoc, signal handling funcitions have to change
+
+
+EXECUTER
+
+- si hay varios </<< se toma el ultimo solo, lo mismo con >/>>. Se prioriza el (>>/> o <</<) antes quel pipe (pero hay que abrir todos, por ejemplo si tenemos ls > a > b, a y b tienen que abrirse)
+- gestionar errores al abrir archivos y pipes, y en general en todas las syscalls
+- en el executer hay que tener en cuenta que los builtins en mayuscula valen (como PWD o pWd)
+
+
+FLOW OF INPUT TILL EXECUTED
+
+input -> lexer -> parser -> expander -> resolvehere_doc -> executer
+
+lexer: returns a list of tokens which can be words or operators. Is in charge of identifying unclosed quotes
+parser: returns a list of t_commands. Is in charge of identifying invalid operator orders such as >>>
+expander: same as parser but expanded
+executer: executes commands in order assuming pipes between them (an overcomplicated pipex)
+
+
+SIGNALS
+
+Executing:			Ctrl + C and Ctrl + \ handled by the execve. Ctrl + D, if its not recieved by the process, should wait till process ends and exit
+For heredoc: 		Ctrl + C cancels command, exits 1. Ctrl + \ does nothing. Ctrl + D exits from the heredoc its in, the command keeps going, exits 0.
+Interactive mode:	Ctrl + C newline, exits 1. Ctrl + \ does nothing. Ctrl + D exits.
+
+
+ENV
+
+
+
+OTHER
+
+When executing multiple commnands, separated by pipes, a subshell for each command must be generated. This means that for example the command 'cd dir | echo a' wont cd us to dir, because it well get executed in a subshell(similarly to a script)  
+cd '' doesnt change directory
+malloc fail should set g_exit_status
+
+
+
+====
+
+THINGS TO TEST MINISHELL
+
+- Paralel execution in processes:
+	- sleep 5 | sleep 5			should take 5 secs
+	- cat < bigfile | sleep 5	should take 5 secs
+
+- All heredoc goes first:
+	- sleep 5 | cat << a | cat << b		should take 5 secs after heredocs are closed
+
+- cat | ls	closes after one intro, broken pipe, exit 0
+
+EXPANDER
+
+echo $q-		print -
+echo $_a		print nothing
+
+prev: export z='a a' && gcc helpers/parameters.c -o params
+- ./params $z 	 		2 params
+- ./params "$z"			1 param
+- ./params "$z"$z"$z"	2 params	
+- ./params $z$z$z		4 params
+- ./params "$z"$z$z		3 params
+
+prev: export y='"a a"' && export x="'b b'" && gcc helpers/parameters.c -o params
+- ./params $x$y$y					4 params
+- ./params $x$y$y$y$x"'"'"'$x'"'	7 params
+
+prev: export w='" "' && gcc helpers/parameters.c -o params
+- ./params z$w-		2 params
+
+prev: unset z (all checks for expander expanding unexisting or NULL vars to NULL instead of '')
+$z | cat
+echo < $z
+echo < ''
+echo < '      '
+$z echo
+export a=' ' echo < $a
+
+
+HERE_DOC
+
+<< a
+$TERM //should expand
+a
+
+<< a
+'$TERM' //should expand
+a
+
+<< a
+$'TERM' //should not change (same for $"TERM")
+a
+
+<< a'' //nothing should expand
+
+
+EXIT STATUS
+echo < 
+     
+echo $? (should give 258)

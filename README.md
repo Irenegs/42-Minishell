@@ -1,18 +1,25 @@
 # Por hacer:
+
 ## Probar siempre
 - Probar (ya funciona, pero probar cada vez que se toquen redirecciones): < /dev/urandom cat | head -1; cat | cat | ls
 Valgrind leaks:
 valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose --log-file=valgrind-out.txt ./minishell
 valgrind --track-fds=yes --trace-children=yes; --child-silent-after-fork=yes
 
+- parser permitir cosas raras entrecomilladas
+echo "> >> < * ? [ ] | ; [ ] || && ( ) & # $  <<"  esto da seg fault
+echo '> >> < * ? [ ] | ; [ ] || && ( ) & # $  <<'  esto da seg fault
+
+- Variables
+echo $"HOME" -> HOME
+echo $'HOME' -> HOME
 
 sumar shlvl al abrir varios bash en archivo struct funcion copy_env_variables
 
+- extract element debe devolver un char** => debe recorrer la cadena, expandir las variables, separar las palabras por espacios y quitar las comillas que no son de las variables
 
 
-export añade al entorno varibles sin nombre, si escribes export =42  lo mete al entorno --- ARREGLADO
-
-
+- generar entorno por defecto => leer https://unix.stackexchange.com/questions/280453/understand-the-meaning-of para la gestión inicial de $_ pasamos de todo y hardcodeamos
 
 
 ## Signals:
