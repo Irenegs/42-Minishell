@@ -45,6 +45,7 @@ static int	count_env_variables(char **envp)
 	return (total_variables);
 }
 
+
 static char	**copy_env_variables(char **envp, int total_variables)
 {
 	char	**env_copy;
@@ -58,13 +59,9 @@ static char	**copy_env_variables(char **envp, int total_variables)
 	i = 0;
 	while (i < total_variables)
 	{
-		env_copy[i] = ft_strdup(envp[i]);
+		env_copy[i] = increment_shlvl(envp[i]);
 		if (!env_copy[i])
-		{
-			write(2, "Malloc error\n", 13);
-			ft_out(env_copy);
 			return (default_env());
-		}
 		i++;
 	}
 	env_copy[total_variables] = NULL;

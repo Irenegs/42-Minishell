@@ -14,12 +14,12 @@ echo '> >> < * ? [ ] | ; [ ] || && ( ) & # $  <<'  esto da seg fault
 echo $"HOME" -> HOME
 echo $'HOME' -> HOME
 
-sumar shlvl al abrir varios bash en archivo struct funcion copy_env_variables
+sumar shlvl al abrir varios bash en archivo struct funcion copy_env_variables --- HECHO
 
 - extract element debe devolver un char** => debe recorrer la cadena, expandir las variables, separar las palabras por espacios y quitar las comillas que no son de las variables
 
 
-- generar entorno por defecto => leer https://unix.stackexchange.com/questions/280453/understand-the-meaning-of para la gestión inicial de $_ pasamos de todo y hardcodeamos
+- generar entorno por defecto => leer https://unix.stackexchange.com/questions/280453/understand-the-meaning-of para la gestión inicial de $_ pasamos de todo y hardcodeamos --- HECHO
 
 
 ## Signals:

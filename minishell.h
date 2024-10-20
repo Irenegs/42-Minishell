@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
+/*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 17:56:24 by irene             #+#    #+#             */
-/*   Updated: 2024/09/22 17:00:39 by irene            ###   ########.fr       */
+/*   Updated: 2024/10/20 12:10:12 by pablgarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,10 +148,11 @@ void	close_pipes(int pipes, int *fd);
 int		pipe_abortion(int *fd);
 
 //general_utils.c
-int 	is_quote(char c);
+int		is_quote(char c);
 int		is_space(char c);
 int		is_separator(char c);
-char **join_arrays(char ***array);
+char	**join_arrays(char ***array);
+char	*increment_shlvl(char *env_var);
 
 //heredoc_files.c
 void	clean_and_free_heredocs(char **heredocs, int pipes);
@@ -190,10 +191,10 @@ size_t	len_variable(char *str, int pos);
 size_t	len_varname(char *str, int *pos);
 
 //expander_quotes.c
-char    **unquote(char **element);
+char	**unquote(char **element);
 char	*expand_str(char *str, t_mix *data);
-int  variables_to_expand(char *str);
-void add_char(char **result, char *orig, int pos);
+int		variables_to_expand(char *str);
+void	add_char(char **result, char *orig, int pos);
 
 //split_element.c
 char	**split_element(char *str);
