@@ -9,6 +9,12 @@ valgrind --track-fds=yes --trace-children=yes; --child-silent-after-fork=yes
 sumar shlvl al abrir varios bash en archivo struct funcion copy_env_variables
 
 
+
+export añade al entorno varibles sin nombre, si escribes export =42  lo mete al entorno --- ARREGLADO
+
+
+
+
 ## Signals:
 Ctrl - \ debe no hacer nada
 ctrl + c da error 130 y a nosotros 0
@@ -16,7 +22,7 @@ ctrl + c da error 130 y a nosotros 0
 ### heredoc + señales:
 C-c dentro de heredoc lo corta y vuelve a la shell sin ejecutar ninguna instrucción $?=130
 C-\ no hace nada
-C-d cierra el heredoc con un error (bash: warning: here-document at line 160 delimited by end-of-file (wanted 'DELIMITADOR')) pero sigue con las instrucciones $?=0.
+C-d cierra el heredoc con un error (bash: warerning: here-document at line 160 delimited by end-of-file (wanted 'DELIMITADOR')) pero sigue con las instrucciones $?=0.
 
 ## Parser:
 Not interpret unclosed quotes or special characters which are not required by the subject such as \ (backslash) or ; (semicolon).
