@@ -6,11 +6,28 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/15 17:56:15 by irene             #+#    #+#             */
-/*   Updated: 2024/10/25 18:17:53 by irene            ###   ########.fr       */
+/*   Updated: 2024/10/25 18:52:18 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static int  variables_to_expand(char *str)
+{
+    int quotes;
+    int i;
+    printf("==variables_to_expand==\n");
+    quotes = 0;
+    i = 0;
+    while (str[i] != '\0')
+    {
+        if (str[i] == '$' && quotes != '\'')
+            return (1);
+        manage_quotes(&quotes, str[i]);
+        i++;
+    }
+    return (0);
+}
 
 static char *extract_str_element(char *s, int pos)
 {
@@ -43,8 +60,7 @@ char    **extract_element(char *s, int pos, t_mix *data)
     printf("extract_str_element:%s\n", str);
     if (variables_to_expand(str) == 1)
     {
-        printf("Hay variables a expandir\n");
-        aux_str = expand_str(str, data);
+        aux_str = expand_string(str, data);
         free(str);
         str = aux_str;    
     }

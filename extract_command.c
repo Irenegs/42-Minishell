@@ -6,7 +6,7 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:36:03 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/10/25 17:55:11 by irene            ###   ########.fr       */
+/*   Updated: 2024/10/25 18:45:35 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ char	**extract_command(char *s, t_mix *data)
 	int		pos;
 	char	*cmd_string;
 	char	**command;
-	printf("Extract_command\n");
+	printf("==extract_command==\n");
 	pos = locate_cmd_position(s);
 	if (pos == -1)
 		return (NULL);
@@ -127,7 +127,6 @@ char	**extract_command(char *s, t_mix *data)
 		printf("===\n");
 		i++;
 	}
-	
 	free(cmd_string);
 	printf("end_extract command\n");
 	return (command);
