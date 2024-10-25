@@ -6,7 +6,7 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 17:56:24 by irene             #+#    #+#             */
-/*   Updated: 2024/09/22 17:00:39 by irene            ###   ########.fr       */
+/*   Updated: 2024/10/25 18:43:35 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,6 @@ int		status_treatment(int *status);
 char	**extract_command(char *s, t_mix *data);
 
 //extract_elements.c
-char	*obtain_variable(char *s, int i, t_mix *data);
 //char	*extract_element(char *s, int *pos, t_mix *data);
 char    **extract_element(char *s, int pos, t_mix *data);
 int		something_to_add(char *s, int pos);
@@ -186,7 +185,7 @@ char	**ft_super_split(char const *s, char *sep);
 int		select_variable(char *var_name, t_mix *data);
 char	*ft_getenv(char *var_name, t_mix *data);
 char	*obtain_variable(char *s, int i, t_mix *data);
-size_t	len_variable(char *str, int pos);
+size_t	len_varvalue(char *str, int pos);
 size_t	len_varname(char *str, int *pos);
 
 //expander_quotes.c

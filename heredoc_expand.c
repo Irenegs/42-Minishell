@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_expand.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 17:52:42 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/09/01 16:28:09 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/10/25 18:43:35 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ char	*expand_heredoc(char *input_str, t_mix *data)
 		if (input_str[pos] == '$' && input_str[pos + 1] != '\'' && input_str[pos + 1] != '"')
 		{
 			expanded = expand_variable(expanded, input_str, pos, data);
-			pos += len_variable(input_str, pos + 1) + 1;
+			pos += len_varvalue(input_str, pos + 1) + 1;
 		}
 		else if (input_str[pos] == '$')
 		{

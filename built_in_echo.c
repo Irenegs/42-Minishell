@@ -6,7 +6,7 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 11:16:50 by irene             #+#    #+#             */
-/*   Updated: 2024/08/23 11:16:55 by irene            ###   ########.fr       */
+/*   Updated: 2024/10/25 17:37:37 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	ft_echo(char **command)
 {
 	int	new_line;
 	int	i;
-
+	printf("ft_echo\n");
 	new_line = 1;
 	i = 1;
 	while (command[i] && check_flag_echo(command[i]) == 1)

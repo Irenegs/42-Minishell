@@ -48,6 +48,7 @@ int	is_special_builtin(char *cmd)
 
 int	execute_builtin(t_mix *data, char **command)
 {
+	printf("execute_builtin\n");
 	if (ft_strcmp(command[0], "echo") == 0)
 		return (ft_echo(command));
 	else if (ft_strcmp(command[0], "cd") == 0)

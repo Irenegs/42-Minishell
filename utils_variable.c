@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   variable_utils.c                                   :+:      :+:    :+:   */
+/*   utils_variable.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 20:32:38 by irene             #+#    #+#             */
-/*   Updated: 2024/09/15 18:29:56 by irene            ###   ########.fr       */
+/*   Updated: 2024/10/25 18:43:35 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ char	*ft_getenv(char *var_name, t_mix *data)
 	return (var_value);
 }
 
-size_t	len_variable(char *str, int pos)
+size_t	len_varvalue(char *str, int pos)
 {
 	size_t	len;
 
@@ -89,18 +89,18 @@ size_t	len_variable(char *str, int pos)
 size_t	len_varname(char *str, int *pos)
 {
 	size_t	len;
-	printf("len_varname:%s,%d\n", str, *pos);
+	printf("==len_varname==\n");
 	if (!str)
 		return (0);
-	if (str[*pos + 1] == '?')
+	if (str[*pos] == '?')
 		return (1);
-	if (str[*pos + 1] == '{' && str[*pos + 1] != '_' && ft_isalpha(str[*pos + 1]) == 0)
+	if (str[*pos] == '{' && str[*pos + 2] != '_' && ft_isalpha(str[*pos + 2]) == 0)
 		return (0);
-	if (str[*pos + 1] == '{')
+	if (str[*pos] == '{')
 		(*pos)++;
-	if (str[*pos + 1] != '_' && ft_isalpha(str[*pos + 1]) == 0)
+	if (str[*pos] != '_' && ft_isalpha(str[*pos]) == 0)
 		return (0);
-	len = 2;
+	len = 1;
 	while (str[*pos + len] == '_' || ft_isalnum(str[*pos + len]))
 		len++;
 	return (len);
@@ -111,7 +111,7 @@ char	*obtain_variable(char *s, int i, t_mix *data)
 	char	*var_name;
 	char	*var_value;
 	size_t	len;
-
+	printf("==obtain_variable==\n");
 	len = len_varname(s, &i);
 	if (len == 0)
 	{
@@ -138,7 +138,6 @@ char	*obtain_variable(char *s, int i, t_mix *data)
 		var_name = ft_substr(s, i, len);
 	if (!var_name)
 		return (write_error_null(1));
-	printf("var_name:%s\n", var_name);
 	var_value = ft_getenv(var_name, data);
 	free(var_name);
 	return (var_value);
@@ -148,7 +147,7 @@ char	*expand_variable(char *orig, char *input_str, int pos, t_mix *data)
 {
 	char	*result;
 	char	*chunk;
-
+	printf("==expand_variable==\n");
 	chunk = obtain_variable(input_str, pos + 1, data);
 	if (!chunk)
 		return (NULL);

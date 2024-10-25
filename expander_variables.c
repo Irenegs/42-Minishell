@@ -6,7 +6,7 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 19:01:32 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/09/15 18:13:52 by irene            ###   ########.fr       */
+/*   Updated: 2024/10/25 18:38:45 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int  variables_to_expand(char *str)
 {
     int quotes;
     int i;
-    printf("variables_to_expand\n");
+    printf("==variables_to_expand==\n");
     quotes = 0;
     i = 0;
     while (str[i] != '\0')
@@ -54,7 +54,7 @@ static char *escape_variable(char *str)
 {
     char	*escaped;
 	int		pos;
-
+    printf("==escape_variable==\n");
 	if (!str)
 		return (NULL);
 	escaped = malloc(1 * sizeof(char));
@@ -77,7 +77,7 @@ static char *variable_escaped_quote(char *str, int pos, t_mix *data)
 {
     char    *orig_varvalue;
     char    *escaped_variable;
-    
+    printf("==variable_escaped_quote==\n");
     orig_varvalue = obtain_variable(str, pos + 1, data);
     printf("orig_varvalue:%s\n", orig_varvalue);
     if (ft_strrchr(orig_varvalue, '\'') != 0 || ft_strrchr(orig_varvalue, '"') != 0)
@@ -93,9 +93,9 @@ static void add_variable(char **result, char *orig, int pos, t_mix *data)
 {
     char    *variable;
     char    *new;
-
+    printf("==add_variable==\n");
     variable = variable_escaped_quote(orig, pos, data);
-    printf("variable:%s\n", variable);
+    printf("escaped variable:%s\n", variable);
     new = ft_strjoin(*result, variable);
     free(variable);
     free(*result);
@@ -122,7 +122,8 @@ char	*expand_str(char *str, t_mix *data)
         {
             add_variable(&expanded, str, pos, data);
             printf("len_varname:%ld\n", len_varname(str, &pos));
-            pos += len_varname(str, &pos) + 1;
+            pos++;
+            pos += len_varname(str, &pos);
         }
         else if (quotes != 0 && is_quote(str[pos]) == 1 && quotes != str[pos])
         {
