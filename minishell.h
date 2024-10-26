@@ -6,7 +6,7 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 17:56:24 by irene             #+#    #+#             */
-/*   Updated: 2024/10/25 18:52:29 by irene            ###   ########.fr       */
+/*   Updated: 2024/10/26 16:56:11 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,4 +195,6 @@ void add_char(char **result, char *orig, int pos);
 
 //split_element.c
 char	**split_element(char *str);
+
+void add_escaped_quote(char **result, char *orig, int pos);
 #endif

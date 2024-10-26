@@ -6,7 +6,7 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/15 18:33:19 by irene             #+#    #+#             */
-/*   Updated: 2024/09/22 17:50:07 by irene            ###   ########.fr       */
+/*   Updated: 2024/10/26 16:31:47 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ static void	fill_joined_array(char ***array, char **joined)
 		while (array[i][j])
 		{
 			joined[size] = array[i][j];
-			printf("joined[size]:%s\n", joined[size]);
+			printf("joined[%d]:%s\n",size, joined[size]);
 			j++;
 			size++;
 		}

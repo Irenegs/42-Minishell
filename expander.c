@@ -6,11 +6,40 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/15 17:56:15 by irene             #+#    #+#             */
-/*   Updated: 2024/10/25 18:52:18 by irene            ###   ########.fr       */
+/*   Updated: 2024/10/26 17:18:27 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static char *escape_quotes_in_string(char *str)
+{
+    char	*escaped;
+	int		pos;
+    int     quotes;
+    printf("==escape_quotes_in_string==\n");
+	if (!str)
+		return (NULL);
+	escaped = malloc(1 * sizeof(char));
+	if (!escaped)
+		return (write_error_null(1));
+	escaped[0] = '\0';
+    quotes = 0;
+	pos = 0;
+	while (str[pos] != '\0' && escaped)
+	{
+        if (is_quote(str[pos]) != 0 && quotes != 0 && quotes != is_quote(str[pos])) //&& is_escaped(str, pos) == 0)
+            add_escaped_quote(&escaped, str, pos);
+        else
+        {
+            if (is_quote(str[pos]) != 0 && is_escaped(str, pos) == 0)
+                manage_quotes(&quotes, str[pos]);
+            add_char(&escaped, str, pos);
+        }
+        pos++;
+	}
+	return (escaped);
+}
 
 static int  variables_to_expand(char *str)
 {
@@ -50,6 +79,22 @@ static char *extract_str_element(char *s, int pos)
     return (result);
 }
 
+char    **escape_quotes_in_array(char **array)
+{
+    char    *aux_str;
+    int     i;
+    printf("==escape_quotes_in_array==\n");
+    i = 0;
+    while (array && array[i])
+    {
+        aux_str = escape_quotes_in_string(array[i]);
+        free(array[i]);
+        array[i] = aux_str;
+        i++;
+    }
+    return (array);
+}
+
 char    **extract_element(char *s, int pos, t_mix *data)
 {
     char    *str;
@@ -66,6 +111,7 @@ char    **extract_element(char *s, int pos, t_mix *data)
     }
     element = split_element(str);
 	free(str);
+    element = escape_quotes_in_array(element);
     unquote(element);
     return (element);
 }

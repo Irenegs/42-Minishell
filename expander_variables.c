@@ -6,17 +6,17 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 19:01:32 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/10/25 19:07:41 by irene            ###   ########.fr       */
+/*   Updated: 2024/10/26 16:56:02 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void add_escaped_quote(char **result, char *orig, int pos)
+void add_escaped_quote(char **result, char *orig, int pos)
 {
     char    *new;
     size_t  len_result;
-
+    printf("==add_escaped_quote==\n");
     len_result = ft_strlen(*result);
     new = malloc((len_result + 3) * sizeof(char));
     if (!new)
@@ -34,11 +34,11 @@ static void add_escaped_quote(char **result, char *orig, int pos)
     *result = new;
 }
 
-static char *escape_variable(char *str)
+char *escape_quotes_in_variable(char *str)
 {
     char	*escaped;
 	int		pos;
-
+    printf("==escape_quotes_in_variable==\n");
 	if (!str)
 		return (NULL);
 	escaped = malloc(1 * sizeof(char));
@@ -65,7 +65,7 @@ static char *variable_escaped_quote(char *str, int pos, t_mix *data)
     orig_varvalue = obtain_variable(str, pos + 1, data);
     if (ft_strrchr(orig_varvalue, '\'') != 0 || ft_strrchr(orig_varvalue, '"') != 0)
     {
-        escaped_variable = escape_variable(orig_varvalue);
+        escaped_variable = escape_quotes_in_variable(orig_varvalue);
         free(orig_varvalue);
         return (escaped_variable);
     }
@@ -103,7 +103,6 @@ char	*expand_string(char *str, t_mix *data)
         if (str[pos] == '$')
         {
             add_variable(&expanded, str, pos, data);
-            printf("len_varname:%ld\n", len_varname(str, &pos));
             pos++;
             pos += len_varname(str, &pos);
         }
@@ -118,8 +117,6 @@ char	*expand_string(char *str, t_mix *data)
             add_char(&expanded, str, pos);
             pos++;
         }
-        printf("expanded:%s\n", expanded);
-        printf("pos:%d\n", pos);
 	}
 	return (expanded);
 }
