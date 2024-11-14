@@ -6,7 +6,7 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 17:56:24 by irene             #+#    #+#             */
-/*   Updated: 2024/10/26 16:56:11 by irene            ###   ########.fr       */
+/*   Updated: 2024/11/14 18:44:21 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,10 +147,11 @@ void	close_pipes(int pipes, int *fd);
 int		pipe_abortion(int *fd);
 
 //general_utils.c
-int 	is_quote(char c);
+int		is_quote(char c);
 int		is_space(char c);
 int		is_separator(char c);
-char **join_arrays(char ***array);
+char	**join_arrays(char ***array);
+char	*increment_shlvl(char *env_var);
 
 //heredoc_files.c
 void	clean_and_free_heredocs(char **heredocs, int pipes);

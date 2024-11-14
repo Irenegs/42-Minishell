@@ -6,7 +6,7 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/15 18:33:19 by irene             #+#    #+#             */
-/*   Updated: 2024/11/14 18:32:45 by irene            ###   ########.fr       */
+/*   Updated: 2024/11/14 18:44:40 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,3 +87,23 @@ char **join_arrays(char ***array)
 	joined[size] = NULL;
 	return (joined);
 }
+
+char	*increment_shlvl(char *env_var)
+{
+	int		shlvl_value;
+	char	*new_shlvl;
+
+	if (ft_strncmp(env_var, "SHLVL=", 6) == 0)
+	{
+		shlvl_value = ft_atoi(env_var + 6) + 1;
+		new_shlvl = (char *)malloc(7 + ft_strlen(ft_itoa(shlvl_value)));
+		if (!new_shlvl)
+			return (NULL);
+		ft_strlcpy(new_shlvl, "SHLVL=", 7);
+		ft_strlcat(new_shlvl, ft_itoa(shlvl_value),
+			7 + ft_strlen(ft_itoa(shlvl_value)));
+		return (new_shlvl);
+	}
+	return (ft_strdup(env_var));
+}
+

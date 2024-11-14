@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
+/*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 17:36:54 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/09/15 16:28:40 by irene            ###   ########.fr       */
+/*   Updated: 2024/10/20 11:05:20 by pablgarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,7 @@ int	run_command(char **command, t_mix *data)
 	if (!cmd)
 		cmd = command[0];
 	execve(cmd, command, data->m_env);
-	perror(NULL);
 	if (ft_strncmp(cmd, command[0], ft_strlen(command[0])) != 0)
 		free(cmd);
-	return (127);
+	return (write_error_int(6, 127));
 }

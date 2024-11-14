@@ -14,24 +14,22 @@ echo '> >> < * ? [ ] | ; [ ] || && ( ) & # $  <<'  esto da seg fault
 echo $"HOME" -> HOME
 echo $'HOME' -> HOME
 
-- parseo de cadenas como estas, con diferentes comillas:
-"exit_code ->$? user ->$USER home -> $HOME"
-'exit_code ->$? user ->$USER home -> $HOME'
+sumar shlvl al abrir varios bash en archivo struct funcion copy_env_variables --- HECHO
 
 - extract element debe devolver un char** => debe recorrer la cadena, expandir las variables, separar las palabras por espacios y quitar las comillas que no son de las variables
 
--tester de 76/146 a 110/146
 
-- generar entorno por defecto => leer https://unix.stackexchange.com/questions/280453/understand-the-meaning-of para la gestión inicial de $_ pasamos de todo y hardcodeamos
+- generar entorno por defecto => leer https://unix.stackexchange.com/questions/280453/understand-the-meaning-of para la gestión inicial de $_ pasamos de todo y hardcodeamos --- HECHO
 
 
 ## Signals:
 Ctrl - \ debe no hacer nada
+ctrl + c da error 130 y a nosotros 0
 
 ### heredoc + señales:
 C-c dentro de heredoc lo corta y vuelve a la shell sin ejecutar ninguna instrucción $?=130
 C-\ no hace nada
-C-d cierra el heredoc con un error (bash: warning: here-document at line 160 delimited by end-of-file (wanted 'DELIMITADOR')) pero sigue con las instrucciones $?=0.
+C-d cierra el heredoc con un error (bash: warerning: here-document at line 160 delimited by end-of-file (wanted 'DELIMITADOR')) pero sigue con las instrucciones $?=0.
 
 ## Parser:
 Not interpret unclosed quotes or special characters which are not required by the subject such as \ (backslash) or ; (semicolon).
