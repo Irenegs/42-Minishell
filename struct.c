@@ -45,7 +45,6 @@ static int	count_env_variables(char **envp)
 	return (total_variables);
 }
 
-
 static char	**copy_env_variables(char **envp, int total_variables)
 {
 	char	**env_copy;

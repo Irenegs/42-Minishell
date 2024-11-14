@@ -6,7 +6,7 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 17:52:42 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/10/25 18:43:35 by irene            ###   ########.fr       */
+/*   Updated: 2024/11/14 19:41:15 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,35 +40,35 @@ static int	len_until_dollar(char *str, int pos)
 	return (len);
 }
 
-char	*expand_heredoc(char *input_str, t_mix *data)
+char	*expand_heredoc(char *input, t_mix *data)
 {
 	char	*expanded;
-	int		pos;
+	int		p;
 
-	if (!input_str)
+	if (!input)
 		return (NULL);
 	expanded = malloc(1 * sizeof(char));
 	if (!expanded)
 		return (write_error_null(1));
 	expanded[0] = '\0';
-	pos = 0;
-	while (input_str[pos] != '\0' && expanded)
+	p = 0;
+	while (input[p] != '\0' && expanded)
 	{
-		if (input_str[pos] == '$' && input_str[pos + 1] != '\'' && input_str[pos + 1] != '"')
+		if (input[p] == '$' && input[p + 1] != '\'' && input[p + 1] != '"')
 		{
-			expanded = expand_variable(expanded, input_str, pos, data);
-			pos += len_varvalue(input_str, pos + 1) + 1;
+			expanded = expand_variable(expanded, input, p, data);
+			p += len_varvalue(input, p + 1) + 1;
 		}
-		else if (input_str[pos] == '$')
+		else if (input[p] == '$')
 		{
-			expanded = normal_expansion(expanded, input_str, pos, 1);
-			pos++;
+			expanded = normal_expansion(expanded, input, p, 1);
+			p++;
 		}
 		else
 		{
-			expanded = normal_expansion(expanded, input_str, pos,
-					len_until_dollar(input_str, pos));
-			pos += len_until_dollar(input_str, pos);
+			expanded = normal_expansion(expanded, input, p,
+					len_until_dollar(input, p));
+			p += len_until_dollar(input, p);
 		}
 	}
 	return (expanded);

@@ -6,7 +6,7 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:36:03 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/11/14 18:34:08 by irene            ###   ########.fr       */
+/*   Updated: 2024/11/14 19:39:01 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,7 @@ static int	count_arguments(char *cmd_str)
 			args++;
 			manage_quotes(&quotes, cmd_str[i]);
 			while (cmd_str[i] != '\0' && (cmd_str[i] != ' ' || quotes != 0))
-			{
-				i++;
-				manage_quotes(&quotes, cmd_str[i]);
-			}
+				manage_quotes(&quotes, cmd_str[i++]);
 			if (cmd_str[i] != '\0')
 				i++;
 		}
@@ -78,7 +75,7 @@ static char	**split_command(char *s, t_mix *data)
 	int		i;
 	int		pos;
 	char	**element;
-	
+
 	arr = malloc((count_arguments(s) + 1) * sizeof(char **));
 	if (!arr || !data)
 		return (write_error_null(1));
@@ -90,13 +87,13 @@ static char	**split_command(char *s, t_mix *data)
 			pos++;
 		arr[i] = extract_element(s, pos, data);
 		if (!arr[i])
-			return (NULL);//write_error_null(1));
+			return (NULL);
 		while (s[pos] != '\0' && is_space(s[pos]) == 0)
 			pos++;
 	}
 	arr[i] = NULL;
 	element = join_arrays(arr);
-	free(arr);//revisar
+	free(arr);
 	return (element);
 }
 

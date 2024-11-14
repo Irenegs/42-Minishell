@@ -6,7 +6,7 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/15 17:56:15 by irene             #+#    #+#             */
-/*   Updated: 2024/11/14 18:36:24 by irene            ###   ########.fr       */
+/*   Updated: 2024/11/14 19:36:45 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static char *escape_quotes_in_string(char *str)
 {
     char	*escaped;
 	int		pos;
-    int     quotes;
+    int     quot;
 
 	if (!str)
 		return (NULL);
@@ -24,16 +24,16 @@ static char *escape_quotes_in_string(char *str)
 	if (!escaped)
 		return (write_error_null(1));
 	escaped[0] = '\0';
-    quotes = 0;
+    quot = 0;
 	pos = 0;
 	while (str[pos] != '\0' && escaped)
 	{
-        if (is_quote(str[pos]) != 0 && quotes != 0 && quotes != is_quote(str[pos]))//&& is_escaped(str, pos) == 0)
+        if (is_quote(str[pos]) != 0 && quot != 0 && quot != is_quote(str[pos]))//&& is_escaped(str, pos) == 0)
             add_escaped_quote(&escaped, str, pos);
         else
         {
             if (is_quote(str[pos]) != 0 && is_escaped(str, pos) == 0)
-                manage_quotes(&quotes, str[pos]);
+                manage_quot(&quot, str[pos]);
             add_char(&escaped, str, pos);
         }
         pos++;
@@ -61,16 +61,16 @@ static int  variables_to_expand(char *str)
 static char *extract_str_element(char *s, int pos)
 {
     int     len;
-    int     quotes;
+    int     q;
     char    *result;
 
     if (!s)
         return (NULL);
     len = 0;
-    quotes = 0;
-    while (s[pos + len] != '\0' && (quotes != 0 || is_separator(s[pos + len]) != 0))
+    q = 0;
+    while (s[pos + len] != '\0' && (q != 0 || is_separator(s[pos + len]) != 0))
     {
-        manage_quotes(&quotes, s[pos + len]);
+        manage_quotes(&q, s[pos + len]);
         len++;
     }
     result = ft_substr(s, pos, len);

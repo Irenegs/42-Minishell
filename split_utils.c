@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   split_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 15:23:01 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/09/01 18:33:45 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/11/14 19:44:34 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	is_split_separator(char c, char *sep)
+static int	is_split_sep(char c, char *sep)
 {
 	int	i;
 
@@ -38,11 +38,11 @@ int	new_word(char const *s, char *sep, int i, int quotes)
 {
 	if (s && sep)
 	{
-		if (is_split_separator(s[i], sep) == -1 && quotes == 0)
+		if (is_split_sep(s[i], sep) == -1 && quotes == 0)
 		{
 			if (i == 0)
 				return (1);
-			if (is_split_separator(s[i - 1], sep) != -1 && is_escaped(s, i - 1) == 0)
+			if (is_split_sep(s[i - 1], sep) != -1 && is_escaped(s, i - 1) == 0)
 				return (1);
 		}
 		return (0);
@@ -72,11 +72,11 @@ int	ft_wc(char const *s, char *sep)
 	return (words);
 }
 
-int	end_word(char const *s, char *sep, int i, int quot)
+int	end_word(char const *s, char *sep, int i, int q)
 {
 	if (s && sep && s[i] != '\0')
 	{
-		if (quot == 1 || is_split_separator(s[i], sep) == -1 || is_escaped(s, i) == 1)
+		if (q == 1 || is_split_sep(s[i], sep) == -1 || is_escaped(s, i) == 1)
 			return (0);
 	}
 	return (1);

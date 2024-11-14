@@ -6,7 +6,7 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 18:56:55 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/11/14 18:46:28 by irene            ###   ########.fr       */
+/*   Updated: 2024/11/14 19:09:59 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	execute_zero_pipes(t_mix *data)
 
 	command = extract_command(data->input, data);
 	if (!command)
-		return (1);//write_error_int(1, 1));
+		return (1);
 	if (is_builtin(command[0]) == 1)
 		status = execute_builtin(data, command);
 	else
