@@ -6,7 +6,7 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:36:03 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/10/25 18:45:35 by irene            ###   ########.fr       */
+/*   Updated: 2024/11/14 18:34:08 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ static int	count_arguments(char *cmd_str)
 	int	args;
 	int	quotes;
 
-	//printf("cmd_str:%s->%ld\n", cmd_str, ft_strlen(cmd_str));
 	if (!cmd_str)
 		return (0);
 	i = 0;
@@ -60,7 +59,6 @@ static int	count_arguments(char *cmd_str)
 		if (cmd_str[i] != ' ' && cmd_str[i] != '\0')
 		{
 			args++;
-			//printf("args++ cuando %c\n", cmd_str[i]);
 			manage_quotes(&quotes, cmd_str[i]);
 			while (cmd_str[i] != '\0' && (cmd_str[i] != ' ' || quotes != 0))
 			{
@@ -80,8 +78,7 @@ static char	**split_command(char *s, t_mix *data)
 	int		i;
 	int		pos;
 	char	**element;
-	printf("split_command\n");
-	printf("count_arguments:%d\n", count_arguments(s));
+	
 	arr = malloc((count_arguments(s) + 1) * sizeof(char **));
 	if (!arr || !data)
 		return (write_error_null(1));
@@ -93,10 +90,7 @@ static char	**split_command(char *s, t_mix *data)
 			pos++;
 		arr[i] = extract_element(s, pos, data);
 		if (!arr[i])
-		{
-			//ft_out(arr);
 			return (NULL);//write_error_null(1));
-		}
 		while (s[pos] != '\0' && is_space(s[pos]) == 0)
 			pos++;
 	}
@@ -111,7 +105,7 @@ char	**extract_command(char *s, t_mix *data)
 	int		pos;
 	char	*cmd_string;
 	char	**command;
-	printf("==extract_command==\n");
+
 	pos = locate_cmd_position(s);
 	if (pos == -1)
 		return (NULL);
@@ -119,6 +113,7 @@ char	**extract_command(char *s, t_mix *data)
 	if (!cmd_string)
 		return (NULL);
 	command = split_command(cmd_string, data);
+	/*
 	printf("printeamos el comando\n");
 	int i = 0;
 	while (command[i])
@@ -127,7 +122,7 @@ char	**extract_command(char *s, t_mix *data)
 		printf("===\n");
 		i++;
 	}
+	printf("=*=*=\n");*/
 	free(cmd_string);
-	printf("end_extract command\n");
 	return (command);
 }

@@ -6,7 +6,7 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/15 17:56:15 by irene             #+#    #+#             */
-/*   Updated: 2024/10/26 17:18:27 by irene            ###   ########.fr       */
+/*   Updated: 2024/11/14 18:36:24 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static char *escape_quotes_in_string(char *str)
     char	*escaped;
 	int		pos;
     int     quotes;
-    printf("==escape_quotes_in_string==\n");
+
 	if (!str)
 		return (NULL);
 	escaped = malloc(1 * sizeof(char));
@@ -28,7 +28,7 @@ static char *escape_quotes_in_string(char *str)
 	pos = 0;
 	while (str[pos] != '\0' && escaped)
 	{
-        if (is_quote(str[pos]) != 0 && quotes != 0 && quotes != is_quote(str[pos])) //&& is_escaped(str, pos) == 0)
+        if (is_quote(str[pos]) != 0 && quotes != 0 && quotes != is_quote(str[pos]))//&& is_escaped(str, pos) == 0)
             add_escaped_quote(&escaped, str, pos);
         else
         {
@@ -45,7 +45,7 @@ static int  variables_to_expand(char *str)
 {
     int quotes;
     int i;
-    printf("==variables_to_expand==\n");
+
     quotes = 0;
     i = 0;
     while (str[i] != '\0')
@@ -83,7 +83,7 @@ char    **escape_quotes_in_array(char **array)
 {
     char    *aux_str;
     int     i;
-    printf("==escape_quotes_in_array==\n");
+
     i = 0;
     while (array && array[i])
     {
@@ -102,7 +102,6 @@ char    **extract_element(char *s, int pos, t_mix *data)
     char    **element;
 
     str = extract_str_element(s, pos);
-    printf("extract_str_element:%s\n", str);
     if (variables_to_expand(str) == 1)
     {
         aux_str = expand_string(str, data);

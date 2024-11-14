@@ -6,7 +6,7 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 19:01:32 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/10/26 16:56:02 by irene            ###   ########.fr       */
+/*   Updated: 2024/11/14 18:35:22 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ char	*expand_string(char *str, t_mix *data)
 	char	*expanded;
 	int		pos;
     int     quotes;
-    printf("==expand_string==\n");
+
 	if (!str)
 		return (NULL);
 	expanded = malloc(1 * sizeof(char));
