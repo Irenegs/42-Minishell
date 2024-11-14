@@ -6,7 +6,7 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 19:01:32 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/11/14 18:35:22 by irene            ###   ########.fr       */
+/*   Updated: 2024/11/14 18:46:59 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void add_escaped_quote(char **result, char *orig, int pos)
 {
     char    *new;
     size_t  len_result;
-    printf("==add_escaped_quote==\n");
+
     len_result = ft_strlen(*result);
     new = malloc((len_result + 3) * sizeof(char));
     if (!new)
@@ -38,7 +38,7 @@ char *escape_quotes_in_variable(char *str)
 {
     char	*escaped;
 	int		pos;
-    printf("==escape_quotes_in_variable==\n");
+
 	if (!str)
 		return (NULL);
 	escaped = malloc(1 * sizeof(char));

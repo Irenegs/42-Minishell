@@ -6,7 +6,7 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/15 18:02:22 by irene             #+#    #+#             */
-/*   Updated: 2024/10/25 18:58:22 by irene            ###   ########.fr       */
+/*   Updated: 2024/11/14 18:47:07 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void add_char(char **result, char *orig, int pos)
 {
     char    *new;
     size_t  len_result;
-    //printf("add_char:%c\n", orig[pos]);
+
     len_result = ft_strlen(*result);
     new = malloc((len_result + 2) * sizeof(char));
     if (!new)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 17:36:54 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/10/20 11:05:20 by pablgarc         ###   ########.fr       */
+/*   Updated: 2024/11/14 18:45:55 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ static char	*command_exists(char *s, t_mix *data)
 int	run_command(char **command, t_mix *data)
 {
 	char	*cmd;
-	printf("Run command:%s\n", command[0]);
+
 	if (!command)
 		return (-1);
 	if (is_builtin(command[0]) == 1)

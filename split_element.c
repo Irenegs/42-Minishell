@@ -6,7 +6,7 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 16:21:12 by irene             #+#    #+#             */
-/*   Updated: 2024/10/25 18:18:31 by irene            ###   ########.fr       */
+/*   Updated: 2024/11/14 18:47:39 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,13 +58,11 @@ static char	*split_word(char *str, int *pos)
 	while (str[*pos] == ' ')
 		(*pos)++;
 	len = len_word(str, pos);
-	printf("split_word:len:%d\n", len);
 	word = malloc((len + 1) * sizeof(char));
 	if (!word)
 		return (write_error_null(1));
 	copy_content(str, word, pos, len);
 	word[len] = '\0';
-	printf("word:%s\n", word);
 	while (str[*pos] == ' ')
 		(*pos)++;
 	return (word);
@@ -100,7 +98,7 @@ char	**split_element(char *str)
 	int		words;
 	int		w;
 	int		pos;
-	printf("==split_element==\n");
+
 	words = count_words(str);
 	result = malloc((words + 1) * sizeof(char *));
 	if (!result)

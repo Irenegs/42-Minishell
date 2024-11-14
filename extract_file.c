@@ -6,7 +6,7 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 16:36:46 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/09/22 17:03:57 by irene            ###   ########.fr       */
+/*   Updated: 2024/11/14 18:47:15 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int	extract_input(char *s, t_mix *data, int p)
 	int		pos;
 	char	*filename;
 	int		aux_fd;
-	printf("extract_input\n");
+
 	if (!s)
 		return (-2);
 	pos = locate_char_position_quotes(s, '<');

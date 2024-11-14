@@ -6,7 +6,7 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 20:32:38 by irene             #+#    #+#             */
-/*   Updated: 2024/10/25 18:43:35 by irene            ###   ########.fr       */
+/*   Updated: 2024/11/14 18:48:00 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ size_t	len_varvalue(char *str, int pos)
 size_t	len_varname(char *str, int *pos)
 {
 	size_t	len;
-	printf("==len_varname==\n");
+
 	if (!str)
 		return (0);
 	if (str[*pos] == '?')
@@ -111,7 +111,7 @@ char	*obtain_variable(char *s, int i, t_mix *data)
 	char	*var_name;
 	char	*var_value;
 	size_t	len;
-	printf("==obtain_variable==\n");
+
 	len = len_varname(s, &i);
 	if (len == 0)
 	{
@@ -147,7 +147,7 @@ char	*expand_variable(char *orig, char *input_str, int pos, t_mix *data)
 {
 	char	*result;
 	char	*chunk;
-	printf("==expand_variable==\n");
+
 	chunk = obtain_variable(input_str, pos + 1, data);
 	if (!chunk)
 		return (NULL);
