@@ -6,7 +6,7 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 16:36:46 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/11/14 18:47:15 by irene            ###   ########.fr       */
+/*   Updated: 2024/11/15 17:14:32 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ char	*extract_filename(char *s, int *pos, t_mix *data)
 {
 	char	**element;
 	char	*filename;
-
+	
 	element = extract_element(s, *pos, data);
 	if (!element)
 		return (NULL);
@@ -76,6 +76,8 @@ char	*extract_filename(char *s, int *pos, t_mix *data)
 	}
 	filename = ft_strdup(element[0]);
 	ft_out(element);
+	if (!filename)
+		return (write_error_null(1));
 	return (filename);
 }
 
@@ -88,10 +90,10 @@ int	extract_input(char *s, t_mix *data, int p)
 
 	if (!s)
 		return (-2);
-	pos = locate_char_position_quotes(s, '<');
-	if (pos == -1)
+	pos = locate_char_position_quotes(s, '<') + 1;
+	if (pos == 0)
 		return (-1);
-	if (s[pos + 1] == '<')
+	if (s[pos] == '<')
 		fd = get_heredoc_fd(data->heredocs, p);
 	else
 	{
@@ -117,8 +119,8 @@ int	extract_output(char *s, t_mix *data)
 
 	if (!s)
 		return (-2);
-	pos = locate_char_position_quotes(s, '>');
-	if (pos == -1)
+	pos = locate_char_position_quotes(s, '>') + 1;
+	if (pos == 0)
 		return (-1);
 	filename = extract_filename(s, &pos, data);
 	if (!filename)

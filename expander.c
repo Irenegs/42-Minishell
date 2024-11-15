@@ -6,7 +6,7 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/15 17:56:15 by irene             #+#    #+#             */
-/*   Updated: 2024/11/14 19:36:45 by irene            ###   ########.fr       */
+/*   Updated: 2024/11/15 17:10:09 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static char *escape_quotes_in_string(char *str)
         else
         {
             if (is_quote(str[pos]) != 0 && is_escaped(str, pos) == 0)
-                manage_quot(&quot, str[pos]);
+                manage_quotes(&quot, str[pos]);
             add_char(&escaped, str, pos);
         }
         pos++;
@@ -68,6 +68,8 @@ static char *extract_str_element(char *s, int pos)
         return (NULL);
     len = 0;
     q = 0;
+    while(s[pos + len] == ' ')
+        pos++;
     while (s[pos + len] != '\0' && (q != 0 || is_separator(s[pos + len]) != 0))
     {
         manage_quotes(&q, s[pos + len]);

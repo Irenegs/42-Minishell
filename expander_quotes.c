@@ -6,14 +6,13 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/15 17:53:19 by irene             #+#    #+#             */
-/*   Updated: 2024/09/22 17:44:13 by irene            ###   ########.fr       */
+/*   Updated: 2024/11/15 16:55:58 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-
-static char    *unquote_str(char *str)
+static char *unquote_str(char *str)
 {
     int     i;
     char    *unquoted;
