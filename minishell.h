@@ -6,7 +6,7 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 17:56:24 by irene             #+#    #+#             */
-/*   Updated: 2024/11/14 18:44:21 by irene            ###   ########.fr       */
+/*   Updated: 2024/11/16 20:28:47 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,10 @@ void	ft_sig_def(void);
 void	ft_signals_hd(void);
 
 //struct.c
-void	*ft_free_env(char **env);
 void	ft_init_mix(t_mix *data, char **envp);
 
 //built_in_check.c
 int		is_builtin(char *cmd);
-int		is_special_builtin(char *cmd);
 int		execute_builtin(t_mix *data, char **command);
 
 //built_in.c
@@ -86,13 +84,7 @@ int		ft_isnum(char *str);
 //built_in_utils2.c
 int		find_env_index(char **env, const char *key);
 char	**au_env(char **env, const char *key, const char *value);
-char	**copy_env_without_entry(char **env, int index, int size);
-char	**remove_env(char **env, const char *key);
 int		valid_varname(char *str);
-
-//built_in_utils3.c
-void	empty_export(t_mix *data);
-int		process_export_command(t_mix *data, char *cmd);
 
 //command.c
 int		run_command(char **command, t_mix *data);

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   built_in.c                                         :+:      :+:    :+:   */
+/*   built_in_cd_pwd.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/30 21:56:45 by pablo             #+#    #+#             */
-/*   Updated: 2024/08/23 11:17:02 by irene            ###   ########.fr       */
+/*   Created: 2024/11/16 20:16:33 by irene             #+#    #+#             */
+/*   Updated: 2024/11/16 20:16:56 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,43 +53,4 @@ int	ft_pwd(t_mix *data)
 		return (0);
 	}
 	return (perror_int(1));
-}
-
-int	ft_unset(t_mix *data, char **command)
-{
-	int	i;
-
-	i = 1;
-	if (!command[1])
-		return (0);
-	while (command[i])
-	{
-		data->m_env = remove_env(data->m_env, command[i]);
-		if (!data->m_env)
-		{
-			perror("unset");
-			return (1);
-		}
-		i++;
-	}
-	return (0);
-}
-
-int	ft_export(t_mix *data, char **command)
-{
-	int	i;
-
-	if (!command || !command[1])
-	{
-		empty_export(data);
-		return (0);
-	}
-	i = 1;
-	while (command[i])
-	{
-		if (process_export_command(data, command[i]) != 0)
-			return (1);
-		i++;
-	}
-	return (0);
 }

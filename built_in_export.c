@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   built_in_utils3.c                                  :+:      :+:    :+:   */
+/*   built_in_export.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/30 18:04:24 by pablgarc          #+#    #+#             */
-/*   Updated: 2024/10/20 09:58:04 by pablgarc         ###   ########.fr       */
+/*   Created: 2024/05/30 21:56:45 by pablo             #+#    #+#             */
+/*   Updated: 2024/11/16 20:28:57 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	empty_export(t_mix *data)
+static void	empty_export(t_mix *data)
 {
 	int	n_var;
 	int	pos_eq;
@@ -34,7 +34,7 @@ void	empty_export(t_mix *data)
 	}
 }
 
-int	process_export_command(t_mix *data, char *cmd)
+static int	process_export_command(t_mix *data, char *cmd)
 {
 	char	*var_name;
 	int		len;
@@ -60,5 +60,24 @@ int	process_export_command(t_mix *data, char *cmd)
 	else
 		return (write_error_int(5, 1));
 	free(var_name);
+	return (0);
+}
+
+int	ft_export(t_mix *data, char **command)
+{
+	int	i;
+
+	if (!command || !command[1])
+	{
+		empty_export(data);
+		return (0);
+	}
+	i = 1;
+	while (command[i])
+	{
+		if (process_export_command(data, command[i]) != 0)
+			return (1);
+		i++;
+	}
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 18:32:16 by irene             #+#    #+#             */
-/*   Updated: 2024/08/28 15:51:49 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/11/16 19:34:57 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,13 @@ static int	open_quotes(char *s)
 	return (0);
 }
 
-int	parser_manage_quotes(char *s, int pos, int quotes)
+int	parser_manage_quotes(char *s, int pos, int *quotes)
 {
-	if (s[pos] == quotes && quotes != 0)
-		quotes = 0;
-	else if (quotes == 0 && (s[pos] == '\'' || s[pos] == '"'))
-		quotes = s[pos];
-	while (quotes != 0 && s[pos] != quotes)
+	if (s[pos] == *quotes && *quotes != 0)
+		*quotes = 0;
+	else if (*quotes == 0 && (s[pos] == '\'' || s[pos] == '"'))
+		*quotes = s[pos];
+	while (*quotes != 0 && s[pos] != *quotes)
 		pos++;
 	return (pos);
 }
@@ -59,7 +59,7 @@ int	count_pipes(char *s)
 			pipes++;
 			i++;
 		}
-		i = parser_manage_quotes(s, i, quotes);
+		i = parser_manage_quotes(s, i, &quotes);
 	}
 	return (pipes);
 }
@@ -126,6 +126,7 @@ int	parser_errors(char *s)
 	change_insert(insert, 0, 1, 1);
 	while (s[++i] != '\0' && valid_insertion(insert, s[i]) == 1)
 	{
+		//printf("s[i]:%c\nquotes:%d\n", s[i], quotes);
 		if (quotes == 0 && s[i] != '\'' && s[i] != '"')
 		{
 			if (s[i] == '|')
@@ -136,7 +137,7 @@ int	parser_errors(char *s)
 			if (ft_isalnum(s[i]) == 1)
 				change_insert(insert, 1, 1, 1);
 		}
-		i = parser_manage_quotes(s, i, quotes);
+		i = parser_manage_quotes(s, i, &quotes);
 		if (s[i] == '\'' || s[i] == '"' )
 			change_insert(insert, 1, 1, 1);
 	}

@@ -6,7 +6,7 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 19:27:26 by irene             #+#    #+#             */
-/*   Updated: 2024/11/14 19:29:17 by irene            ###   ########.fr       */
+/*   Updated: 2024/11/16 19:13:29 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ char	*expand_string(char *str, t_mix *data)
 		}
 		else if (quotes != 0 && is_quote(str[pos]) == 1 && quotes != str[pos])
 		{
-			add_escaped_quote(&expanded, str, pos);
+			add_escaped_quote(&expanded, str, pos++);
 			pos++;
 		}
 		else

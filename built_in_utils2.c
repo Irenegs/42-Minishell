@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in_utils2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 19:35:07 by pablgarc          #+#    #+#             */
-/*   Updated: 2024/07/30 20:00:20 by pablgarc         ###   ########.fr       */
+/*   Updated: 2024/11/16 20:26:40 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,52 +41,6 @@ char	**au_env(char **env, const char *key, const char *value)
 	while (env[size])
 		size++;
 	new_env = new_entry(env, key, value, size);
-	if (!new_env)
-		return (NULL);
-	free(env);
-	return (new_env);
-}
-
-char	**copy_env_without_entry(char **env, int index, int size)
-{
-	char	**new_env;
-	int		j;
-	int		i;
-
-	i = 0;
-	j = 0;
-	new_env = (char **)malloc(size * sizeof(char *));
-	if (!new_env)
-		return (write_error_null(1));
-	while (i < index)
-	{
-		new_env[j] = env[i];
-		i++;
-		j++;
-	}
-	free(env[index]);
-	while (env[++i])
-	{
-		new_env[j] = env[i];
-		j++;
-	}
-	new_env[j] = NULL;
-	return (new_env);
-}
-
-char	**remove_env(char **env, const char *key)
-{
-	int		index;
-	int		size;
-	char	**new_env;
-
-	size = 0;
-	index = find_env_index(env, key);
-	if (index == -1)
-		return (env);
-	while (env[size])
-		size++;
-	new_env = copy_env_without_entry(env, index, size);
 	if (!new_env)
 		return (NULL);
 	free(env);

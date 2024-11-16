@@ -6,7 +6,7 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/15 18:33:19 by irene             #+#    #+#             */
-/*   Updated: 2024/11/14 18:44:40 by irene            ###   ########.fr       */
+/*   Updated: 2024/11/16 20:46:02 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,18 +92,23 @@ char	*increment_shlvl(char *env_var)
 {
 	int		shlvl_value;
 	char	*new_shlvl;
+	char	*new_shlvl_value;
 
 	if (ft_strncmp(env_var, "SHLVL=", 6) == 0)
 	{
 		shlvl_value = ft_atoi(env_var + 6) + 1;
-		new_shlvl = (char *)malloc(7 + ft_strlen(ft_itoa(shlvl_value)));
+		new_shlvl_value = ft_itoa(shlvl_value);
+		if (!new_shlvl_value)
+			return (write_error_null(1));
+		new_shlvl = (char *)malloc(7 + ft_strlen(new_shlvl_value));
 		if (!new_shlvl)
-			return (NULL);
+			return (write_error_null(1));
 		ft_strlcpy(new_shlvl, "SHLVL=", 7);
-		ft_strlcat(new_shlvl, ft_itoa(shlvl_value),
-			7 + ft_strlen(ft_itoa(shlvl_value)));
+		ft_strlcat(new_shlvl, new_shlvl_value,
+			7 + ft_strlen(new_shlvl_value));
+		free(new_shlvl_value);
 		return (new_shlvl);
 	}
-	return (ft_strdup(env_var));
+	return (env_var);
 }
 

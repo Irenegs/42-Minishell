@@ -4,8 +4,8 @@ LIBS        := ft
 LIBS_TARGET := libft/libft.a 
 INCS        := include libft/include
 
-SRCS        := built_in_check.c built_in.c built_in_env_exit.c built_in_echo.c\
-				built_in_utils1.c built_in_utils2.c built_in_utils3.c \
+SRCS        := built_in_cd_pwd.c built_in_check.c built_in_echo.c built_in_env.c built_in_exit.c built_in_export.c built_in_unset.c \
+				built_in_utils1.c built_in_utils2.c \
 				command.c command_utils.c \
 				error.c \
 				expander.c expander_variables.c expander_quotes.c expander_utils.c\

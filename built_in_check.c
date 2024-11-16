@@ -32,20 +32,6 @@ int	is_builtin(char *cmd)
 		return (0);
 }
 
-int	is_special_builtin(char *cmd)
-{
-	if (ft_strcmp(cmd, "cd") == 0)
-		return (1);
-	else if (ft_strcmp(cmd, "export") == 0)
-		return (1);
-	else if (ft_strcmp(cmd, "unset") == 0)
-		return (1);
-	else if (ft_strcmp(cmd, "exit") == 0)
-		return (1);
-	else
-		return (0);
-}
-
 int	execute_builtin(t_mix *data, char **command)
 {
 	if (ft_strcmp(command[0], "echo") == 0)

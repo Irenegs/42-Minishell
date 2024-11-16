@@ -6,7 +6,7 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:36:03 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/11/15 16:54:25 by irene            ###   ########.fr       */
+/*   Updated: 2024/11/16 19:50:57 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static int	count_arguments(char *cmd_str)
 			args++;
 			manage_quotes(&quotes, cmd_str[i]);
 			while (cmd_str[i] != '\0' && (cmd_str[i] != ' ' || quotes != 0))
-				manage_quotes(&quotes, cmd_str[i++]);
+				manage_quotes(&quotes, cmd_str[++i]);
 			if (cmd_str[i] != '\0')
 				i++;
 		}
