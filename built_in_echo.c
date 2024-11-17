@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in_echo.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
+/*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 11:16:50 by irene             #+#    #+#             */
-/*   Updated: 2024/11/14 18:45:41 by irene            ###   ########.fr       */
+/*   Updated: 2024/11/17 19:42:19 by pablgarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ static int	check_flag_echo(char *arg)
 	int	i;
 
 	if (!arg || arg[0] != '-')
+		return (0);
+	if (arg[0] == '-' && arg[1] == '\0')
 		return (0);
 	i = 1;
 	while (arg[i] != '\0')
