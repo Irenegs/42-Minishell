@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/15 18:33:19 by irene             #+#    #+#             */
-/*   Updated: 2024/11/18 22:24:57 by pablo            ###   ########.fr       */
+/*   Updated: 2024/11/19 23:46:47 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,3 +115,10 @@ char	*increment_shlvl(char *env_var)
 	return (env_var);
 }
 
+char **free_partial_array(char **array, int filled)
+{
+    for (int i = 0; i < filled; i++)
+        free(array[i]);
+    free(array);
+    return (NULL);
+}

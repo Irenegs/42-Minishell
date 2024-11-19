@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 17:56:24 by irene             #+#    #+#             */
-/*   Updated: 2024/11/16 20:28:47 by irene            ###   ########.fr       */
+/*   Updated: 2024/11/19 23:48:08 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,4 +190,6 @@ void add_char(char **result, char *orig, int pos);
 char	**split_element(char *str);
 
 void add_escaped_quote(char **result, char *orig, int pos);
+char **free_partial_array(char **array, int filled);
+
 #endif

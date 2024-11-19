@@ -1,257 +1,322 @@
-==27448== Memcheck, a memory error detector
-==27448== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==27448== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
-==27448== Command: ./minishell
-==27448== Parent PID: 2345
-==27448== 
---27448-- 
---27448-- Valgrind options:
---27448--    --suppressions=readline.supp
---27448--    --leak-check=full
---27448--    --show-leak-kinds=all
---27448--    --track-origins=yes
---27448--    --verbose
---27448--    --log-file=valgrind-out.txt
---27448-- Contents of /proc/version:
---27448--   Linux version 5.4.0-150-generic (buildd@bos03-amd64-012) (gcc version 7.5.0 (Ubuntu 7.5.0-3ubuntu1~18.04)) #167~18.04.1-Ubuntu SMP Wed May 24 00:51:42 UTC 2023
---27448-- 
---27448-- Arch and hwcaps: AMD64, LittleEndian, amd64-cx16-lzcnt-rdtscp-sse3-avx-avx2-bmi
---27448-- Page sizes: currently 4096, max supported 4096
---27448-- Valgrind library directory: /usr/lib/valgrind
---27448-- Reading syms from /home/pablo/Escritorio/42-Minishell/minishell
---27448-- Reading syms from /lib/x86_64-linux-gnu/ld-2.27.so
---27448--   Considering /lib/x86_64-linux-gnu/ld-2.27.so ..
---27448--   .. CRC mismatch (computed 2977d8b2 wanted c64f09ed)
---27448--   Considering /usr/lib/debug/lib/x86_64-linux-gnu/ld-2.27.so ..
---27448--   .. CRC is valid
---27448-- Reading syms from /usr/lib/valgrind/memcheck-amd64-linux
---27448--   Considering /usr/lib/valgrind/memcheck-amd64-linux ..
---27448--   .. CRC mismatch (computed 41ddb025 wanted 9972f546)
---27448--    object doesn't have a symbol table
---27448--    object doesn't have a dynamic symbol table
---27448-- Scheduler: using generic scheduler lock implementation.
---27448-- Reading suppressions file: readline.supp
---27448-- Reading suppressions file: /usr/lib/valgrind/default.supp
-==27448== embedded gdbserver: reading from /tmp/vgdb-pipe-from-vgdb-to-27448-by-pablo-on-???
-==27448== embedded gdbserver: writing to   /tmp/vgdb-pipe-to-vgdb-from-27448-by-pablo-on-???
-==27448== embedded gdbserver: shared mem   /tmp/vgdb-pipe-shared-mem-vgdb-27448-by-pablo-on-???
-==27448== 
-==27448== TO CONTROL THIS PROCESS USING vgdb (which you probably
-==27448== don't want to do, unless you know exactly what you're doing,
-==27448== or are doing some strange experiment):
-==27448==   /usr/lib/valgrind/../../bin/vgdb --pid=27448 ...command...
-==27448== 
-==27448== TO DEBUG THIS PROCESS USING GDB: start GDB like this
-==27448==   /path/to/gdb ./minishell
-==27448== and then give GDB the following command
-==27448==   target remote | /usr/lib/valgrind/../../bin/vgdb --pid=27448
-==27448== --pid is optional if only one valgrind process is running
-==27448== 
---27448-- REDIR: 0x4020d20 (ld-linux-x86-64.so.2:strlen) redirected to 0x580608c1 (???)
---27448-- REDIR: 0x4020b00 (ld-linux-x86-64.so.2:index) redirected to 0x580608db (???)
---27448-- Reading syms from /usr/lib/valgrind/vgpreload_core-amd64-linux.so
---27448--   Considering /usr/lib/valgrind/vgpreload_core-amd64-linux.so ..
---27448--   .. CRC mismatch (computed 50df1b30 wanted 4800a4cf)
---27448--    object doesn't have a symbol table
---27448-- Reading syms from /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so
---27448--   Considering /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so ..
---27448--   .. CRC mismatch (computed f893b962 wanted 95ee359e)
---27448--    object doesn't have a symbol table
-==27448== WARNING: new redirection conflicts with existing -- ignoring it
---27448--     old: 0x04020d20 (strlen              ) R-> (0000.0) 0x580608c1 ???
---27448--     new: 0x04020d20 (strlen              ) R-> (2007.0) 0x04c34db0 strlen
---27448-- REDIR: 0x401d540 (ld-linux-x86-64.so.2:strcmp) redirected to 0x4c35ee0 (strcmp)
---27448-- REDIR: 0x4021260 (ld-linux-x86-64.so.2:mempcpy) redirected to 0x4c394f0 (mempcpy)
---27448-- Reading syms from /lib/x86_64-linux-gnu/libreadline.so.7.0
---27448--    object doesn't have a symbol table
---27448-- Reading syms from /lib/x86_64-linux-gnu/libc-2.27.so
---27448--   Considering /lib/x86_64-linux-gnu/libc-2.27.so ..
---27448--   .. CRC mismatch (computed f250d419 wanted 4aacab51)
---27448--   Considering /usr/lib/debug/lib/x86_64-linux-gnu/libc-2.27.so ..
---27448--   .. CRC is valid
---27448-- Reading syms from /lib/x86_64-linux-gnu/libtinfo.so.5.9
---27448--    object doesn't have a symbol table
---27448-- REDIR: 0x5125a50 (libc.so.6:memmove) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
---27448-- REDIR: 0x5124d60 (libc.so.6:strncpy) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
---27448-- REDIR: 0x5125d30 (libc.so.6:strcasecmp) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
---27448-- REDIR: 0x51247b0 (libc.so.6:strcat) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
---27448-- REDIR: 0x5124d90 (libc.so.6:rindex) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
---27448-- REDIR: 0x5127480 (libc.so.6:rawmemchr) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
---27448-- REDIR: 0x5125bc0 (libc.so.6:mempcpy) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
---27448-- REDIR: 0x51259f0 (libc.so.6:bcmp) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
---27448-- REDIR: 0x5124d20 (libc.so.6:strncmp) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
---27448-- REDIR: 0x5124820 (libc.so.6:strcmp) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
---27448-- REDIR: 0x5125b20 (libc.so.6:memset) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
---27448-- REDIR: 0x5142db0 (libc.so.6:wcschr) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
---27448-- REDIR: 0x5124cc0 (libc.so.6:strnlen) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
---27448-- REDIR: 0x5124890 (libc.so.6:strcspn) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
---27448-- REDIR: 0x5125d80 (libc.so.6:strncasecmp) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
---27448-- REDIR: 0x5124860 (libc.so.6:strcpy) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
---27448-- REDIR: 0x5125ec0 (libc.so.6:memcpy@@GLIBC_2.14) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
---27448-- REDIR: 0x5124dc0 (libc.so.6:strpbrk) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
---27448-- REDIR: 0x51247e0 (libc.so.6:index) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
---27448-- REDIR: 0x5124c90 (libc.so.6:strlen) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
---27448-- REDIR: 0x512f380 (libc.so.6:memrchr) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
---27448-- REDIR: 0x5125dd0 (libc.so.6:strcasecmp_l) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
---27448-- REDIR: 0x51259c0 (libc.so.6:memchr) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
---27448-- REDIR: 0x5143b70 (libc.so.6:wcslen) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
---27448-- REDIR: 0x5125070 (libc.so.6:strspn) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
---27448-- REDIR: 0x5125d00 (libc.so.6:stpncpy) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
---27448-- REDIR: 0x5125cd0 (libc.so.6:stpcpy) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
---27448-- REDIR: 0x51274b0 (libc.so.6:strchrnul) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
---27448-- REDIR: 0x5125e20 (libc.so.6:strncasecmp_l) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
---27448-- REDIR: 0x5124cf0 (libc.so.6:strncat) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
---27448-- REDIR: 0x51b8700 (libc.so.6:__memcpy_chk) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
---27448-- REDIR: 0x5125900 (libc.so.6:strstr) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
---27448-- REDIR: 0x5215280 (libc.so.6:__strrchr_avx2) redirected to 0x4c34730 (rindex)
---27448-- REDIR: 0x511e020 (libc.so.6:malloc) redirected to 0x4c31aa0 (malloc)
---27448-- REDIR: 0x511e910 (libc.so.6:free) redirected to 0x4c32cd0 (free)
---27448-- REDIR: 0x5215450 (libc.so.6:__strlen_avx2) redirected to 0x4c34cf0 (strlen)
---27448-- REDIR: 0x513d200 (libc.so.6:__strcpy_sse2_unaligned) redirected to 0x4c34dd0 (strcpy)
---27448-- REDIR: 0x5214e60 (libc.so.6:__strchr_avx2) redirected to 0x4c34950 (index)
---27448-- REDIR: 0x520c3d0 (libc.so.6:__strncmp_sse42) redirected to 0x4c35570 (__strncmp_sse42)
---27448-- REDIR: 0x5121050 (libc.so.6:calloc) redirected to 0x4c33a70 (calloc)
---27448-- REDIR: 0x5215090 (libc.so.6:__strchrnul_avx2) redirected to 0x4c39020 (strchrnul)
---27448-- REDIR: 0x52155e0 (libc.so.6:__strnlen_avx2) redirected to 0x4c34c90 (strnlen)
---27448-- REDIR: 0x5215990 (libc.so.6:__memcpy_avx_unaligned_erms) redirected to 0x4c386e0 (memmove)
---27448-- REDIR: 0x5130b30 (libc.so.6:__strcmp_sse2_unaligned) redirected to 0x4c35da0 (strcmp)
---27448-- REDIR: 0x51255a0 (libc.so.6:__GI_strstr) redirected to 0x4c39760 (__strstr_sse2)
---27448-- REDIR: 0x5215980 (libc.so.6:__memcpy_chk_avx_unaligned_erms) redirected to 0x4c395e0 (__memcpy_chk)
---27448-- REDIR: 0x511fc50 (libc.so.6:realloc) redirected to 0x4c33cb0 (realloc)
---27448-- REDIR: 0x513d830 (libc.so.6:__strncpy_sse2_unaligned) redirected to 0x4c352e0 (__strncpy_sse2_unaligned)
---27448-- REDIR: 0x50c9c40 (libc.so.6:setenv) redirected to 0x4c39de0 (setenv)
---27448-- REDIR: 0x5215970 (libc.so.6:__mempcpy_avx_unaligned_erms) redirected to 0x4c39130 (mempcpy)
---27448-- REDIR: 0x52112e0 (libc.so.6:__memchr_avx2) redirected to 0x4c35f80 (memchr)
---27448-- REDIR: 0x513e810 (libc.so.6:__stpcpy_sse2_unaligned) redirected to 0x4c38200 (__stpcpy_sse2_unaligned)
---27448-- REDIR: 0x5211e40 (libc.so.6:__strcasecmp_avx) redirected to 0x4c355f0 (strcasecmp)
---27448-- REDIR: 0x52134b0 (libc.so.6:__strncasecmp_avx) redirected to 0x4c356d0 (strncasecmp)
---27448-- REDIR: 0x5215e10 (libc.so.6:__memset_avx2_unaligned_erms) redirected to 0x4c385d0 (memset)
---27448-- REDIR: 0x5211a60 (libc.so.6:__memcmp_avx2_movbe) redirected to 0x4c37e00 (bcmp)
-==27448== Invalid free() / delete / delete[] / realloc()
-==27448==    at 0x4C32D3B: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==27448==    by 0x10F15A: ft_out (in /home/pablo/Escritorio/42-Minishell/minishell)
-==27448==    by 0x1096DE: ft_exit (in /home/pablo/Escritorio/42-Minishell/minishell)
-==27448==    by 0x10930C: execute_builtin (in /home/pablo/Escritorio/42-Minishell/minishell)
-==27448==    by 0x10BA16: execute_zero_pipes (in /home/pablo/Escritorio/42-Minishell/minishell)
-==27448==    by 0x10B719: execute (in /home/pablo/Escritorio/42-Minishell/minishell)
-==27448==    by 0x10B810: parse_and_execute (in /home/pablo/Escritorio/42-Minishell/minishell)
-==27448==    by 0x10EBF6: prompt (in /home/pablo/Escritorio/42-Minishell/minishell)
-==27448==    by 0x10EC63: main (in /home/pablo/Escritorio/42-Minishell/minishell)
-==27448==  Address 0x1fff00015b is on thread 1's stack
-==27448== 
-==27448== 
-==27448== HEAP SUMMARY:
-==27448==     in use at exit: 134,448 bytes in 202 blocks
-==27448==   total heap usage: 348 allocs, 210 frees, 154,799 bytes allocated
-==27448== 
-==27448== Searching for pointers to 202 not-freed blocks
-==27448== Checked 170,384 bytes
-==27448== 
-==27448== 5 bytes in 1 blocks are still reachable in loss record 1 of 48
-==27448==    at 0x4C31B0F: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==27448==    by 0x10B281: add_char (in /home/pablo/Escritorio/42-Minishell/minishell)
-==27448==    by 0x10A807: escape_quotes_in_string (in /home/pablo/Escritorio/42-Minishell/minishell)
-==27448==    by 0x10AA2F: escape_quotes_in_array (in /home/pablo/Escritorio/42-Minishell/minishell)
-==27448==    by 0x10AB2A: extract_element (in /home/pablo/Escritorio/42-Minishell/minishell)
-==27448==    by 0x10BD91: split_command (in /home/pablo/Escritorio/42-Minishell/minishell)
-==27448==    by 0x10BEA8: extract_command (in /home/pablo/Escritorio/42-Minishell/minishell)
-==27448==    by 0x10B9DD: execute_zero_pipes (in /home/pablo/Escritorio/42-Minishell/minishell)
-==27448==    by 0x10B719: execute (in /home/pablo/Escritorio/42-Minishell/minishell)
-==27448==    by 0x10B810: parse_and_execute (in /home/pablo/Escritorio/42-Minishell/minishell)
-==27448==    by 0x10EBF6: prompt (in /home/pablo/Escritorio/42-Minishell/minishell)
-==27448==    by 0x10EC63: main (in /home/pablo/Escritorio/42-Minishell/minishell)
-==27448== 
-==27448== 16 bytes in 1 blocks are still reachable in loss record 9 of 48
-==27448==    at 0x4C31B0F: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==27448==    by 0x10F32C: join_arrays (in /home/pablo/Escritorio/42-Minishell/minishell)
-==27448==    by 0x10BE30: split_command (in /home/pablo/Escritorio/42-Minishell/minishell)
-==27448==    by 0x10BEA8: extract_command (in /home/pablo/Escritorio/42-Minishell/minishell)
-==27448==    by 0x10B9DD: execute_zero_pipes (in /home/pablo/Escritorio/42-Minishell/minishell)
-==27448==    by 0x10B719: execute (in /home/pablo/Escritorio/42-Minishell/minishell)
-==27448==    by 0x10B810: parse_and_execute (in /home/pablo/Escritorio/42-Minishell/minishell)
-==27448==    by 0x10EBF6: prompt (in /home/pablo/Escritorio/42-Minishell/minishell)
-==27448==    by 0x10EC63: main (in /home/pablo/Escritorio/42-Minishell/minishell)
-==27448== 
-==27448== 32 bytes in 2 blocks are definitely lost in loss record 15 of 48
-==27448==    at 0x4C31B0F: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==27448==    by 0x10F053: split_element (in /home/pablo/Escritorio/42-Minishell/minishell)
-==27448==    by 0x10AB0E: extract_element (in /home/pablo/Escritorio/42-Minishell/minishell)
-==27448==    by 0x10BD91: split_command (in /home/pablo/Escritorio/42-Minishell/minishell)
-==27448==    by 0x10BEA8: extract_command (in /home/pablo/Escritorio/42-Minishell/minishell)
-==27448==    by 0x10B9DD: execute_zero_pipes (in /home/pablo/Escritorio/42-Minishell/minishell)
-==27448==    by 0x10B719: execute (in /home/pablo/Escritorio/42-Minishell/minishell)
-==27448==    by 0x10B810: parse_and_execute (in /home/pablo/Escritorio/42-Minishell/minishell)
-==27448==    by 0x10EBF6: prompt (in /home/pablo/Escritorio/42-Minishell/minishell)
-==27448==    by 0x10EC63: main (in /home/pablo/Escritorio/42-Minishell/minishell)
-==27448== 
-==27448== 8,224 bytes in 2 blocks are still reachable in loss record 46 of 48
-==27448==    at 0x4C31B0F: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==27448==    by 0x4E75738: xmalloc (in /lib/x86_64-linux-gnu/libreadline.so.7.0)
-==27448==    by 0x4E5697D: rl_make_bare_keymap (in /lib/x86_64-linux-gnu/libreadline.so.7.0)
-==27448==    by 0x4E5D995: rl_generic_bind (in /lib/x86_64-linux-gnu/libreadline.so.7.0)
-==27448==    by 0x4E52D43: rl_initialize (in /lib/x86_64-linux-gnu/libreadline.so.7.0)
-==27448==    by 0x4E52EE6: readline (in /lib/x86_64-linux-gnu/libreadline.so.7.0)
-==27448==    by 0x10EB93: prompt (in /home/pablo/Escritorio/42-Minishell/minishell)
-==27448==    by 0x10EC63: main (in /home/pablo/Escritorio/42-Minishell/minishell)
-==27448== 
-==27448== 12,336 bytes in 3 blocks are still reachable in loss record 47 of 48
-==27448==    at 0x4C31B0F: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==27448==    by 0x4E75738: xmalloc (in /lib/x86_64-linux-gnu/libreadline.so.7.0)
-==27448==    by 0x4E5697D: rl_make_bare_keymap (in /lib/x86_64-linux-gnu/libreadline.so.7.0)
-==27448==    by 0x4E5D995: rl_generic_bind (in /lib/x86_64-linux-gnu/libreadline.so.7.0)
-==27448==    by 0x4E52D56: rl_initialize (in /lib/x86_64-linux-gnu/libreadline.so.7.0)
-==27448==    by 0x4E52EE6: readline (in /lib/x86_64-linux-gnu/libreadline.so.7.0)
-==27448==    by 0x10EB93: prompt (in /home/pablo/Escritorio/42-Minishell/minishell)
-==27448==    by 0x10EC63: main (in /home/pablo/Escritorio/42-Minishell/minishell)
-==27448== 
-==27448== LEAK SUMMARY:
-==27448==    definitely lost: 32 bytes in 2 blocks
-==27448==    indirectly lost: 0 bytes in 0 blocks
-==27448==      possibly lost: 0 bytes in 0 blocks
-==27448==    still reachable: 20,581 bytes in 7 blocks
-==27448==         suppressed: 113,835 bytes in 193 blocks
-==27448== 
-==27448== ERROR SUMMARY: 65 errors from 2 contexts (suppressed: 0 from 0)
-==27448== 
-==27448== 64 errors in context 1 of 2:
-==27448== Invalid free() / delete / delete[] / realloc()
-==27448==    at 0x4C32D3B: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==27448==    by 0x10F15A: ft_out (in /home/pablo/Escritorio/42-Minishell/minishell)
-==27448==    by 0x1096DE: ft_exit (in /home/pablo/Escritorio/42-Minishell/minishell)
-==27448==    by 0x10930C: execute_builtin (in /home/pablo/Escritorio/42-Minishell/minishell)
-==27448==    by 0x10BA16: execute_zero_pipes (in /home/pablo/Escritorio/42-Minishell/minishell)
-==27448==    by 0x10B719: execute (in /home/pablo/Escritorio/42-Minishell/minishell)
-==27448==    by 0x10B810: parse_and_execute (in /home/pablo/Escritorio/42-Minishell/minishell)
-==27448==    by 0x10EBF6: prompt (in /home/pablo/Escritorio/42-Minishell/minishell)
-==27448==    by 0x10EC63: main (in /home/pablo/Escritorio/42-Minishell/minishell)
-==27448==  Address 0x1fff00015b is on thread 1's stack
-==27448== 
---27448-- 
---27448-- used_suppression:      1 <insert_a_suppression_name_here> readline.supp:553 suppressed: 32,896 bytes in 8 blocks
---27448-- used_suppression:      6 <insert_a_suppression_name_here> readline.supp:522 suppressed: 45,232 bytes in 11 blocks
---27448-- used_suppression:      1 <insert_a_suppression_name_here> readline.supp:538 suppressed: 7,952 bytes in 1 blocks
---27448-- used_suppression:      3 <insert_a_suppression_name_here> readline.supp:60 suppressed: 6,125 bytes in 3 blocks
---27448-- used_suppression:      2 <insert_a_suppression_name_here> readline.supp:498 suppressed: 4,040 bytes in 3 blocks
---27448-- used_suppression:      3 <insert_a_suppression_name_here> readline.supp:480 suppressed: 3,948 bytes in 3 blocks
---27448-- used_suppression:      1 <insert_a_suppression_name_here> readline.supp:466 suppressed: 2,176 bytes in 136 blocks
---27448-- used_suppression:      2 <insert_a_suppression_name_here> readline.supp:435 suppressed: 2,347 bytes in 2 blocks
---27448-- used_suppression:      1 <insert_a_suppression_name_here> readline.supp:421 suppressed: 1,536 bytes in 1 blocks
---27448-- used_suppression:      6 <insert_a_suppression_name_here> readline.supp:407 suppressed: 6,144 bytes in 6 blocks
---27448-- used_suppression:      1 <insert_a_suppression_name_here> readline.supp:301 suppressed: 528 bytes in 1 blocks
---27448-- used_suppression:      1 <insert_a_suppression_name_here> readline.supp:289 suppressed: 256 bytes in 1 blocks
---27448-- used_suppression:      1 <insert_a_suppression_name_here> readline.supp:275 suppressed: 208 bytes in 1 blocks
---27448-- used_suppression:      1 <insert_a_suppression_name_here> readline.supp:258 suppressed: 94 bytes in 1 blocks
---27448-- used_suppression:      1 <insert_a_suppression_name_here> readline.supp:241 suppressed: 93 bytes in 1 blocks
---27448-- used_suppression:      2 <insert_a_suppression_name_here> readline.supp:176 suppressed: 57 bytes in 4 blocks
---27448-- used_suppression:      1 <insert_a_suppression_name_here> readline.supp:206 suppressed: 48 bytes in 1 blocks
---27448-- used_suppression:      1 <insert_a_suppression_name_here> readline.supp:158 suppressed: 24 bytes in 1 blocks
---27448-- used_suppression:      1 <insert_a_suppression_name_here> readline.supp:144 suppressed: 23 bytes in 1 blocks
---27448-- used_suppression:      1 <insert_a_suppression_name_here> readline.supp:132 suppressed: 23 bytes in 1 blocks
---27448-- used_suppression:      1 <insert_a_suppression_name_here> readline.supp:117 suppressed: 20 bytes in 1 blocks
---27448-- used_suppression:      1 <insert_a_suppression_name_here> readline.supp:105 suppressed: 16 bytes in 1 blocks
---27448-- used_suppression:      1 <insert_a_suppression_name_here> readline.supp:90 suppressed: 15 bytes in 1 blocks
---27448-- used_suppression:      1 <insert_a_suppression_name_here> readline.supp:73 suppressed: 14 bytes in 1 blocks
---27448-- used_suppression:      1 <insert_a_suppression_name_here> readline.supp:31 suppressed: 12 bytes in 1 blocks
---27448-- used_suppression:      1 <insert_a_suppression_name_here> readline.supp:16 suppressed: 8 bytes in 1 blocks
-==27448== 
-==27448== ERROR SUMMARY: 65 errors from 2 contexts (suppressed: 0 from 0)
+==6794== Memcheck, a memory error detector
+==6794== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==6794== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==6794== Command: ./minishell
+==6794== Parent PID: 3037
+==6794== 
+--6794-- 
+--6794-- Valgrind options:
+--6794--    --suppressions=readline.supp
+--6794--    --leak-check=full
+--6794--    --show-leak-kinds=all
+--6794--    --track-origins=yes
+--6794--    --verbose
+--6794--    --log-file=valgrind-out.txt
+--6794-- Contents of /proc/version:
+--6794--   Linux version 5.4.0-150-generic (buildd@bos03-amd64-012) (gcc version 7.5.0 (Ubuntu 7.5.0-3ubuntu1~18.04)) #167~18.04.1-Ubuntu SMP Wed May 24 00:51:42 UTC 2023
+--6794-- 
+--6794-- Arch and hwcaps: AMD64, LittleEndian, amd64-cx16-lzcnt-rdtscp-sse3-avx-avx2-bmi
+--6794-- Page sizes: currently 4096, max supported 4096
+--6794-- Valgrind library directory: /usr/lib/valgrind
+--6794-- Reading syms from /home/pablo/Escritorio/42-Minishell/minishell
+--6794-- Reading syms from /lib/x86_64-linux-gnu/ld-2.27.so
+--6794--   Considering /lib/x86_64-linux-gnu/ld-2.27.so ..
+--6794--   .. CRC mismatch (computed 2977d8b2 wanted c64f09ed)
+--6794--   Considering /usr/lib/debug/lib/x86_64-linux-gnu/ld-2.27.so ..
+--6794--   .. CRC is valid
+--6794-- Reading syms from /usr/lib/valgrind/memcheck-amd64-linux
+--6794--   Considering /usr/lib/valgrind/memcheck-amd64-linux ..
+--6794--   .. CRC mismatch (computed 41ddb025 wanted 9972f546)
+--6794--    object doesn't have a symbol table
+--6794--    object doesn't have a dynamic symbol table
+--6794-- Scheduler: using generic scheduler lock implementation.
+--6794-- Reading suppressions file: readline.supp
+--6794-- Reading suppressions file: /usr/lib/valgrind/default.supp
+==6794== embedded gdbserver: reading from /tmp/vgdb-pipe-from-vgdb-to-6794-by-pablo-on-???
+==6794== embedded gdbserver: writing to   /tmp/vgdb-pipe-to-vgdb-from-6794-by-pablo-on-???
+==6794== embedded gdbserver: shared mem   /tmp/vgdb-pipe-shared-mem-vgdb-6794-by-pablo-on-???
+==6794== 
+==6794== TO CONTROL THIS PROCESS USING vgdb (which you probably
+==6794== don't want to do, unless you know exactly what you're doing,
+==6794== or are doing some strange experiment):
+==6794==   /usr/lib/valgrind/../../bin/vgdb --pid=6794 ...command...
+==6794== 
+==6794== TO DEBUG THIS PROCESS USING GDB: start GDB like this
+==6794==   /path/to/gdb ./minishell
+==6794== and then give GDB the following command
+==6794==   target remote | /usr/lib/valgrind/../../bin/vgdb --pid=6794
+==6794== --pid is optional if only one valgrind process is running
+==6794== 
+--6794-- REDIR: 0x4020d20 (ld-linux-x86-64.so.2:strlen) redirected to 0x580608c1 (???)
+--6794-- REDIR: 0x4020b00 (ld-linux-x86-64.so.2:index) redirected to 0x580608db (???)
+--6794-- Reading syms from /usr/lib/valgrind/vgpreload_core-amd64-linux.so
+--6794--   Considering /usr/lib/valgrind/vgpreload_core-amd64-linux.so ..
+--6794--   .. CRC mismatch (computed 50df1b30 wanted 4800a4cf)
+--6794--    object doesn't have a symbol table
+--6794-- Reading syms from /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so
+--6794--   Considering /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so ..
+--6794--   .. CRC mismatch (computed f893b962 wanted 95ee359e)
+--6794--    object doesn't have a symbol table
+==6794== WARNING: new redirection conflicts with existing -- ignoring it
+--6794--     old: 0x04020d20 (strlen              ) R-> (0000.0) 0x580608c1 ???
+--6794--     new: 0x04020d20 (strlen              ) R-> (2007.0) 0x04c34db0 strlen
+--6794-- REDIR: 0x401d540 (ld-linux-x86-64.so.2:strcmp) redirected to 0x4c35ee0 (strcmp)
+--6794-- REDIR: 0x4021260 (ld-linux-x86-64.so.2:mempcpy) redirected to 0x4c394f0 (mempcpy)
+--6794-- Reading syms from /lib/x86_64-linux-gnu/libreadline.so.7.0
+--6794--    object doesn't have a symbol table
+--6794-- Reading syms from /lib/x86_64-linux-gnu/libc-2.27.so
+--6794--   Considering /lib/x86_64-linux-gnu/libc-2.27.so ..
+--6794--   .. CRC mismatch (computed f250d419 wanted 4aacab51)
+--6794--   Considering /usr/lib/debug/lib/x86_64-linux-gnu/libc-2.27.so ..
+--6794--   .. CRC is valid
+--6794-- Reading syms from /lib/x86_64-linux-gnu/libtinfo.so.5.9
+--6794--    object doesn't have a symbol table
+--6794-- REDIR: 0x5125a50 (libc.so.6:memmove) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
+--6794-- REDIR: 0x5124d60 (libc.so.6:strncpy) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
+--6794-- REDIR: 0x5125d30 (libc.so.6:strcasecmp) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
+--6794-- REDIR: 0x51247b0 (libc.so.6:strcat) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
+--6794-- REDIR: 0x5124d90 (libc.so.6:rindex) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
+--6794-- REDIR: 0x5127480 (libc.so.6:rawmemchr) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
+--6794-- REDIR: 0x5125bc0 (libc.so.6:mempcpy) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
+--6794-- REDIR: 0x51259f0 (libc.so.6:bcmp) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
+--6794-- REDIR: 0x5124d20 (libc.so.6:strncmp) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
+--6794-- REDIR: 0x5124820 (libc.so.6:strcmp) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
+--6794-- REDIR: 0x5125b20 (libc.so.6:memset) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
+--6794-- REDIR: 0x5142db0 (libc.so.6:wcschr) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
+--6794-- REDIR: 0x5124cc0 (libc.so.6:strnlen) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
+--6794-- REDIR: 0x5124890 (libc.so.6:strcspn) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
+--6794-- REDIR: 0x5125d80 (libc.so.6:strncasecmp) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
+--6794-- REDIR: 0x5124860 (libc.so.6:strcpy) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
+--6794-- REDIR: 0x5125ec0 (libc.so.6:memcpy@@GLIBC_2.14) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
+--6794-- REDIR: 0x5124dc0 (libc.so.6:strpbrk) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
+--6794-- REDIR: 0x51247e0 (libc.so.6:index) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
+--6794-- REDIR: 0x5124c90 (libc.so.6:strlen) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
+--6794-- REDIR: 0x512f380 (libc.so.6:memrchr) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
+--6794-- REDIR: 0x5125dd0 (libc.so.6:strcasecmp_l) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
+--6794-- REDIR: 0x51259c0 (libc.so.6:memchr) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
+--6794-- REDIR: 0x5143b70 (libc.so.6:wcslen) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
+--6794-- REDIR: 0x5125070 (libc.so.6:strspn) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
+--6794-- REDIR: 0x5125d00 (libc.so.6:stpncpy) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
+--6794-- REDIR: 0x5125cd0 (libc.so.6:stpcpy) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
+--6794-- REDIR: 0x51274b0 (libc.so.6:strchrnul) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
+--6794-- REDIR: 0x5125e20 (libc.so.6:strncasecmp_l) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
+--6794-- REDIR: 0x5124cf0 (libc.so.6:strncat) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
+--6794-- REDIR: 0x51b8700 (libc.so.6:__memcpy_chk) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
+--6794-- REDIR: 0x5125900 (libc.so.6:strstr) redirected to 0x4a2c6e0 (_vgnU_ifunc_wrapper)
+--6794-- REDIR: 0x5215280 (libc.so.6:__strrchr_avx2) redirected to 0x4c34730 (rindex)
+--6794-- REDIR: 0x511e020 (libc.so.6:malloc) redirected to 0x4c31aa0 (malloc)
+--6794-- REDIR: 0x511e910 (libc.so.6:free) redirected to 0x4c32cd0 (free)
+--6794-- REDIR: 0x5215450 (libc.so.6:__strlen_avx2) redirected to 0x4c34cf0 (strlen)
+--6794-- REDIR: 0x513d200 (libc.so.6:__strcpy_sse2_unaligned) redirected to 0x4c34dd0 (strcpy)
+--6794-- REDIR: 0x5214e60 (libc.so.6:__strchr_avx2) redirected to 0x4c34950 (index)
+--6794-- REDIR: 0x520c3d0 (libc.so.6:__strncmp_sse42) redirected to 0x4c35570 (__strncmp_sse42)
+--6794-- REDIR: 0x5121050 (libc.so.6:calloc) redirected to 0x4c33a70 (calloc)
+--6794-- REDIR: 0x5215090 (libc.so.6:__strchrnul_avx2) redirected to 0x4c39020 (strchrnul)
+--6794-- REDIR: 0x52155e0 (libc.so.6:__strnlen_avx2) redirected to 0x4c34c90 (strnlen)
+--6794-- REDIR: 0x5215990 (libc.so.6:__memcpy_avx_unaligned_erms) redirected to 0x4c386e0 (memmove)
+--6794-- REDIR: 0x5130b30 (libc.so.6:__strcmp_sse2_unaligned) redirected to 0x4c35da0 (strcmp)
+--6794-- REDIR: 0x51255a0 (libc.so.6:__GI_strstr) redirected to 0x4c39760 (__strstr_sse2)
+--6794-- REDIR: 0x5215980 (libc.so.6:__memcpy_chk_avx_unaligned_erms) redirected to 0x4c395e0 (__memcpy_chk)
+--6794-- REDIR: 0x511fc50 (libc.so.6:realloc) redirected to 0x4c33cb0 (realloc)
+--6794-- REDIR: 0x513d830 (libc.so.6:__strncpy_sse2_unaligned) redirected to 0x4c352e0 (__strncpy_sse2_unaligned)
+--6794-- REDIR: 0x50c9c40 (libc.so.6:setenv) redirected to 0x4c39de0 (setenv)
+--6794-- REDIR: 0x5215970 (libc.so.6:__mempcpy_avx_unaligned_erms) redirected to 0x4c39130 (mempcpy)
+--6794-- REDIR: 0x52112e0 (libc.so.6:__memchr_avx2) redirected to 0x4c35f80 (memchr)
+--6794-- REDIR: 0x513e810 (libc.so.6:__stpcpy_sse2_unaligned) redirected to 0x4c38200 (__stpcpy_sse2_unaligned)
+--6794-- REDIR: 0x5211e40 (libc.so.6:__strcasecmp_avx) redirected to 0x4c355f0 (strcasecmp)
+--6794-- REDIR: 0x52134b0 (libc.so.6:__strncasecmp_avx) redirected to 0x4c356d0 (strncasecmp)
+--6794-- REDIR: 0x5215e10 (libc.so.6:__memset_avx2_unaligned_erms) redirected to 0x4c385d0 (memset)
+--6794-- REDIR: 0x5211a60 (libc.so.6:__memcmp_avx2_movbe) redirected to 0x4c37e00 (bcmp)
+==6794== Invalid read of size 1
+==6794==    at 0x10F018: count_words (in /home/pablo/Escritorio/42-Minishell/minishell)
+==6794==    by 0x10F084: split_element (in /home/pablo/Escritorio/42-Minishell/minishell)
+==6794==    by 0x10AB39: extract_element (in /home/pablo/Escritorio/42-Minishell/minishell)
+==6794==    by 0x10BDCA: split_command (in /home/pablo/Escritorio/42-Minishell/minishell)
+==6794==    by 0x10BEE1: extract_command (in /home/pablo/Escritorio/42-Minishell/minishell)
+==6794==    by 0x10BA16: execute_zero_pipes (in /home/pablo/Escritorio/42-Minishell/minishell)
+==6794==    by 0x10B752: execute (in /home/pablo/Escritorio/42-Minishell/minishell)
+==6794==    by 0x10B849: parse_and_execute (in /home/pablo/Escritorio/42-Minishell/minishell)
+==6794==    by 0x10EC34: prompt (in /home/pablo/Escritorio/42-Minishell/minishell)
+==6794==    by 0x10ECAB: main (in /home/pablo/Escritorio/42-Minishell/minishell)
+==6794==  Address 0x56cd1cf is 1 bytes before a block of size 14 alloc'd
+==6794==    at 0x4C31B0F: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==6794==    by 0x11033E: ft_substr (in /home/pablo/Escritorio/42-Minishell/minishell)
+==6794==    by 0x10A9CA: extract_str_element (in /home/pablo/Escritorio/42-Minishell/minishell)
+==6794==    by 0x10AAC2: extract_element (in /home/pablo/Escritorio/42-Minishell/minishell)
+==6794==    by 0x10BDCA: split_command (in /home/pablo/Escritorio/42-Minishell/minishell)
+==6794==    by 0x10BEE1: extract_command (in /home/pablo/Escritorio/42-Minishell/minishell)
+==6794==    by 0x10BA16: execute_zero_pipes (in /home/pablo/Escritorio/42-Minishell/minishell)
+==6794==    by 0x10B752: execute (in /home/pablo/Escritorio/42-Minishell/minishell)
+==6794==    by 0x10B849: parse_and_execute (in /home/pablo/Escritorio/42-Minishell/minishell)
+==6794==    by 0x10EC34: prompt (in /home/pablo/Escritorio/42-Minishell/minishell)
+==6794==    by 0x10ECAB: main (in /home/pablo/Escritorio/42-Minishell/minishell)
+==6794== 
+==6861== embedded gdbserver: reading from /tmp/vgdb-pipe-from-vgdb-to-6861-by-pablo-on-???
+==6861== embedded gdbserver: writing to   /tmp/vgdb-pipe-to-vgdb-from-6861-by-pablo-on-???
+==6861== embedded gdbserver: shared mem   /tmp/vgdb-pipe-shared-mem-vgdb-6861-by-pablo-on-???
+==6861== 
+==6861== TO CONTROL THIS PROCESS USING vgdb (which you probably
+==6861== don't want to do, unless you know exactly what you're doing,
+==6861== or are doing some strange experiment):
+==6861==   /usr/lib/valgrind/../../bin/vgdb --pid=6861 ...command...
+==6861== 
+==6861== TO DEBUG THIS PROCESS USING GDB: start GDB like this
+==6861==   /path/to/gdb ./minishell
+==6861== and then give GDB the following command
+==6861==   target remote | /usr/lib/valgrind/../../bin/vgdb --pid=6861
+==6861== --pid is optional if only one valgrind process is running
+==6861== 
+==6794== Invalid free() / delete / delete[] / realloc()
+==6794==    at 0x4C32D3B: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==6794==    by 0x10F1A7: ft_out (in /home/pablo/Escritorio/42-Minishell/minishell)
+==6794==    by 0x1096DE: ft_exit (in /home/pablo/Escritorio/42-Minishell/minishell)
+==6794==    by 0x10930C: execute_builtin (in /home/pablo/Escritorio/42-Minishell/minishell)
+==6794==    by 0x10BA4F: execute_zero_pipes (in /home/pablo/Escritorio/42-Minishell/minishell)
+==6794==    by 0x10B752: execute (in /home/pablo/Escritorio/42-Minishell/minishell)
+==6794==    by 0x10B849: parse_and_execute (in /home/pablo/Escritorio/42-Minishell/minishell)
+==6794==    by 0x10EC34: prompt (in /home/pablo/Escritorio/42-Minishell/minishell)
+==6794==    by 0x10ECAB: main (in /home/pablo/Escritorio/42-Minishell/minishell)
+==6794==  Address 0x1fff00015b is on thread 1's stack
+==6794== 
+==6794== 
+==6794== HEAP SUMMARY:
+==6794==     in use at exit: 134,591 bytes in 211 blocks
+==6794==   total heap usage: 422 allocs, 275 frees, 155,629 bytes allocated
+==6794== 
+==6794== Searching for pointers to 211 not-freed blocks
+==6794== Checked 170,496 bytes
+==6794== 
+==6794== 5 bytes in 1 blocks are still reachable in loss record 1 of 48
+==6794==    at 0x4C31B0F: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==6794==    by 0x10B2BA: add_char (in /home/pablo/Escritorio/42-Minishell/minishell)
+==6794==    by 0x10A807: escape_quotes_in_string (in /home/pablo/Escritorio/42-Minishell/minishell)
+==6794==    by 0x10AA2F: escape_quotes_in_array (in /home/pablo/Escritorio/42-Minishell/minishell)
+==6794==    by 0x10AB55: extract_element (in /home/pablo/Escritorio/42-Minishell/minishell)
+==6794==    by 0x10BDCA: split_command (in /home/pablo/Escritorio/42-Minishell/minishell)
+==6794==    by 0x10BEE1: extract_command (in /home/pablo/Escritorio/42-Minishell/minishell)
+==6794==    by 0x10BA16: execute_zero_pipes (in /home/pablo/Escritorio/42-Minishell/minishell)
+==6794==    by 0x10B752: execute (in /home/pablo/Escritorio/42-Minishell/minishell)
+==6794==    by 0x10B849: parse_and_execute (in /home/pablo/Escritorio/42-Minishell/minishell)
+==6794==    by 0x10EC34: prompt (in /home/pablo/Escritorio/42-Minishell/minishell)
+==6794==    by 0x10ECAB: main (in /home/pablo/Escritorio/42-Minishell/minishell)
+==6794== 
+==6794== 16 bytes in 1 blocks are still reachable in loss record 8 of 48
+==6794==    at 0x4C31B0F: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==6794==    by 0x10F379: join_arrays (in /home/pablo/Escritorio/42-Minishell/minishell)
+==6794==    by 0x10BE69: split_command (in /home/pablo/Escritorio/42-Minishell/minishell)
+==6794==    by 0x10BEE1: extract_command (in /home/pablo/Escritorio/42-Minishell/minishell)
+==6794==    by 0x10BA16: execute_zero_pipes (in /home/pablo/Escritorio/42-Minishell/minishell)
+==6794==    by 0x10B752: execute (in /home/pablo/Escritorio/42-Minishell/minishell)
+==6794==    by 0x10B849: parse_and_execute (in /home/pablo/Escritorio/42-Minishell/minishell)
+==6794==    by 0x10EC34: prompt (in /home/pablo/Escritorio/42-Minishell/minishell)
+==6794==    by 0x10ECAB: main (in /home/pablo/Escritorio/42-Minishell/minishell)
+==6794== 
+==6794== 80 bytes in 5 blocks are definitely lost in loss record 18 of 48
+==6794==    at 0x4C31B0F: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==6794==    by 0x10F09B: split_element (in /home/pablo/Escritorio/42-Minishell/minishell)
+==6794==    by 0x10AB39: extract_element (in /home/pablo/Escritorio/42-Minishell/minishell)
+==6794==    by 0x10BDCA: split_command (in /home/pablo/Escritorio/42-Minishell/minishell)
+==6794==    by 0x10BEE1: extract_command (in /home/pablo/Escritorio/42-Minishell/minishell)
+==6794==    by 0x10BA16: execute_zero_pipes (in /home/pablo/Escritorio/42-Minishell/minishell)
+==6794==    by 0x10B752: execute (in /home/pablo/Escritorio/42-Minishell/minishell)
+==6794==    by 0x10B849: parse_and_execute (in /home/pablo/Escritorio/42-Minishell/minishell)
+==6794==    by 0x10EC34: prompt (in /home/pablo/Escritorio/42-Minishell/minishell)
+==6794==    by 0x10ECAB: main (in /home/pablo/Escritorio/42-Minishell/minishell)
+==6794== 
+==6794== 8,224 bytes in 2 blocks are still reachable in loss record 46 of 48
+==6794==    at 0x4C31B0F: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==6794==    by 0x4E75738: xmalloc (in /lib/x86_64-linux-gnu/libreadline.so.7.0)
+==6794==    by 0x4E5697D: rl_make_bare_keymap (in /lib/x86_64-linux-gnu/libreadline.so.7.0)
+==6794==    by 0x4E5D995: rl_generic_bind (in /lib/x86_64-linux-gnu/libreadline.so.7.0)
+==6794==    by 0x4E52D43: rl_initialize (in /lib/x86_64-linux-gnu/libreadline.so.7.0)
+==6794==    by 0x4E52EE6: readline (in /lib/x86_64-linux-gnu/libreadline.so.7.0)
+==6794==    by 0x10EBD1: prompt (in /home/pablo/Escritorio/42-Minishell/minishell)
+==6794==    by 0x10ECAB: main (in /home/pablo/Escritorio/42-Minishell/minishell)
+==6794== 
+==6794== 12,336 bytes in 3 blocks are still reachable in loss record 47 of 48
+==6794==    at 0x4C31B0F: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==6794==    by 0x4E75738: xmalloc (in /lib/x86_64-linux-gnu/libreadline.so.7.0)
+==6794==    by 0x4E5697D: rl_make_bare_keymap (in /lib/x86_64-linux-gnu/libreadline.so.7.0)
+==6794==    by 0x4E5D995: rl_generic_bind (in /lib/x86_64-linux-gnu/libreadline.so.7.0)
+==6794==    by 0x4E52D56: rl_initialize (in /lib/x86_64-linux-gnu/libreadline.so.7.0)
+==6794==    by 0x4E52EE6: readline (in /lib/x86_64-linux-gnu/libreadline.so.7.0)
+==6794==    by 0x10EBD1: prompt (in /home/pablo/Escritorio/42-Minishell/minishell)
+==6794==    by 0x10ECAB: main (in /home/pablo/Escritorio/42-Minishell/minishell)
+==6794== 
+==6794== LEAK SUMMARY:
+==6794==    definitely lost: 80 bytes in 5 blocks
+==6794==    indirectly lost: 0 bytes in 0 blocks
+==6794==      possibly lost: 0 bytes in 0 blocks
+==6794==    still reachable: 20,581 bytes in 7 blocks
+==6794==         suppressed: 113,930 bytes in 199 blocks
+==6794== 
+==6794== ERROR SUMMARY: 66 errors from 3 contexts (suppressed: 0 from 0)
+==6794== 
+==6794== 1 errors in context 1 of 3:
+==6794== Invalid read of size 1
+==6794==    at 0x10F018: count_words (in /home/pablo/Escritorio/42-Minishell/minishell)
+==6794==    by 0x10F084: split_element (in /home/pablo/Escritorio/42-Minishell/minishell)
+==6794==    by 0x10AB39: extract_element (in /home/pablo/Escritorio/42-Minishell/minishell)
+==6794==    by 0x10BDCA: split_command (in /home/pablo/Escritorio/42-Minishell/minishell)
+==6794==    by 0x10BEE1: extract_command (in /home/pablo/Escritorio/42-Minishell/minishell)
+==6794==    by 0x10BA16: execute_zero_pipes (in /home/pablo/Escritorio/42-Minishell/minishell)
+==6794==    by 0x10B752: execute (in /home/pablo/Escritorio/42-Minishell/minishell)
+==6794==    by 0x10B849: parse_and_execute (in /home/pablo/Escritorio/42-Minishell/minishell)
+==6794==    by 0x10EC34: prompt (in /home/pablo/Escritorio/42-Minishell/minishell)
+==6794==    by 0x10ECAB: main (in /home/pablo/Escritorio/42-Minishell/minishell)
+==6794==  Address 0x56cd1cf is 1 bytes before a block of size 14 alloc'd
+==6794==    at 0x4C31B0F: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==6794==    by 0x11033E: ft_substr (in /home/pablo/Escritorio/42-Minishell/minishell)
+==6794==    by 0x10A9CA: extract_str_element (in /home/pablo/Escritorio/42-Minishell/minishell)
+==6794==    by 0x10AAC2: extract_element (in /home/pablo/Escritorio/42-Minishell/minishell)
+==6794==    by 0x10BDCA: split_command (in /home/pablo/Escritorio/42-Minishell/minishell)
+==6794==    by 0x10BEE1: extract_command (in /home/pablo/Escritorio/42-Minishell/minishell)
+==6794==    by 0x10BA16: execute_zero_pipes (in /home/pablo/Escritorio/42-Minishell/minishell)
+==6794==    by 0x10B752: execute (in /home/pablo/Escritorio/42-Minishell/minishell)
+==6794==    by 0x10B849: parse_and_execute (in /home/pablo/Escritorio/42-Minishell/minishell)
+==6794==    by 0x10EC34: prompt (in /home/pablo/Escritorio/42-Minishell/minishell)
+==6794==    by 0x10ECAB: main (in /home/pablo/Escritorio/42-Minishell/minishell)
+==6794== 
+==6794== 
+==6794== 64 errors in context 2 of 3:
+==6794== Invalid free() / delete / delete[] / realloc()
+==6794==    at 0x4C32D3B: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==6794==    by 0x10F1A7: ft_out (in /home/pablo/Escritorio/42-Minishell/minishell)
+==6794==    by 0x1096DE: ft_exit (in /home/pablo/Escritorio/42-Minishell/minishell)
+==6794==    by 0x10930C: execute_builtin (in /home/pablo/Escritorio/42-Minishell/minishell)
+==6794==    by 0x10BA4F: execute_zero_pipes (in /home/pablo/Escritorio/42-Minishell/minishell)
+==6794==    by 0x10B752: execute (in /home/pablo/Escritorio/42-Minishell/minishell)
+==6794==    by 0x10B849: parse_and_execute (in /home/pablo/Escritorio/42-Minishell/minishell)
+==6794==    by 0x10EC34: prompt (in /home/pablo/Escritorio/42-Minishell/minishell)
+==6794==    by 0x10ECAB: main (in /home/pablo/Escritorio/42-Minishell/minishell)
+==6794==  Address 0x1fff00015b is on thread 1's stack
+==6794== 
+--6794-- 
+--6794-- used_suppression:      1 <insert_a_suppression_name_here> readline.supp:553 suppressed: 32,896 bytes in 8 blocks
+--6794-- used_suppression:      6 <insert_a_suppression_name_here> readline.supp:522 suppressed: 45,232 bytes in 11 blocks
+--6794-- used_suppression:      1 <insert_a_suppression_name_here> readline.supp:538 suppressed: 7,952 bytes in 1 blocks
+--6794-- used_suppression:      3 <insert_a_suppression_name_here> readline.supp:60 suppressed: 6,125 bytes in 3 blocks
+--6794-- used_suppression:      2 <insert_a_suppression_name_here> readline.supp:498 suppressed: 4,064 bytes in 5 blocks
+--6794-- used_suppression:      3 <insert_a_suppression_name_here> readline.supp:480 suppressed: 3,948 bytes in 3 blocks
+--6794-- used_suppression:      1 <insert_a_suppression_name_here> readline.supp:466 suppressed: 2,176 bytes in 136 blocks
+--6794-- used_suppression:      2 <insert_a_suppression_name_here> readline.supp:435 suppressed: 2,347 bytes in 2 blocks
+--6794-- used_suppression:      1 <insert_a_suppression_name_here> readline.supp:421 suppressed: 1,536 bytes in 1 blocks
+--6794-- used_suppression:      6 <insert_a_suppression_name_here> readline.supp:407 suppressed: 6,144 bytes in 6 blocks
+--6794-- used_suppression:      1 <insert_a_suppression_name_here> readline.supp:301 suppressed: 528 bytes in 1 blocks
+--6794-- used_suppression:      1 <insert_a_suppression_name_here> readline.supp:289 suppressed: 256 bytes in 1 blocks
+--6794-- used_suppression:      1 <insert_a_suppression_name_here> readline.supp:275 suppressed: 208 bytes in 1 blocks
+--6794-- used_suppression:      2 <insert_a_suppression_name_here> readline.supp:176 suppressed: 128 bytes in 8 blocks
+--6794-- used_suppression:      1 <insert_a_suppression_name_here> readline.supp:258 suppressed: 94 bytes in 1 blocks
+--6794-- used_suppression:      1 <insert_a_suppression_name_here> readline.supp:241 suppressed: 93 bytes in 1 blocks
+--6794-- used_suppression:      1 <insert_a_suppression_name_here> readline.supp:206 suppressed: 48 bytes in 1 blocks
+--6794-- used_suppression:      1 <insert_a_suppression_name_here> readline.supp:158 suppressed: 24 bytes in 1 blocks
+--6794-- used_suppression:      1 <insert_a_suppression_name_here> readline.supp:144 suppressed: 23 bytes in 1 blocks
+--6794-- used_suppression:      1 <insert_a_suppression_name_here> readline.supp:132 suppressed: 23 bytes in 1 blocks
+--6794-- used_suppression:      1 <insert_a_suppression_name_here> readline.supp:117 suppressed: 20 bytes in 1 blocks
+--6794-- used_suppression:      1 <insert_a_suppression_name_here> readline.supp:105 suppressed: 16 bytes in 1 blocks
+--6794-- used_suppression:      1 <insert_a_suppression_name_here> readline.supp:90 suppressed: 15 bytes in 1 blocks
+--6794-- used_suppression:      1 <insert_a_suppression_name_here> readline.supp:73 suppressed: 14 bytes in 1 blocks
+--6794-- used_suppression:      1 <insert_a_suppression_name_here> readline.supp:31 suppressed: 12 bytes in 1 blocks
+--6794-- used_suppression:      1 <insert_a_suppression_name_here> readline.supp:16 suppressed: 8 bytes in 1 blocks
+==6794== 
+==6794== ERROR SUMMARY: 66 errors from 3 contexts (suppressed: 0 from 0)

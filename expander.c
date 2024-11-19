@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/15 17:56:15 by irene             #+#    #+#             */
-/*   Updated: 2024/11/15 17:10:09 by irene            ###   ########.fr       */
+/*   Updated: 2024/11/19 23:57:33 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,15 +104,24 @@ char    **extract_element(char *s, int pos, t_mix *data)
     char    **element;
 
     str = extract_str_element(s, pos);
+    if (!str)
+        return(NULL);
     if (variables_to_expand(str) == 1)
     {
         aux_str = expand_string(str, data);
+        if (!aux_str) 
+        {
+            free(str);
+            return (NULL);
+        }
         free(str);
         str = aux_str;    
     }
     element = split_element(str);
 	free(str);
     element = escape_quotes_in_array(element);
+    if (!element)
+        return (NULL);
     unquote(element);
     return (element);
 }

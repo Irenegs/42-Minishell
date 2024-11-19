@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 16:21:12 by irene             #+#    #+#             */
-/*   Updated: 2024/11/18 23:53:59 by pablo            ###   ########.fr       */
+/*   Updated: 2024/11/19 23:50:11 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ char	**split_element(char *str)
 	{
 		result[w] = split_word(str, &pos);
 		if (!result[w])
-			return (ft_out(result));
+			return (free_partial_array(result, w));
 		w++;
 	}
 	result[w] = NULL;

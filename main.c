@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 19:58:35 by pablgarc          #+#    #+#             */
-/*   Updated: 2024/11/16 20:07:45 by irene            ###   ########.fr       */
+/*   Updated: 2024/11/19 23:17:09 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	prompt(t_mix *data)
 			parse_and_execute(data);
 		free(data->input);
 	}
+	close(copy_stdin);
 }
 
 int	main(int argc, char **argv, char **envp)
