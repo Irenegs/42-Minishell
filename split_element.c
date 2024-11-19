@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_element.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 16:21:12 by irene             #+#    #+#             */
-/*   Updated: 2024/11/14 18:47:39 by irene            ###   ########.fr       */
+/*   Updated: 2024/11/18 23:53:59 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ char	**split_element(char *str)
 	while (w < words)
 	{
 		result[w] = split_word(str, &pos);
-		if (!result)
+		if (!result[w])
 			return (ft_out(result));
 		w++;
 	}

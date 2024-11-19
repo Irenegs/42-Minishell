@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in_exit.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 20:10:48 by irene             #+#    #+#             */
-/*   Updated: 2024/11/16 20:11:13 by irene            ###   ########.fr       */
+/*   Updated: 2024/11/18 23:41:08 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,11 @@ int	ft_exit(char **command, t_mix *data)
 			status = 2;
 		}
 		else
+		{
 			status = ft_atoi(command[1]);
+			if (status < 0 || status > 255)
+				status = (unsigned char)status;
+		}
 	}
 	close_pipes(data->pipes, data->pipesfd);
 	clean_and_free_heredocs(data->heredocs, data->pipes);

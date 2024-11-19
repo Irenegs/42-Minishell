@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_arrays.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/15 18:33:19 by irene             #+#    #+#             */
-/*   Updated: 2024/11/16 20:46:02 by irene            ###   ########.fr       */
+/*   Updated: 2024/11/18 22:24:57 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,9 @@
 char	**ft_out(char **arr)
 {
 	int	j;
+	
+	if (!arr)
+		return (NULL);
 
 	j = 0;
 	while (arr[j])
