@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/15 18:33:19 by irene             #+#    #+#             */
-/*   Updated: 2024/11/19 23:46:47 by pablo            ###   ########.fr       */
+/*   Updated: 2024/11/21 00:14:26 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,20 @@ char	**ft_out(char **arr)
 {
 	int	j;
 	
+	j = 0;
+	
 	if (!arr)
 		return (NULL);
 
-	j = 0;
 	while (arr[j])
 	{
+		arr[j] = NULL;
 		free(arr[j]);
+		arr[j] = NULL;
 		j++;
 	}
 	free(arr);
+	arr = NULL;
 	return (NULL);
 }
 
@@ -105,7 +109,10 @@ char	*increment_shlvl(char *env_var)
 			return (write_error_null(1));
 		new_shlvl = (char *)malloc(7 + ft_strlen(new_shlvl_value));
 		if (!new_shlvl)
+		{
+			free(new_shlvl_value);
 			return (write_error_null(1));
+		}
 		ft_strlcpy(new_shlvl, "SHLVL=", 7);
 		ft_strlcat(new_shlvl, new_shlvl_value,
 			7 + ft_strlen(new_shlvl_value));
@@ -117,8 +124,17 @@ char	*increment_shlvl(char *env_var)
 
 char **free_partial_array(char **array, int filled)
 {
-    for (int i = 0; i < filled; i++)
+   int i = 0;
+
+    if (!array) 
+        return (NULL);
+
+    while (i < filled)
+    {
         free(array[i]);
+        i++;
+    }
+
     free(array);
     return (NULL);
 }

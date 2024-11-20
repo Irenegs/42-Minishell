@@ -60,7 +60,11 @@ static char	**copy_env_variables(char **envp, int total_variables)
 	{
 		env_copy[i] = increment_shlvl(envp[i]);
 		if (!env_copy[i])
+		{
+			free_partial_array(env_copy, i);
 			return (default_env());
+		}
+			
 		i++;
 	}
 	env_copy[total_variables] = NULL;

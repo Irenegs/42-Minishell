@@ -5,7 +5,8 @@
 Valgrind leaks:
 valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose --log-file=valgrind-out.txt ./minishell
 valgrind --track-fds=yes --trace-children=yes; --child-silent-after-fork=yes
-valgrind --suppressions=readline.supp --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose --log-file=valgrind-out.txt ./minishell./minishell
+valgrind --suppressions=readline.supp --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose --log-file=valgrind-out.txt ./minishell
+
 
 - parser permitir cosas raras entrecomilladas
 echo "> >> < * ? [ ] | ; [ ] || && ( ) & # $  <<"  esto da seg fault
@@ -14,9 +15,6 @@ echo '> >> < * ? [ ] | ; [ ] || && ( ) & # $  <<'  esto da seg fault
 - Variables
 
 -echo "$" deberia imprimir "$" y no imprime nada
-
--unset HOME, PATH, SHELL y muchos otros ---> munmap_chunk(): invalid pointer
-
 
 
 - extract element debe devolver un char** => debe recorrer la cadena, expandir las variables, separar las palabras por espacios y quitar las comillas que no son de las variables

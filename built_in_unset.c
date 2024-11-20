@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in_unset.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 20:23:21 by irene             #+#    #+#             */
-/*   Updated: 2024/11/16 20:26:37 by irene            ###   ########.fr       */
+/*   Updated: 2024/11/20 23:28:32 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ static char	**copy_env_without_entry(char **env, int index, int size)
 		i++;
 		j++;
 	}
+	env[index] = NULL;
 	free(env[index]);
 	while (env[++i])
 	{
