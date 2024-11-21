@@ -12,11 +12,12 @@
 
 #include "minishell.h"
 
+/*
 void	ft_interrupt(int signal)
 {
 	if (signal == SIGQUIT)
 		ft_putstr_fd("Quit (SIGQUIT)\n", STDERR_FILENO);
-	if (signal == SIGINT)
+	else if (signal == SIGINT)
 		ft_putchar_fd('\n', STDOUT_FILENO);
 	rl_on_new_line();
 	rl_replace_line("", 0);
@@ -26,6 +27,32 @@ void	ft_signals_running(void)
 {
 	signal(SIGINT, ft_interrupt);
 	signal(SIGQUIT, ft_interrupt);
+}
+*/
+
+void running_handler(int sig)
+{
+    if (sig == SIGINT) 
+    {
+        ft_putchar_fd('\n', STDOUT_FILENO);
+        g_exit_status = 130; 
+    }
+    else if (sig == SIGQUIT) 
+    {
+        ft_putstr_fd("Quit: 3\n", STDERR_FILENO);
+        g_exit_status = 131; 
+    }
+}
+
+void ft_signals_running(void)
+{
+    struct sigaction sa;
+
+    sa.sa_flags = SA_RESTART;
+    sigemptyset(&sa.sa_mask);
+    sa.sa_handler = &running_handler;
+    sigaction(SIGINT, &sa, NULL); 
+    sigaction(SIGQUIT, &sa, NULL);
 }
 
 void	ft_sig_def(void)
@@ -53,7 +80,7 @@ void	ft_signals_start(void)
 	sa.sa_flags = SA_RESTART;
 	sigemptyset(&sa.sa_mask);
 	sa.sa_handler = &start_handler;
-	sigaddset(&sa.sa_mask, SIGINT);
+	//sigaddset(&sa.sa_mask, SIGINT);
 	sigaction(SIGINT, &sa, NULL);
 	signal(SIGQUIT, SIG_IGN);
 }

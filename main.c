@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 19:58:35 by pablgarc          #+#    #+#             */
-/*   Updated: 2024/11/19 23:17:09 by pablo            ###   ########.fr       */
+/*   Updated: 2024/11/21 23:37:42 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,13 @@ void	prompt(t_mix *data)
 			printf("\n");
 			break ;
 		}
-		ft_signals_running();
 		if (*data->input)
 			add_history(data->input);
 		if (*data->input != '\0')
+		{
+			ft_signals_running();
 			parse_and_execute(data);
+		}
 		free(data->input);
 	}
 	close(copy_stdin);

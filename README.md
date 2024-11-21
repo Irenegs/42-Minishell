@@ -5,7 +5,12 @@
 Valgrind leaks:
 valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose --log-file=valgrind-out.txt ./minishell
 valgrind --track-fds=yes --trace-children=yes; --child-silent-after-fork=yes
+
+
+Probando el tester con este comando de valgrin, solo salen 3 leeks,
+
 valgrind --suppressions=readline.supp --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose --log-file=valgrind-out.txt ./minishell
+
 
 
 - parser permitir cosas raras entrecomilladas
@@ -24,11 +29,15 @@ echo '> >> < * ? [ ] | ; [ ] || && ( ) & # $  <<'  esto da seg fault
 
 
 ## Signals:
-Ctrl - \ debe no hacer nada
-ctrl + c da error 130 y a nosotros 0
+Ctrl - \ debe no hacer nada --- esto esta bien
+ctrl + c da error 130 y a nosotros 0 --- estoy en ello
+
+Ctrl - \ hace Quit y da error 131 cuando interrumpe algo en ejecucion como un sleep
+ctrl + c da error 130 cuando interrumpe algo en ejecucion como n sleep
+
 
 ### heredoc + señales:
-C-c dentro de heredoc lo corta y vuelve a la shell sin ejecutar ninguna instrucción $?=130
+C-c dentro de heredoc lo corta y vuelve a la shell sin ejecutar ninguna instrucción $?=130 --- esto ya esta bien
 C-\ no hace nada
 C-d cierra el heredoc con un error (bash: warerning: here-document at line 160 delimited by end-of-file (wanted 'DELIMITADOR')) pero sigue con las instrucciones $?=0.
 
