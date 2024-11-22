@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 19:58:35 by pablgarc          #+#    #+#             */
-/*   Updated: 2024/11/21 23:37:42 by pablo            ###   ########.fr       */
+/*   Updated: 2024/11/22 18:55:52 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,15 @@ void	prompt(t_mix *data)
 	int	copy_stdin;
 
 	copy_stdin = dup(STDIN_FILENO);
-	ft_signals_start();
+	//ft_signals_start();
 	while (1)
 	{
 		dup2(copy_stdin, 0);
 		ft_signals_start();
+		//printf("Exit status antes: %d\n", g_exit_status);
 		data->input = readline("\033[0;32mMinishell:\033[0m ");
+		//printf("Exit status tras readline: %d\n", g_exit_status);
+		
 		if (data->input == NULL)
 		{
 			printf("\n");
@@ -37,6 +40,8 @@ void	prompt(t_mix *data)
 			ft_signals_running();
 			parse_and_execute(data);
 		}
+		else
+			data->exit_status = g_exit_status;
 		free(data->input);
 	}
 	close(copy_stdin);

@@ -70,6 +70,7 @@ static void	start_handler(int sig)
 		rl_replace_line("", 0);
 		rl_redisplay();
 		g_exit_status = 130;
+		//printf("ctl + c: %d\n", g_exit_status);
 	}
 }
 
@@ -80,7 +81,7 @@ void	ft_signals_start(void)
 	sa.sa_flags = SA_RESTART;
 	sigemptyset(&sa.sa_mask);
 	sa.sa_handler = &start_handler;
-	//sigaddset(&sa.sa_mask, SIGINT);
+	sigaddset(&sa.sa_mask, SIGINT);
 	sigaction(SIGINT, &sa, NULL);
 	signal(SIGQUIT, SIG_IGN);
 }
