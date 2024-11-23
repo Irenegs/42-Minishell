@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_arrays.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/15 18:33:19 by irene             #+#    #+#             */
-/*   Updated: 2024/11/21 00:14:26 by pablo            ###   ########.fr       */
+/*   Updated: 2024/11/24 00:00:02 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,24 @@ char	**ft_out(char **arr)
 	int	j;
 	
 	j = 0;
-	
 	if (!arr)
 		return (NULL);
-
+	while (arr[j])
+	{
+		free(arr[j]);
+		j++;
+	}
+	free(arr);
+	return (NULL);
+}
+/*
+char	**ft_out(char **arr)
+{
+	int	j;
+	
+	j = 0;
+	if (!arr)
+		return (NULL);
 	while (arr[j])
 	{
 		arr[j] = NULL;
@@ -32,7 +46,7 @@ char	**ft_out(char **arr)
 	arr = NULL;
 	return (NULL);
 }
-
+*/
 static int	join_arrays_size(char ***array)
 {
 	int size;
@@ -71,7 +85,7 @@ static void	fill_joined_array(char ***array, char **joined)
 		j = 0;
 		while (array[i][j])
 		{
-			joined[size] = array[i][j];
+			joined[size] = ft_strdup(array[i][j]);
 			j++;
 			size++;
 		}
@@ -119,7 +133,8 @@ char	*increment_shlvl(char *env_var)
 		free(new_shlvl_value);
 		return (new_shlvl);
 	}
-	return (env_var);
+	new_shlvl_value = ft_strdup(env_var);
+	return (new_shlvl_value);
 }
 
 char **free_partial_array(char **array, int filled)

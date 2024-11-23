@@ -6,13 +6,13 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 19:27:26 by irene             #+#    #+#             */
-/*   Updated: 2024/11/16 19:13:29 by irene            ###   ########.fr       */
+/*   Updated: 2024/11/23 23:53:36 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void add_escaped_quote(char **result, char *orig, int	pos)
+void add_escaped_quote(char **result, char *orig, int pos)
 {
 	char	*new;
 	size_t  len_result;

@@ -6,7 +6,7 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:36:03 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/11/16 19:50:57 by irene            ###   ########.fr       */
+/*   Updated: 2024/11/23 23:57:52 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,26 @@ static int	count_arguments(char *cmd_str)
 	return (args);
 }
 
+void free_array(char ***arr)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (arr && arr[i])
+	{
+		j = 0;
+		while (arr[i] && arr[i][j])
+		{
+			free(arr[i][j]);
+			j++;
+		}
+		free(arr[i]);
+		i++;
+	}
+	free(arr);
+}
+
 static char	**split_command(char *s, t_mix *data)
 {
 	char	***arr;
@@ -93,7 +113,7 @@ static char	**split_command(char *s, t_mix *data)
 	}
 	arr[i] = NULL;
 	element = join_arrays(arr);
-	free(arr);
+	free_array(arr);
 	return (element);
 }
 
@@ -110,16 +130,6 @@ char	**extract_command(char *s, t_mix *data)
 	if (!cmd_string)
 		return (NULL);
 	command = split_command(cmd_string, data);
-	/*
-	printf("printeamos el comando\n");
-	int i = 0;
-	while (command[i])
-	{
-		printf("command[%d]:%s\n", i, command[i]);
-		printf("===\n");
-		i++;
-	}
-	printf("=*=*=\n");*/
 	free(cmd_string);
 	return (command);
 }

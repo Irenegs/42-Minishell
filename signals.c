@@ -54,13 +54,13 @@ void ft_signals_running(void)
     sigaction(SIGINT, &sa, NULL); 
     sigaction(SIGQUIT, &sa, NULL);
 }
-
+/*
 void	ft_sig_def(void)
 {
 	signal(SIGQUIT, SIG_DFL);
 	signal(SIGINT, SIG_DFL);
 }
-
+*/
 static void	start_handler(int sig)
 {
 	if (sig == SIGINT)

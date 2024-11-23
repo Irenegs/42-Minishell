@@ -1,5 +1,7 @@
 # Por hacer:
 
+- SEÑALES: no sobra 
+
 ## Probar siempre
 - Probar (ya funciona, pero probar cada vez que se toquen redirecciones): < /dev/urandom cat | head -1; cat | cat | ls
 Valgrind leaks:
@@ -13,19 +15,12 @@ valgrind --suppressions=readline.supp --leak-check=full --show-leak-kinds=all --
 
 
 
+
 - parser permitir cosas raras entrecomilladas
 echo "> >> < * ? [ ] | ; [ ] || && ( ) & # $  <<"  esto da seg fault
 echo '> >> < * ? [ ] | ; [ ] || && ( ) & # $  <<'  esto da seg fault
 
-- Variables
 
--echo "$" deberia imprimir "$" y no imprime nada
-
-
-- extract element debe devolver un char** => debe recorrer la cadena, expandir las variables, separar las palabras por espacios y quitar las comillas que no son de las variables
-
-
-- generar entorno por defecto => leer https://unix.stackexchange.com/questions/280453/understand-the-meaning-of para la gestión inicial de $_ pasamos de todo y hardcodeamos --- HECHO
 
 
 ## Signals:

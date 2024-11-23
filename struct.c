@@ -35,7 +35,7 @@ static char	**default_env(void)
 	return (env);
 }
 
-static int	count_env_variables(char **envp)
+int	count_env_variables(char **envp)
 {
 	int	total_variables;
 
@@ -64,7 +64,6 @@ static char	**copy_env_variables(char **envp, int total_variables)
 			free_partial_array(env_copy, i);
 			return (default_env());
 		}
-			
 		i++;
 	}
 	env_copy[total_variables] = NULL;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 17:56:24 by irene             #+#    #+#             */
-/*   Updated: 2024/11/19 23:48:08 by pablo            ###   ########.fr       */
+/*   Updated: 2024/11/23 23:56:16 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <unistd.h>
+# include <asm-generic/signal-defs.h>
+# include <x86_64-linux-gnu/bits/sigaction.h>
 
 # define MAX_ARGV 100
 
@@ -48,16 +50,17 @@ int		perror_int(int return_value);
 int		write_error_int(int error_code, int return_value);
 
 //signals.c
-void	ft_interrupt(int signal);
+//void	ft_interrupt(int signal);
 void	ft_signals_start(void);
 void	ft_signals_running(void);
-void	ft_sig_def(void);
+//void	ft_sig_def(void);
 
 //signals_hd.c
 void	ft_signals_hd(void);
 
 //struct.c
 void	ft_init_mix(t_mix *data, char **envp);
+int	count_env_variables(char **envp);
 
 //built_in_check.c
 int		is_builtin(char *cmd);
@@ -191,5 +194,5 @@ char	**split_element(char *str);
 
 void add_escaped_quote(char **result, char *orig, int pos);
 char **free_partial_array(char **array, int filled);
-
+char	**ft_out_command(char **arr);
 #endif

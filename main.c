@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 19:58:35 by pablgarc          #+#    #+#             */
-/*   Updated: 2024/11/22 18:55:52 by pablo            ###   ########.fr       */
+/*   Updated: 2024/11/23 23:19:15 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ void	prompt(t_mix *data)
 	{
 		dup2(copy_stdin, 0);
 		ft_signals_start();
-		//printf("Exit status antes: %d\n", g_exit_status);
+		printf("Exit status antes: %d\n", g_exit_status);
 		data->input = readline("\033[0;32mMinishell:\033[0m ");
-		//printf("Exit status tras readline: %d\n", g_exit_status);
+		printf("Exit status tras readline: %d\n", g_exit_status);
 		
 		if (data->input == NULL)
 		{
@@ -55,6 +55,6 @@ int	main(int argc, char **argv, char **envp)
 		return (1);
 	ft_init_mix(&data, envp);
 	prompt(&data);
-	ft_out(data.m_env);
+	free_partial_array(data.m_env, count_env_variables(data.m_env));
 	return (0);
 }

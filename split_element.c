@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_element.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/22 16:21:12 by irene             #+#    #+#             */
-/*   Updated: 2024/11/19 23:50:11 by pablo            ###   ########.fr       */
+/*   Updated: 2024/11/24 00:08:31 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,9 +83,9 @@ static int	count_words(char *str)
 	{
 		if (quotes == 0 && str[i] == ' ')
 			words++;
-		if (quotes != 0 && str[i] == quotes && str[i - 1] != '\\')
+		if (quotes != 0 && str[i] == quotes && is_escaped(str, i) != 1)
 			quotes = 0;
-		else if (quotes == 0 && is_quote(str[i]) != 0 && str[i - 1] != '\\')
+		else if (quotes == 0 && is_quote(str[i]) != 0 && is_escaped(str, i) != 1)
 			quotes = str[i];
 		i++;
 	}
