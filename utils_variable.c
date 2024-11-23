@@ -6,7 +6,7 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 20:32:38 by irene             #+#    #+#             */
-/*   Updated: 2024/11/14 18:48:00 by irene            ###   ########.fr       */
+/*   Updated: 2024/11/23 22:06:26 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,13 +111,13 @@ char	*obtain_variable(char *s, int i, t_mix *data)
 	char	*var_name;
 	char	*var_value;
 	size_t	len;
-
+	printf("s[%d]:%c->%s\n", i, s[i],s);
 	len = len_varname(s, &i);
 	if (len == 0)
 	{
 		if (s[i] == '{')
 			return (write_error_null(2));
-		if (is_quote(s[i]) != 0)
+		if (is_quote(s[i]) != 0 && is_space(s[i + 1]) == 0)
 		{
 			var_value = malloc(1 * sizeof(char));
 			if (!var_value)
