@@ -6,7 +6,7 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 18:29:21 by irene             #+#    #+#             */
-/*   Updated: 2024/11/24 18:53:54 by irene            ###   ########.fr       */
+/*   Updated: 2024/11/24 19:01:35 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,9 @@ int	parser_errors(char *s)
 	int	i;
 	int	insert[3];
 
-	i = -1;
+	i = 0;
 	change_insert(insert, 0, 1, 1);
-	while (i != -1 && s[++i] != '\0' && valid_insertion(insert, s[i]) == 1)
+	while (i != -1 && s[i] != '\0' && valid_insertion(insert, s[i]) == 1)
 	{
 		if (s[i] != '\'' && s[i] != '"')
 			i = parsing_without_quotes(s, i, insert);
@@ -77,6 +77,7 @@ int	parser_errors(char *s)
 			i = parser_manage_quotes(s, i);
 			change_insert(insert, 1, 1, 1);
 		}
+		i++;
 	}
 	if (i == -1 || s[i] != '\0' || valid_insertion(insert, '|') != 1)
 		return (-1);
