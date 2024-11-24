@@ -6,7 +6,7 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 18:32:16 by irene             #+#    #+#             */
-/*   Updated: 2024/11/24 18:48:37 by irene            ###   ########.fr       */
+/*   Updated: 2024/11/24 19:31:16 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static int	open_quotes(char *s)
 	{
 		if (s[i] == quotes && quotes != 0)
 			quotes = 0;
-		else if (quotes == 0 && (s[i] == '\'' || s[i] == '"'))
+		else if (quotes == 0 && is_quote(s[i]) != 0)
 			quotes = s[i];
 		i++;
 	}
@@ -59,7 +59,8 @@ int	count_pipes(char *s)
 			pipes++;
 			i++;
 		}
-		i = parser_manage_quotes(s, i);
+		if (is_quote(s[i]) != 0)
+			i = parser_manage_quotes(s, i);
 	}
 	return (pipes);
 }
