@@ -6,7 +6,7 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:36:03 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/11/23 23:57:52 by irene            ###   ########.fr       */
+/*   Updated: 2024/11/24 17:47:19 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,7 @@ char	**extract_command(char *s, t_mix *data)
 	if (pos == -1)
 		return (NULL);
 	cmd_string = extract_cmd_str(s);
+	printf("cmd_string:%s\n", cmd_string);
 	if (!cmd_string)
 		return (NULL);
 	command = split_command(cmd_string, data);

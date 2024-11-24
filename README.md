@@ -1,7 +1,5 @@
 # Por hacer:
 
-- SEÑALES: no sobra 
-
 ## Probar siempre
 - Probar (ya funciona, pero probar cada vez que se toquen redirecciones): < /dev/urandom cat | head -1; cat | cat | ls
 Valgrind leaks:

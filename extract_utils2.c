@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   extract_utils2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irgonzal <irgonzal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 19:08:50 by pablgarc          #+#    #+#             */
-/*   Updated: 2024/08/30 19:23:06 by irgonzal         ###   ########.fr       */
+/*   Updated: 2024/11/24 18:03:31 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ int	len_skip_word(char *str, int pos)
 		return (0);
 	quotes = 0;
 	len = 1;
+	if (str[pos + len] == '<' || str[pos + len] == '>')
+		len++;
 	while (str[pos + len] == ' ')
 		len++;
 	while (str[pos + len] != '\0' && (quotes != 0 || str[pos + len] != ' '))
