@@ -6,7 +6,7 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 16:09:28 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/11/23 22:12:20 by irene            ###   ########.fr       */
+/*   Updated: 2024/11/24 16:23:14 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,10 +127,10 @@ void parse_and_execute(t_mix *data)
 {
     if (!data || !data->input || ft_strlen(data->input) == 0)
         return;
-
-    g_exit_status = 0;
+    if (g_exit_status == 130)
+		data->exit_status = 130;
+	g_exit_status = 0;
     data->pipes = parser(data->input);
-
     if (data->pipes == -1)
     {
         write(2, "Parse error\n", 12);

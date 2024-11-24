@@ -65,12 +65,11 @@ static void	start_handler(int sig)
 {
 	if (sig == SIGINT)
 	{
+		g_exit_status = 130;
 		ft_putchar_fd('\n', STDOUT_FILENO);
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
-		g_exit_status = 130;
-		//printf("ctl + c: %d\n", g_exit_status);
 	}
 }
 
