@@ -6,7 +6,7 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 17:56:24 by irene             #+#    #+#             */
-/*   Updated: 2024/11/23 23:56:16 by irene            ###   ########.fr       */
+/*   Updated: 2024/11/24 18:37:37 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,10 @@ int		locate_char_position(char *s, char c);
 
 //parser.c
 int		parser(char *s);
+
+//parser_utils.c
+int	parser_manage_quotes(char *s, int pos);
+int	parser_errors(char *s);
 
 //pipe_utils.c
 void	manage_multiple_pipes(int p, int pipes, int *fd);

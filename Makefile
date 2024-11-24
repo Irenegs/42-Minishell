@@ -14,7 +14,8 @@ SRCS        := built_in_cd_pwd.c built_in_check.c built_in_echo.c built_in_env.c
 				extract_utils.c extract_utils2.c \
 				heredoc_delimiter.c heredoc_files.c heredoc_files_utils.c heredoc_text.c heredoc_expand.c\
 				pipe_utils.c \
-				parser.c super_split.c split_utils.c \
+				parser.c parser_utils.c \
+				super_split.c split_utils.c \
 				struct.c signals.c signals_hd.c\
 				main.c \
 				split_element.c \
