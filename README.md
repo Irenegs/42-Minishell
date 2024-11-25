@@ -12,25 +12,34 @@ Probando el tester con este comando de valgrin, solo salen 3 leeks,
 valgrind --suppressions=readline.supp --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose --log-file=valgrind-out.txt ./minishell
 
 
+ echo <"./test_files/infile" <missing <"./test_files/infile" ----  no hace nada, deberia da error
+
+echo hi >./test_files/invalid_permission | echo bye  (sin permisos)
+echo hi >>./outfiles/outfile01 | echo bye  (no exite ese directorio)
+
+lo que falla, es que deberia ejecutar el segundo commando del pipe aunque falle el primero
+
+echo <123 <456 hi | echo 42 
+
+este imprime 4 errores y luego no imprime el 42
 
 
-- parser permitir cosas raras entrecomilladas
-echo "> >> < * ? [ ] | ; [ ] || && ( ) & # $  <<"  esto da seg fault
-echo '> >> < * ? [ ] | ; [ ] || && ( ) & # $  <<'  esto da seg fault
 
 
 
 
 ## Signals:
-Ctrl - \ debe no hacer nada --- esto esta bien
-ctrl + c da error 130 y a nosotros 0 --- estoy en ello
+FUNCIONAN TODAS BIEN 
+
+Ctrl - \ debe no hacer nada 
+ctrl + c da error 130 
 
 Ctrl - \ hace Quit y da error 131 cuando interrumpe algo en ejecucion como un sleep
 ctrl + c da error 130 cuando interrumpe algo en ejecucion como n sleep
 
 
 ### heredoc + señales:
-C-c dentro de heredoc lo corta y vuelve a la shell sin ejecutar ninguna instrucción $?=130 --- esto ya esta bien
+C-c dentro de heredoc lo corta y vuelve a la shell sin ejecutar ninguna instrucción $?=130 
 C-\ no hace nada
 C-d cierra el heredoc con un error (bash: warerning: here-document at line 160 delimited by end-of-file (wanted 'DELIMITADOR')) pero sigue con las instrucciones $?=0.
 
