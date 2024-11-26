@@ -12,14 +12,17 @@ Probando el tester con este comando de valgrin, solo salen 3 leeks,
 valgrind --suppressions=readline.supp --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose --log-file=valgrind-out.txt ./minishell
 
 
- echo <"./test_files/infile" <missing <"./test_files/infile" ----  no hace nada, deberia da error
+** echo <"./test_files/infile" <missing <"./test_files/infile"** ----  no hace nada, deberia da error
 
-echo hi >./test_files/invalid_permission | echo bye  (sin permisos)
-echo hi >>./outfiles/outfile01 | echo bye  (no exite ese directorio)
+**echo hi >./test_files/invalid_permission | echo bye  (sin permisos)**
 
 lo que falla, es que deberia ejecutar el segundo commando del pipe aunque falle el primero
 
-echo <123 <456 hi | echo 42 
+**echo hi >>./outfiles/outfile01 | echo bye  (no exite ese directorio)**
+
+lo que falla, es que deberia ejecutar el segundo commando del pipe aunque falle el primero
+
+**echo <123 <456 hi | echo 42 **
 
 este imprime 4 errores y luego no imprime el 42
 
