@@ -6,7 +6,7 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 17:36:54 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/11/14 18:45:55 by irene            ###   ########.fr       */
+/*   Updated: 2024/11/28 23:41:03 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int	run_command(char **command, t_mix *data)
 	if (!command)
 		return (-1);
 	if (is_builtin(command[0]) == 1)
-		return (execute_builtin(data, command));
+		return (choose_and_execute_builtin(data, command));
 	cmd = command_exists(command[0], data);
 	if (!cmd)
 		cmd = command[0];

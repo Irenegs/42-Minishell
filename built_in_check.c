@@ -32,7 +32,7 @@ int	is_builtin(char *cmd)
 		return (0);
 }
 
-static int	choose_and_execute_builtin(t_mix *data, char **command)
+int	choose_and_execute_builtin(t_mix *data, char **command)
 {
 	if (ft_strcmp(command[0], "echo") == 0)
 		return (ft_echo(command));

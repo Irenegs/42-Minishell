@@ -9,10 +9,13 @@ out*
 tmp*
 test*
 .tmp*
-file1
+file*
+nor
+now
 file3
 input
 output
 gnl.c
 tester*
 params.c
+execute_prueba.c

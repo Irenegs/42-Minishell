@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 17:56:24 by irene             #+#    #+#             */
-/*   Updated: 2024/11/25 19:58:08 by pablo            ###   ########.fr       */
+/*   Updated: 2024/11/28 23:41:59 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ int	count_env_variables(char **envp);
 //built_in_check.c
 int		is_builtin(char *cmd);
 int		execute_builtin(t_mix *data, char **command);
+int		choose_and_execute_builtin(t_mix *data, char **command);
 
 //built_in.c
 int		ft_echo(char **command);
