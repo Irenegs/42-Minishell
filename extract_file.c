@@ -6,7 +6,7 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 16:36:46 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/11/15 17:14:32 by irene            ###   ########.fr       */
+/*   Updated: 2024/11/28 23:50:34 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,9 +103,11 @@ int	extract_input(char *s, t_mix *data, int p)
 		fd = ft_open(filename, O_RDONLY);
 		free(filename);
 	}
+	if (fd == -2)
+		return (-2);
 	pos = locate_char_position_quotes(s, '<');
 	aux_fd = extract_input(s + pos + 2, data, p);
-	if (aux_fd != -1 && fd != -2)
+	if (aux_fd != -1)
 		fd = aux_fd;
 	return (fd);
 }
@@ -133,8 +135,10 @@ int	extract_output(char *s, t_mix *data)
 	else
 		fd = ft_open(filename, 2);
 	free(filename);
+	if (fd == -2)
+		return (-2);
 	aux_fd = extract_output(s + pos + 1, data);
-	if (aux_fd != -1 && fd != -2)
+	if (aux_fd != -1)
 		fd = aux_fd;
 	return (fd);
 }
