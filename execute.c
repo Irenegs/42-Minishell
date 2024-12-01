@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
+/*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 16:09:28 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/11/24 19:32:13 by irene            ###   ########.fr       */
+/*   Updated: 2024/12/01 19:29:32 by pablgarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,61 +86,42 @@ int	execute_several_pipes(t_mix *data)
 	return (last_status);
 }
 
-int execute(t_mix *data)
+int	execute(t_mix *data)
 {
-    int ret_value;
+	int	ret_value;
 
-    ret_value = 0;
-    data->heredocs = malloc((data->pipes + 2) * sizeof(char *));
-    if (!data->heredocs)
-        return (write_error_int(1, 1));
-
-    if (ret_value == 0 && get_heredocs(data) == 0)
-    {
-        if (g_exit_status == 130)
-        {
-            clean_and_free_heredocs(data->heredocs, data->pipes);
-            return (130);
-        }
-        if (data->pipes != 0)
-            data->pipesfd = malloc((data->pipes) * 2 * sizeof(int));
-        if (data->pipes != 0 && data->pipesfd)
-        {
-            ret_value = execute_several_pipes(data);
-            free(data->pipesfd);
-        }
-        else if (data->pipes == 0)
-            ret_value = execute_zero_pipes(data);
-        else
-            ret_value = write_error_int(1, 1);
-    }
-    else
-        ret_value = 1;
-
-    clean_and_free_heredocs(data->heredocs, data->pipes);
-    return (ret_value);
+	data->heredocs = malloc((data->pipes + 2) * sizeof(char *));
+	if (!data->heredocs)
+		return (write_error_int(1, 1));
+	if (get_heredocs(data) != 0)
+		ret_value = 1;
+	else if (g_exit_status == 130)
+		ret_value = 130;
+	else
+		ret_value = execute_pipes(data);
+	clean_and_free_heredocs(data->heredocs, data->pipes);
+	return (ret_value);
 }
 
-void parse_and_execute(t_mix *data)
+void	parse_and_execute(t_mix *data)
 {
-    if (!data || !data->input || ft_strlen(data->input) == 0)
-        return;
-    if (g_exit_status == 130)
+	if (!data || !data->input || ft_strlen(data->input) == 0)
+		return ;
+	if (g_exit_status == 130)
 		data->exit_status = 130;
 	g_exit_status = 0;
-    data->pipes = parser(data->input);
-    if (data->pipes == -1)
-    {
-        write(2, "Parse error\n", 12);
-        g_exit_status = 2;
-        data->exit_status = 2;
-        return;
-    }
-    else if (data->pipes != -2)
-    {
-        data->exit_status = execute(data);
-        if (g_exit_status == 130)
-            data->exit_status = g_exit_status;
-    }
+	data->pipes = parser(data->input);
+	if (data->pipes == -1)
+	{
+		write(2, "Parse error\n", 12);
+		g_exit_status = 2;
+		data->exit_status = 2;
+		return ;
+	}
+	else if (data->pipes != -2)
+	{
+		data->exit_status = execute(data);
+		if (g_exit_status == 130)
+			data->exit_status = g_exit_status;
+	}
 }
-

@@ -79,10 +79,10 @@ static int	redirect_output(t_mix *data, int *output, int *stdout_copy)
 
 int	execute_builtin(t_mix *data, char **command)
 {
-	int input;
-	int output;
-	int return_value;
-	int stdin_copy;
+	int	input;
+	int	output;
+	int	return_value;
+	int	stdin_copy;
 	int	stdout_copy;
 
 	if (redirect_input(data, &input, &stdin_copy) != 0)

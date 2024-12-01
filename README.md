@@ -12,12 +12,12 @@ Probando el tester con este comando de valgrin, solo salen 3 leeks,
 valgrind --suppressions=readline.supp --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose --log-file=valgrind-out.txt ./minishell
 
 
+$? No guarda el ultimo error registrado si damos enter en el promt vacio
+
+
+
+
 ** echo <"./test_files/infile" <missing <"./test_files/infile"** ----  no hace nada, deberia da error
-
-**cat <noexiste | echo hola**  --- deberia imprimr hola y mostar error el noexiste, este ademas imprime doble mensaje de error 
-No such file or directory
-No such file or directory
-
 
 
 **echo hi >./test_files/invalid_permission | echo bye  (sin permisos)**
@@ -28,9 +28,6 @@ lo que falla, es que deberia ejecutar el segundo commando del pipe aunque falle 
 
 lo que falla, es que deberia ejecutar el segundo commando del pipe aunque falle el primero
 
-**echo <123 <456 hi | echo 42**
-
-este imprime 4 errores y luego no imprime el 42
 
 
 

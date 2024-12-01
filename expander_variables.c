@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   expander_variables.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
+/*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 19:27:26 by irene             #+#    #+#             */
-/*   Updated: 2024/11/23 23:53:36 by irene            ###   ########.fr       */
+/*   Updated: 2024/12/01 19:34:28 by pablgarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void add_escaped_quote(char **result, char *orig, int pos)
+void	add_escaped_quote(char **result, char *orig, int pos)
 {
 	char	*new;
-	size_t  len_result;
+	size_t	len_result;
 
 	len_result = ft_strlen(*result);
 	new = malloc((len_result + 3) * sizeof(char));
@@ -34,7 +34,7 @@ void add_escaped_quote(char **result, char *orig, int pos)
 	*result = new;
 }
 
-char *escape_quotes_in_variable(char *str)
+char	*escape_quotes_in_variable(char *str)
 {
 	char	*escaped;
 	int		pos;
@@ -57,7 +57,7 @@ char *escape_quotes_in_variable(char *str)
 	return (escaped);
 }
 
-static char *variable_escaped_quote(char *str, int	pos, t_mix *data)
+static char	*variable_escaped_quote(char *str, int pos, t_mix *data)
 {
 	char	*orig_value;
 	char	*escaped_variable;
@@ -72,7 +72,7 @@ static char *variable_escaped_quote(char *str, int	pos, t_mix *data)
 	return (orig_value);
 }
 
-static void add_variable(char **result, char *orig, int	pos, t_mix *data)
+static void	add_variable(char **result, char *orig, int pos, t_mix *data)
 {
 	char	*variable;
 	char	*new;
@@ -88,7 +88,7 @@ char	*expand_string(char *str, t_mix *data)
 {
 	char	*expanded;
 	int		pos;
-	int	 quotes;
+	int		quotes;
 
 	if (!str)
 		return (NULL);
@@ -120,3 +120,4 @@ char	*expand_string(char *str, t_mix *data)
 	}
 	return (expanded);
 }
+

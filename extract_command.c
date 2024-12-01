@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   extract_command.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
+/*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:36:03 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/11/24 18:36:16 by irene            ###   ########.fr       */
+/*   Updated: 2024/12/01 19:10:59 by pablgarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,26 +67,6 @@ static int	count_arguments(char *cmd_str)
 		}
 	}
 	return (args);
-}
-
-void free_array(char ***arr)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (arr && arr[i])
-	{
-		j = 0;
-		while (arr[i] && arr[i][j])
-		{
-			free(arr[i][j]);
-			j++;
-		}
-		free(arr[i]);
-		i++;
-	}
-	free(arr);
 }
 
 static char	**split_command(char *s, t_mix *data)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_arrays.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
+/*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/15 18:33:19 by irene             #+#    #+#             */
-/*   Updated: 2024/11/24 00:00:02 by irene            ###   ########.fr       */
+/*   Updated: 2024/12/01 18:59:02 by pablgarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 char	**ft_out(char **arr)
 {
 	int	j;
-	
+
 	j = 0;
 	if (!arr)
 		return (NULL);
@@ -27,29 +27,10 @@ char	**ft_out(char **arr)
 	free(arr);
 	return (NULL);
 }
-/*
-char	**ft_out(char **arr)
-{
-	int	j;
-	
-	j = 0;
-	if (!arr)
-		return (NULL);
-	while (arr[j])
-	{
-		arr[j] = NULL;
-		free(arr[j]);
-		arr[j] = NULL;
-		j++;
-	}
-	free(arr);
-	arr = NULL;
-	return (NULL);
-}
-*/
+
 static int	join_arrays_size(char ***array)
 {
-	int size;
+	int	size;
 	int	i;
 	int	j;
 
@@ -72,7 +53,7 @@ static int	join_arrays_size(char ***array)
 
 static void	fill_joined_array(char ***array, char **joined)
 {
-	int size;
+	int	size;
 	int	i;
 	int	j;
 
@@ -93,7 +74,7 @@ static void	fill_joined_array(char ***array, char **joined)
 	}
 }
 
-char **join_arrays(char ***array)
+char	**join_arrays(char ***array)
 {
 	int		size;
 	char	**joined;
@@ -101,7 +82,7 @@ char **join_arrays(char ***array)
 	if (!array)
 		return (NULL);
 	size = join_arrays_size(array);
-	joined = malloc((size + 1)* sizeof(char *));
+	joined = malloc((size + 1) * sizeof(char *));
 	if (!joined)
 		return (write_error_null(1));
 	fill_joined_array(array, joined);
@@ -135,21 +116,4 @@ char	*increment_shlvl(char *env_var)
 	}
 	new_shlvl_value = ft_strdup(env_var);
 	return (new_shlvl_value);
-}
-
-char **free_partial_array(char **array, int filled)
-{
-   int i = 0;
-
-    if (!array) 
-        return (NULL);
-
-    while (i < filled)
-    {
-        free(array[i]);
-        i++;
-    }
-
-    free(array);
-    return (NULL);
 }

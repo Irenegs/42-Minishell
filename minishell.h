@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
+/*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 17:56:24 by irene             #+#    #+#             */
-/*   Updated: 2024/11/28 23:41:59 by irene            ###   ########.fr       */
+/*   Updated: 2024/12/01 19:28:40 by pablgarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	ft_signals_hd(void);
 
 //struct.c
 void	ft_init_mix(t_mix *data, char **envp);
-int	count_env_variables(char **envp);
+int		count_env_variables(char **envp);
 
 //built_in_check.c
 int		is_builtin(char *cmd);
@@ -109,8 +109,7 @@ int		status_treatment(int *status);
 char	**extract_command(char *s, t_mix *data);
 
 //extract_elements.c
-//char	*extract_element(char *s, int *pos, t_mix *data);
-char    **extract_element(char *s, int pos, t_mix *data);
+char	**extract_element(char *s, int pos, t_mix *data);
 int		something_to_add(char *s, int pos);
 
 //extract_file.c
@@ -138,8 +137,8 @@ int		locate_char_position(char *s, char c);
 int		parser(char *s);
 
 //parser_utils.c
-int	parser_manage_quotes(char *s, int pos);
-int	parser_errors(char *s);
+int		parser_manage_quotes(char *s, int pos);
+int		parser_errors(char *s);
 
 //pipe_utils.c
 void	manage_multiple_pipes(int p, int pipes, int *fd);
@@ -190,14 +189,17 @@ size_t	len_varvalue(char *str, int pos);
 size_t	len_varname(char *str, int *pos);
 
 //expander_quotes.c
-char    **unquote(char **element);
+char	**unquote(char **element);
 char	*expand_string(char *str, t_mix *data);
-void add_char(char **result, char *orig, int pos);
+void	add_char(char **result, char *orig, int pos);
 
 //split_element.c
 char	**split_element(char *str);
 
-void add_escaped_quote(char **result, char *orig, int pos);
-char **free_partial_array(char **array, int filled);
+void	add_escaped_quote(char **result, char *orig, int pos);
+char	**free_partial_array(char **array, int filled);
 char	**ft_out_command(char **arr);
+void	free_array(char ***arr);
+int		execute_pipes(t_mix *data);
+int		execute_several_pipes(t_mix *data);
 #endif

@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   utils_char.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
+/*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 18:06:33 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/09/22 16:41:21 by irene            ###   ########.fr       */
+/*   Updated: 2024/12/01 18:58:45 by pablgarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int is_quote(char c)
+int	is_quote(char c)
 {
-    if (c == '\'' || c == '"')
-        return ((int) c);
-    return (0);
+	if (c == '\'' || c == '"')
+		return ((int) c);
+	return (0);
 }
 
 int	is_space(char c)
@@ -37,4 +37,20 @@ void	manage_quotes(int *quotes, char c)
 		*quotes = 0;
 	else if (*quotes == 0 && is_quote(c) != 0)
 		*quotes = c;
+}
+
+char	**free_partial_array(char **array, int filled)
+{
+	int	i;
+
+	i = 0;
+	if (!array)
+		return (NULL);
+	while (i < filled)
+	{
+		free(array[i]);
+		i++;
+	}
+	free(array);
+	return (NULL);
 }

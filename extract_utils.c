@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   extract_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
+/*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:40:20 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/11/24 18:01:20 by irene            ###   ########.fr       */
+/*   Updated: 2024/12/01 19:11:55 by pablgarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ size_t	len_quotes(char *s, int pos)
 	quote = s[pos];
 	while (s[pos + 1 + len] != '\0' && s[pos + 1 + len] != quote)
 	{
-		//printf("c:%c\n", s[pos + 1 + len]);
 		len++;
 	}
 	return (len);

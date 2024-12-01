@@ -12,55 +12,31 @@
 
 #include "minishell.h"
 
-/*
-void	ft_interrupt(int signal)
+void	running_handler(int sig)
 {
-	if (signal == SIGQUIT)
-		ft_putstr_fd("Quit (SIGQUIT)\n", STDERR_FILENO);
-	else if (signal == SIGINT)
+	if (sig == SIGINT)
+	{
 		ft_putchar_fd('\n', STDOUT_FILENO);
-	rl_on_new_line();
-	rl_replace_line("", 0);
+		g_exit_status = 130;
+	}
+	else if (sig == SIGQUIT)
+	{
+		ft_putstr_fd("Quit: 3\n", STDERR_FILENO);
+		g_exit_status = 131;
+	}
 }
 
 void	ft_signals_running(void)
 {
-	signal(SIGINT, ft_interrupt);
-	signal(SIGQUIT, ft_interrupt);
-}
-*/
+	struct sigaction	sa;
 
-void running_handler(int sig)
-{
-    if (sig == SIGINT) 
-    {
-        ft_putchar_fd('\n', STDOUT_FILENO);
-        g_exit_status = 130; 
-    }
-    else if (sig == SIGQUIT) 
-    {
-        ft_putstr_fd("Quit: 3\n", STDERR_FILENO);
-        g_exit_status = 131; 
-    }
+	sa.sa_flags = SA_RESTART;
+	sigemptyset(&sa.sa_mask);
+	sa.sa_handler = &running_handler;
+	sigaction(SIGINT, &sa, NULL);
+	sigaction(SIGQUIT, &sa, NULL);
 }
 
-void ft_signals_running(void)
-{
-    struct sigaction sa;
-
-    sa.sa_flags = SA_RESTART;
-    sigemptyset(&sa.sa_mask);
-    sa.sa_handler = &running_handler;
-    sigaction(SIGINT, &sa, NULL); 
-    sigaction(SIGQUIT, &sa, NULL);
-}
-/*
-void	ft_sig_def(void)
-{
-	signal(SIGQUIT, SIG_DFL);
-	signal(SIGINT, SIG_DFL);
-}
-*/
 static void	start_handler(int sig)
 {
 	if (sig == SIGINT)

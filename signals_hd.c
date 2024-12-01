@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals_hd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 18:31:25 by pablo             #+#    #+#             */
-/*   Updated: 2024/11/22 18:51:52 by pablo            ###   ########.fr       */
+/*   Updated: 2024/12/01 18:50:43 by pablgarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,6 @@
 
 static void	ft_sigint_hd(int signal)
 {
-	
-	/*
-	if (signal == SIGINT)
-	{
-		ft_putchar_fd('\n', STDOUT_FILENO);
-		g_exit_status = 130;
-	}
-	else if (signal == SIGQUIT)
-	{
-		write(1, "Quit: \n", 8);
-		g_exit_status = 131;
-	}
-	close(STDIN_FILENO);
-	*/
-	
 	ft_putchar_fd('\n', STDOUT_FILENO);
 	if (signal == SIGINT)
 		g_exit_status = 130;
