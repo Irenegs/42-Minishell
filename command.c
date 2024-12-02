@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 17:36:54 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/12/01 18:42:02 by pablgarc         ###   ########.fr       */
+/*   Updated: 2024/12/02 22:48:57 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,8 @@ int	run_command(char **command, t_mix *data)
 
 	if (!command)
 		return (-1);
+	if(command[0][0] == '\0')
+		return(0);
 	if (is_builtin(command[0]) == 1)
 		return (choose_and_execute_builtin(data, command));
 	cmd = command_exists(command[0], data);

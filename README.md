@@ -12,7 +12,7 @@ Probando el tester con este comando de valgrin, solo salen 3 leeks,
 valgrind --suppressions=readline.supp --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose --log-file=valgrind-out.txt ./minishell
 
 
-$? No guarda el ultimo error registrado si damos enter en el promt vacio
+$? No guarda el ultimo error registrado si damos enter en el promt vacio, es el error 127, con la señales si se guarda (son el 130)
 
 
 

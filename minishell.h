@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 17:56:24 by irene             #+#    #+#             */
-/*   Updated: 2024/12/01 19:28:40 by pablgarc         ###   ########.fr       */
+/*   Updated: 2024/12/02 22:49:32 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 # include <sys/wait.h>
 # include <unistd.h>
 # include <asm-generic/signal-defs.h>
-# include <x86_64-linux-gnu/bits/sigaction.h>
+//# include <x86_64-linux-gnu/bits/sigaction.h>
 
 # define MAX_ARGV 100
 
