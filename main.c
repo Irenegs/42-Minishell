@@ -6,7 +6,7 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 19:58:35 by pablgarc          #+#    #+#             */
-/*   Updated: 2024/11/24 16:27:25 by irene            ###   ########.fr       */
+/*   Updated: 2024/12/03 16:51:23 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	prompt(t_mix *data)
 			ft_signals_running();
 			parse_and_execute(data);
 		}
-		else
+		else if (data->exit_status == 0)
 			data->exit_status = g_exit_status;
 		free(data->input);
 	}
