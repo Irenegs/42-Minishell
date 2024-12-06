@@ -6,7 +6,7 @@
 /*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 20:23:21 by irene             #+#    #+#             */
-/*   Updated: 2024/11/20 23:28:32 by pablo            ###   ########.fr       */
+/*   Updated: 2024/12/06 22:18:44 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,29 +15,48 @@
 static char	**copy_env_without_entry(char **env, int index, int size)
 {
 	char	**new_env;
-	int		j;
 	int		i;
+	int		j;
 
-	i = 0;
-	j = 0;
 	new_env = (char **)malloc(size * sizeof(char *));
 	if (!new_env)
 		return (write_error_null(1));
-	while (i < index)
+	i = 0;
+	j = 0;
+	while (i < size - 1)
 	{
-		new_env[j] = env[i];
+		if (i == index)
+		{
+			i++;
+			continue;
+		}
+		new_env[j] = ft_strdup(env[i]);
+		if (!new_env[j])
+		{
+			while (j-- > 0)
+				free(new_env[j]);
+			free(new_env);
+			return (NULL);
+		}
 		i++;
-		j++;
-	}
-	env[index] = NULL;
-	free(env[index]);
-	while (env[++i])
-	{
-		new_env[j] = env[i];
 		j++;
 	}
 	new_env[j] = NULL;
 	return (new_env);
+}
+
+static void	free_env(char **env)
+{
+	int	i = 0;
+
+	if (!env)
+		return;
+	while (env[i])
+	{
+		free(env[i]);
+		i++;
+	}
+	free(env);
 }
 
 static char	**remove_env(char **env, const char *key)
@@ -46,16 +65,16 @@ static char	**remove_env(char **env, const char *key)
 	int		size;
 	char	**new_env;
 
-	size = 0;
 	index = find_env_index(env, key);
 	if (index == -1)
 		return (env);
+	size = 0;
 	while (env[size])
 		size++;
 	new_env = copy_env_without_entry(env, index, size);
 	if (!new_env)
 		return (NULL);
-	free(env);
+	free_env(env);
 	return (new_env);
 }
 
