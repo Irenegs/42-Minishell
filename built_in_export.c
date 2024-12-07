@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in_export.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 21:56:45 by pablo             #+#    #+#             */
-/*   Updated: 2024/11/16 20:28:57 by irene            ###   ########.fr       */
+/*   Updated: 2024/12/07 18:19:12 by pablo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,10 @@ static int	process_export_command(t_mix *data, char *cmd)
 		}
 	}
 	else
+	{
+		free(var_name);
 		return (write_error_int(5, 1));
+	}
 	free(var_name);
 	return (0);
 }
