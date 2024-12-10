@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in_unset.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 20:23:21 by irene             #+#    #+#             */
-/*   Updated: 2024/12/06 22:18:44 by pablo            ###   ########.fr       */
+/*   Updated: 2024/12/10 21:38:51 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static char	**copy_env_without_entry(char **env, int index, int size)
 		if (i == index)
 		{
 			i++;
-			continue;
+			continue ;
 		}
 		new_env[j] = ft_strdup(env[i]);
 		if (!new_env[j])
@@ -47,10 +47,11 @@ static char	**copy_env_without_entry(char **env, int index, int size)
 
 static void	free_env(char **env)
 {
-	int	i = 0;
+	int	i;
 
+	i = 0;
 	if (!env)
-		return;
+		return ;
 	while (env[i])
 	{
 		free(env[i]);

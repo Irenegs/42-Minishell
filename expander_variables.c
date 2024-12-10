@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander_variables.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 19:27:26 by irene             #+#    #+#             */
-/*   Updated: 2024/12/01 19:34:28 by pablgarc         ###   ########.fr       */
+/*   Updated: 2024/12/10 21:41:13 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,4 +120,3 @@ char	*expand_string(char *str, t_mix *data)
 	}
 	return (expanded);
 }
-

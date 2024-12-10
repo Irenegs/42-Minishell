@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in_export.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 21:56:45 by pablo             #+#    #+#             */
-/*   Updated: 2024/12/07 18:19:12 by pablo            ###   ########.fr       */
+/*   Updated: 2024/12/10 21:36:24 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,19 +45,16 @@ static int	process_export_command(t_mix *data, char *cmd)
 	var_name = ft_substr(cmd, 0, len);
 	if (!var_name)
 		return (write_error_int(1, 1));
-	if (valid_varname(var_name) == 1)
+	if (valid_varname(var_name) == 1 && len != -1)
 	{
-		if (len != -1)
+		data->m_env = au_env(data->m_env, var_name, cmd + len + 1);
+		if (!data->m_env)
 		{
-			data->m_env = au_env(data->m_env, var_name, cmd + len + 1);
-			if (!data->m_env)
-			{
-				free(var_name);
-				return (1);
-			}
+			free(var_name);
+			return (1);
 		}
 	}
-	else
+	else if (valid_varname(var_name) != 1)
 	{
 		free(var_name);
 		return (write_error_int(5, 1));

@@ -6,7 +6,7 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 20:32:38 by irene             #+#    #+#             */
-/*   Updated: 2024/11/23 22:12:07 by irene            ###   ########.fr       */
+/*   Updated: 2024/12/10 21:51:11 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,8 @@ size_t	len_varname(char *str, int *pos)
 		return (0);
 	if (str[*pos] == '?')
 		return (1);
-	if (str[*pos] == '{' && str[*pos + 2] != '_' && ft_isalpha(str[*pos + 2]) == 0)
+	if (str[*pos] == '{' && str[*pos + 2] != '_'
+		&& ft_isalpha(str[*pos + 2]) == 0)
 		return (0);
 	if (str[*pos] == '{')
 		(*pos)++;
@@ -104,6 +105,29 @@ size_t	len_varname(char *str, int *pos)
 	while (str[*pos + len] == '_' || ft_isalnum(str[*pos + len]))
 		len++;
 	return (len);
+}
+
+char	*dollar_string(void)
+{
+	char	*var_value;
+
+	var_value = malloc(2 * sizeof(char));
+	if (!var_value)
+		return (write_error_null(1));
+	var_value[0] = '$';
+	var_value[1] = '\0';
+	return (var_value);
+}
+
+char	*empty_string(void)
+{
+	char	*var_value;
+
+	var_value = malloc(1 * sizeof(char));
+	if (!var_value)
+		return (write_error_null(1));
+	var_value[0] = '\0';
+	return (var_value);
 }
 
 char	*obtain_variable(char *s, int i, t_mix *data)
@@ -118,19 +142,8 @@ char	*obtain_variable(char *s, int i, t_mix *data)
 		if (s[i] == '{')
 			return (write_error_null(2));
 		if (is_quote(s[i]) != 0 && is_space(s[i + 1]) == 0)
-		{
-			var_value = malloc(1 * sizeof(char));
-			if (!var_value)
-				return (write_error_null(1));
-			var_value[0] = '\0';
-			return (var_value);
-		}
-		var_value = malloc(2 * sizeof(char));
-		if (!var_value)
-			return (write_error_null(1));
-		var_value[0] = '$';
-		var_value[1] = '\0';
-		return (var_value);
+			return (empty_string());
+		return (dollar_string());
 	}
 	if (len > 0 && s[i] == '{')
 		var_name = ft_substr(s, i + 1, len - 2);

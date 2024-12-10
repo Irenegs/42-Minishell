@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in_utils1.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 22:08:38 by pablo             #+#    #+#             */
-/*   Updated: 2024/12/06 21:54:17 by pablo            ###   ########.fr       */
+/*   Updated: 2024/12/10 21:39:21 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ char	**update_entry(char **env, int i, const char *key, const char *value)
 	new_entry = create_env_entry(key, value);
 	if (new_entry)
 	{
-		if(env[i])
+		if (env[i])
 			free(env[i]);
 		env[i] = new_entry;
 	}
