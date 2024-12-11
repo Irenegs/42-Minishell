@@ -28,8 +28,7 @@ int	is_builtin(char *cmd)
 		return (1);
 	else if (ft_strcmp(cmd, "exit") == 0)
 		return (1);
-	else
-		return (0);
+	return (0);
 }
 
 int	choose_and_execute_builtin(t_mix *data, char **command)

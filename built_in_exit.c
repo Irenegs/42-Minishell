@@ -6,7 +6,7 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 20:10:48 by irene             #+#    #+#             */
-/*   Updated: 2024/12/03 16:58:07 by irene            ###   ########.fr       */
+/*   Updated: 2024/12/11 18:49:55 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ int	ft_exit(char **command, t_mix *data)
 	close_pipes(data->pipes, data->pipesfd);
 	clean_and_free_heredocs(data->heredocs, data->pipes);
 	free(data->input);
-	free_partial_array(data->m_env, count_env_variables(data->m_env));
+	if (data->m_env)
+		free_partial_array(data->m_env, count_env_variables(data->m_env));
 	exit(status);
 }

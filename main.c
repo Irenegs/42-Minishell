@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 19:58:35 by pablgarc          #+#    #+#             */
-/*   Updated: 2024/12/03 23:14:16 by pablo            ###   ########.fr       */
+/*   Updated: 2024/12/11 18:51:03 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ int	main(int argc, char **argv, char **envp)
 		return (1);
 	ft_init_mix(&data, envp);
 	prompt(&data);
-	free_partial_array(data.m_env, count_env_variables(data.m_env));
+	if (data.m_env)
+		free_partial_array(data.m_env, count_env_variables(data.m_env));
 	return (0);
 }

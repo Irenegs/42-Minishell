@@ -3,22 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   built_in_unset.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 20:23:21 by irene             #+#    #+#             */
-/*   Updated: 2024/12/10 23:29:56 by pablo            ###   ########.fr       */
+/*   Updated: 2024/12/11 18:14:25 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	copy_and_check(char **new_env, char **env, int src_index, int dest_index)
+static int	copy_env(char **new_env, char **env, int src_ind, int dest_ind)
 {
-	new_env[dest_index] = ft_strdup(env[src_index]);
-	if (!new_env[dest_index])
+	new_env[dest_ind] = ft_strdup(env[src_ind]);
+	if (!new_env[dest_ind])
 	{
-		while (dest_index-- > 0)
-			free(new_env[dest_index]);
+		while (dest_ind-- > 0)
+			free(new_env[dest_ind]);
 		free(new_env);
 		return (0);
 	}
@@ -34,7 +34,6 @@ static char	**copy_env_without_entry(char **env, int index, int size)
 	new_env = (char **)malloc(size * sizeof(char *));
 	if (!new_env)
 		return (write_error_null(1));
-
 	i = 0;
 	j = 0;
 	while (i < size - 1)
@@ -44,7 +43,7 @@ static char	**copy_env_without_entry(char **env, int index, int size)
 			i++;
 			continue ;
 		}
-		if (!copy_and_check(new_env, env, i, j))
+		if (!copy_env(new_env, env, i, j))
 			return (NULL);
 		i++;
 		j++;
