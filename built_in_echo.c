@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in_echo.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 11:16:50 by irene             #+#    #+#             */
-/*   Updated: 2024/11/17 19:42:19 by pablgarc         ###   ########.fr       */
+/*   Updated: 2024/12/11 22:34:54 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,12 @@ int	ft_echo(char **command)
 
 	new_line = 1;
 	i = 1;
-	while (command[i] && check_flag_echo(command[i]) == 1)
+	while (command && command[i] && check_flag_echo(command[i]) == 1)
 	{
 		new_line = 0;
 		i++;
 	}
-	while (command[i])
+	while (command && command[i])
 	{
 		printf("%s", command[i]);
 		if (command[i + 1])

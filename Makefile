@@ -9,7 +9,7 @@ SRCS        := built_in_cd_pwd.c built_in_check.c built_in_echo.c built_in_env.c
 				command.c command_utils.c \
 				error.c \
 				expander.c expander_variables.c expander_quotes.c expander_utils.c\
-				execute.c execute_simple.c \
+				execute.c execute_redirections.c execute_simple.c \
 				extract_command.c extract_element.c  extract_file.c extract_pipe.c \
 				extract_utils.c extract_utils2.c \
 				heredoc_delimiter.c heredoc_files.c heredoc_files_utils.c heredoc_text.c heredoc_expand.c\

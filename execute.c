@@ -3,36 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 16:09:28 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/12/03 21:38:25 by pablo            ###   ########.fr       */
+/*   Updated: 2024/12/11 23:21:37 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	manage_redirections(int p, t_mix *data, char *subs)
-{
-	int		input;
-	int		output;
-
-	input = extract_input(subs, data, p);
-	if (input == -2)
-		return (1);
-	else if (input > 0)
-		dup2(input, STDIN_FILENO);
-	else if (p > 0)
-		dup2(data->pipesfd[2 * (p - 1)], STDIN_FILENO);
-	output = extract_output(subs, data);
-	if (output == -2)
-		return (1);
-	if (p != data->pipes)
-		dup2(data->pipesfd[2 * p + 1], STDOUT_FILENO);
-	if (output > 0)
-		dup2(output, STDOUT_FILENO);
-	return (0);
-}
 
 int	extract_pipe_and_execute(int p, t_mix *data)
 {
@@ -49,8 +27,11 @@ int	extract_pipe_and_execute(int p, t_mix *data)
 	command = extract_command(subs, data);
 	if (!command)
 	{
+		ret_value = 1;
+		if (ft_strlen(subs) == 0)
+			ret_value = 0;
 		free(subs);
-		exit (1);
+		exit (ret_value);
 	}
 	ret_value = run_command(command, data);
 	free(subs);
@@ -84,6 +65,24 @@ int	execute_several_pipes(t_mix *data)
 	while (wait(&status) > 0)
 		;
 	return (last_status);
+}
+
+int	execute_pipes(t_mix *data)
+{
+	int	ret_value;
+
+	ret_value = 0;
+	if (data->pipes != 0)
+	{
+		data->pipesfd = malloc((data->pipes) * 2 * sizeof(int));
+		if (!data->pipesfd)
+			return (write_error_int(1, 1));
+		ret_value = execute_several_pipes(data);
+		free(data->pipesfd);
+	}
+	else
+		ret_value = execute_zero_pipes(data);
+	return (ret_value);
 }
 
 int	execute(t_mix *data)

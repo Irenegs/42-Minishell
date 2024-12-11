@@ -6,7 +6,7 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 21:56:45 by pablo             #+#    #+#             */
-/*   Updated: 2024/12/11 18:41:28 by irene            ###   ########.fr       */
+/*   Updated: 2024/12/11 22:46:02 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static int	process_export_command(t_mix *data, char *cmd)
 	char	*var_name;
 	int		len;
 
-	if (cmd[0] == '=')
+	if (cmd && cmd[0] == '=')
 		return (write_error_int(5, 1));
 	len = locate_char_position(cmd, '=');
 	var_name = ft_substr(cmd, 0, len);

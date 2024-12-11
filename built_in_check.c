@@ -14,7 +14,9 @@
 
 int	is_builtin(char *cmd)
 {
-	if (ft_strcmp(cmd, "echo") == 0)
+	if (!cmd)
+		return (1);
+	else if (ft_strcmp(cmd, "echo") == 0)
 		return (1);
 	else if (ft_strcmp(cmd, "cd") == 0)
 		return (1);
@@ -33,6 +35,8 @@ int	is_builtin(char *cmd)
 
 int	choose_and_execute_builtin(t_mix *data, char **command)
 {
+	if (!command || !data)
+		return (1);
 	if (ft_strcmp(command[0], "echo") == 0)
 		return (ft_echo(command));
 	else if (ft_strcmp(command[0], "cd") == 0)
@@ -84,6 +88,8 @@ int	execute_builtin(t_mix *data, char **command)
 	int	stdin_copy;
 	int	stdout_copy;
 
+	if (!data || !command)
+		return (1);
 	if (redirect_input(data, &input, &stdin_copy) != 0)
 		return (1);
 	if (redirect_output(data, &output, &stdout_copy) != 0)

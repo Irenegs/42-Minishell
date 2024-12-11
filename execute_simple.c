@@ -6,7 +6,7 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/29 18:56:55 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/11/24 18:19:27 by irene            ###   ########.fr       */
+/*   Updated: 2024/12/11 23:46:01 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 int	status_treatment(int *status)
 {
+	if (!status)
+		return (1);
 	if (WIFEXITED(*status) != 0)
 		return (WEXITSTATUS(*status));
 	if (WIFSIGNALED(*status) != 0)
@@ -46,10 +48,7 @@ static int	execute_only_child(t_mix *data, char **command)
 
 	childpid = fork();
 	if (childpid == -1)
-	{
-		perror(NULL);
-		return (1);
-	}
+		return (perror_int(1));
 	if (childpid == 0)
 	{
 		if (manage_simple_redirections(data) != 0)
@@ -68,6 +67,8 @@ int	execute_zero_pipes(t_mix *data)
 	int		status;
 
 	command = extract_command(data->input, data);
+	if (!command && ft_strlen(data->input) == 0)
+		return (0);
 	if (!command)
 		return (1);
 	if (is_builtin(command[0]) == 1)

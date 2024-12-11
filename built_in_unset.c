@@ -6,7 +6,7 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 20:23:21 by irene             #+#    #+#             */
-/*   Updated: 2024/12/11 18:14:25 by irene            ###   ########.fr       */
+/*   Updated: 2024/12/11 22:32:48 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ static int	copy_env(char **new_env, char **env, int src_ind, int dest_ind)
 		while (dest_ind-- > 0)
 			free(new_env[dest_ind]);
 		free(new_env);
-		return (0);
+		return (write_error_int(1, 1));
 	}
-	return (1);
+	return (0);
 }
 
 static char	**copy_env_without_entry(char **env, int index, int size)
@@ -43,7 +43,7 @@ static char	**copy_env_without_entry(char **env, int index, int size)
 			i++;
 			continue ;
 		}
-		if (!copy_env(new_env, env, i, j))
+		if (copy_env(new_env, env, i, j) != 0)
 			return (NULL);
 		i++;
 		j++;
@@ -97,10 +97,7 @@ int	ft_unset(t_mix *data, char **command)
 	{
 		data->m_env = remove_env(data->m_env, command[i]);
 		if (!data->m_env)
-		{
-			perror("unset");
 			return (1);
-		}
 		i++;
 	}
 	return (0);

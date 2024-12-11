@@ -6,7 +6,7 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 20:16:33 by irene             #+#    #+#             */
-/*   Updated: 2024/12/11 18:34:05 by irene            ###   ########.fr       */
+/*   Updated: 2024/12/11 22:37:43 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	ft_cd(char **command, t_mix *data)
 {
 	char	*home_dir;
 
-	if (!command[1])
+	if (!command || !command[1])
 	{
 		home_dir = ft_getenv("HOME", data);
 		if (home_dir == NULL)
@@ -27,7 +27,7 @@ int	ft_cd(char **command, t_mix *data)
 			return (perror_int(1));
 		}
 	}
-	else if (command[2])
+	else if (command && command[2])
 		return (write_error_int(3, 1));
 	else if (chdir(command[1]) != 0)
 		return (perror_int(1));

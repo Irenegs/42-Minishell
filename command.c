@@ -6,7 +6,7 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 17:36:54 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/12/10 21:39:57 by irene            ###   ########.fr       */
+/*   Updated: 2024/12/11 22:58:17 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	run_command(char **command, t_mix *data)
 {
 	char	*cmd;
 
-	if (!command)
+	if (!command || !command[0])
 		return (-1);
 	if (command[0][0] == '\0')
 		return (0);

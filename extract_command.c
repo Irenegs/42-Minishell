@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   extract_command.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:36:03 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/12/01 19:10:59 by pablgarc         ###   ########.fr       */
+/*   Updated: 2024/12/11 23:44:02 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ static int	locate_cmd_position(char *s)
 	{
 		if (s[i] == '<' || s[i] == '>')
 			i += skip_word(s, i);
+		if (s[i] == '\0')
+			return (-1);
 		if (is_space(s[i]) == 0)
 			return (i);
 		i++;
@@ -105,7 +107,10 @@ char	**extract_command(char *s, t_mix *data)
 
 	pos = locate_cmd_position(s);
 	if (pos == -1)
+	{
+		*s = '\0';
 		return (NULL);
+	}
 	cmd_string = extract_cmd_str(s);
 	if (!cmd_string)
 		return (NULL);

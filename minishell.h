@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 17:56:24 by irene             #+#    #+#             */
-/*   Updated: 2024/12/02 22:49:32 by pablo            ###   ########.fr       */
+/*   Updated: 2024/12/11 23:23:36 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,8 @@ char	**get_path_variable(t_mix *data);
 //execute.c
 int		execute(t_mix *data);
 void	parse_and_execute(t_mix *data);
+
+int	manage_redirections(int p, t_mix *data, char *subs);
 
 //execute_simple.c
 int		execute_zero_pipes(t_mix *data);

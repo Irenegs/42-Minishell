@@ -6,7 +6,7 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/28 19:35:07 by pablgarc          #+#    #+#             */
-/*   Updated: 2024/11/16 20:26:40 by irene            ###   ########.fr       */
+/*   Updated: 2024/12/11 22:45:53 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	find_env_index(char **env, const char *key)
 
 	key_len = ft_strlen(key);
 	i = 0;
-	while (env[i])
+	while (env && env[i])
 	{
 		if (ft_strncmp(env[i], key, key_len) == 0 && env[i][key_len] == '=')
 			return (i);
@@ -38,7 +38,7 @@ char	**au_env(char **env, const char *key, const char *value)
 	if (index != -1)
 		return (update_entry(env, index, key, value));
 	size = 0;
-	while (env[size])
+	while (env && env[size])
 		size++;
 	new_env = new_entry(env, key, value, size);
 	if (!new_env)

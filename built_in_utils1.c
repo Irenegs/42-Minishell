@@ -6,7 +6,7 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 22:08:38 by pablo             #+#    #+#             */
-/*   Updated: 2024/12/11 18:52:04 by irene            ###   ########.fr       */
+/*   Updated: 2024/12/11 22:48:51 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,12 @@ char	**new_entry(char **env, const char *key, const char *value, int size)
 {
 	char	**new_env;
 	int		i;
-	if (size + 1 < 0) return (NULL);
+
 	new_env = (char **)malloc((size + 2) * sizeof(char *));
 	if (!new_env)
 		return (write_error_null(1));
 	i = 0;
-	while (env[i])
+	while (env && env[i])
 	{
 		new_env[i] = env[i];
 		i++;
