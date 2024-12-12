@@ -6,44 +6,11 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/15 18:33:19 by irene             #+#    #+#             */
-/*   Updated: 2024/12/12 19:14:03 by irene            ###   ########.fr       */
+/*   Updated: 2024/12/13 00:31:54 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-char	**ft_out_exception(char **arr, int n)
-{
-	int	j;
-
-	j = 0;
-	if (!arr)
-		return (NULL);
-	while (arr[j] || j == n)
-	{
-		if (j != n)
-			free(arr[j]);
-		j++;
-	}
-	free(arr);
-	return (NULL);
-}
-
-char	**ft_out(char **arr)
-{
-	int	j;
-
-	j = 0;
-	if (!arr)
-		return (NULL);
-	while (arr[j])
-	{
-		free(arr[j]);
-		j++;
-	}
-	free(arr);
-	return (NULL);
-}
 
 static int	join_arrays_size(char ***array)
 {
@@ -107,30 +74,12 @@ char	**join_arrays(char ***array)
 	return (joined);
 }
 
-char	*increment_shlvl(char *env_var)
+int	count_env_variables(char **envp)
 {
-	int		shlvl_value;
-	char	*new_shlvl;
-	char	*new_shlvl_value;
+	int	total_variables;
 
-	if (ft_strncmp(env_var, "SHLVL=", 6) == 0)
-	{
-		shlvl_value = ft_atoi(env_var + 6) + 1;
-		new_shlvl_value = ft_itoa(shlvl_value);
-		if (!new_shlvl_value)
-			return (write_error_null(1));
-		new_shlvl = (char *)malloc(7 + ft_strlen(new_shlvl_value));
-		if (!new_shlvl)
-		{
-			free(new_shlvl_value);
-			return (write_error_null(1));
-		}
-		ft_strlcpy(new_shlvl, "SHLVL=", 7);
-		ft_strlcat(new_shlvl, new_shlvl_value,
-			7 + ft_strlen(new_shlvl_value));
-		free(new_shlvl_value);
-		return (new_shlvl);
-	}
-	new_shlvl_value = ft_strdup(env_var);
-	return (new_shlvl_value);
+	total_variables = 0;
+	while (envp[total_variables])
+		total_variables++;
+	return (total_variables);
 }

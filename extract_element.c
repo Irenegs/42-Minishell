@@ -6,36 +6,105 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:42:48 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/12/11 23:21:31 by irene            ###   ########.fr       */
+/*   Updated: 2024/12/12 23:16:04 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	something_to_add(char *s, int pos)
+static char	*escape_quotes_in_string(char *str)
 {
-	if (is_space(s[pos]) == 0 && s[pos] != '<' && s[pos] != '>'
-		&& s[pos] != '|')
-		return (1);
-	return (0);
+	char	*escaped;
+	int		pos;
+	int		quot;
+
+	if (!str)
+		return (NULL);
+	escaped = malloc(1 * sizeof(char));
+	if (!escaped)
+		return (write_error_null(1));
+	escaped[0] = '\0';
+	quot = 0;
+	pos = 0;
+	while (str[pos] != '\0' && escaped)
+	{
+		if (is_quote(str[pos]) != 0 && quot != 0 && quot != is_quote(str[pos]))
+			add_escaped_quote(&escaped, str, pos);
+		else
+		{
+			if (is_quote(str[pos]) != 0 && is_escaped(str, pos) == 0)
+				manage_quotes(&quot, str[pos]);
+			add_char(&escaped, str, pos);
+		}
+		pos++;
+	}
+	return (escaped);
 }
 
-void	free_array(char ***arr)
+static char	*extract_str_element(char *s, int pos)
 {
-	int	i;
-	int	j;
+	int		len;	
+	int		q;
+	char	*result;
+
+	if (!s)
+		return (NULL);
+	len = 0;
+	q = 0;
+	while (s[pos + len] == ' ')
+		pos++;
+	while (s[pos + len] != '\0' && (q != 0 || is_separator(s[pos + len]) != 0))
+	{
+		manage_quotes(&q, s[pos + len]);
+		len++;
+	}
+	result = ft_substr(s, pos, len);
+	if (!result)
+		return (write_error_null(1));
+	return (result);
+}
+
+char	**escape_quotes_in_array(char **array)
+{
+	char	*aux_str;
+	int		i;
 
 	i = 0;
-	while (arr && arr[i])
+	while (array && array[i])
 	{
-		j = 0;
-		while (arr[i] && arr[i][j])
-		{
-			free(arr[i][j]);
-			j++;
-		}
-		free(arr[i]);
+		aux_str = escape_quotes_in_string(array[i]);
+		free(array[i]);
+		array[i] = aux_str;
 		i++;
 	}
-	free(arr);
+	return (array);
+}
+
+char	**extract_element(char *s, int pos, t_mix *data)
+{
+	char	*str;
+	char	*aux_str;
+	char	**element;
+
+	str = extract_str_element(s, pos);
+	if (!str)
+		return (NULL);
+	if (variables_to_expand(str) == 1)
+	{
+		aux_str = expand_string(str, data);
+		if (!aux_str)
+		{
+			free(str);
+			return (NULL);
+		}
+		free(str);
+		str = aux_str;
+	}
+	element = split_element(str);
+	free(str);
+	element = escape_quotes_in_array(element);
+	if (!element)
+		return (NULL);
+	element = unquote(element);
+	return (element);
 }

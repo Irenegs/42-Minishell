@@ -6,7 +6,7 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:40:20 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/12/11 23:43:44 by irene            ###   ########.fr       */
+/*   Updated: 2024/12/12 22:12:04 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,27 @@ int	len_cmd_str(char *str)
 			&& (str[i] == '<' || str[i] == '>'))
 			i += len_skip_word(str, i);
 		manage_quotes(&quotes, str[i]);
+		len++;
+	}
+	return (len);
+}
+
+int	len_skip_word(char *str, int pos)
+{
+	int	quotes;
+	int	len;
+
+	if (!str)
+		return (0);
+	quotes = 0;
+	len = 1;
+	if (str[pos + len] == '<' || str[pos + len] == '>')
+		len++;
+	while (str[pos + len] == ' ')
+		len++;
+	while (str[pos + len] != '\0' && (quotes != 0 || str[pos + len] != ' '))
+	{
+		manage_quotes(&quotes, str[pos + len]);
 		len++;
 	}
 	return (len);

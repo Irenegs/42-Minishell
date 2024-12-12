@@ -6,7 +6,7 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 18:06:33 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/12/11 18:50:40 by irene            ###   ########.fr       */
+/*   Updated: 2024/12/13 00:15:56 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,20 +37,4 @@ void	manage_quotes(int *quotes, char c)
 		*quotes = 0;
 	else if (*quotes == 0 && is_quote(c) != 0)
 		*quotes = c;
-}
-
-char	**free_partial_array(char **array, int filled)
-{
-	int	i;
-
-	i = 0;
-	if (!array)
-		return (NULL);
-	while (i < filled)
-	{
-		free(array[i]);
-		i++;
-	}
-	free(array);
-	return (NULL);
 }

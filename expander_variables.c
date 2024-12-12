@@ -5,92 +5,98 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/14 19:27:26 by irene             #+#    #+#             */
-/*   Updated: 2024/12/12 20:33:55 by irene            ###   ########.fr       */
+/*   Created: 2024/12/13 00:51:52 by irene             #+#    #+#             */
+/*   Updated: 2024/12/13 00:52:46 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	*variable_escaped_quote(char *str, int pos, t_mix *data)
+static char	*empty_string(void)
 {
-	char	*orig_value;
-	char	*escaped_variable;
+	char	*var_value;
 
-	orig_value = obtain_variable(str, pos + 1, data);
-	if (ft_strrchr(orig_value, '\'') != 0 || ft_strrchr(orig_value, '"') != 0)
-	{
-		escaped_variable = escape_quotes_in_variable(orig_value);
-		free(orig_value);
-		return (escaped_variable);
-	}
-	return (orig_value);
-}
-
-static void	add_variable(char **result, char *orig, int pos, t_mix *data)
-{
-	char	*variable;
-	char	*new;
-
-	variable = variable_escaped_quote(orig, pos, data);
-	if (!variable)
-	{
-		free(*result);
-		*result = NULL;
-		return ;
-	}
-	new = ft_strjoin(*result, variable);
-	if (!new)
-		write_error_null(1);
-	free(variable);
-	free(*result);
-	*result = new;
-}
-
-static void	dollar_case(char **expanded, char *str, int *pos, t_mix *data)
-{
-	add_variable(expanded, str, *pos, data);
-	(*pos)++;
-	(*pos) += len_varname(str, pos);
-	if (str[*pos] == '}')
-		(*pos)++;
-}
-
-static char	*initialize_expand_string(char **expanded, int *pos, int *quotes)
-{
-	*pos = 0;
-	*quotes = 0;
-	*expanded = malloc(1 * sizeof(char));
-	if (!*expanded)
+	var_value = malloc(1 * sizeof(char));
+	if (!var_value)
 		return (write_error_null(1));
-	*expanded[0] = '\0';
-	return (*expanded);
+	var_value[0] = '\0';
+	return (var_value);
 }
 
-char	*expand_string(char *str, t_mix *data)
+char	*ft_getenv(char *var_name, t_mix *data)
 {
-	char	*expanded;
-	int		pos;
-	int		quotes;
+	int		var_number;
+	int		len_var;
+	char	*var_value;
 
-	if (!str)
-		return (NULL);
-	expanded = initialize_expand_string(&expanded, &pos, &quotes);
-	while (expanded && str[pos] != '\0')
+	if (ft_strncmp(var_name, "?", 1) == 0)
+		var_value = ft_itoa(data->exit_status);
+	else
 	{
-		if (str[pos] == '$')
-			dollar_case(&expanded, str, &pos, data);
-		else if (quotes != 0 && is_quote(str[pos]) == 1 && quotes != str[pos])
-		{
-			add_escaped_quote(&expanded, str, pos++);
-			pos++;
-		}
-		else
-		{
-			manage_quotes(&quotes, str[pos]);
-			add_char(&expanded, str, pos);
-			pos++;
-		}
+		var_number = select_variable(var_name, data);
+		if (var_number == -1)
+			return (NULL);
+		if (var_number == -2)
+			return (empty_string());
+		len_var = ft_strlen(var_name);
+		var_value = ft_substr(data->m_env[var_number], len_var + 1,
+				ft_strlen(data->m_env[var_number]) - len_var - 1);
 	}
-	return (expanded);
+	if (!var_value)
+		return (write_error_null(1));
+	return (var_value);
+}
+
+static char	*dollar_string(void)
+{
+	char	*var_value;
+
+	var_value = malloc(2 * sizeof(char));
+	if (!var_value)
+		return (write_error_null(1));
+	var_value[0] = '$';
+	var_value[1] = '\0';
+	return (var_value);
+}
+
+char	*obtain_variable(char *s, int i, t_mix *data)
+{
+	char	*var_name;
+	char	*var_value;
+	size_t	len;
+
+	len = len_varname(s, &i);
+	if (len == 0)
+	{
+		if (s[i] == '{')
+			return (write_error_null(2));
+		if (is_quote(s[i]) != 0 && is_space(s[i + 1]) == 0)
+			return (empty_string());
+		return (dollar_string());
+	}
+	if (len > 0 && s[i] == '{')
+		var_name = ft_substr(s, i + 1, len - 2);
+	else
+		var_name = ft_substr(s, i, len);
+	if (!var_name)
+		return (write_error_null(1));
+	var_value = ft_getenv(var_name, data);
+	free(var_name);
+	return (var_value);
+}
+
+char	*expand_variable(char *orig, char *input_str, int pos, t_mix *data)
+{
+	char	*result;
+	char	*chunk;
+
+	chunk = obtain_variable(input_str, pos + 1, data);
+	if (!chunk)
+		return (NULL);
+	result = ft_strjoin(orig, chunk);
+	free(orig);
+	free(chunk);
+	if (!result)
+		return (write_error_null(1));
+	return (result);
 }

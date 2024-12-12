@@ -6,7 +6,7 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 17:52:42 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/11/14 19:41:15 by irene            ###   ########.fr       */
+/*   Updated: 2024/12/13 00:05:02 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,11 @@ static char	*normal_expansion(char *orig, char *input_str, int pos, int len)
 
 	chunk = ft_substr(input_str, pos, len);
 	if (!chunk)
+	{
+		free(orig);
+		free(input_str);
 		return (write_error_null(1));
+	}
 	result = ft_strjoin(orig, chunk);
 	free(orig);
 	free(chunk);
@@ -40,6 +44,26 @@ static int	len_until_dollar(char *str, int pos)
 	return (len);
 }
 
+static void	go_expanding(char **expanded, char *input, t_mix *data, int *p)
+{
+	if (input[*p] == '$' && input[*p + 1] != '\'' && input[*p + 1] != '"')
+	{
+		*expanded = expand_variable(*expanded, input, *p, data);
+		*p += len_varvalue(input, *p + 1) + 1;
+	}
+	else if (input[*p] == '$')
+	{
+		*expanded = normal_expansion(*expanded, input, *p, 1);
+		(*p)++;
+	}
+	else
+	{
+		*expanded = normal_expansion(*expanded, input, *p,
+				len_until_dollar(input, *p));
+		(*p) += len_until_dollar(input, *p);
+	}
+}
+
 char	*expand_heredoc(char *input, t_mix *data)
 {
 	char	*expanded;
@@ -53,24 +77,7 @@ char	*expand_heredoc(char *input, t_mix *data)
 	expanded[0] = '\0';
 	p = 0;
 	while (input[p] != '\0' && expanded)
-	{
-		if (input[p] == '$' && input[p + 1] != '\'' && input[p + 1] != '"')
-		{
-			expanded = expand_variable(expanded, input, p, data);
-			p += len_varvalue(input, p + 1) + 1;
-		}
-		else if (input[p] == '$')
-		{
-			expanded = normal_expansion(expanded, input, p, 1);
-			p++;
-		}
-		else
-		{
-			expanded = normal_expansion(expanded, input, p,
-					len_until_dollar(input, p));
-			p += len_until_dollar(input, p);
-		}
-	}
+		go_expanding(&expanded, input, data, &p);
 	return (expanded);
 }
 

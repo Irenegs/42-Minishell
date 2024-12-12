@@ -6,100 +6,50 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:36:03 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/12/12 19:22:04 by irene            ###   ########.fr       */
+/*   Updated: 2024/12/12 22:33:28 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	skip_word(char *s, int pos)
+static void	copy_cmd(char *orig, char *res)
 {
 	int	len;
-
-	len = 0;
-	while (s[pos + len] == '<' || s[pos + len] == '>'
-		|| is_space(s[pos + len]) == 1)
-		len++;
-	while (something_to_add(s, pos + len) == 1)
-		len += len_literal_word(s, pos + len);
-	return (len);
-}
-
-static int	locate_cmd_position(char *s)
-{
 	int	i;
-
-	i = 0;
-	while (s && s[i] != '\0')
-	{
-		if (s[i] == '<' || s[i] == '>')
-			i += skip_word(s, i);
-		if (s[i] == '\0')
-			return (-1);
-		if (is_space(s[i]) == 0)
-			return (i);
-		i++;
-	}
-	return (-1);
-}
-
-static int	count_arguments(char *cmd_str)
-{
-	int	i;
-	int	args;
 	int	quotes;
 
-	if (!cmd_str)
-		return (0);
+	if (!orig || !res)
+		return ;
+	len = 0;
 	i = 0;
-	args = 0;
 	quotes = 0;
-	while (cmd_str[i] != '\0')
+	while (orig[i] != '\0' && (orig[i] != '|' || quotes != 0))
 	{
-		while (cmd_str[i] == ' ')
+		while (orig[i] != '\0' && orig[i] != '|' && quotes == 0
+			&& (orig[i] == '<' || orig[i] == '>'))
+			i += len_skip_word(orig, i);
+		manage_quotes(&quotes, orig[i]);
+		res[len] = orig[i];
+		len++;
+		if (orig[i] != '\0')
 			i++;
-		if (cmd_str[i] != ' ' && cmd_str[i] != '\0')
-		{
-			args++;
-			manage_quotes(&quotes, cmd_str[i]);
-			while (cmd_str[i] != '\0' && (cmd_str[i] != ' ' || quotes != 0))
-				manage_quotes(&quotes, cmd_str[++i]);
-			if (cmd_str[i] != '\0')
-				i++;
-		}
 	}
-	return (args);
+	res[len] = '\0';
 }
 
-static char	**split_command(char *s, t_mix *data)
+static char	*extract_cmd_str(char *str)
 {
-	char	***arr;
-	int		i;
-	int		pos;
-	char	**element;
+	int		len;
+	char	*cmd;
 
-	arr = malloc((count_arguments(s) + 1) * sizeof(char **));
-	if (!arr || !data)
+	if (!str || len_cmd_str(str) == 0)
+		return (NULL);
+	len = len_cmd_str(str);
+	cmd = malloc((len + 1) * sizeof(char));
+	if (!cmd)
 		return (write_error_null(1));
-	i = -1;
-	pos = 0;
-	while (++i < count_arguments(s))
-	{
-		while (new_word(s, " ", pos, 0) == 0)
-			pos++;
-		arr[i] = extract_element(s, pos, data);
-		if (!arr[i])
-		{
-			free_array(arr);
-			return (NULL);
-		}
-		while (s[pos] != '\0' && is_space(s[pos]) == 0)
-			pos++;
-	}
-	arr[i] = NULL;
-	element = join_arrays(arr);
-	free_array(arr);
-	return (element);
+	copy_cmd(str, cmd);
+	return (cmd);
 }
 
 char	**extract_command(char *s, t_mix *data)

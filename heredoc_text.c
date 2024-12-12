@@ -6,7 +6,7 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 14:46:24 by irene             #+#    #+#             */
-/*   Updated: 2024/12/12 19:47:26 by irene            ###   ########.fr       */
+/*   Updated: 2024/12/12 23:38:00 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static char	*get_heredoc(char *s, t_mix *data)
 
 	delimiter = obtain_delimiter(s);
 	if (!delimiter)
-		return (write_error_null(1));//revisar si no es NULL
+		return (NULL);
 	heredoc_text = get_rawtext(delimiter);
 	if (heredoc_text == NULL)
 	{

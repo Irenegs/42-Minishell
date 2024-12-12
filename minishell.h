@@ -6,7 +6,7 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 17:56:24 by irene             #+#    #+#             */
-/*   Updated: 2024/12/12 19:05:28 by irene            ###   ########.fr       */
+/*   Updated: 2024/12/13 00:17:53 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,6 @@ char	**extract_command(char *s, t_mix *data);
 
 //extract_elements.c
 char	**extract_element(char *s, int pos, t_mix *data);
-int		something_to_add(char *s, int pos);
 
 //extract_file.c
 int		extract_input(char *s, t_mix *data, int p);
@@ -129,10 +128,8 @@ size_t	len_quotes(char *s, int pos);
 int		len_cmd_str(char *str);
 
 //extract_utils2.c
-char	*extract_cmd_str(char *str);
 void	manage_quotes(int *quotes, char c);
 int		len_skip_word(char *str, int pos);
-void	copy_cmd(char *orig, char *res);
 int		locate_char_position(char *s, char c);
 
 //parser.c
@@ -152,7 +149,6 @@ int		is_quote(char c);
 int		is_space(char c);
 int		is_separator(char c);
 char	**join_arrays(char ***array);
-char	*increment_shlvl(char *env_var);
 
 //heredoc_files.c
 void	clean_and_free_heredocs(char **heredocs, int pipes);
@@ -206,5 +202,11 @@ int		execute_pipes(t_mix *data);
 int		execute_several_pipes(t_mix *data);
 
 char	**ft_out_exception(char **arr, int n);
+char	*escape_quotes_in_variable(char *str);
 
+int	variables_to_expand(char *str);
+char	**split_command(char *s, t_mix *data);
+int	locate_cmd_position(char *s);
+int	ft_open(char *filename, int mode);
+char	*extract_filename(char *s, int *pos, t_mix *data);
 #endif

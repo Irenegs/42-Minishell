@@ -8,10 +8,10 @@ SRCS        := built_in_cd_pwd.c built_in_check.c built_in_echo.c built_in_env.c
 				built_in_utils1.c built_in_utils2.c \
 				command.c command_utils.c \
 				error.c \
-				expander.c expander_variables.c expander_quotes.c expander_utils.c\
+				expander.c expander_string.c expander_variables.c expander_quotes.c expander_utils.c\
 				execute.c execute_redirections.c execute_simple.c \
-				extract_command.c extract_element.c  extract_file.c extract_pipe.c \
-				extract_utils.c extract_utils2.c \
+				extract_command.c extract_element.c  extract_output_redirection.c extract_pipe.c extract_input_redirection.c\
+				extract_utils_len.c extract_split_command.c extract_utils_locate.c \
 				heredoc_delimiter.c heredoc_files.c heredoc_files_utils.c heredoc_text.c heredoc_expand.c\
 				pipe_utils.c \
 				parser.c parser_utils.c \
@@ -19,7 +19,7 @@ SRCS        := built_in_cd_pwd.c built_in_check.c built_in_echo.c built_in_env.c
 				struct.c signals.c signals_hd.c\
 				main.c \
 				split_element.c \
-				utils_arrays.c utils_char.c utils_variable.c \
+				utils_arrays.c utils_char.c utils_free.c utils_variable.c \
 			
 
 OBJS        := $(SRCS:%.c=%.o)
