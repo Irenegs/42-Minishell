@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/15 17:56:15 by irene             #+#    #+#             */
-/*   Updated: 2024/12/01 19:03:54 by pablgarc         ###   ########.fr       */
+/*   Updated: 2024/12/12 20:05:11 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,6 @@ char	**extract_element(char *s, int pos, t_mix *data)
 	element = escape_quotes_in_array(element);
 	if (!element)
 		return (NULL);
-	unquote(element);
+	element = unquote(element);
 	return (element);
 }

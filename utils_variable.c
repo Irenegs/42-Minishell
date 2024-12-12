@@ -6,7 +6,7 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 20:32:38 by irene             #+#    #+#             */
-/*   Updated: 2024/12/11 18:29:12 by irene            ###   ########.fr       */
+/*   Updated: 2024/12/12 19:48:48 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ char	*ft_getenv(char *var_name, t_mix *data)
 				ft_strlen(data->m_env[var_number]) - len_var - 1);
 	}
 	if (!var_value)
-		return (write_error_null(1));
+		return (write_error_null(1));//NULL?
 	return (var_value);
 }
 

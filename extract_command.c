@@ -6,7 +6,7 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:36:03 by irgonzal          #+#    #+#             */
-/*   Updated: 2024/12/11 23:44:02 by irene            ###   ########.fr       */
+/*   Updated: 2024/12/12 19:22:04 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,10 @@ static char	**split_command(char *s, t_mix *data)
 			pos++;
 		arr[i] = extract_element(s, pos, data);
 		if (!arr[i])
+		{
+			free_array(arr);
 			return (NULL);
+		}
 		while (s[pos] != '\0' && is_space(s[pos]) == 0)
 			pos++;
 	}

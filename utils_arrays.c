@@ -3,14 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   utils_arrays.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablgarc <pablgarc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/15 18:33:19 by irene             #+#    #+#             */
-/*   Updated: 2024/12/01 18:59:02 by pablgarc         ###   ########.fr       */
+/*   Updated: 2024/12/12 19:14:03 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+char	**ft_out_exception(char **arr, int n)
+{
+	int	j;
+
+	j = 0;
+	if (!arr)
+		return (NULL);
+	while (arr[j] || j == n)
+	{
+		if (j != n)
+			free(arr[j]);
+		j++;
+	}
+	free(arr);
+	return (NULL);
+}
 
 char	**ft_out(char **arr)
 {

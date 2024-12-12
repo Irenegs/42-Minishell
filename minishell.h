@@ -6,7 +6,7 @@
 /*   By: irene <irgonzal@student.42madrid.com>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 17:56:24 by irene             #+#    #+#             */
-/*   Updated: 2024/12/11 23:23:36 by irene            ###   ########.fr       */
+/*   Updated: 2024/12/12 19:05:28 by irene            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,4 +204,7 @@ char	**ft_out_command(char **arr);
 void	free_array(char ***arr);
 int		execute_pipes(t_mix *data);
 int		execute_several_pipes(t_mix *data);
+
+char	**ft_out_exception(char **arr, int n);
+
 #endif
